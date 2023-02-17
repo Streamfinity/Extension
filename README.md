@@ -1,4 +1,4 @@
-# streamfinity-extension
+# Streamfinity Extension
 
 This template should help get you started developing a react web extension in Vite.
 
