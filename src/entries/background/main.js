@@ -1,5 +1,5 @@
-import browser from "webextension-polyfill";
+import browser from 'webextension-polyfill';
 
 browser.runtime.onInstalled.addListener(() => {
-  console.log("Extension installed");
+    console.log('Extension installed');
 });
