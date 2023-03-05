@@ -1,10 +1,11 @@
-import PageContent from '~/components/PageContent';
 import './App.css';
 
 function App() {
     return (
         <main>
-            <PageContent>Popup</PageContent>
+            <div className="text-xl text-black">
+                Streamfinity
+            </div>
         </main>
     );
 }
