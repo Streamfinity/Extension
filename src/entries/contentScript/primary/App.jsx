@@ -10,7 +10,7 @@ function App() {
     log.debug('content script react');
 
     return (
-        <div>
+        <div className="text-red-500 text-lg">
             ++++++++streamfinity+++++++++++
         </div>
     );
