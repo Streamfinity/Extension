@@ -7,7 +7,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    id: release
     name: "Create release"
     outputs:
       release_url: ${{ steps.release.outputs.upload_url }}
