@@ -2,17 +2,21 @@ import * as dotenv from 'dotenv';
 import pkg from '../package.json';
 
 dotenv.config({
-    path: '../',
+    path: '.env.local',
 });
+
+const hostMatches = {
+    youtube: '*://*.youtube.com/*',
+    api: process.env.MANIFEST_HOST_API,
+    frontend: process.env.MANIFEST_HOST_FRONTEND,
+};
 
 const sharedManifest = {
     content_scripts: [
         {
             js: ['src/entries/contentScript/primary/main.jsx'],
             matches: [
-                '*://*.youtube.com/*',
-                '*://*.streamfinity.tv/*',
-                '*://*.streamfinity.code/*',
+                hostMatches.youtube,
             ],
         },
     ],
@@ -32,7 +36,14 @@ const sharedManifest = {
         page: 'src/entries/options/index.html',
         open_in_tab: true,
     },
-    permissions: [],
+    permissions: [
+        'storage',
+        '<all_urls>',
+        '*://*/*',
+        // hostMatches.youtube,
+        // hostMatches.api,
+        // hostMatches.frontend,
+    ],
 };
 
 const browserAction = {
@@ -56,7 +67,7 @@ const ManifestV2 = {
         ...sharedManifest.options_ui,
         chrome_style: false,
     },
-    permissions: [...sharedManifest.permissions, '*://*/*'],
+    permissions: [...sharedManifest.permissions],
 };
 
 const ManifestV3 = {
@@ -65,7 +76,11 @@ const ManifestV3 = {
     background: {
         service_worker: 'src/entries/background/serviceWorker.js',
     },
-    host_permissions: ['*://*/*'],
+    host_permissions: [
+        hostMatches.youtube,
+        hostMatches.api,
+        hostMatches.frontend,
+    ],
 };
 
 export function getManifest(manifestVersion) {
