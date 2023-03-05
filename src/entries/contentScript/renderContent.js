@@ -78,7 +78,7 @@ export async function listenPlayerEvents() {
         date: (new Date()).toISOString(),
     };
 
-    const pushInfoInterval = setInterval(async () => {
+    setInterval(async () => {
         if (!playerAttributes.timestamp) {
             return;
         }
