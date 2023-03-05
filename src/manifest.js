@@ -14,7 +14,7 @@ const hostMatches = {
 const sharedManifest = {
     content_scripts: [
         {
-            js: ['src/entries/contentScript/primary/main.jsx'],
+            js: [`src/entries/contentScript/primary/${process.env.NODE_ENV === 'production' ? 'main.jsx' : 'man.dev.jsx'}`],
             matches: [
                 hostMatches.youtube,
             ],
