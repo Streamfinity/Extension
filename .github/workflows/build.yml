@@ -7,11 +7,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: "Build (node ${{ matrix.node }})"
+    name: "Build (MV ${{ matrix.manifest_version }})"
 
     strategy:
       matrix:
-        node: [ 16 ]
+        manifest_version: [ 2, 3 ]
 
     steps:
       - name: Checkout repository
@@ -20,7 +20,7 @@ jobs:
       - name: Setup node env
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 16
           check-latest: true
 
       - name: Prepare env files
