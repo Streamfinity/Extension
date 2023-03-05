@@ -43,12 +43,7 @@ const sharedManifest = {
         open_in_tab: true,
     },
     permissions: [
-        '<all_urls>',
-        '*://*/*',
         'storage',
-        // hostMatches.youtube,
-        // hostMatches.api,
-        // hostMatches.frontend,
     ],
 };
 
