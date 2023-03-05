@@ -19,6 +19,12 @@ const sharedManifest = {
                 hostMatches.youtube,
             ],
         },
+        {
+            js: ['src/entries/contentScript/handshake/main.js'],
+            matches: [
+                hostMatches.frontend,
+            ],
+        },
     ],
     icons: {
         16: 'icons/16.png',

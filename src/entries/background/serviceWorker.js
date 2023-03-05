@@ -1,11 +1,29 @@
 import './main';
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
-import { GET_STATUS } from '~/messages';
+import { GET_STATUS, HANDSHAKE_VALIDATE } from '~/messages';
 
 const log = createLogger('SW');
 
-log.debug('started');
+log.debug('started', { api: import.meta.env.VITE_API_URL });
+
+async function api(url, options) {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/${url}`, {
+        headers: {
+            Accept: 'application/json',
+            ...options?.headers || {},
+            ...options?.token ? {
+                Authorization: `Bearer ${options.token}`,
+            } : {},
+        },
+        ...options || {},
+    });
+
+    return {
+        ...response,
+        data: await response.json(),
+    };
+}
 
 browser.runtime.onInstalled.addListener(async () => {
     log.debug('onInstalled');
@@ -18,10 +36,32 @@ async function getStatus() {
     };
 }
 
+async function validateHandshakeData(data) {
+    try {
+        const { data: response } = await api('users/@me', {
+            token: data.token,
+        });
+
+        if (response.data.id === data.user.id) {
+            log.debug('handshake', 'ok');
+            log.debug('handshake', 'response', response.data);
+            log.debug('handshake', 'provided', data);
+
+            return { success: true, user: response.data };
+        }
+    } catch (err) {
+        log.error('error checking handshake data', err);
+    }
+
+    return { success: false };
+}
+
 async function getResponse(type, data) {
     switch (type) {
     case GET_STATUS:
         return getStatus(data);
+    case HANDSHAKE_VALIDATE:
+        return validateHandshakeData(data);
     default:
         return null;
     }
