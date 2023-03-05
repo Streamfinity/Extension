@@ -4,7 +4,16 @@ module.exports = {
         './src/**/*.{js,ts,jsx,tsx,html}',
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontSize: {
+                base: '14px',
+            },
+            backgroundColor: {
+                yt: {
+                    'button-light': 'var(--yt-spec-badge-chip-background)',
+                },
+            },
+        },
     },
     plugins: [],
 };
