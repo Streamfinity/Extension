@@ -1,4 +1,7 @@
 import browser from 'webextension-polyfill';
+import { createLogger } from '~/common/log';
+
+const log = createLogger('Content-Script');
 
 function retryFindContainer() {
     return new Promise((resolve) => {
@@ -11,17 +14,22 @@ function retryFindContainer() {
             const container = document.querySelector('#above-the-fold');
             const containerChildPointer = container.querySelector('#bottom-row');
 
-            if (container && containerChildPointer) {
-                found = true;
-                clearInterval(findInterval);
+            if (!container || !containerChildPointer) {
+                log.debug('injected', 'not found');
+                return;
             }
+
+            found = true;
 
             const injectedContainer = document.createElement('div');
             injectedContainer.id = 'streamfinity';
 
             container.insertBefore(injectedContainer, containerChildPointer);
 
+            log.debug('injected', { injectedContainer });
+
             resolve(injectedContainer);
+            clearInterval(findInterval);
         }, 1000);
     });
 }
