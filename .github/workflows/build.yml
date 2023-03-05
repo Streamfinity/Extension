@@ -5,9 +5,27 @@ on:
     tags: [ '*' ]
 
 jobs:
+  release:
+    runs-on: ubuntu-latest
+    id: release
+    name: "Create release"
+    outputs:
+      release_url: ${{ steps.release.outputs.upload_url }}
+    steps:
+      - name: Create Release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: v${{ github.ref }}
+          prerelease: ${{ contains(github.ref_name, 'dev') == true }}
+
   build:
     runs-on: ubuntu-latest
     name: "Build (MV ${{ matrix.manifest_version }})"
+    needs: [ release ]
 
     strategy:
       matrix:
@@ -57,21 +75,11 @@ jobs:
         run: yarn build
 
       - name: Create archive
-        run: cd dist && zip -r dist.zip .
-
-      - name: Create Release
-        id: release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: v${{ github.ref }}
-          prerelease: ${{ contains(github.ref_name, 'dev') == true }}
+        run: cd dist && zip -r ${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip .
 
       - name: Upload Assets to Release
         uses: csexton/release-asset-action@v2
         with:
           pattern: "dist/*.zip"
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          release-url: ${{ steps.release.outputs.upload_url }}
+          release-url: ${{ needs.release.outputs.release_url }}
