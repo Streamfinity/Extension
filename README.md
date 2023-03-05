@@ -1,5 +1,11 @@
 # Streamfinity Extension
 
+## Download
+
+- [**Manual .zip Download**](https://github.com/Streamfinity/Extension/releases/latest)
+- [Chrome Web Store](https://chrome.google.com/webstore)
+- [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/)
+
 ## Setup
 
 ```sh
@@ -7,7 +13,9 @@ yarn install
 ```
 
 ## Commands
+
 ### Build
+
 #### Development, HMR
 
 Hot Module Reloading is used to load changes inline without requiring extension rebuilds and extension/page reloads
@@ -41,9 +49,9 @@ yarn serve:chrome
 yarn serve:firefox
 ```
 
-# Installation
+## Installation
 
-- Download the `artifact.zip` files from the latest workflow (see [Download](#download))
+- Download the `artifact.zip` files from the [latest release](https://github.com/Streamfinity/Extension/releases/latest)
 - Unzip file
 - Select `manifest.json` file when loading the extension as temporary add-on (see below)
 
@@ -59,7 +67,10 @@ yarn serve:firefox
 - Toggle "**Developmer mode**" in the top right corner
 - Drag the `.zip` file into the browser window or select the extracted the parent folder via "Load unpacked"
 
+## Authors
 
-# Credits
+- [Roman Zipp](https://ich.wtf)
+
+## Credits
 
 Based on [samrum/vite-plugin-web-extension](https://github.com/samrum/vite-plugin-web-extension).
