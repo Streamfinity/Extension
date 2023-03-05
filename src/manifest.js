@@ -1,10 +1,19 @@
+import * as dotenv from 'dotenv';
 import pkg from '../package.json';
+
+dotenv.config({
+    path: '../',
+});
 
 const sharedManifest = {
     content_scripts: [
         {
             js: ['src/entries/contentScript/primary/main.jsx'],
-            matches: ['*://*/*'],
+            matches: [
+                '*://*.youtube.com/*',
+                '*://*.streamfinity.tv/*',
+                '*://*.streamfinity.code/*',
+            ],
         },
     ],
     icons: {
