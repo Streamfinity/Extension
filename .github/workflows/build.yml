@@ -23,7 +23,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    name: "Build (MV ${{ matrix.manifest_version }})"
+    name: "Build (Manifest ${{ matrix.manifest_version }})"
     needs: [ release ]
 
     strategy:
@@ -72,6 +72,8 @@ jobs:
 
       - name: Build extension
         run: yarn build
+        env:
+          MANIFEST_VERSION: ${{ matrix.manifest_version }}
 
       - name: Create archive
         run: cd dist && zip -r ${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip .
