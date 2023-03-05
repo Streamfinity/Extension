@@ -1,7 +1,9 @@
 import './main';
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
-import { GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE } from '~/messages';
+import {
+    GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE, PLAYER_PROGRESS,
+} from '~/messages';
 
 const STORAGE_TOKEN = 'token';
 const STORAGE_USER = 'user';
@@ -18,8 +20,14 @@ async function api(url, options) {
             ...options?.token ? {
                 Authorization: `Bearer ${options.token}`,
             } : {},
+            ...options?.json ? {
+                'Content-Type': 'application/json',
+            } : {},
         },
         ...options || {},
+        ...options?.json ? {
+            body: JSON.stringify(options.json),
+        } : {},
     });
 
     return {
@@ -80,6 +88,21 @@ async function dumpStorage() {
     return browser.storage.sync.get();
 }
 
+async function sendPlayerProgress(data) {
+    const items = [{
+        timestamp: Math.round(data.timestamp),
+        created_at: data.date,
+        original_url: data.url,
+        stream_id: '989d746c-967b-41cc-9d2f-dae56bb72499', // TODO
+    }];
+
+    await api('extension/playback', {
+        token: await getToken(),
+        method: 'post',
+        json: { items },
+    });
+}
+
 async function getResponse(type, data) {
     switch (type) {
     case GET_STATUS:
@@ -88,6 +111,8 @@ async function getResponse(type, data) {
         return validateHandshakeData(data);
     case DEBUG_DUMP_STORAGE:
         return dumpStorage();
+    case PLAYER_PROGRESS:
+        return sendPlayerProgress(data);
     default:
         return null;
     }
@@ -100,7 +125,7 @@ browser.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
     }
 
     const { type, data } = msg;
-    log.debug('onMessage', { type, data });
+    log.debug('onMessage', type, data);
 
     const response = getResponse(type, data);
 

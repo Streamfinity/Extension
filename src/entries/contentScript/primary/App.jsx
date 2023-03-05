@@ -12,7 +12,9 @@ function App() {
     const [loadingStatus, setLoadingStatus] = useState(true);
     const [user, setUser] = useState(null);
 
-    const isLive = useMemo(() => status?.live_streams?.length > 0, []);
+    const [debugStorage, setDebugStorage] = useState({});
+
+    const isLive = useMemo(() => status?.live_streams?.length > 0, [status]);
 
     async function checkStatus() {
         const response = await browser.runtime.sendMessage({ type: GET_STATUS });
@@ -25,18 +27,25 @@ function App() {
         setLoadingStatus(false);
     }
 
-    const [debugStorage, setDebugStorage] = useState({});
+    async function checkStorage() {
+        setDebugStorage(
+            await browser.runtime.sendMessage({ type: DEBUG_DUMP_STORAGE }),
+        );
+    }
 
     useEffect(() => {
-        const interval = setInterval(async () => {
-            setDebugStorage(
-                await browser.runtime.sendMessage({ type: DEBUG_DUMP_STORAGE }),
-            );
-        }, 2000);
+        const storageInterval = setInterval(checkStorage, 5 * 1000);
+        const statusInterval = setInterval(checkStatus, 30 * 1000);
 
         return () => {
-            clearInterval(interval);
+            clearInterval(storageInterval);
+            clearInterval(statusInterval);
         };
+    }, []);
+
+    useEffect(() => {
+        checkStatus();
+        checkStorage();
     }, []);
 
     return (
@@ -44,23 +53,23 @@ function App() {
 
             <div className="flex justify-between">
                 <div className="flex gap-4">
-                    <div className="flex items-center font-medium rounded-full px-4 h-[36px] bg-yt-button-light">
+                    <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
                         Content Rating
                     </div>
-                    <div className="flex items-center font-medium rounded-full px-4 h-[36px] bg-yt-button-light">
+                    <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
                         Mark as reaction
                     </div>
-                    <div className="flex items-center font-medium rounded-full px-4 h-[36px] bg-yt-button-light">
+                    <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
                         Submit as suggestion
                     </div>
                 </div>
                 <div className="flex gap-2">
                     {isLive ? (
-                        <div className="flex items-center font-medium rounded-full px-4 h-[36px] bg-red-500 text-white">
+                        <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white">
                             LIVE
                         </div>
                     ) : (
-                        <div className="flex items-center font-medium rounded-full px-4 h-[36px] bg-yt-button-light">
+                        <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
                             Offline
                         </div>
                     )}
@@ -69,7 +78,7 @@ function App() {
                         <button
                             type="button"
                             onClick={checkStatus}
-                            className="flex items-center font-medium rounded-full px-4 h-[36px] bg-yt-button-light"
+                            className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light"
                         >
                             Loading...
                         </button>
@@ -92,7 +101,7 @@ function App() {
                         <b>Accounts:</b>
                         {' '}
                         {status?.accounts?.map((a) => (
-                            <div>{`  - ${a.name} (${a.id})`}</div>
+                            <div key={a.id}>{`  - ${a.name} (${a.id})`}</div>
                         ))}
                     </div>
                     <hr />
@@ -100,7 +109,7 @@ function App() {
                         <b>Live:</b>
                         {' '}
                         {status?.live_streams?.map((a) => (
-                            <div>{`  - ${a.title} (${a.id})`}</div>
+                            <div key={a.id}>{`  - ${a.title} (${a.id})`}</div>
                         ))}
                     </div>
                     <hr />
@@ -108,7 +117,7 @@ function App() {
                         value={JSON.stringify(debugStorage, null, 4)}
                         readOnly
                         rows={15}
-                        className="w-full font-mono"
+                        className="w-full text-base font-mono"
                     />
                 </div>
             )}

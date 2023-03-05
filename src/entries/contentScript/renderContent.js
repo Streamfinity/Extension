@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
+import { PLAYER_PROGRESS } from '~/messages';
 
 const log = createLogger('Content-Script');
 
@@ -34,7 +35,7 @@ function retryFindContainer() {
     });
 }
 
-export default async function renderContent(
+export async function renderContent(
     cssPaths,
     render = (_appRoot) => {},
 ) {
@@ -63,4 +64,62 @@ export default async function renderContent(
     shadowRoot.appendChild(appRoot);
 
     render(appRoot);
+}
+
+export async function listenPlayerEvents() {
+    let boundEvents = false;
+
+    const playerAttributes = {
+        playbackRate: null, // player.playbackRate,
+        paused: null, // player.paused,
+        ended: null, // player.ended,
+        timestamp: null, // player.currentTime,
+        url: window.location.href,
+        date: (new Date()).toISOString(),
+    };
+
+    const pushInfoInterval = setInterval(async () => {
+        if (!playerAttributes.timestamp) {
+            return;
+        }
+
+        log.debug('player', playerAttributes);
+
+        await browser.runtime.sendMessage({
+            type: PLAYER_PROGRESS,
+            data: playerAttributes,
+        });
+    }, 5000);
+
+    function bindEvents(player) {
+        player.addEventListener('play', () => {
+            playerAttributes.paused = false;
+        });
+
+        player.addEventListener('pause', () => {
+            playerAttributes.paused = true;
+        });
+
+        player.addEventListener('ended', () => {
+            playerAttributes.ended = true;
+        });
+
+        player.addEventListener('timeupdate', () => {
+            playerAttributes.timestamp = player.currentTime;
+            playerAttributes.url = window.location.href;
+            playerAttributes.date = (new Date()).toISOString();
+        });
+    }
+
+    const findPlayerInterval = setInterval(() => {
+        const player = document.querySelector('video.video-stream');
+        if (!player || boundEvents) {
+            return;
+        }
+
+        bindEvents(player);
+        boundEvents = true;
+
+        clearInterval(findPlayerInterval);
+    }, 2000);
 }
