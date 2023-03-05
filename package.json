@@ -1,9 +1,9 @@
 {
-  "name": "vite-web-extension",
-  "version": "1.0.0",
-  "displayName": "Vite Web Extension",
-  "author": "@samrum/vite-plugin-web-extension",
-  "description": "A @samrum/vite-plugin-web-extension web extension",
+  "name": "streamfinity",
+  "version": "0.0.1",
+  "displayName": "Streamfinity",
+  "author": "Roman Zipp <ich@ich.wtf>",
+  "description": "Streamfintiy browser extension",
   "scripts": {
     "build": "vite build",
     "watch": "vite build --watch --mode development --minify false",
