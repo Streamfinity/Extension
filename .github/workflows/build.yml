@@ -1,0 +1,77 @@
+name: "Build"
+
+on:
+  push:
+    tags: [ '*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: "Build (node ${{ matrix.node }})"
+
+    strategy:
+      matrix:
+        node: [ 16 ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup node env
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+          check-latest: true
+
+      - name: Prepare env files
+        if: ${{ contains(github.ref_name, 'dev') == false }}
+        run: cp .env.production .env.production.local
+
+      - name: Prepare env files
+        if: ${{ contains(github.ref_name, 'dev') == true }}
+        run: cp .env .env.local
+
+      - name: Authenticate npm
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Update version
+        run: yarn version --new-version ${{ github.ref_name }} --no-git-tag-version
+
+      - name: Build extension
+        run: yarn build
+
+      - name: Create archive
+        run: cd dist && zip -r dist.zip .
+
+      - name: Create Release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: v${{ github.ref }}
+          prerelease: ${{ contains(github.ref_name, 'dev') == true }}
+
+      - name: Upload Assets to Release
+        uses: csexton/release-asset-action@v2
+        with:
+          pattern: "dist/*.zip"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-url: ${{ steps.release.outputs.upload_url }}
