@@ -2,7 +2,7 @@
   "name": "streamfinity",
   "version": "0.0.1",
   "displayName": "Streamfinity",
-  "author": "Roman Zipp <ich@ich.wtf>",
+  "author": "Roman Zipp",
   "description": "Streamfintiy browser extension",
   "scripts": {
     "build": "vite build",
