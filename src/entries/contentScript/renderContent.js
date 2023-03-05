@@ -1,10 +1,37 @@
 import browser from 'webextension-polyfill';
 
+function retryFindContainer() {
+    return new Promise((resolve) => {
+        let found = false;
+        const findInterval = setInterval(() => {
+            if (found) {
+                return;
+            }
+
+            const container = document.querySelector('#above-the-fold');
+            const containerChildPointer = container.querySelector('#bottom-row');
+
+            if (container && containerChildPointer) {
+                found = true;
+                clearInterval(findInterval);
+            }
+
+            const injectedContainer = document.createElement('div');
+            injectedContainer.id = 'streamfinity';
+
+            container.insertBefore(injectedContainer, containerChildPointer);
+
+            resolve(injectedContainer);
+        }, 1000);
+    });
+}
+
 export default async function renderContent(
     cssPaths,
     render = (_appRoot) => {},
 ) {
-    const appContainer = document.createElement('div');
+    const appContainer = await retryFindContainer();
+
     const shadowRoot = appContainer.attachShadow({
         mode: import.meta.env.DEV ? 'open' : 'closed',
     });
@@ -26,7 +53,6 @@ export default async function renderContent(
     }
 
     shadowRoot.appendChild(appRoot);
-    document.body.appendChild(appContainer);
 
     render(appRoot);
 }

@@ -10,12 +10,8 @@ function App() {
     log.debug('content script react');
 
     return (
-        <div className="logo">
-            <img
-                src={logoImageUrl}
-                height="50"
-                alt=""
-            />
+        <div>
+            ++++++++streamfinity+++++++++++
         </div>
     );
 }
