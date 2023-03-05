@@ -18,8 +18,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
-          tag_name: ${{ github.ref }}
-          release_name: v${{ github.ref }}
+          tag: ${{ github.ref }}
+          name: v${{ github.ref }}
 
   build:
     runs-on: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
   release-publish:
     name: "Publish release"
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [ build ]
     steps:
       - name: Publish Release
         id: release
@@ -98,5 +98,4 @@ jobs:
         with:
           draft: false
           prerelease: ${{ contains(github.ref_name, 'dev') == true }}
-          tag_name: ${{ github.ref }}
-          release_name: v${{ github.ref }}
+          tag: ${{ github.ref }}
