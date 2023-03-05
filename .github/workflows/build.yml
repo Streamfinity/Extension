@@ -97,6 +97,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag: ${{ github.ref }}
+          name: v${{ github.ref_name }}
           draft: false
           prerelease: ${{ contains(github.ref_name, 'dev') == true }}
           allowUpdates: true
