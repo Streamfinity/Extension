@@ -23,7 +23,7 @@ async function api(url, options) {
     });
 
     return {
-        ...response,
+        status: response.status,
         data: await response.json(),
     };
 }
@@ -33,9 +33,23 @@ browser.runtime.onInstalled.addListener(async () => {
     // log.debug(await browser.storage.sync.set({ foo: 'bar' }));
 });
 
+async function getUser() {
+    return (await browser.storage.sync.get('user')).user;
+}
+
+async function getToken() {
+    return (await browser.storage.sync.get('token')).token;
+}
+
 async function getStatus() {
+    const { status, data } = await api('extension/status', {
+        token: await getToken(),
+    });
+
     return {
-        auth: false,
+        success: status === 200,
+        status: data?.data,
+        user: await getUser(),
     };
 }
 
@@ -63,7 +77,6 @@ async function validateHandshakeData(data) {
 }
 
 async function dumpStorage() {
-    const items = [];
     return browser.storage.sync.get();
 }
 
