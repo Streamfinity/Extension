@@ -1,4 +1,3 @@
-import './main';
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import {
