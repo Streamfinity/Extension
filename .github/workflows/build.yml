@@ -17,9 +17,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          draft: true
           tag: ${{ github.ref }}
           name: v${{ github.ref }}
+          draft: true
 
   build:
     runs-on: ubuntu-latest
@@ -96,6 +96,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag: ${{ github.ref }}
           draft: false
           prerelease: ${{ contains(github.ref_name, 'dev') == true }}
-          tag: ${{ github.ref }}
+          allowUpdates: true
