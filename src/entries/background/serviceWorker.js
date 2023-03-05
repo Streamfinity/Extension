@@ -1,7 +1,10 @@
 import './main';
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
-import { GET_STATUS, HANDSHAKE_VALIDATE } from '~/messages';
+import { GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE } from '~/messages';
+
+const STORAGE_TOKEN = 'token';
+const STORAGE_USER = 'user';
 
 const log = createLogger('SW');
 
@@ -47,6 +50,9 @@ async function validateHandshakeData(data) {
             log.debug('handshake', 'response', response.data);
             log.debug('handshake', 'provided', data);
 
+            await browser.storage.sync.set({ [STORAGE_TOKEN]: data.token });
+            await browser.storage.sync.set({ [STORAGE_USER]: response.data });
+
             return { success: true, user: response.data };
         }
     } catch (err) {
@@ -56,12 +62,19 @@ async function validateHandshakeData(data) {
     return { success: false };
 }
 
+async function dumpStorage() {
+    const items = [];
+    return browser.storage.sync.get();
+}
+
 async function getResponse(type, data) {
     switch (type) {
     case GET_STATUS:
         return getStatus(data);
     case HANDSHAKE_VALIDATE:
         return validateHandshakeData(data);
+    case DEBUG_DUMP_STORAGE:
+        return dumpStorage();
     default:
         return null;
     }

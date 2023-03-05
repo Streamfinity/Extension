@@ -1,7 +1,8 @@
 import './App.css';
 import browser from 'webextension-polyfill';
+import { useEffect, useState } from 'react';
 import { createLogger } from '~/common/log';
-import { GET_STATUS } from '~/messages';
+import { GET_STATUS, DEBUG_DUMP_STORAGE } from '~/messages';
 
 const log = createLogger('Content-Script');
 
@@ -14,6 +15,20 @@ function App() {
 
         log.debug('status', status);
     }
+
+    const [debugStorage, setDebugStorage] = useState({});
+
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            setDebugStorage(
+                await browser.runtime.sendMessage({ type: DEBUG_DUMP_STORAGE }),
+            );
+        }, 2000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
 
     return (
         <div className="mt-4 text-base">
@@ -49,7 +64,12 @@ function App() {
                     <div className="absolute left-0 top-0 px-2 text-sm bg-red-600 text-white font-medium uppercase rounded-br-md leading-normal">
                         Streamfinity Dev Tools
                     </div>
-                    dev
+                    <textarea
+                        value={JSON.stringify(debugStorage, null, 4)}
+                        readOnly
+                        rows={15}
+                        className="w-full font-mono"
+                    />
                 </div>
             )}
 
