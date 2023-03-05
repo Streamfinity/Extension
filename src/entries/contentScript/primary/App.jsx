@@ -1,11 +1,19 @@
 import './App.css';
+import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
+import { GET_STATUS } from '~/messages';
 
 const log = createLogger('Content-Script');
 
 function App() {
     const dev = import.meta.env.DEV;
     log.debug('content script react', { dev });
+
+    async function checkStatus() {
+        const status = await browser.runtime.sendMessage({ type: GET_STATUS });
+
+        log.debug('status', status);
+    }
 
     return (
         <div className="mt-4 text-base">
@@ -26,9 +34,13 @@ function App() {
                     <div className="flex items-center font-medium rounded-full px-4 h-[36px] bg-red-500">
                         LIVE
                     </div>
-                    <div className="flex items-center bg-yt-button-light font-medium rounded-full px-4 h-[36px]">
+                    <button
+                        type="button"
+                        onClick={checkStatus}
+                        className="flex items-center bg-yt-button-light font-medium rounded-full px-4 h-[36px]"
+                    >
                         Streamfinity
-                    </div>
+                    </button>
                 </div>
             </div>
 
