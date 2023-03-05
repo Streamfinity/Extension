@@ -41,6 +41,25 @@ yarn serve:chrome
 yarn serve:firefox
 ```
 
+# Installation
+
+- Download the `artifact.zip` files from the latest workflow (see [Download](#download))
+- Unzip file
+- Select `manifest.json` file when loading the extension as temporary add-on (see below)
+
+### Firefox
+
+- Open [**about:debugging**](https://developer.mozilla.org/en-US/docs/Tools/about:debugging) page
+- Navigate to "**This Firefox**" tab
+- Select the [dist/manifest.json](dist/manifest.json) from "Load Temporary Add-on..."
+
+### Chrome
+
+- Open **chrome://extensions/** page
+- Toggle "**Developmer mode**" in the top right corner
+- Drag the `.zip` file into the browser window or select the extracted the parent folder via "Load unpacked"
+
+
 # Credits
 
 Based on [samrum/vite-plugin-web-extension](https://github.com/samrum/vite-plugin-web-extension).
