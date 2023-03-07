@@ -69,7 +69,8 @@ yarn serve:firefox
 
 ## Known Issues
 
-- HMR is not available in Chromium based browsers [#85](https://github.com/samrum/vite-plugin-web-extension/issues/85)
+- HMR is not available in Chromium based browsers: [vite-plugin-web-extension#85](https://github.com/samrum/vite-plugin-web-extension/issues/85)
+- Firefox is not yet supporting service workers: [stackoverflow.com](https://stackoverflow.com/questions/73440104/failing-to-export-to-background-js-from-a-common-script-under-firefox-with-mv3)
 
 ## Authors
 

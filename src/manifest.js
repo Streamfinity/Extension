@@ -45,9 +45,9 @@ const sharedManifest = {
     permissions: [
         'storage',
     ],
-    content_security_policy: {
-        // extension_pages: "script-src 'unsafe-inline' 'self' http://localhost:5173 ; object-src 'self'",
-    },
+    // content_security_policy: {
+    //     extension_pages: "script-src 'unsafe-inline' 'self' http://localhost:5173 ; object-src 'self'",
+    // },
 };
 
 const browserAction = {
