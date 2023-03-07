@@ -67,10 +67,14 @@ yarn serve:firefox
 - Toggle "**Developmer mode**" in the top right corner
 - Drag the `.zip` file into the browser window or select the extracted the parent folder via "Load unpacked"
 
+## Known Issues
+
+- HMR is not available in Chromium based browsers [#85](https://github.com/samrum/vite-plugin-web-extension/issues/85)
+
 ## Authors
 
 - [Roman Zipp](https://ich.wtf)
 
 ## Credits
 
-Based on [samrum/vite-plugin-web-extension](https://github.com/samrum/vite-plugin-web-extension).
+Based on [samrum/vite-plugin-web-extension](https://github.com/samrum/vite-plugin-web-extension) (via [create-vite-plugin-web-extension](https://github.com/samrum/create-vite-plugin-web-extension)).
