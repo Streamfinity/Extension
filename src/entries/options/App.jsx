@@ -1,10 +1,12 @@
-import PageContent from '~/components/PageContent';
+import React from 'react';
 import './App.css';
 
 function App() {
     return (
         <main>
-            <PageContent>Options</PageContent>
+            <div className="text-xl text-black borderred500 p-4">
+                Streamfinity Popup
+            </div>
         </main>
     );
 }
