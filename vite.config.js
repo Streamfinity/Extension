@@ -12,7 +12,6 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             eslint(),
-            react(),
             webExtension({
                 manifest: getManifest(Number(env.MANIFEST_VERSION)),
                 useDynamicUrlContentScripts: true,
