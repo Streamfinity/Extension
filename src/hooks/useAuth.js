@@ -1,6 +1,10 @@
 import browser from 'webextension-polyfill';
 
-export const loginUrl = `${import.meta.env.VITE_FRONTEND_URL}/dashboard/settings/extension`;
+export function buildUrl(path) {
+    return `${import.meta.env.VITE_FRONTEND_URL}${path}`;
+}
+
+export const loginUrl = buildUrl('/dashboard/settings/extension');
 
 export async function openLoginPage() {
     await browser.tabs.create({

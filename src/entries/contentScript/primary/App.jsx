@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import browser from 'webextension-polyfill';
 import { DEBUG_DUMP_STORAGE } from '~/messages';
 import { useStatus } from '~/hooks/useStatus';
-import { loginUrl } from '~/hooks/useAuth';
+import { loginUrl, buildUrl } from '~/hooks/useAuth';
 
 const dev = import.meta.env.DEV;
 
@@ -59,9 +59,14 @@ function App() {
                     {hasData && (
                         <>
                             {isLive && (
-                                <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white">
+                                <a
+                                    href={buildUrl('/dashboard/streams')}
+                                    target="_blank"
+                                    className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white"
+                                    rel="noreferrer"
+                                >
                                     LIVE
-                                </div>
+                                </a>
                             )}
 
                             {!isLive && (
