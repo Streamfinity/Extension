@@ -30,11 +30,13 @@ function App() {
             clearInterval(storageInterval);
             clearInterval(statusInterval);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         refreshStatus();
         checkStorage();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
