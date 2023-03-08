@@ -103,20 +103,31 @@ function App() {
                     <div>
                         <b>Logged in as:</b>
                         {' '}
-                        {user ? (`${user.display_name} (${user.id}})`) : (<span>...</span>)}
+                        {user ? (
+                            <>
+                                <span>{user.display_name}</span>
+                                {' '}
+                                <span className="opacity-50">{`(${user.id})`}</span>
+                            </>
+                        ) : (<span>...</span>)}
                     </div>
                     <hr />
                     <div>
                         <b>Accounts:</b>
                         {' '}
                         {status?.accounts?.map((a) => (
-                            <div key={a.id}>{`  - ${a.name} (${a.id})`}</div>
+                            <div key={a.id}>
+                                {`  - ${a.name}`}
+                                {' '}
+                                <span className="opacity-50">{`(${a.id})`}</span>
+                            </div>
                         ))}
                     </div>
                     <hr />
                     <div>
                         <b>Live:</b>
                         {' '}
+                        {!isLive && 'not live'}
                         {status?.live_streams?.map((a) => (
                             <div key={a.id}>{`  - ${a.title} (${a.id})`}</div>
                         ))}
@@ -133,6 +144,7 @@ function App() {
                         <button
                             type="button"
                             onClick={() => setShowDebugStorage(true)}
+                            className="underline"
                         >
                             Show storage debug
                         </button>
