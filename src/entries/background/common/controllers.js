@@ -4,11 +4,12 @@ import {
     getUser, getToken, STORAGE_USER, STORAGE_TOKEN,
 } from '~/entries/background/common/storage';
 import {
-    GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE, PLAYER_PROGRESS,
+    GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE, PLAYER_PROGRESS, LOGOUT,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
-const log = createLogger('Content-Script');
+const log = createLogger('Background');
+
 async function getResponse(type, data) {
     switch (type) {
     case GET_STATUS:
@@ -19,6 +20,8 @@ async function getResponse(type, data) {
         return dumpStorage();
     case PLAYER_PROGRESS:
         return sendPlayerProgress(data);
+    case LOGOUT:
+        return logout(data);
     default:
         return null;
     }
@@ -40,6 +43,16 @@ export async function handleMessage(msg, sender, sendResponse) {
     }
 
     return response;
+}
+
+// ------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+
+export async function logout() {
+    await browser.storage.sync.remove([STORAGE_TOKEN, STORAGE_USER]);
+
+    return { success: true };
 }
 
 export async function getStatus() {

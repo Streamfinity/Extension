@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
             webExtension({
                 manifest: getManifest(Number(env.MANIFEST_VERSION)),
                 useDynamicUrlContentScripts: true,
+                devHtmlTransform: false,
             }),
         ],
         resolve: {
