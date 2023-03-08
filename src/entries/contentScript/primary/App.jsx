@@ -1,20 +1,16 @@
 import './App.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import browser from 'webextension-polyfill';
-import { createLogger } from '~/common/log';
 import { DEBUG_DUMP_STORAGE } from '~/messages';
 import { useStatus } from '~/hooks/useStatus';
 import { loginUrl } from '~/hooks/useAuth';
 
 const dev = import.meta.env.DEV;
-const log = createLogger('Content-Script');
 
 function App() {
     const {
         user, status, refresh: refreshStatus, loading: loadingStatus, hasData,
     } = useStatus();
-
-    log.debug('started');
 
     const [debugStorage, setDebugStorage] = useState({});
 
@@ -28,7 +24,7 @@ function App() {
 
     useEffect(() => {
         const storageInterval = setInterval(checkStorage, 5 * 1000);
-        const statusInterval = setInterval(refreshStatus, 30 * 1000);
+        const statusInterval = setInterval(refreshStatus, 5 * 1000);
 
         return () => {
             clearInterval(storageInterval);
