@@ -4,13 +4,14 @@ import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { DEBUG_DUMP_STORAGE } from '~/messages';
 import { useStatus } from '~/hooks/useStatus';
+import { loginUrl } from '~/hooks/useAuth';
 
 const dev = import.meta.env.DEV;
 const log = createLogger('Content-Script');
 
 function App() {
     const {
-        user, status, refresh: refreshStatus, loading: loadingStatus,
+        user, status, refresh: refreshStatus, loading: loadingStatus, hasData,
     } = useStatus();
 
     log.debug('started');
@@ -56,14 +57,31 @@ function App() {
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    {isLive ? (
-                        <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white">
-                            LIVE
-                        </div>
-                    ) : (
-                        <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
-                            Offline
-                        </div>
+                    {hasData && (
+                        <>
+                            {isLive && (
+                                <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white">
+                                    LIVE
+                                </div>
+                            )}
+
+                            {!isLive && (
+                                <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
+                                    Offline
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    {(!loadingStatus && !user) && (
+                        <a
+                            href={loginUrl}
+                            target="_blank"
+                            className="flex items-center font-medium rounded-full px-6 h-[36px] bg-primary-500 text-white"
+                            rel="noreferrer"
+                        >
+                            Login with Streamfinity
+                        </a>
                     )}
 
                     {loadingStatus && (
