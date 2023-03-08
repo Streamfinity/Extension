@@ -12,6 +12,7 @@ function App() {
         user, status, refresh: refreshStatus, loading: loadingStatus, hasData,
     } = useStatus();
 
+    const [showDebugStorage, setShowDebugStorage] = useState(false);
     const [debugStorage, setDebugStorage] = useState({});
 
     const isLive = useMemo(() => status?.live_streams?.length > 0, [status]);
@@ -121,12 +122,21 @@ function App() {
                         ))}
                     </div>
                     <hr />
-                    <textarea
-                        value={JSON.stringify(debugStorage, null, 4)}
-                        readOnly
-                        rows={15}
-                        className="w-full text-base font-mono"
-                    />
+                    {showDebugStorage ? (
+                        <textarea
+                            value={JSON.stringify(debugStorage, null, 4)}
+                            readOnly
+                            rows={15}
+                            className="w-full text-base font-mono"
+                        />
+                    ) : (
+                        <button
+                            type="button"
+                            onClick={() => setShowDebugStorage(true)}
+                        >
+                            Show storage debug
+                        </button>
+                    )}
                 </div>
             )}
 
