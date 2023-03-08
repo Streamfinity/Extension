@@ -1,7 +1,12 @@
+const { preset, plugin } = require('@streamfinity/streamfinity-branding');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
         './src/**/*.{js,ts,jsx,tsx,html}',
+    ],
+    presets: [
+        preset,
     ],
     theme: {
         extend: {
@@ -15,5 +20,7 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        plugin,
+    ],
 };
