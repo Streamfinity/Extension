@@ -1,6 +1,9 @@
 import browser from 'webextension-polyfill';
 import { useState, useMemo } from 'react';
 import { GET_STATUS } from '~/messages';
+import { createLogger } from '~/common/log';
+
+const log = createLogger('useStatus');
 
 export function useStatus() {
     const [loading, setLoading] = useState(true);
@@ -10,6 +13,7 @@ export function useStatus() {
     const hasData = useMemo(() => !loading && user, [loading, user]);
 
     const refresh = async () => {
+        log.debug('refreshing...');
         const response = await browser.runtime.sendMessage({ type: GET_STATUS });
 
         setStatus(response?.status);
@@ -18,6 +22,6 @@ export function useStatus() {
     };
 
     return {
-        user, status, refresh, hasData,
+        user, status, refresh, hasData, loading,
     };
 }
