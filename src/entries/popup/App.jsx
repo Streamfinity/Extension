@@ -20,7 +20,9 @@ function App() {
     const [activeView, setActiveView] = useState(availableViews[0]);
     const ActiveViewComponent = activeView.component;
 
-    const { user, refresh: refreshStatus, hasData } = useStatus();
+    const {
+        user, refresh: refreshStatus, hasData, loading: loadingStatus,
+    } = useStatus();
 
     console.log(user);
 
@@ -33,7 +35,7 @@ function App() {
     return (
         <main className="min-w-[21rem] h-[21rem] flex flex-col">
             <div>
-                <div className="p-3">
+                <div className="p-3 text-center">
                     <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-gray-600 dark:from-gray-200 to-gray-800 dark:to-gray-400">
                         Streamfinity
                     </div>
@@ -60,20 +62,16 @@ function App() {
 
             <div className="h-full p-2">
                 <div className="h-full p-2 bg-gray-50 rounded-lg">
-                    {hasData ? (
+                    {(!loadingStatus && hasData) && (
                         <ActiveViewComponent
                             user={user}
                             refreshStatus={refreshStatus}
                         />
-                    ) : (
-                        <IndexView />
-                    )}
-                    {user && (
-                        <div>
-                            {user.display_name}
-                        </div>
                     )}
 
+                    {(!loadingStatus && !hasData) && (
+                        <IndexView />
+                    )}
                 </div>
             </div>
 
