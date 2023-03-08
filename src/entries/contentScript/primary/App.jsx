@@ -1,6 +1,6 @@
 import './App.css';
+import React, { useEffect, useState, useMemo } from 'react';
 import browser from 'webextension-polyfill';
-import { useEffect, useState, useMemo } from 'react';
 import { createLogger } from '~/common/log';
 import { GET_STATUS, DEBUG_DUMP_STORAGE } from '~/messages';
 

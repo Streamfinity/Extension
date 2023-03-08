@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { renderContent, listenPlayerEvents } from '../renderContent';
 import App from './App';
 import { createLogger } from '~/common/log';
@@ -10,12 +10,12 @@ log.debug('content script main');
 
 // eslint-disable-next-line
 renderContent(import.meta.PLUGIN_WEB_EXT_CHUNK_CSS_PATHS, (appRoot) => {
-    ReactDOM.render(
-        <React.StrictMode>
-            <App />
-        </React.StrictMode>,
-        appRoot,
-    );
+    createRoot(appRoot)
+        .render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>,
+        );
 });
 
 listenPlayerEvents();
