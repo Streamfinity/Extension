@@ -10,6 +10,10 @@ import { createLogger } from '~/common/log';
 
 const log = createLogger('Background');
 
+const store = {
+    status: null,
+};
+
 async function getResponse(type, data) {
     switch (type) {
     case GET_STATUS:
@@ -60,6 +64,8 @@ export async function getStatus() {
         token: await getToken(),
     });
 
+    store.status = data?.data;
+
     return {
         success: status === 200,
         status: data?.data,
@@ -95,11 +101,21 @@ export async function dumpStorage() {
 }
 
 export async function sendPlayerProgress(data) {
+    if (!store.status) {
+        log.debug('no status adata, dont send player progress');
+        return;
+    }
+
+    if (store.status.live_streams.length === 0) {
+        log.debug('on stream live');
+        return;
+    }
+
     const items = [{
         timestamp: Math.round(data.timestamp),
         created_at: data.date,
         original_url: data.url,
-        stream_id: '989d746c-967b-41cc-9d2f-dae56bb72499', // TODO
+        stream_id: store.status.live_streams[0].id,
     }];
 
     await api('extension/playback', {
