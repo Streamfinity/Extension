@@ -1,6 +1,7 @@
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { PLAYER_PROGRESS } from '~/messages';
+import { INTERVAL_SEND_PLAYER_PROGRESS } from '~/config';
 
 const log = createLogger('Content-Script');
 
@@ -89,7 +90,7 @@ export async function listenPlayerEvents() {
             type: PLAYER_PROGRESS,
             data: playerAttributes,
         });
-    }, 5000);
+    }, INTERVAL_SEND_PLAYER_PROGRESS);
 
     function bindEvents(player) {
         player.addEventListener('play', () => {
