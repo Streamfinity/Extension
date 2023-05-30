@@ -5,6 +5,7 @@ const log = {
     section: null,
     app: 'EXT',
     appColor: '#0d9488',
+    forwardCallback: null,
 
     levels: {
         verbose: {
@@ -42,6 +43,10 @@ const log = {
         const { func, highlight } = this.levels[level];
         const placeholder = ' '.repeat(Math.max(0, 6 - level.length));
 
+        if (this.forwardCallback) {
+            this.forwardCallback(level, args);
+        }
+
         func(...[
             `%c${moment().format('mm:ss.SSS')} %c ${this.app} %c ${level.toUpperCase()}${placeholder} %c ${this.section} `,
             'color:grey;font-family:monospace',
@@ -72,8 +77,13 @@ const log = {
     },
 };
 
-export function createLogger(section) {
+export function createLogger(section, options = {}) {
     const logger = { ...log };
     logger.section = section;
+
+    if (options.forwardCallback) {
+        logger.forwardCallback = options.forwardCallback;
+    }
+
     return logger;
 }
