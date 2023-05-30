@@ -84,8 +84,25 @@ export async function validateHandshakeData(data) {
             log.debug('handshake', 'response', response.data);
             log.debug('handshake', 'provided', data);
 
-            await browser.storage.sync.set({ [STORAGE_TOKEN]: data.token });
-            await browser.storage.sync.set({ [STORAGE_USER]: response.data });
+            const storeToken = data.token;
+            const storeUser = response.data;
+
+            delete storeUser.avatar;
+            delete storeUser.fetch_preferences;
+            delete storeUser.subscriptions;
+
+            storeUser.accounts = storeUser.accounts.map((acc) => ({
+                id: acc.id,
+                name: acc.name,
+                display_name: acc.display_name,
+                enable_monitoring: acc.enable_monitoring,
+            }));
+
+            log.debug('storing token...', storeToken);
+            await browser.storage.sync.set({ [STORAGE_TOKEN]: storeToken });
+
+            log.debug('storing user...', storeUser);
+            await browser.storage.sync.set({ [STORAGE_USER]: storeUser });
 
             return { success: true, user: response.data };
         }
