@@ -68,7 +68,7 @@ jobs:
         run: yarn install
 
       - name: Update version
-        run: yarn version --new-version ${{ github.ref_name }} --no-git-tag-version
+        run: ./tag-version.sh ${{ github.ref_name }}
 
       - name: Build extension
         run: yarn build
