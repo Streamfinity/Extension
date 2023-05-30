@@ -40,11 +40,11 @@ jobs:
           node-version: 16
           check-latest: true
 
-      - name: Prepare env files
+      - name: Prepare env files (production)
         if: ${{ contains(github.ref_name, 'dev') == false }}
-        run: cp .env .env.local
+        run: cp .env.production .env.local
 
-      - name: Prepare env files
+      - name: Prepare env files (development)
         if: ${{ contains(github.ref_name, 'dev') == true }}
         run: cp .env.development .env.local
 
