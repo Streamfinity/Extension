@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import browser from 'webextension-polyfill';
-import { func } from 'prop-types';
 import { DEBUG_DUMP_STORAGE } from '~/messages';
 import { useStatus } from '~/hooks/useStatus';
 import { loginUrl, buildUrl } from '~/hooks/useAuth';
@@ -64,7 +63,6 @@ function App() {
                         Mark as reaction
                     </div>
                     <button
-                        role="button"
                         type="button"
                         onClick={() => setShowSubmitSuggestionModal(true)}
                         className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light"
