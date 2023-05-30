@@ -13,8 +13,9 @@ export function useStatus() {
     const hasData = useMemo(() => !loading && user, [loading, user]);
 
     const refresh = async () => {
-        log.debug('refreshing...');
         const response = await browser.runtime.sendMessage({ type: GET_STATUS });
+
+        log.debug('refreshing', response);
 
         setStatus(response?.status);
         setUser(response?.user);
