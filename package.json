@@ -14,10 +14,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@samrum/vite-plugin-web-extension": "^3.0.0",
+    "@samrum/vite-plugin-web-extension": "^4.1.0",
     "@streamfinity/streamfinity-branding": "^1.0.6",
-    "@types/chrome": "^0.0.206",
-    "@types/webextension-polyfill": "^0.9.2",
+    "@types/chrome": "^0.0.237",
+    "@types/webextension-polyfill": "^0.10.0",
     "@vitejs/plugin-react": "^3.0.0",
     "autoprefixer": "^10.4.13",
     "classnames": "^2.3.2",
