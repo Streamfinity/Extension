@@ -1,10 +1,10 @@
 import browser from 'webextension-polyfill';
-import api from '~/entries/background/common/api';
+import { api, searchSuggestionAccounts, submitSuggestion } from '~/entries/background/common/api';
 import {
-    getUser, getToken, STORAGE_USER, STORAGE_TOKEN,
+    storageGetUser, storageGetToken, STORAGE_USER, STORAGE_TOKEN,
 } from '~/entries/background/common/storage';
 import {
-    GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE, PLAYER_PROGRESS, LOGOUT,
+    GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE, PLAYER_PROGRESS, LOGOUT, SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -26,6 +26,10 @@ async function getResponse(type, data) {
         return sendPlayerProgress(data);
     case LOGOUT:
         return logout(data);
+    case SUGGESTIONS_SEARCH_ACCOUNT:
+        return searchSuggestionAccounts(data);
+    case SUGGESTIONS_SUBMIT:
+        return submitSuggestion(data);
     default:
         return null;
     }
@@ -61,7 +65,7 @@ export async function logout() {
 
 export async function getStatus() {
     const { status, data } = await api('extension/status', {
-        token: await getToken(),
+        token: await storageGetToken(),
     });
 
     store.status = data?.data;
@@ -69,7 +73,7 @@ export async function getStatus() {
     return {
         success: status === 200,
         status: data?.data,
-        user: await getUser(),
+        user: await storageGetUser(),
     };
 }
 
@@ -136,7 +140,7 @@ export async function sendPlayerProgress(data) {
     }];
 
     await api('extension/playback', {
-        token: await getToken(),
+        token: await storageGetToken(),
         method: 'post',
         json: { items },
     });

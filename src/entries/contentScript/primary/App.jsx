@@ -1,9 +1,11 @@
 import './App.css';
 import React, { useEffect, useState, useMemo } from 'react';
 import browser from 'webextension-polyfill';
+import { func } from 'prop-types';
 import { DEBUG_DUMP_STORAGE } from '~/messages';
 import { useStatus } from '~/hooks/useStatus';
 import { loginUrl, buildUrl } from '~/hooks/useAuth';
+import SubmitSuggestionModal from '~/entries/contentScript/primary/components/SubmitSuggestionModal';
 
 const dev = import.meta.env.DEV;
 
@@ -14,6 +16,8 @@ function App() {
 
     const [showDebugStorage, setShowDebugStorage] = useState(false);
     const [debugStorage, setDebugStorage] = useState({});
+
+    const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
 
     const isLive = useMemo(() => status?.live_streams?.length > 0, [status]);
 
@@ -40,8 +44,16 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    function onSuggestionSubmitted() {
+        setShowSubmitSuggestionModal(false);
+    }
+
     return (
         <div className="mt-4 text-base">
+
+            {showSubmitSuggestionModal && (
+                <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
+            )}
 
             <div className="flex justify-between">
                 <div className="flex gap-4">
@@ -51,9 +63,14 @@ function App() {
                     <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
                         Mark as reaction
                     </div>
-                    <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
+                    <button
+                        role="button"
+                        type="button"
+                        onClick={() => setShowSubmitSuggestionModal(true)}
+                        className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light"
+                    >
                         Submit as suggestion
-                    </div>
+                    </button>
                 </div>
                 <div className="flex gap-2">
                     {hasData && (

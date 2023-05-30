@@ -1,5 +1,15 @@
-export default async function api(url, options) {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/${url}`, {
+import { storageGetToken } from '~/entries/background/common/storage';
+
+export async function api(url, opts) {
+    const options = opts;
+    let finalUrl = `${import.meta.env.VITE_API_URL}/api/v1/${url}`;
+
+    if (options.query) {
+        finalUrl = `${finalUrl}?${new URLSearchParams(options.query)}`;
+        delete options.query;
+    }
+
+    const response = await fetch(finalUrl, {
         headers: {
             Accept: 'application/json',
             ...options?.headers || {},
@@ -20,4 +30,25 @@ export default async function api(url, options) {
         status: response.status,
         data: await response.json(),
     };
+}
+
+export async function searchSuggestionAccounts({ query }) {
+    const { data } = await api('suggestions/search-account', {
+        token: await storageGetToken(),
+        query: {
+            query,
+        },
+    });
+
+    return data;
+}
+
+export async function submitSuggestion(data) {
+    const { data: suggestion } = await api('suggestions', {
+        method: 'POST',
+        token: await storageGetToken(),
+        json: data,
+    });
+
+    return suggestion;
 }
