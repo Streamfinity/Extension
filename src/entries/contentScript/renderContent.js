@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { PLAYER_PROGRESS } from '~/messages';
-import { INTERVAL_SEND_PLAYER_PROGRESS } from '~/config';
+import { INTERVAL_SEND_PLAYER_PROGRESS, INTERVAL_WATCHED_REACTIONS_FIND } from '~/config';
 import { getWatchedReactions } from '~/common/autobahn';
 import { getIdFromLink } from '~/common/utility';
 
@@ -72,29 +72,44 @@ export async function renderContent(
 export async function markVideosWatched() {
     const watchedVideos = await getWatchedReactions();
 
-    const mediaElements = document.querySelectorAll('ytd-rich-grid-media');
+    function markElements() {
+        let countFound = 0;
+        const mediaElements = document.querySelectorAll('ytd-rich-grid-media,ytd-playlist-video-renderer');
 
-    mediaElements.forEach((mediaElement) => {
-        const thumbnail = mediaElement.querySelector('ytd-thumbnail #thumbnail');
-        if (!thumbnail) {
-            return;
-        }
+        mediaElements.forEach((mediaElement) => {
+            const thumbnail = mediaElement.querySelector('ytd-thumbnail #thumbnail');
+            if (!thumbnail) {
+                return;
+            }
 
-        const id = getIdFromLink(thumbnail.href);
-        if (!id) {
-            return;
-        }
+            const id = getIdFromLink(thumbnail.href);
+            if (!id) {
+                return;
+            }
 
-        const watched = watchedVideos.find((video) => video.service_video_id === id);
-        if (!watched) {
-            return;
-        }
+            const watched = watchedVideos.find((video) => video.service_video_id === id);
+            if (!watched) {
+                return;
+            }
 
-        // eslint-disable-next-line no-param-reassign
-        mediaElement.style.transition = 'opacity 200ms';
-        // eslint-disable-next-line no-param-reassign
-        mediaElement.style.opacity = '40%';
+            // eslint-disable-next-line no-param-reassign
+            mediaElement.style.transition = 'opacity 200ms';
+            // eslint-disable-next-line no-param-reassign
+            mediaElement.style.opacity = '40%';
+
+            countFound += 1;
+        });
+
+        log.debug('find watched reaction elements', countFound);
+    }
+
+    window.addEventListener('popstate', (event) => {
+        markElements();
     });
+
+    markElements();
+
+    setInterval(markElements, INTERVAL_WATCHED_REACTIONS_FIND);
 }
 
 export async function listenPlayerEvents() {
