@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { searchSuggestionAccounts, submitSuggestion } from '~/common/autobahn';
+import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
 
 function SubmitSuggestionModal({ onSubmit }) {
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);

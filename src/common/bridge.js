@@ -1,8 +1,17 @@
 import browser from 'webextension-polyfill';
-import { SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET } from '~/messages';
+import {
+    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS,
+} from '~/messages';
 import { createLogger } from '~/common/log';
 
-const log = createLogger('Autobahn');
+const log = createLogger('Bridge');
+
+export async function sendPlayerProgress(data) {
+    await browser.runtime.sendMessage({
+        type: PLAYER_PROGRESS,
+        data,
+    });
+}
 
 export async function searchSuggestionAccounts(data) {
     const { data: accounts } = await browser.runtime.sendMessage({ type: SUGGESTIONS_SEARCH_ACCOUNT, data });

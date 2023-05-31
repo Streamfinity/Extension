@@ -1,8 +1,7 @@
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
-import { PLAYER_PROGRESS } from '~/messages';
 import { INTERVAL_SEND_PLAYER_PROGRESS, INTERVAL_WATCHED_REACTIONS_FIND } from '~/config';
-import { getWatchedReactions } from '~/common/autobahn';
+import { getWatchedReactions, sendPlayerProgress } from '~/common/bridge';
 import { getIdFromLink } from '~/common/utility';
 
 const log = createLogger('Content-Script');
@@ -103,7 +102,16 @@ export async function markVideosWatched() {
         log.debug('find watched reaction elements', countFound);
     }
 
-    window.addEventListener('popstate', (event) => {
+    let currentUrl = window.location.href;
+    setInterval(() => {
+        if (currentUrl !== window.location.href) {
+            currentUrl = window.location.href;
+            window.dispatchEvent(new CustomEvent('pushstate'));
+        }
+    }, 1000);
+
+    window.addEventListener('pushstate', (event) => {
+        log.debug('pushstate');
         markElements();
     });
 
@@ -131,10 +139,7 @@ export async function listenPlayerEvents() {
 
         log.debug('player', playerAttributes);
 
-        await browser.runtime.sendMessage({
-            type: PLAYER_PROGRESS,
-            data: playerAttributes,
-        });
+        await sendPlayerProgress(playerAttributes);
     }, INTERVAL_SEND_PLAYER_PROGRESS);
 
     function bindEvents(player) {
