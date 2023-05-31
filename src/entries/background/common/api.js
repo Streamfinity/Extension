@@ -1,4 +1,4 @@
-import { storageGetToken } from '~/entries/background/common/storage';
+import { storageGetToken, storageGetUser } from '~/entries/background/common/storage';
 
 export async function api(url, opts) {
     const options = opts;
@@ -51,4 +51,14 @@ export async function submitSuggestion(data) {
     });
 
     return suggestion;
+}
+
+export async function getWatchedReactions(data) {
+    const user = await storageGetUser();
+    const { data: watchedReactions } = await api(`users/${user.id}/watched-reactions`, {
+        token: await storageGetToken(),
+    });
+
+    console.log({ watchedReactions });
+    return watchedReactions;
 }

@@ -2,6 +2,8 @@ import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { PLAYER_PROGRESS } from '~/messages';
 import { INTERVAL_SEND_PLAYER_PROGRESS } from '~/config';
+import { getWatchedReactions } from '~/common/autobahn';
+import { getIdFromLink } from '~/common/utility';
 
 const log = createLogger('Content-Script');
 
@@ -65,6 +67,34 @@ export async function renderContent(
     shadowRoot.appendChild(appRoot);
 
     render(appRoot);
+}
+
+export async function markVideosWatched() {
+    const watchedVideos = await getWatchedReactions();
+
+    const mediaElements = document.querySelectorAll('ytd-rich-grid-media');
+
+    mediaElements.forEach((mediaElement) => {
+        const thumbnail = mediaElement.querySelector('ytd-thumbnail #thumbnail');
+        if (!thumbnail) {
+            return;
+        }
+
+        const id = getIdFromLink(thumbnail.href);
+        if (!id) {
+            return;
+        }
+
+        const watched = watchedVideos.find((video) => video.service_video_id === id);
+        if (!watched) {
+            return;
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        mediaElement.style.transition = 'opacity 200ms';
+        // eslint-disable-next-line no-param-reassign
+        mediaElement.style.opacity = '40%';
+    });
 }
 
 export async function listenPlayerEvents() {
