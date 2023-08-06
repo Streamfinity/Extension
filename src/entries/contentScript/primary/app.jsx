@@ -35,6 +35,18 @@ function App() {
         setShowSubmitSuggestionModal(false);
     }
 
+    // User item
+
+    const [toggleLogout, setToggleLogout] = useState(false);
+
+    useEffect(() => {
+        const countdown = setTimeout(() => setToggleLogout(false), 5000);
+
+        return () => {
+            clearTimeout(countdown);
+        };
+    }, [toggleLogout]);
+
     return (
         <div className="mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md">
 
@@ -47,7 +59,18 @@ function App() {
                     Streamfinity
                 </div>
                 {user && (
-                    <div className="flex gap-4 bg-gray-700 px-4 rounded-full py-2">
+                    <div
+                        onClick={() => setToggleLogout(true)}
+                        className="relative flex gap-4 bg-gray-700 px-4 rounded-full py-2 overflow-hidden cursor-pointer"
+                    >
+                        {toggleLogout && (
+                            <button
+                                type="button"
+                                className="absolute left-0 top-0 w-full h-full  flex items-center justify-center bg-gray-700"
+                            >
+                                Logout
+                            </button>
+                        )}
                         <div className="h-6 w-6 bg-gray-600 rounded-full" />
                         {user.display_name}
                     </div>

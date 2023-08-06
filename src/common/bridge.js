@@ -1,6 +1,8 @@
+// Bridge sends messages from ContentScripts to BackgroundScripts/ServiceWorkers
+
 import browser from 'webextension-polyfill';
 import {
-    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS,
+    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -31,4 +33,10 @@ export async function getWatchedReactions(data) {
     const { data: suggestion } = await browser.runtime.sendMessage({ type: WATCHED_REACTIONS_GET, data });
 
     return suggestion;
+}
+
+export async function getStatus() {
+    const data = await browser.runtime.sendMessage({ type: GET_STATUS });
+
+    return { status: data?.status, user: data?.user };
 }

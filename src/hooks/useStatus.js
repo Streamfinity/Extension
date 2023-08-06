@@ -1,8 +1,7 @@
-import browser from 'webextension-polyfill';
 import { useMemo } from 'react';
-import { GET_STATUS } from '~/messages';
 import { createLogger } from '~/common/log';
 import { useContentStore } from '~/entries/contentScript/primary/state';
+import { getStatus } from '~/common/bridge';
 
 const log = createLogger('useStatus');
 
@@ -17,12 +16,12 @@ export function useStatus() {
     const isLive = useMemo(() => status?.live_streams?.length > 0, [status]);
 
     const refresh = async () => {
-        const response = await browser.runtime.sendMessage({ type: GET_STATUS });
+        const { status: statusResponse, user: userResponse } = await getStatus();
 
-        log.debug('refreshing', response);
+        log.debug('refreshing', { status, user });
 
-        setStatus(response?.status);
-        setUser(response?.user);
+        setStatus(statusResponse);
+        setUser(userResponse);
         setLoading(false);
     };
 
