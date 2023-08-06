@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from '~/styles/input.module.css';
 import H3Header from '~/entries/contentScript/primary/components/h3-header';
 import Button from '~/entries/contentScript/primary/components/button';
 import { getYouTubePlayer } from '~/common/utility';
 import { prettyDuration } from '~/common/pretty';
+import { submitReaction } from '~/common/bridge';
 
-function MarkReactionModal(props) {
+function MarkReactionModal({ onSubmitted }) {
+    const [loading, setLoading] = useState(false);
+
     const [originalUrl, setOriginalUrl] = useState('');
 
     const [segmentFull, setSegmentFull] = useState(null);
@@ -46,6 +50,29 @@ function MarkReactionModal(props) {
         }
 
         setSegmentEnd(player.currentTime);
+    }
+
+    async function submit() {
+        if (loading) {
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            await submitReaction({
+                from: parseInt(segmentStart, 10),
+                to: parseInt(segmentEnd, 10),
+                original_video_url: originalUrl,
+                from_video_url: window.location.href,
+            });
+
+            onSubmitted();
+        } catch (err) {
+            alert(err);
+        }
+
+        setLoading(false);
     }
 
     return (
@@ -116,6 +143,8 @@ function MarkReactionModal(props) {
             <Button
                 color="primary"
                 className="w-full"
+                disabled={loading}
+                onClick={() => submit()}
             >
                 Submit Reaction
             </Button>
@@ -124,7 +153,7 @@ function MarkReactionModal(props) {
 }
 
 MarkReactionModal.propTypes = {
-
+    onSubmitted: PropTypes.func.isRequired,
 };
 
 MarkReactionModal.defaultProps = {};

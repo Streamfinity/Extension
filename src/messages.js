@@ -6,3 +6,4 @@ export const LOGOUT = 'auth.logout';
 export const SUGGESTIONS_SEARCH_ACCOUNT = 'suggestions.search-account';
 export const SUGGESTIONS_SUBMIT = 'suggestions.submit';
 export const WATCHED_REACTIONS_GET = 'watched-reactions.get';
+export const REACTION_SUBMIT = 'reaction-suggestion.submit';

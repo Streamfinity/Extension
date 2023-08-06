@@ -59,6 +59,15 @@ export async function getWatchedReactions(data) {
         token: await storageGetToken(),
     });
 
-    console.log({ watchedReactions });
     return watchedReactions;
+}
+
+export async function submitReaction(data) {
+    const { data: response } = await api('reactions', {
+        method: 'POST',
+        token: await storageGetToken(),
+        json: data,
+    });
+
+    return response;
 }

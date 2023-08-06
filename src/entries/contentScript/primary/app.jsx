@@ -58,7 +58,7 @@ function App() {
                     title="Mark Reaction"
                     onHide={() => setShowMarkReactionModal(false)}
                 >
-                    <MarkReactionModal />
+                    <MarkReactionModal onSubmitted={() => setShowMarkReactionModal(false)} />
                 </Overlay>
             )}
 

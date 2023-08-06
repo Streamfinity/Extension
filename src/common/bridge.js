@@ -2,7 +2,7 @@
 
 import browser from 'webextension-polyfill';
 import {
-    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS,
+    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -39,4 +39,14 @@ export async function getStatus() {
     const data = await browser.runtime.sendMessage({ type: GET_STATUS });
 
     return { status: data?.status, user: data?.user };
+}
+
+export async function submitReaction(data) {
+    const response = await browser.runtime.sendMessage({ type: REACTION_SUBMIT, data });
+
+    if (response.message) {
+        throw new Error(response.message);
+    }
+
+    return response;
 }
