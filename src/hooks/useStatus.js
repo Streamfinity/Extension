@@ -11,6 +11,7 @@ export function useStatus() {
     const [user, setUser] = useState(null);
 
     const hasData = useMemo(() => !loading && user, [loading, user]);
+    const isLive = useMemo(() => status?.live_streams?.length > 0, [status]);
 
     const refresh = async () => {
         const response = await browser.runtime.sendMessage({ type: GET_STATUS });
@@ -23,6 +24,6 @@ export function useStatus() {
     };
 
     return {
-        user, status, refresh, hasData, loading,
+        user, status, refresh, hasData, isLive, loading,
     };
 }

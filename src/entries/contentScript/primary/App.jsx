@@ -1,50 +1,26 @@
 import './App.css';
-import React, { useEffect, useState, useMemo } from 'react';
-import browser from 'webextension-polyfill';
-import { DEBUG_DUMP_STORAGE } from '~/messages';
+import React, { useEffect, useState } from 'react';
 import { useStatus } from '~/hooks/useStatus';
 import { loginUrl, buildUrl } from '~/hooks/useAuth';
-import SubmitSuggestionModal from '~/entries/contentScript/primary/components/SubmitSuggestionModal';
-import { childrenShape } from '~/shapes';
+import SubmitSuggestionModal from '~/entries/contentScript/primary/components/submit-suggestion-modal';
+import Card from '~/entries/contentScript/primary/components/card';
+import H2Header from '~/entries/contentScript/primary/components/h2-header';
+import Button from '~/entries/contentScript/primary/components/button';
+import DevTools from '~/entries/contentScript/primary/components/dev-tools';
 
 const dev = import.meta.env.DEV;
 
-function Card({ children }) {
-    return (
-        <div className="p-4 bg-gray-700 rounded-md">
-            {children}
-        </div>
-    );
-}
-
-Card.propTypes = {
-    children: childrenShape.isRequired,
-};
-
 function App() {
     const {
-        user, status, refresh: refreshStatus, loading: loadingStatus, hasData,
+        user, status, refresh: refreshStatus, loading: loadingStatus, hasData, isLive,
     } = useStatus();
-
-    const [showDebugStorage, setShowDebugStorage] = useState(false);
-    const [debugStorage, setDebugStorage] = useState({});
 
     const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
 
-    const isLive = useMemo(() => status?.live_streams?.length > 0, [status]);
-
-    async function checkStorage() {
-        setDebugStorage(
-            await browser.runtime.sendMessage({ type: DEBUG_DUMP_STORAGE }),
-        );
-    }
-
     useEffect(() => {
-        const storageInterval = setInterval(checkStorage, 5 * 1000);
         const statusInterval = setInterval(refreshStatus, 5 * 1000);
 
         return () => {
-            clearInterval(storageInterval);
             clearInterval(statusInterval);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,7 +28,6 @@ function App() {
 
     useEffect(() => {
         refreshStatus();
-        checkStorage();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -67,57 +42,62 @@ function App() {
                 <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
             )}
 
-            <div className="flex justify-between">
-                <div className="text-4xl font-semibold mb-4">
+            <div className="flex justify-between items-center mb-4">
+                <div className="text-4xl font-semibold">
                     Streamfinity
                 </div>
-                <div>
-                    logged
-                </div>
+                {user && (
+                    <div className="flex gap-4 bg-gray-700 px-4 rounded-full py-2">
+                        <div className="h-6 w-6 bg-gray-600 rounded-full" />
+                        {user.display_name}
+                    </div>
+                )}
             </div>
 
-            <Card>
-                asd
-            </Card>
+            {hasData && (
+                <Card>
+                    Live Status:
+                    {' '}
+                    {!isLive && (<span className="text-red-500">Offline</span>)}
+                    {isLive && (
+                        <a
+                            href={buildUrl('/dashboard/streams')}
+                            target="_blank"
+                            className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white"
+                            rel="noreferrer"
+                        >
+                            LIVE
+                        </a>
+                    )}
+                </Card>
+            )}
+
+            <H2Header>
+                Content Rating
+            </H2Header>
+
+            <Button color="gray">
+                Add Rating
+            </Button>
+
+            <H2Header>
+                Actions
+            </H2Header>
+
+            <div className="flex gap-4">
+                <Button color="gray">
+                    Mark as reaction
+                </Button>
+                <Button
+                    color="gray"
+                    onClick={() => setShowSubmitSuggestionModal(true)}
+                >
+                    Submit as suggestion
+                </Button>
+            </div>
 
             <div className="flex justify-between">
-                <div className="flex gap-4">
-                    <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
-                        Content Rating
-                    </div>
-                    <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
-                        Mark as reaction
-                    </div>
-                    <button
-                        type="button"
-                        onClick={() => setShowSubmitSuggestionModal(true)}
-                        className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light"
-                    >
-                        Submit as suggestion
-                    </button>
-                </div>
                 <div className="flex gap-2">
-                    {hasData && (
-                        <>
-                            {isLive && (
-                                <a
-                                    href={buildUrl('/dashboard/streams')}
-                                    target="_blank"
-                                    className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white"
-                                    rel="noreferrer"
-                                >
-                                    LIVE
-                                </a>
-                            )}
-
-                            {!isLive && (
-                                <div className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light">
-                                    Offline
-                                </div>
-                            )}
-                        </>
-                    )}
-
                     {(!loadingStatus && !user) && (
                         <a
                             href={loginUrl}
@@ -142,60 +122,7 @@ function App() {
             </div>
 
             {dev && (
-                <div className="relative p-2 pt-6 mt-6 mb-2 border-2 border-red-600 rounded-md overflow-hidden">
-                    <div className="absolute left-0 top-0 px-2 text-sm bg-red-600 text-white font-medium uppercase rounded-br-md leading-normal">
-                        Streamfinity Dev Tools
-                    </div>
-                    <div>
-                        <b>Logged in as:</b>
-                        {' '}
-                        {user ? (
-                            <>
-                                <span>{user.display_name}</span>
-                                {' '}
-                                <span className="opacity-50">{`(${user.id})`}</span>
-                            </>
-                        ) : (<span>...</span>)}
-                    </div>
-                    <hr />
-                    <div>
-                        <b>Accounts:</b>
-                        {' '}
-                        {status?.accounts?.map((a) => (
-                            <div key={a.id}>
-                                {`  - ${a.name}`}
-                                {' '}
-                                <span className="opacity-50">{`(${a.id})`}</span>
-                            </div>
-                        ))}
-                    </div>
-                    <hr />
-                    <div>
-                        <b>Live:</b>
-                        {' '}
-                        {!isLive && 'not live'}
-                        {status?.live_streams?.map((a) => (
-                            <div key={a.id}>{`  - ${a.title} (${a.id})`}</div>
-                        ))}
-                    </div>
-                    <hr />
-                    {showDebugStorage ? (
-                        <textarea
-                            value={JSON.stringify(debugStorage, null, 4)}
-                            readOnly
-                            rows={15}
-                            className="w-full text-base font-mono"
-                        />
-                    ) : (
-                        <button
-                            type="button"
-                            onClick={() => setShowDebugStorage(true)}
-                            className="underline"
-                        >
-                            Show storage debug
-                        </button>
-                    )}
-                </div>
+                <DevTools />
             )}
 
         </div>

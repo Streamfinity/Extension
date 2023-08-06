@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './PageContent.css';
+import './page-content.css';
 import logo from '~/assets/logo.svg';
 import { childrenShape } from '~/shapes';
 
