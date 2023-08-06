@@ -24,13 +24,9 @@ function App() {
         user, refresh: refreshStatus, hasData, loading: loadingStatus,
     } = useStatus();
 
-    console.log(user);
-
     useEffect(() => {
         refreshStatus();
     }, []);
-
-    console.log(user);
 
     return (
         <main className="min-w-[21rem] h-[21rem] flex flex-col">

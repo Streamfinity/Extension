@@ -1,14 +1,17 @@
 import browser from 'webextension-polyfill';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { GET_STATUS } from '~/messages';
 import { createLogger } from '~/common/log';
+import { useContentStore } from '~/entries/contentScript/primary/state';
 
 const log = createLogger('useStatus');
 
 export function useStatus() {
-    const [loading, setLoading] = useState(true);
-    const [status, setStatus] = useState(null);
-    const [user, setUser] = useState(null);
+    const {
+        user, setUser,
+        status, setStatus,
+        loading, setLoading,
+    } = useContentStore();
 
     const hasData = useMemo(() => !loading && user, [loading, user]);
     const isLive = useMemo(() => status?.live_streams?.length > 0, [status]);
