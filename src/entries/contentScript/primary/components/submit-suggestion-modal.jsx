@@ -90,9 +90,6 @@ function SubmitSuggestionModal({ onSubmit }) {
 
     return (
         <div>
-            <H2Header mt={false}>
-                Submit Suggestion
-            </H2Header>
             <p className="text-white/70">
                 You can submit the currently playing video as a suggestion for any streamer.
             </p>

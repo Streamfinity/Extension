@@ -52,7 +52,10 @@ function App() {
         <div className="relative mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md">
 
             {showSubmitSuggestionModal && (
-                <Overlay onHide={() => setShowSubmitSuggestionModal(false)}>
+                <Overlay
+                    title="Submit Suggestion"
+                    onHide={() => setShowSubmitSuggestionModal(false)}
+                >
                     <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
                 </Overlay>
 
