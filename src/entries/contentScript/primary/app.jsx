@@ -7,6 +7,7 @@ import Card from '~/entries/contentScript/primary/components/card';
 import H2Header from '~/entries/contentScript/primary/components/h2-header';
 import Button from '~/entries/contentScript/primary/components/button';
 import DevTools from '~/entries/contentScript/primary/components/dev-tools';
+import Overlay from '~/entries/contentScript/primary/components/overlay';
 
 const dev = import.meta.env.DEV;
 
@@ -48,10 +49,13 @@ function App() {
     }, [toggleLogout]);
 
     return (
-        <div className="mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md">
+        <div className="relative mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md">
 
             {showSubmitSuggestionModal && (
-                <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
+                <Overlay onHide={() => setShowSubmitSuggestionModal(false)}>
+                    <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
+                </Overlay>
+
             )}
 
             <div className="flex justify-between items-center mb-4">

@@ -36,7 +36,7 @@ function Button({
 
     const sizeClasses = sm
         ? ['px-4', 'py-1', 'leading-loose', 'rounded', 'text-xs']
-        : ['px-6', 'py-3', 'leading-normal', 'rounded', 'text-sm'];
+        : ['px-6', 'py-3', 'leading-normal', 'rounded', 'text-lg'];
 
     const styles = {};
 

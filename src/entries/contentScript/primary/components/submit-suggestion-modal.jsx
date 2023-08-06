@@ -2,32 +2,42 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
+import H2Header from '~/entries/contentScript/primary/components/h2-header';
+import Button from '~/entries/contentScript/primary/components/button';
+
+const RESULTS_PENDING = 0;
+const RESULTS_LOADING = 1;
+const RESULTS_EMPTY = 2;
+const RESULTS_OK = 3;
 
 function SubmitSuggestionModal({ onSubmit }) {
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
     const [suggestedAccounts, setSuggestedAccounts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchedAccounts, setSearchedAccounts] = useState([]);
+    const [loadingSearch, setLoadingSearch] = useState(false);
     const [selectedAccount, setSelectedAccount] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
-    const canSubmit = useMemo(() => !loading && !!selectedAccount?.id, [selectedAccount, loading]);
+    const canSubmit = useMemo(() => !loadingSubmit && !!selectedAccount?.id, [selectedAccount, loadingSubmit]);
 
     async function searchAccounts() {
+        setLoadingSearch(true);
         setSearchedAccounts(
             await searchSuggestionAccounts({ query: searchTerm }),
         );
+        setLoadingSearch(false);
     }
 
     async function submit() {
-        setLoading(true);
+        setLoadingSubmit(true);
 
         const suggestion = await submitSuggestion({
             video_url: window.location.href,
             user_account_id: selectedAccount.id,
         });
 
-        setLoading(false);
+        setLoadingSubmit(false);
         onSubmit(suggestion);
     }
 
@@ -38,6 +48,22 @@ function SubmitSuggestionModal({ onSubmit }) {
 
         return suggestedAccounts;
     }, [suggestedAccounts, searchedAccounts]);
+
+    const resultStatus = useMemo(() => {
+        if (loadingSearch) {
+            return RESULTS_LOADING;
+        }
+
+        if (!searchTerm) {
+            return RESULTS_PENDING;
+        }
+
+        if (accounts?.length > 0) {
+            return RESULTS_OK;
+        }
+
+        return RESULTS_EMPTY;
+    }, [searchTerm, accounts, loadingSubmit]);
 
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
@@ -63,36 +89,58 @@ function SubmitSuggestionModal({ onSubmit }) {
     }, []);
 
     return (
-        <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-[99999] flex items-center justify-center">
-
-            <div className="bg-white rounded-lg p-8">
+        <div>
+            <H2Header mt={false}>
+                Submit Suggestion
+            </H2Header>
+            <p className="text-white/70">
+                You can submit the currently playing video as a suggestion for any streamer.
+            </p>
+            <div className="mt-4">
                 <input
                     autoFocus
                     type="text"
                     autoComplete="off"
-                    className="border"
                     placeholder="Search here..."
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-600 border-2 border-gray-500 rounded-lg focus-visible:border-primary-500 !outline-none"
                 />
 
-                {accounts?.map((account) => (
-                    <div
-                        key={account.id}
-                        className={classNames(account.id === selectedAccount?.id && 'text-green-500')}
-                        onClick={() => setSelectedAccount(account)}
-                    >
-                        {account.display_name}
-                    </div>
-                ))}
+                <div className={classNames(
+                    'flex flex-col h-64 py-2 overflow-y-auto',
+                    accounts.length > 0 ? 'gap-1' : 'justify-center',
+                )}
+                >
+                    {accounts.length === 0 && (
+                        <div className="text-center text-gray-300">
+                            {resultStatus === RESULTS_PENDING && ('Enter search term')}
+                            {resultStatus === RESULTS_LOADING && ('Loading...')}
+                            {resultStatus === RESULTS_EMPTY && ('No results')}
+                        </div>
+                    )}
+                    {accounts?.map((account) => (
+                        <div
+                            key={account.id}
+                            className={classNames(
+                                account.id === selectedAccount?.id ? 'bg-primary-500/20' : 'hover:bg-white/10',
+                                'py-2 px-3 rounded-md cursor-pointer transition-colors duration-100',
+                            )}
+                            onClick={() => setSelectedAccount(account)}
+                        >
+                            {account.display_name}
+                        </div>
+                    ))}
+                </div>
 
-                <button
+                <Button
                     disabled={!canSubmit}
-                    className="block bg-primary-500 disabled:opacity-50"
+                    color="primary"
                     type="button"
-                    onClick={submit}
+                    className="w-full"
+                    onClick={() => submit()}
                 >
                     Submit
-                </button>
+                </Button>
             </div>
         </div>
     );
