@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './app.css';
 import classNames from 'classnames';
-import InfoView from '~/entries/popup/components/InfoView';
-import SettingsView from '~/entries/popup/components/SettingsView';
+import InfoView from '~/entries/popup/components/info-view';
+import SettingsView from '~/entries/popup/components/settings-view';
 import { useStatus } from '~/hooks/useStatus';
-import IndexView from '~/entries/popup/components/IndexView';
+import IndexView from '~/entries/popup/components/index-view';
 
 const availableViews = [
     {

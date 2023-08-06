@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderContent, listenPlayerEvents, markVideosWatched } from '../renderContent';
-import App from './App';
+import App from './app';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('Content-Script');

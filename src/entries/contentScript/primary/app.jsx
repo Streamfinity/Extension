@@ -1,4 +1,4 @@
-import './App.css';
+import './app.css';
 import React, { useEffect, useState } from 'react';
 import { useStatus } from '~/hooks/useStatus';
 import { loginUrl, buildUrl } from '~/hooks/useAuth';
