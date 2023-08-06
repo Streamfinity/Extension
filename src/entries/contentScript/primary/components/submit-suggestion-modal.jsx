@@ -63,7 +63,7 @@ function SubmitSuggestionModal({ onSubmit }) {
         }
 
         return RESULTS_EMPTY;
-    }, [searchTerm, accounts, loadingSubmit]);
+    }, [searchTerm, accounts, loadingSearch]);
 
     useEffect(() => {
         const delayDebounce = setTimeout(() => {

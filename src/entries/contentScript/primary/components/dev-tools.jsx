@@ -14,7 +14,7 @@ function DevTools() {
     }
 
     const {
-        user, status, refresh: refreshStatus, loading: loadingStatus, hasData, isLive,
+        user, status, isLive,
     } = useStatus();
 
     useEffect(() => {

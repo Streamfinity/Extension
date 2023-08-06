@@ -14,7 +14,7 @@ const dev = import.meta.env.DEV;
 
 function App() {
     const {
-        user, status, refresh: refreshStatus, loading: loadingStatus, hasData, isLive,
+        user, refresh: refreshStatus, loading: loadingStatus, hasData, isLive,
     } = useStatus();
 
     const [showMarkReactionModal, setShowMarkReactionModal] = useState(false);
