@@ -14,10 +14,9 @@ function retryFindContainer() {
                 return;
             }
 
-            const container = document.querySelector('#above-the-fold');
-            const containerChildPointer = container.querySelector('#bottom-row');
+            const container = document.querySelector('#related');
 
-            if (!container || !containerChildPointer) {
+            if (!container || !container.firstChild) {
                 log.debug('injected', 'not found');
                 return;
             }
@@ -27,7 +26,7 @@ function retryFindContainer() {
             const injectedContainer = document.createElement('div');
             injectedContainer.id = 'streamfinity';
 
-            container.insertBefore(injectedContainer, containerChildPointer);
+            container.insertBefore(injectedContainer, container.firstChild);
 
             log.debug('injected', { injectedContainer });
 

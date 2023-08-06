@@ -5,8 +5,21 @@ import { DEBUG_DUMP_STORAGE } from '~/messages';
 import { useStatus } from '~/hooks/useStatus';
 import { loginUrl, buildUrl } from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/primary/components/SubmitSuggestionModal';
+import { childrenShape } from '~/shapes';
 
 const dev = import.meta.env.DEV;
+
+function Card({ children }) {
+    return (
+        <div className="p-4 bg-gray-700 rounded-md">
+            {children}
+        </div>
+    );
+}
+
+Card.propTypes = {
+    children: childrenShape.isRequired,
+};
 
 function App() {
     const {
@@ -48,11 +61,24 @@ function App() {
     }
 
     return (
-        <div className="mt-4 text-base">
+        <div className="mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md">
 
             {showSubmitSuggestionModal && (
                 <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
             )}
+
+            <div className="flex justify-between">
+                <div className="text-4xl font-semibold mb-4">
+                    Streamfinity
+                </div>
+                <div>
+                    logged
+                </div>
+            </div>
+
+            <Card>
+                asd
+            </Card>
 
             <div className="flex justify-between">
                 <div className="flex gap-4">
