@@ -7,3 +7,7 @@ export function getIdFromLink(link) {
 
     return match.groups.id;
 }
+
+export function getYouTubePlayer() {
+    return document.querySelector('video.video-stream.html5-main-video');
+}

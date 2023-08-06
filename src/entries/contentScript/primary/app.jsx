@@ -8,6 +8,7 @@ import H2Header from '~/entries/contentScript/primary/components/h2-header';
 import Button from '~/entries/contentScript/primary/components/button';
 import DevTools from '~/entries/contentScript/primary/components/dev-tools';
 import Overlay from '~/entries/contentScript/primary/components/overlay';
+import MarkReactionModal from '~/entries/contentScript/primary/components/mark-reaction-modal';
 
 const dev = import.meta.env.DEV;
 
@@ -16,6 +17,7 @@ function App() {
         user, status, refresh: refreshStatus, loading: loadingStatus, hasData, isLive,
     } = useStatus();
 
+    const [showMarkReactionModal, setShowMarkReactionModal] = useState(false);
     const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
 
     useEffect(() => {
@@ -51,6 +53,15 @@ function App() {
     return (
         <div className="relative mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md">
 
+            {showMarkReactionModal && (
+                <Overlay
+                    title="Mark Reaction"
+                    onHide={() => setShowMarkReactionModal(false)}
+                >
+                    <MarkReactionModal />
+                </Overlay>
+            )}
+
             {showSubmitSuggestionModal && (
                 <Overlay
                     title="Submit Suggestion"
@@ -58,7 +69,6 @@ function App() {
                 >
                     <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
                 </Overlay>
-
             )}
 
             <div className="flex justify-between items-center mb-4">
@@ -115,7 +125,10 @@ function App() {
             </H2Header>
 
             <div className="flex gap-4">
-                <Button color="gray">
+                <Button
+                    color="gray"
+                    onClick={() => setShowMarkReactionModal(true)}
+                >
                     Mark as reaction
                 </Button>
                 <Button

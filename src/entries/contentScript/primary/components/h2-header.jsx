@@ -5,9 +5,9 @@ import { childrenShape } from '~/shapes';
 
 function H2Header({ children, mt, mb }) {
     return (
-        <div className={classNames(mt, mb, 'text-3xl font-semibold')}>
+        <h2 className={classNames(mt, mb, 'text-3xl font-semibold')}>
             {children}
-        </div>
+        </h2>
     );
 }
 

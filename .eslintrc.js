@@ -34,5 +34,6 @@ module.exports = {
         'import/no-extraneous-dependencies': 'off',
         'import/extensions': 'off',
         'import/no-unresolved': 'off', // TODO enable
+        'jsx-a11y/label-has-associated-control': 'off',
     },
 };

@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
-import H2Header from '~/entries/contentScript/primary/components/h2-header';
 import Button from '~/entries/contentScript/primary/components/button';
+import styles from '~/styles/input.module.css';
 
 const RESULTS_PENDING = 0;
 const RESULTS_LOADING = 1;
@@ -100,7 +100,7 @@ function SubmitSuggestionModal({ onSubmit }) {
                     autoComplete="off"
                     placeholder="Search here..."
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-600 border-2 border-gray-500 rounded-lg focus-visible:border-primary-500 !outline-none"
+                    className={styles.input}
                 />
 
                 <div className={classNames(

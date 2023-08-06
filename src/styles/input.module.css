@@ -1,0 +1,15 @@
+.label {
+    @apply block text-base text-gray-200 mb-2;
+}
+
+.input {
+    @apply w-full;
+    @apply px-4;
+    @apply py-3;
+    @apply bg-gray-600;
+    @apply border-2;
+    @apply border-gray-500;
+    @apply rounded-lg;
+    @apply focus-visible:border-primary-500;
+    @apply outline-none !important;
+}
