@@ -24,4 +24,4 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Run linter
-        run: bun lint
+        run: bun run lint

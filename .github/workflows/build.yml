@@ -57,7 +57,7 @@ jobs:
         run: ./tag-version.sh ${{ github.ref_name }}
 
       - name: Build extension
-        run: bun build
+        run: bun run build
         env:
           MANIFEST_VERSION: ${{ matrix.manifest_version }}
 
