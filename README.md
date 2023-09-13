@@ -9,7 +9,7 @@
 ## Setup
 
 ```sh
-yarn install
+bun install
 ```
 
 ### Create local env file
@@ -32,32 +32,32 @@ VITE_FRONTEND_URL=http://localhost:3000
 Hot Module Reloading is used to load changes inline without requiring extension rebuilds and extension/page reloads
 Currently only works in Chromium based browsers.
 ```sh
-yarn dev
+bun run dev
 ```
 
 #### Development, Watch
 
 Rebuilds extension on file changes. Requires a reload of the extension (and page reload if using content scripts)
 ```sh
-yarn watch
+bun run watch
 ```
 
 #### Production
 
 Minifies and optimizes extension build
 ```sh
-yarn build
+bun run build
 ```
 
 ### Load extension in browser
 
 Loads the contents of the dist directory into the specified browser
 ```sh
-yarn serve:chrome
+bun run serve:chrome
 ```
 
 ```sh
-yarn serve:firefox
+bun run serve:firefox
 ```
 
 ## Installation
