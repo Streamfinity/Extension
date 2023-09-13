@@ -34,11 +34,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup node env
-        uses: actions/setup-node@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: 16
-          check-latest: true
+          bun-version: latest
+
+      - name: Setup jq
+        run: sudo apt-get install -y jq
 
       - name: Prepare env files (production)
         if: ${{ contains(github.ref_name, 'dev') == false }}
@@ -48,30 +50,14 @@ jobs:
         if: ${{ contains(github.ref_name, 'dev') == true }}
         run: cp .env.development .env.local
 
-      - name: Authenticate npm
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache node_modules
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Install dependencies
-        run: yarn install
+        run: bun install
 
       - name: Update version
         run: ./tag-version.sh ${{ github.ref_name }}
 
       - name: Build extension
-        run: yarn build
+        run: bun build
         env:
           MANIFEST_VERSION: ${{ matrix.manifest_version }}
 
