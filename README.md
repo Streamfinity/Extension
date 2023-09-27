@@ -68,9 +68,11 @@ bun run serve:firefox
 
 ### Firefox
 
+- Download & Unpack extension
 - Open [**about:debugging**](https://developer.mozilla.org/en-US/docs/Tools/about:debugging) page
 - Navigate to "**This Firefox**" tab
-- Select the [dist/manifest.json](dist/manifest.json) from "Load Temporary Add-on..."
+- Click "Load Temporary Add-on..."
+- Select the [manifest.json](dist/manifest.json) file 
 
 ### Chrome
 
