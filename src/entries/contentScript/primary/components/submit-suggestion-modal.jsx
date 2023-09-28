@@ -34,7 +34,7 @@ function SubmitSuggestionModal({ onSubmit }) {
 
         const suggestion = await submitSuggestion({
             video_url: window.location.href,
-            user_account_id: selectedAccount.id,
+            account_id: selectedAccount.id,
         });
 
         setLoadingSubmit(false);
