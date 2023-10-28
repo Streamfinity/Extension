@@ -51,8 +51,8 @@ export async function submitReaction(data) {
     return response;
 }
 
-export async function getReactionPolicyForVideo(videoUrl) {
-    const data = await browser.runtime.sendMessage({ type: REACTION_POLICY_GET, data: { videoUrl } });
+export async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
+    const data = await browser.runtime.sendMessage({ type: REACTION_POLICY_GET, data: { videoUrl, channelUrl } });
 
     return { data: data?.data };
 }

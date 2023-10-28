@@ -72,10 +72,11 @@ export async function submitReaction(data) {
     return response;
 }
 
-export async function getReactionPolicy({ videoUrl }) {
+export async function getReactionPolicy({ videoUrl, channelUrl }) {
     const { data: policy } = await api('reaction-policies/for-video', {
         query: {
             video_url: videoUrl,
+            channel_url: channelUrl,
         },
     });
 

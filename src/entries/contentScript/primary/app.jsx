@@ -1,6 +1,5 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
-import classNames from 'classnames';
 import { useStatus } from '~/hooks/useStatus';
 import { loginUrl, buildUrl } from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/primary/components/submit-suggestion-modal';
@@ -12,8 +11,8 @@ import MarkReactionModal from '~/entries/contentScript/primary/components/mark-r
 import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import { getReactionPolicyForVideo } from '~/common/bridge';
-import { reactionPolicyEnum } from '~/enums';
 import ReactionPolicyNotice from '~/entries/contentScript/primary/components/reaction-policy-notice';
+import { findCurrentVideoChannel } from '~/common/utility';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -49,7 +48,10 @@ function App() {
     useEffect(() => {
         async function fetchPolicy() {
             try {
-                const { data: policy } = await getReactionPolicyForVideo(currentUrl);
+                const { data: policy } = await getReactionPolicyForVideo({
+                    videoUrl: currentUrl,
+                    channelUrl: findCurrentVideoChannel(),
+                });
 
                 setReactionPolicy(policy);
                 log.debug('reaction-policy', policy);
