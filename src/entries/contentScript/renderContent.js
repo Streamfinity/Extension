@@ -102,14 +102,19 @@ export async function markVideosWatched() {
     }
 
     let currentUrl = window.location.href;
+
     setInterval(() => {
         if (currentUrl !== window.location.href) {
             currentUrl = window.location.href;
-            window.dispatchEvent(new CustomEvent('pushstate'));
+            window.dispatchEvent(new CustomEvent('pushstate', {
+                detail: {
+                    currentUrl,
+                },
+            }));
         }
     }, 1000);
 
-    window.addEventListener('pushstate', (event) => {
+    window.addEventListener('pushstate', () => {
         log.debug('pushstate');
         markElements();
     });

@@ -1,12 +1,12 @@
 import browser from 'webextension-polyfill';
 import {
-    api, searchSuggestionAccounts, submitSuggestion, getWatchedReactions, submitReaction,
+    api, searchSuggestionAccounts, submitSuggestion, getWatchedReactions, submitReaction, getReactionPolicy,
 } from '~/entries/background/common/api';
 import {
     storageGetUser, storageGetToken, STORAGE_USER, STORAGE_TOKEN,
 } from '~/entries/background/common/storage';
 import {
-    GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE, PLAYER_PROGRESS, LOGOUT, SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, REACTION_SUBMIT,
+    GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE, PLAYER_PROGRESS, LOGOUT, SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, REACTION_SUBMIT, REACTION_POLICY_GET,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -133,6 +133,8 @@ async function getResponse(type, data) {
         return getWatchedReactions();
     case REACTION_SUBMIT:
         return submitReaction(data);
+    case REACTION_POLICY_GET:
+        return getReactionPolicy(data);
     default:
         return null;
     }

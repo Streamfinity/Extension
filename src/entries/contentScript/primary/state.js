@@ -8,3 +8,10 @@ export const useContentStore = create((set) => ({
     setStatus: (status) => set(() => ({ status })),
     setUser: (user) => set(() => ({ user })),
 }));
+
+export const useAppStore = create((set) => ({
+    currentUrl: null,
+    reactionPolicy: null,
+    setCurrentUrl: (currentUrl) => set(() => ({ currentUrl })),
+    setReactionPolicy: (reactionPolicy) => set(() => ({ reactionPolicy })),
+}));

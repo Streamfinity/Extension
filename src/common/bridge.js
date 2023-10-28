@@ -2,7 +2,7 @@
 
 import browser from 'webextension-polyfill';
 import {
-    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT,
+    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT, REACTION_POLICY_GET,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -49,4 +49,10 @@ export async function submitReaction(data) {
     }
 
     return response;
+}
+
+export async function getReactionPolicyForVideo(videoUrl) {
+    const data = await browser.runtime.sendMessage({ type: REACTION_POLICY_GET, data: { videoUrl } });
+
+    return { data: data?.data };
 }

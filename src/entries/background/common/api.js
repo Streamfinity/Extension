@@ -71,3 +71,13 @@ export async function submitReaction(data) {
 
     return response;
 }
+
+export async function getReactionPolicy({ videoUrl }) {
+    const { data: policy } = await api('reaction-policies/for-video', {
+        query: {
+            video_url: videoUrl,
+        },
+    });
+
+    return policy;
+}
