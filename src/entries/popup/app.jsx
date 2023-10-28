@@ -26,7 +26,7 @@ function App() {
 
     useEffect(() => {
         refreshStatus();
-    }, [refreshStatus]);
+    }, []);
 
     return (
         <main className="min-w-[21rem] h-[21rem] flex flex-col">
