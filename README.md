@@ -84,6 +84,7 @@ bun run serve:firefox
 
 - HMR is not available in Chromium based browsers: [vite-plugin-web-extension#85](https://github.com/samrum/vite-plugin-web-extension/issues/85)
 - Firefox is not yet supporting service workers: [stackoverflow.com](https://stackoverflow.com/questions/73440104/failing-to-export-to-background-js-from-a-common-script-under-firefox-with-mv3)
+- Can not use dynamically imported module from localhost URL in Firefox [vite-plugin-web-extension#87](https://github.com/samrum/vite-plugin-web-extension/issues/87)
 
 ## Authors
 
