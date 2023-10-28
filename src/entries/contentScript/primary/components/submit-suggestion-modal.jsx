@@ -71,7 +71,6 @@ function SubmitSuggestionModal({ onSubmit }) {
         }, 400);
 
         return () => clearTimeout(delayDebounce);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
     useEffect(() => {
@@ -85,7 +84,6 @@ function SubmitSuggestionModal({ onSubmit }) {
         if (!hasLoadedSuggestedAccounts) {
             fetch();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -26,12 +26,10 @@ function App() {
         return () => {
             clearInterval(statusInterval);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         refreshStatus();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function onSuggestionSubmitted() {

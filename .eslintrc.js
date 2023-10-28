@@ -4,10 +4,13 @@ module.exports = {
         node: true,
         webextensions: true,
     },
+    parserOptions: {
+        ecmaVersion: 2020,
+    },
     extends: [
         'plugin:react/recommended',
+        'plugin:import/recommended',
         'airbnb',
-        'react-app',
     ],
     plugins: [
         'react',
@@ -23,6 +26,7 @@ module.exports = {
         'no-console': 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-unused-vars': ['warn'],
+        'no-undef': 'off',
         'jsx-a11y/no-autofocus': 'off',
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],

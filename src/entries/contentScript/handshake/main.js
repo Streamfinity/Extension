@@ -7,25 +7,17 @@ const log = createLogger('Content-Handshake');
 let loading = false;
 let hasToken = false;
 
-async function performHandshake(data) {
-    log.debug('got data from frontend', data);
+function findElement() {
+    return document.querySelector('#extension-handshake-trigger');
+}
 
-    const waitForTokenInterval = setInterval(() => {
-        if (hasToken) {
-            return;
-        }
+function findHandshakeData() {
+    const element = findElement();
+    if (!element) {
+        return {};
+    }
 
-        const { data: nextData } = findHandshakeData();
-        if (!nextData.token) {
-            log.debug('waiting for token...', nextData);
-            return;
-        }
-
-        log.debug('found token', nextData.token);
-        hasToken = true;
-        validateHandshake(nextData);
-        clearInterval(waitForTokenInterval);
-    }, 200);
+    return { data: JSON.parse(element.dataset.handshake), element };
 }
 
 async function validateHandshake(data) {
@@ -45,17 +37,25 @@ async function validateHandshake(data) {
     log.debug('validation', response);
 }
 
-function findElement() {
-    return document.querySelector('#extension-handshake-trigger');
-}
+async function performHandshake(data) {
+    log.debug('got data from frontend', data);
 
-function findHandshakeData() {
-    const element = findElement();
-    if (!element) {
-        return {};
-    }
+    const waitForTokenInterval = setInterval(() => {
+        if (hasToken) {
+            return;
+        }
 
-    return { data: JSON.parse(element.dataset.handshake), element };
+        const { data: nextData } = findHandshakeData();
+        if (!nextData.token) {
+            log.debug('waiting for token...', nextData);
+            return;
+        }
+
+        log.debug('found token', nextData.token);
+        hasToken = true;
+        validateHandshake(nextData);
+        clearInterval(waitForTokenInterval);
+    }, 200);
 }
 
 const findElementInterval = setInterval(async () => {

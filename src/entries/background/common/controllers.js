@@ -16,49 +16,6 @@ const store = {
     status: null,
 };
 
-async function getResponse(type, data) {
-    switch (type) {
-    case GET_STATUS:
-        return getStatus(data);
-    case HANDSHAKE_VALIDATE:
-        return validateHandshakeData(data);
-    case DEBUG_DUMP_STORAGE:
-        return dumpStorage();
-    case PLAYER_PROGRESS:
-        return sendPlayerProgress(data);
-    case LOGOUT:
-        return logout(data);
-    case SUGGESTIONS_SEARCH_ACCOUNT:
-        return searchSuggestionAccounts(data);
-    case SUGGESTIONS_SUBMIT:
-        return submitSuggestion(data);
-    case WATCHED_REACTIONS_GET:
-        return getWatchedReactions();
-    case REACTION_SUBMIT:
-        return submitReaction(data);
-    default:
-        return null;
-    }
-}
-
-export async function handleMessage(msg, sender, sendResponse) {
-    if (typeof msg !== 'object') {
-        log.warn('message is not an object', { msg });
-        return Promise.resolve();
-    }
-
-    const { type, data } = msg;
-    log.debug('onMessage', type, data);
-
-    const response = getResponse(type, data);
-
-    if (response === null) {
-        return Promise.resolve();
-    }
-
-    return response;
-}
-
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
@@ -150,4 +107,51 @@ export async function sendPlayerProgress(data) {
         method: 'post',
         json: { items },
     });
+}
+
+// ------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+
+async function getResponse(type, data) {
+    switch (type) {
+    case GET_STATUS:
+        return getStatus(data);
+    case HANDSHAKE_VALIDATE:
+        return validateHandshakeData(data);
+    case DEBUG_DUMP_STORAGE:
+        return dumpStorage();
+    case PLAYER_PROGRESS:
+        return sendPlayerProgress(data);
+    case LOGOUT:
+        return logout(data);
+    case SUGGESTIONS_SEARCH_ACCOUNT:
+        return searchSuggestionAccounts(data);
+    case SUGGESTIONS_SUBMIT:
+        return submitSuggestion(data);
+    case WATCHED_REACTIONS_GET:
+        return getWatchedReactions();
+    case REACTION_SUBMIT:
+        return submitReaction(data);
+    default:
+        return null;
+    }
+}
+
+export async function handleMessage(msg, sender, sendResponse) {
+    if (typeof msg !== 'object') {
+        log.warn('message is not an object', { msg });
+        return Promise.resolve();
+    }
+
+    const { type, data } = msg;
+    log.debug('onMessage', type, data);
+
+    const response = getResponse(type, data);
+
+    if (response === null) {
+        return Promise.resolve();
+    }
+
+    return response;
 }

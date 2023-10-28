@@ -23,7 +23,6 @@ function DevTools() {
         return () => {
             clearInterval(storageInterval);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
