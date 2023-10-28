@@ -110,32 +110,38 @@ function App() {
                 </Card>
             )}
 
-            <H2Header>
-                Content Rating
-            </H2Header>
+            {user && (
+                <>
 
-            <Button color="gray">
-                Add Rating
-            </Button>
+                    <H2Header>
+                        Content Rating
+                    </H2Header>
 
-            <H2Header>
-                Actions
-            </H2Header>
+                    <Button color="gray">
+                        Add Rating
+                    </Button>
 
-            <div className="flex gap-4">
-                <Button
-                    color="gray"
-                    onClick={() => setShowMarkReactionModal(true)}
-                >
-                    Mark as reaction
-                </Button>
-                <Button
-                    color="gray"
-                    onClick={() => setShowSubmitSuggestionModal(true)}
-                >
-                    Submit as suggestion
-                </Button>
-            </div>
+                    <H2Header>
+                        Actions
+                    </H2Header>
+
+                    <div className="flex gap-4">
+                        <Button
+                            color="gray"
+                            onClick={() => setShowMarkReactionModal(true)}
+                        >
+                            Mark as reaction
+                        </Button>
+                        <Button
+                            color="gray"
+                            onClick={() => setShowSubmitSuggestionModal(true)}
+                        >
+                            Submit as suggestion
+                        </Button>
+                    </div>
+
+                </>
+            )}
 
             <div className="flex justify-between">
                 <div className="flex gap-2">
