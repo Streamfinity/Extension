@@ -7,6 +7,12 @@ const log = createLogger('Content-Handshake');
 let loading = false;
 let hasToken = false;
 
+log.debug('running in MV2');
+log.debug('config', {
+    API_URL: import.meta.env.VITE_API_URL,
+    FRONTEND_URL: import.meta.env.VITE_FRONTEND_URL,
+});
+
 function findElement() {
     return document.querySelector('#extension-handshake-trigger');
 }
