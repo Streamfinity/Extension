@@ -4,7 +4,7 @@ export function buildUrl(path) {
     return `${import.meta.env.VITE_FRONTEND_URL}${path}`;
 }
 
-export const loginUrl = buildUrl('/dashboard/settings/extension');
+export const loginUrl = buildUrl('/dashboard/settings/extension?auto=1');
 
 export async function openLoginPage() {
     await browser.tabs.create({

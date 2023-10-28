@@ -1,11 +1,9 @@
 import React from 'react';
-import browser from 'webextension-polyfill';
+import { openLoginPage } from '~/hooks/useAuth';
 
 function IndexView() {
     async function login() {
-        await browser.tabs.create({
-            url: `${import.meta.env.VITE_FRONTEND_URL}/dashboard/settings/extension`,
-        });
+        await openLoginPage();
     }
 
     return (
