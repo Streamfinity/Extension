@@ -49,7 +49,7 @@ function App() {
     }, [toggleLogout]);
 
     return (
-        <div className="relative mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md overflow-y-auto">
+        <div className="relative mb-6 text-base border border-neutral-700 bg-neutral-800/30 rounded-[10px] p-[12px] text-white shadow-lg shadow-white/5 overflow-y-auto">
 
             {showMarkReactionModal && (
                 <Overlay
@@ -76,7 +76,7 @@ function App() {
                 {user && (
                     <div
                         onClick={() => setToggleLogout(true)}
-                        className="relative flex gap-4 bg-gray-700 px-4 rounded-full py-2 overflow-hidden cursor-pointer"
+                        className="relative flex gap-4 border border-neutral-700 bg-neutral-700/30 px-4 rounded-full py-2 overflow-hidden cursor-pointer"
                     >
                         {toggleLogout && (
                             <button
@@ -93,21 +93,24 @@ function App() {
             </div>
 
             {hasData && (
-                <Card>
-                    Live Status:
-                    {' '}
-                    {!isLive && (<span className="text-red-500">Offline</span>)}
-                    {isLive && (
-                        <a
-                            href={buildUrl('/dashboard/streams')}
-                            target="_blank"
-                            className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white"
-                            rel="noreferrer"
-                        >
-                            LIVE
-                        </a>
+                <div>
+                    {isLive ? (
+                        <div>
+                            <a
+                                href={buildUrl('/dashboard/streams')}
+                                target="_blank"
+                                className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white"
+                                rel="noreferrer"
+                            >
+                                LIVE
+                            </a>
+                        </div>
+                    ) : (
+                        <div className="py-1 rounded-full border border-neutral-700 bg-neutral-700/30 text-center text-sm text-white/60">
+                            You are currently offline
+                        </div>
                     )}
-                </Card>
+                </div>
             )}
 
             {user && (
