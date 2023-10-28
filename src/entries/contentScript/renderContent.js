@@ -85,7 +85,7 @@ export async function markVideosWatched() {
                 return;
             }
 
-            const watched = watchedVideos.find((video) => video.service_video_id === id);
+            const watched = watchedVideos?.find((video) => video.service_video_id === id);
             if (!watched) {
                 return;
             }
