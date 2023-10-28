@@ -49,7 +49,7 @@ function App() {
     }, [toggleLogout]);
 
     return (
-        <div className="relative mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md">
+        <div className="relative mb-6 text-base bg-gray-800 rounded-[10px] p-[12px] text-white shadow-md overflow-y-auto">
 
             {showMarkReactionModal && (
                 <Overlay
