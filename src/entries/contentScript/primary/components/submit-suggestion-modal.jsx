@@ -24,7 +24,7 @@ function SubmitSuggestionModal({ onSubmit }) {
     async function searchAccounts() {
         setLoadingSearch(true);
         setSearchedAccounts(
-            await searchSuggestionAccounts({ query: searchTerm }),
+            await searchSuggestionAccounts({ query: searchTerm }) || [],
         );
         setLoadingSearch(false);
     }
@@ -43,10 +43,10 @@ function SubmitSuggestionModal({ onSubmit }) {
 
     const accounts = useMemo(() => {
         if (searchedAccounts.length > 0) {
-            return searchedAccounts;
+            return searchedAccounts || [];
         }
 
-        return suggestedAccounts;
+        return suggestedAccounts || [];
     }, [suggestedAccounts, searchedAccounts]);
 
     const resultStatus = useMemo(() => {
