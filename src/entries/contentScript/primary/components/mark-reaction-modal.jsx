@@ -86,7 +86,7 @@ function MarkReactionModal({ onSubmitted }) {
                     <Button
                         color="primary"
                         className="w-full"
-                        disabled={segmentStart}
+                        disabled={!!segmentStart}
                         onClick={() => fullSegment()}
                     >
                         Full Video
@@ -102,7 +102,7 @@ function MarkReactionModal({ onSubmitted }) {
                 <div className="flex-1 flex flex-col gap-4">
                     <Button
                         color="primary"
-                        disabled={segmentFull || segmentStart}
+                        disabled={!!segmentFull || !!segmentStart}
                         className="w-full"
                         onClick={() => startSegment()}
                     >
@@ -111,7 +111,7 @@ function MarkReactionModal({ onSubmitted }) {
                     <Button
                         color="primary"
                         className="w-full"
-                        disabled={segmentFull || !segmentStart}
+                        disabled={!!segmentFull || !segmentStart}
                         onClick={() => endSegment()}
                     >
                         {segmentEnd ? prettyDuration(segmentEnd) : 'End Segment'}
