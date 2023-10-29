@@ -24,7 +24,7 @@ async function retryFindContainer() {
     const injectedContainer = document.createElement('div');
     injectedContainer.id = 'streamfinity';
 
-    container.insertBefore(injectedContainer, container.firstChild);
+    container.prepend(injectedContainer);
 
     log.debug('injected', injectedContainer);
 
