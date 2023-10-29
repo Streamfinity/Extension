@@ -2,38 +2,33 @@ import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { INTERVAL_SEND_PLAYER_PROGRESS, INTERVAL_WATCHED_REACTIONS_FIND } from '~/config';
 import { getWatchedReactions, sendPlayerProgress } from '~/common/bridge';
-import { getIdFromLink } from '~/common/utility';
+import { getIdFromLink, retryFind } from '~/common/utility';
 
 const log = createLogger('Content-Script');
 
-function retryFindContainer() {
-    return new Promise((resolve) => {
-        let found = false;
-        const findInterval = setInterval(() => {
-            if (found) {
-                return;
-            }
+async function retryFindContainer() {
+    const [findFunc, clearFunc] = retryFind(
+        () => {
+            const el = document.querySelector('#related');
 
-            const container = document.querySelector('#related');
+            return (el?.firstChild) ? el : null;
+        },
+        300,
+        100,
+    );
 
-            if (!container || !container.firstChild) {
-                log.debug('injected', 'not found');
-                return;
-            }
+    const container = await findFunc();
 
-            found = true;
+    log.debug('container', container);
 
-            const injectedContainer = document.createElement('div');
-            injectedContainer.id = 'streamfinity';
+    const injectedContainer = document.createElement('div');
+    injectedContainer.id = 'streamfinity';
 
-            container.insertBefore(injectedContainer, container.firstChild);
+    container.insertBefore(injectedContainer, container.firstChild);
 
-            log.debug('injected', { injectedContainer });
+    log.debug('injected', injectedContainer);
 
-            resolve(injectedContainer);
-            clearInterval(findInterval);
-        }, 1000);
-    });
+    return injectedContainer;
 }
 
 export async function renderContent(

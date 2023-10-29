@@ -47,7 +47,7 @@ export function findCurrentVideoPublishDate() {
  * @param {number} maxTries
  * @returns {(Promise<HTMLElement>|function)[]}
  */
-function retryFind(callback, intervalMs = 300, maxTries = 300) {
+export function retryFind(callback, intervalMs = 300, maxTries = 300) {
     let intervalId;
     let tries = 0;
 
