@@ -63,24 +63,20 @@ bun run serve:firefox
 
 ## Installation
 
-- Download the `artifact.zip` files from the [latest release](https://github.com/Streamfinity/Extension/releases/latest)
-- Unzip file
-- Select `manifest.json` file when loading the extension as temporary add-on (see below)
-
 ### Firefox
 
-#### Option 1: Install via unpacked .zip
+#### Option 1: Install signed .xpi
+
+- [Download](https://github.com/Streamfinity/Extension/releases) the `Firefox_X.X.X_mv2_signed.xpi` version
+- Firefox will prompt you to install the extension
+
+#### Option 2: Install via unpacked .zip
 
 - [Download](https://github.com/Streamfinity/Extension/releases) & Unpack extension
 - Open [`about:debugging`](https://developer.mozilla.org/en-US/docs/Tools/about:debugging) page
 - Navigate to "**This Firefox**" tab
 - Click "**Load Temporary Add-on...**"
 - Select the [manifest.json](dist/manifest.json) file 
-
-#### Option 3: Install signed .xpi
-
-- [Download](https://github.com/Streamfinity/Extension/releases) the `Firefox_X.X.X_mv2_signed.xpi` version
-- Firefox will prompt you to install the extension
 
 #### Option 3: Install unsigned .xpi
 
@@ -93,6 +89,7 @@ _This is only possible if you are on Firefox Developer or Nightly Edition._
 
 ### Chrome
 
+- [Download](https://github.com/Streamfinity/Extension/releases) extension
 - Open `chrome://extensions/` page
 - Toggle "**Developmer mode**" in the top right corner
 - Drag the `.zip` file into the browser window or select the extracted the parent folder via "Load unpacked"
