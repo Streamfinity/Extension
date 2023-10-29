@@ -109,7 +109,7 @@ NoticeLine.defaultProps = {
     maxPercentage: null,
 };
 
-function ReactionPolicyNotice({ policy }) {
+function ReactionPolicyNotice({ loading, policy }) {
     const [liveCountdownDuration, setLiveCountdownDuration] = useState(null);
     const [videoCountdownDuration, setVideoCountdownDuration] = useState(null);
 
@@ -210,18 +210,20 @@ function ReactionPolicyNotice({ policy }) {
         return STATUS_DENIED;
     }, [policy, liveStatus, videoStatus]);
 
-    if (policy === null) {
+    if (loading) {
         return (
             <Notice
+                className="bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700"
                 title="Loading..."
                 description="asdasd"
             />
         );
     }
 
-    if (policy === undefined) {
+    if (!policy) {
         return (
             <Notice
+                className="bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700"
                 title="No Reaction Policy"
                 description="The content creator has not defined a reaction policy"
             />
@@ -277,6 +279,7 @@ function ReactionPolicyNotice({ policy }) {
 }
 
 ReactionPolicyNotice.propTypes = {
+    loading: PropTypes.bool,
     policy: PropTypes.shape({
         id: PropTypes.string,
         policy: PropTypes.number,
@@ -299,6 +302,7 @@ ReactionPolicyNotice.propTypes = {
 
 ReactionPolicyNotice.defaultProps = {
     policy: null,
+    loading: false,
 };
 
 export default ReactionPolicyNotice;

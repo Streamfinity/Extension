@@ -6,7 +6,7 @@ import { getIdFromLink, retryFind } from '~/common/utility';
 
 const log = createLogger('Content-Script');
 
-async function retryFindContainer() {
+async function spawnContainer() {
     const [findFunc, clearFunc] = retryFind(
         () => {
             const el = document.querySelector('#related');
@@ -27,6 +27,7 @@ async function retryFindContainer() {
     container.prepend(injectedContainer);
 
     log.debug('injected', injectedContainer);
+    log.debug('injected check', container.querySelector('#streamfinity'));
 
     return injectedContainer;
 }
@@ -35,12 +36,12 @@ export async function renderContent(
     cssPaths,
     render = (_appRoot) => {},
 ) {
-    const appContainer = await retryFindContainer();
+    const appContainer = await spawnContainer();
 
+    const appRoot = document.createElement('div');
     const shadowRoot = appContainer.attachShadow({
         mode: import.meta.env.DEV ? 'open' : 'closed',
     });
-    const appRoot = document.createElement('div');
 
     if (import.meta.hot) {
         const { addViteStyleTarget } = await import(

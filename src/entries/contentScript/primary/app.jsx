@@ -10,13 +10,47 @@ import Overlay from '~/entries/contentScript/primary/components/overlay';
 import MarkReactionModal from '~/entries/contentScript/primary/components/mark-reaction-modal';
 import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/primary/state';
-import { getReactionPolicyForVideo } from '~/common/bridge';
 import ReactionPolicyNotice from '~/entries/contentScript/primary/components/reaction-policy-notice';
-import { findCurrentVideoChannel, buildFrontendUrl, findVideoPlayerBar } from '~/common/utility';
+import { buildFrontendUrl } from '~/common/utility';
 import ContentRatingHeadless from '~/entries/contentScript/primary/components/content-rating-headless';
+import useReactionPolicy from '~/hooks/useReactionPolicy';
+import { childrenShape } from '~/shapes';
 
 const log = createLogger('App');
-const dev = import.meta.env.DEV;
+const dev = false; // import.meta.env.DEV;
+
+function AppContainer({ children, user }) {
+    return (
+        <div className="relative mb-6 text-base rounded-[10px] p-[12px] overflow-y-auto
+                        bg-black/[0.05] dark:bg-neutral-800/30 dark:border dark:border-neutral-700
+                        text-gray-900 dark:text-white
+                        dark:shadow-lg dark:shadow-white/5"
+        >
+            <div className="flex justify-between items-center mb-4">
+                <div className="text-4xl font-semibold">
+                    Streamfinity
+                </div>
+                {user}
+            </div>
+
+            {children}
+
+            {dev && (
+                <DevTools />
+            )}
+
+        </div>
+    );
+}
+
+AppContainer.propTypes = {
+    children: childrenShape.isRequired,
+    user: childrenShape,
+};
+
+AppContainer.defaultProps = {
+    user: null,
+};
 
 function App() {
     const { login, logout, loadingLogout } = useAuth();
@@ -25,9 +59,7 @@ function App() {
         user, refreshUserData, loading: loadingStatus, hasData, isLive,
     } = useAuth();
 
-    const {
-        setCurrentUrl, currentUrl, setReactionPolicy, reactionPolicy,
-    } = useAppStore();
+    const { setCurrentUrl } = useAppStore();
 
     const [showMarkReactionModal, setShowMarkReactionModal] = useState(false);
     const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
@@ -59,26 +91,9 @@ function App() {
 
     // Reaction Policy
 
-    useEffect(() => {
-        async function fetchPolicy() {
-            try {
-                const { data: policy } = await getReactionPolicyForVideo({
-                    videoUrl: currentUrl,
-                    channelUrl: findCurrentVideoChannel(),
-                });
+    const { policy: reactionPolicy, loading: loadingReactionPolicy } = useReactionPolicy();
 
-                setReactionPolicy(policy);
-                log.debug('reaction policy', policy);
-            } catch (err) {
-                log.warn('error fetching reaction policy', err);
-                setReactionPolicy(null);
-            }
-        }
-
-        if (currentUrl) {
-            fetchPolicy();
-        }
-    }, [currentUrl]);
+    // Modals
 
     function onSuggestionSubmitted() {
         setShowSubmitSuggestionModal(false);
@@ -96,52 +111,58 @@ function App() {
         };
     }, [toggleLogout]);
 
-    return (
-        <div className="relative mb-6 text-base bg-neutral-200/80 dark:bg-neutral-800/30 dark:border dark:border-neutral-700 rounded-[10px] p-[12px] text-gray-900 dark:text-white shadow-lg dark:shadow-white/5 overflow-y-auto">
+    if (!user) {
+        return (
+            <AppContainer>
+                <div className="flex flex-col gap-6">
 
-            {showMarkReactionModal && (
-                <Overlay
-                    title="Mark Reaction"
-                    onHide={() => setShowMarkReactionModal(false)}
-                >
-                    <MarkReactionModal onSubmitted={() => setShowMarkReactionModal(false)} />
-                </Overlay>
-            )}
+                    <p className="text-sm text-gray-500">
+                        Get started by logging in with your YouTube account!
+                    </p>
 
-            {showSubmitSuggestionModal && (
-                <Overlay
-                    title="Submit Suggestion"
-                    onHide={() => setShowSubmitSuggestionModal(false)}
-                >
-                    <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
-                </Overlay>
-            )}
-
-            <div className="flex justify-between items-center mb-4">
-                <div className="text-4xl font-semibold">
-                    Streamfinity
-                </div>
-                {user && (
-                    <div
-                        onClick={() => setToggleLogout(true)}
-                        className="relative flex gap-4 px-4 py-2 bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700 rounded-full overflow-hidden cursor-pointer"
-                    >
-                        {toggleLogout && (
-                            <button
-                                onClick={logout}
-                                disabled={loadingLogout}
-                                type="button"
-                                className="absolute left-0 top-0 w-full h-full flex items-center justify-center"
-                            >
-                                Logout
-                            </button>
+                    <button
+                        type="button"
+                        onClick={login}
+                        disabled={loadingStatus}
+                        className={classNames(
+                            loadingStatus && 'opacity-50',
+                            'w-full font-medium rounded-full px-6 h-[36px] bg-primary-500 hover:bg-primary-600 transition-colors text-center text-white',
                         )}
-                        <div className={classNames(toggleLogout && 'invisible')}>
-                            {user.display_name}
-                        </div>
-                    </div>
+                    >
+                        {loadingStatus ? 'Loading...' : 'Login with Streamfinity'}
+                    </button>
+
+                    <p className="text-sm text-gray-500">
+                        By logging in you aggree to our Terms of Service and Privacy Policy.
+                    </p>
+
+                </div>
+            </AppContainer>
+        );
+    }
+
+    return (
+        <AppContainer user={(
+            <div
+                onClick={() => setToggleLogout(true)}
+                className="relative flex gap-4 px-4 py-2 bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700 rounded-full overflow-hidden cursor-pointer"
+            >
+                {toggleLogout && (
+                    <button
+                        onClick={logout}
+                        disabled={loadingLogout}
+                        type="button"
+                        className="absolute left-0 top-0 w-full h-full flex items-center justify-center"
+                    >
+                        Logout
+                    </button>
                 )}
+                <div className={classNames(toggleLogout && 'invisible')}>
+                    {user.display_name}
+                </div>
             </div>
+        )}
+        >
 
             {hasData && (
                 <div>
@@ -164,7 +185,10 @@ function App() {
                 </div>
             )}
 
-            <ReactionPolicyNotice policy={reactionPolicy} />
+            <ReactionPolicyNotice
+                loading={loadingReactionPolicy}
+                policy={reactionPolicy}
+            />
 
             <ContentRatingHeadless />
 
@@ -201,35 +225,25 @@ function App() {
                 </>
             )}
 
-            <div className="flex justify-between">
-                <div className="flex gap-2">
-                    {(!loadingStatus && !user) && (
-                        <button
-                            type="button"
-                            onClick={login}
-                            className="flex items-center font-medium rounded-full px-6 h-[36px] bg-primary-500 text-white"
-                        >
-                            Login with Streamfinity
-                        </button>
-                    )}
-
-                    {loadingStatus && (
-                        <button
-                            type="button"
-                            onClick={refreshUserData}
-                            className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light"
-                        >
-                            Loading...
-                        </button>
-                    )}
-                </div>
-            </div>
-
-            {dev && (
-                <DevTools />
+            {showMarkReactionModal && (
+                <Overlay
+                    title="Mark Reaction"
+                    onHide={() => setShowMarkReactionModal(false)}
+                >
+                    <MarkReactionModal onSubmitted={() => setShowMarkReactionModal(false)} />
+                </Overlay>
             )}
 
-        </div>
+            {showSubmitSuggestionModal && (
+                <Overlay
+                    title="Submit Suggestion"
+                    onHide={() => setShowSubmitSuggestionModal(false)}
+                >
+                    <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
+                </Overlay>
+            )}
+
+        </AppContainer>
     );
 }
 
