@@ -44,6 +44,7 @@ const sharedManifest = {
     },
     permissions: [
         'storage',
+        'identity',
     ],
     // content_security_policy: {
     //     extension_pages: "script-src 'unsafe-inline' 'self' http://localhost:5173 ; object-src 'self'",

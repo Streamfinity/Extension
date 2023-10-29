@@ -6,7 +6,17 @@ import {
     storageGetUser, storageGetToken, STORAGE_USER, STORAGE_TOKEN,
 } from '~/entries/background/common/storage';
 import {
-    GET_STATUS, HANDSHAKE_VALIDATE, DEBUG_DUMP_STORAGE, PLAYER_PROGRESS, LOGOUT, SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, REACTION_SUBMIT, REACTION_POLICY_GET,
+    GET_STATUS,
+    HANDSHAKE_VALIDATE,
+    DEBUG_DUMP_STORAGE,
+    PLAYER_PROGRESS,
+    LOGOUT,
+    SUGGESTIONS_SEARCH_ACCOUNT,
+    SUGGESTIONS_SUBMIT,
+    WATCHED_REACTIONS_GET,
+    REACTION_SUBMIT,
+    REACTION_POLICY_GET,
+    LOGIN,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -109,12 +119,87 @@ export async function sendPlayerProgress(data) {
     });
 }
 
+async function loginFetchUser(accessToken) {
+    try {
+        const { data: response } = await api('users/@me', {
+            token: accessToken,
+        });
+
+        log.debug('handshake', 'ok');
+        log.debug('handshake', 'response', response.data);
+
+        const storeToken = accessToken;
+        const storeUser = response.data;
+
+        delete storeUser.avatar;
+        delete storeUser.fetch_preferences;
+        delete storeUser.subscriptions;
+
+        storeUser.accounts = storeUser.accounts.map((acc) => ({
+            id: acc.id,
+            name: acc.name,
+            display_name: acc.display_name,
+            enable_monitoring: acc.enable_monitoring,
+        }));
+
+        log.debug('storing token...', storeToken);
+        await browser.storage.sync.set({ [STORAGE_TOKEN]: storeToken });
+
+        log.debug('storing user...', storeUser);
+        await browser.storage.sync.set({ [STORAGE_USER]: storeUser });
+
+        return { success: true, user: response.data };
+    } catch (err) {
+        log.error('error checking handshake data', err);
+    }
+
+    return { success: false };
+}
+
+async function login() {
+    const redirectUri = browser.identity.getRedirectURL();
+
+    const url = `${import.meta.env.VITE_API_URL}/oauth/authorize?${new URLSearchParams({
+        client_id: import.meta.env.VITE_OAUTH_CLIENT_ID,
+        response_type: 'token',
+        redirect_uri: redirectUri,
+        scope: '',
+    })}`;
+
+    log.debug('login', 'reidrect', redirectUri);
+    log.debug('login', url);
+
+    // https://cfiiggfhnccbchheekifachmajflgcgn.chromiumapp.org/
+    //     #access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ
+    //     &token_type=Bearer
+    //     &expires_in=31622400
+    const responseUrl = await browser.identity.launchWebAuthFlow({
+        url,
+        interactive: true,
+    });
+
+    const parsedUrl = new URL(responseUrl);
+    const paramsString = parsedUrl.hash.substring(1);
+    const params = new URLSearchParams(paramsString);
+
+    const expiresIn = params.get('expires_in');
+    const accessToken = params.get('access_token');
+
+    console.log(
+        await loginFetchUser(accessToken),
+    );
+}
+
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 
 async function getResponse(type, data) {
     switch (type) {
+    case LOGOUT:
+        return logout(data);
+    case LOGIN:
+        return login(data);
     case GET_STATUS:
         return getStatus(data);
     case HANDSHAKE_VALIDATE:
@@ -123,8 +208,6 @@ async function getResponse(type, data) {
         return dumpStorage();
     case PLAYER_PROGRESS:
         return sendPlayerProgress(data);
-    case LOGOUT:
-        return logout(data);
     case SUGGESTIONS_SEARCH_ACCOUNT:
         return searchSuggestionAccounts(data);
     case SUGGESTIONS_SUBMIT:

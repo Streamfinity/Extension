@@ -1,17 +1,9 @@
-import browser from 'webextension-polyfill';
 import { useState, useMemo } from 'react';
-import { logout, getStatus } from '~/common/bridge';
-import { buildFrontendUrl } from '~/common/utility';
+import { logout as bridgeLogut, getStatus, login as bridgeLogin } from '~/common/bridge';
 import { useContentStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('useAuth');
-
-export async function openLoginPage() {
-    await browser.tabs.create({
-        url: buildFrontendUrl('/dashboard/settings/extension?auto=1'),
-    });
-}
 
 export default function useAuth() {
     const {
@@ -36,17 +28,21 @@ export default function useAuth() {
         setLoading(false);
     }
 
-    async function initLogout() {
+    async function logout() {
         setLoadingLogout(true);
 
-        await logout();
+        await bridgeLogut();
+        await refreshUserData();
 
         setLoadingLogout(false);
     }
 
     async function login() {
         setLoadingLogin(true);
-        await openLoginPage();
+
+        await bridgeLogin();
+        await refreshUserData();
+
         setLoadingLogin(false);
     }
 
@@ -62,6 +58,6 @@ export default function useAuth() {
         login,
         // Logout
         loadingLogout,
-        logout: initLogout,
+        logout,
     };
 }

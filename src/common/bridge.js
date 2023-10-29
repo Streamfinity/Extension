@@ -2,11 +2,15 @@
 
 import browser from 'webextension-polyfill';
 import {
-    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT, REACTION_POLICY_GET, LOGOUT,
+    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT, REACTION_POLICY_GET, LOGOUT, LOGIN,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('Bridge');
+
+export async function login() {
+    await browser.runtime.sendMessage({ type: LOGIN });
+}
 
 export async function logout() {
     await browser.runtime.sendMessage({ type: LOGOUT });
