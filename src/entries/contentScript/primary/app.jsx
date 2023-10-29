@@ -12,7 +12,7 @@ import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import ReactionPolicyNotice from '~/entries/contentScript/primary/components/reaction-policy-notice';
 import { buildFrontendUrl } from '~/common/utility';
-import ContentRatingHeadless from '~/entries/contentScript/primary/components/content-rating-headless';
+import ContentRatingNotice from '~/entries/contentScript/primary/components/content-rating-notice';
 import { childrenShape } from '~/shapes';
 import { WINDOW_NAVIGATE } from '~/events';
 import Card from '~/entries/contentScript/primary/components/card';
@@ -120,6 +120,10 @@ function App() {
             <AppContainer>
                 <div className="flex flex-col gap-6">
 
+                    <ReactionPolicyNotice />
+
+                    <ContentRatingNotice />
+
                     <p className="text-sm text-gray-500">
                         Get started by logging in with your YouTube account!
                     </p>
@@ -188,7 +192,7 @@ function App() {
 
             <ReactionPolicyNotice />
 
-            <ContentRatingHeadless />
+            <ContentRatingNotice />
 
             {user && (
                 <>

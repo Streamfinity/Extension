@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { findVideoPlayerBar } from '~/common/utility';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';
+import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 
 const log = createLogger('Content-Rating');
 
-function ContentRatingHeadless() {
+function ContentRatingNotice() {
     const [playerBarElement, setPlayerBarElement] = useState(null);
     const [initialized, setInitialized] = useState(false);
 
@@ -59,14 +60,21 @@ function ContentRatingHeadless() {
     }, [playerBarElement]);
 
     return (
-        <div />
+        <Card className="p-4 rounded-xl">
+            <CardTitle>
+                Content Rating
+            </CardTitle>
+            <p>
+                asd
+            </p>
+        </Card>
     );
 }
 
-ContentRatingHeadless.propTypes = {
+ContentRatingNotice.propTypes = {
 
 };
 
-ContentRatingHeadless.defaultProps = {};
+ContentRatingNotice.defaultProps = {};
 
-export default ContentRatingHeadless;
+export default ContentRatingNotice;

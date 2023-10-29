@@ -6,6 +6,7 @@ import { reactionPolicyEnum } from '~/enums';
 import { findCurrentVideoPublishDate } from '~/common/utility';
 import { childrenShape } from '~/shapes';
 import useReactionPolicy from '~/hooks/useReactionPolicy';
+import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 
 const STATUS_ALLOWED = 0;
 const STATUS_DENIED = 1;
@@ -25,21 +26,25 @@ function prettyFormatCountdown(diff) {
     return `${days}d ${hours}:${minutes}:${seconds}`;
 }
 
-function Notice({ title, description, className }) {
+function Notice({
+    title, description, cardColor, className,
+}) {
     return (
-        <div className={classNames(
-            className,
-            'mt-4 p-4 rounded-xl border text-sm dark:text-white/60 text-gray-800 leading-normal',
-        )}
+        <Card
+            color={cardColor}
+            className={classNames(
+                className,
+                'mt-4 p-4 rounded-xl text-sm dark:text-white/60 text-gray-800 leading-normal',
+            )}
         >
-            <div className="mb-2 text-base font-semibold text-center">
+            <CardTitle>
                 {title}
-            </div>
+            </CardTitle>
 
             <div className="text-sm">
                 {description}
             </div>
-        </div>
+        </Card>
     );
 }
 
@@ -47,6 +52,7 @@ Notice.propTypes = {
     title: PropTypes.string.isRequired,
     description: childrenShape.isRequired,
     className: PropTypes.string,
+    cardColor: PropTypes.string.isRequired,
 };
 
 Notice.defaultProps = {
@@ -216,7 +222,7 @@ function ReactionPolicyNotice() {
     if (loading) {
         return (
             <Notice
-                className="bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700"
+                cardColor="default"
                 title="Loading..."
                 description="asdasd"
             />
@@ -226,7 +232,7 @@ function ReactionPolicyNotice() {
     if (!policy) {
         return (
             <Notice
-                className="bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700"
+                cardColor="default"
                 title="No Reaction Policy"
                 description="The content creator has not defined a reaction policy"
             />
@@ -238,7 +244,8 @@ function ReactionPolicyNotice() {
     case STATUS_ALLOWED:
         return (
             <Notice
-                className="text-center border-green-700 bg-green-700/30"
+                cardColor="green"
+                className="text-center"
                 title="Reactions Allowed"
                 description="The content creator has approved live & video reactions"
             />
@@ -247,7 +254,7 @@ function ReactionPolicyNotice() {
     case STATUS_DENIED:
         return (
             <Notice
-                className="text-center border-red-700 bg-red-700/30"
+                cardColor="red"
                 title="Reactions Not Allowed"
                 description="The content creator asks not to reaction on to video"
             />
@@ -256,7 +263,7 @@ function ReactionPolicyNotice() {
 
     return (
         <Notice
-            className="border-yellow-500/50 bg-yellow-700/10 dark:border-yellow-800/80 dark:bg-yellow-700/10 text-gray-900"
+            cardColor="yellow"
             title="Conditions Policy"
             description={(
                 <div className="flex flex-col gap-4">
