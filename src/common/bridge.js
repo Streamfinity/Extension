@@ -1,10 +1,12 @@
 // Bridge sends messages from ContentScripts to BackgroundScripts/ServiceWorkers
 
 import browser from 'webextension-polyfill';
+import { useQuery } from '@tanstack/react-query';
 import {
     SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT, REACTION_POLICY_GET, LOGOUT, LOGIN, CONTENT_RATINGS_GET,
 } from '~/messages';
 import { createLogger } from '~/common/log';
+import { api } from '~/entries/background/common/api';
 
 const log = createLogger('Bridge');
 
@@ -65,10 +67,17 @@ export async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
     return { data: data?.data };
 }
 
-export async function getContentRatings({ videoUrl }) {
-    const data = await browser.runtime.sendMessage({
-        type: CONTENT_RATINGS_GET, data: { videoUrl },
+export function useContentRatings({ videoUrl }) {
+    const query = useQuery({
+        queryKey: ['content-ratings', videoUrl],
+        queryFn: () => browser.runtime.sendMessage({
+            type: CONTENT_RATINGS_GET, data: { videoUrl },
+        }),
+        enabled: !!videoUrl,
     });
 
-    return { data: data?.data };
+    return {
+        ...query,
+        items: query.data?.data,
+    };
 }
