@@ -40,3 +40,48 @@ export function findCurrentVideoPublishDate() {
 
     return null;
 }
+
+/**
+ * @param callback
+ * @param {number} intervalMs
+ * @param {number} maxTries
+ * @returns {(Promise<HTMLElement>|function)[]}
+ */
+function retryFind(callback, intervalMs = 300, maxTries = 300) {
+    let intervalId;
+    let tries = 0;
+
+    function clear() {
+        clearInterval(intervalId);
+    }
+
+    const findPromise = new Promise((resolve, reject) => {
+        intervalId = setInterval(() => {
+            const element = callback();
+            tries += 1;
+
+            if (element) {
+                clear();
+                resolve(element);
+            }
+
+            if (tries >= maxTries) {
+                reject();
+                clear();
+            }
+        }, intervalMs);
+    });
+
+    return [
+        async () => findPromise,
+        clear,
+    ];
+}
+
+export function findVideoPlayerBar(interval = 300, maxTries = 300) {
+    return retryFind(
+        () => document.querySelector('.ytp-progress-bar-container .ytp-progress-bar .ytp-progress-list'),
+        interval,
+        maxTries,
+    );
+}

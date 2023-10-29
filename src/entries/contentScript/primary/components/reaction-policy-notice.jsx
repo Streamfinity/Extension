@@ -28,7 +28,7 @@ function Notice({ title, description, className }) {
     return (
         <div className={classNames(
             className,
-            'mt-4 p-4 rounded-xl border text-sm text-white/60 leading-normal',
+            'mt-4 p-4 rounded-xl border text-sm dark:text-white/60 text-gray-800 leading-normal',
         )}
         >
             <div className="mb-2 text-base font-semibold text-center">
@@ -100,11 +100,12 @@ NoticeLine.propTypes = {
     title: PropTypes.string.isRequired,
     status: PropTypes.number.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
-    countdown: PropTypes.object.isRequired,
+    countdown: PropTypes.object,
     maxPercentage: PropTypes.number,
 };
 
 NoticeLine.defaultProps = {
+    countdown: null,
     maxPercentage: null,
 };
 
@@ -114,6 +115,10 @@ function ReactionPolicyNotice({ policy }) {
 
     useEffect(() => {
         const publishDate = findCurrentVideoPublishDate();
+
+        if (!policy) {
+            return () => {};
+        }
 
         const interval = setInterval(() => {
             const liveAllowedAfter = moment(publishDate).add(policy.live_min_hours, 'hours');
@@ -134,6 +139,10 @@ function ReactionPolicyNotice({ policy }) {
     }, []);
 
     const videoStatus = useMemo(() => {
+        if (!policy) {
+            return null;
+        }
+
         if (!policy.allow_video) {
             return STATUS_DENIED;
         }
@@ -154,6 +163,10 @@ function ReactionPolicyNotice({ policy }) {
     }, [policy, videoCountdownDuration]);
 
     const liveStatus = useMemo(() => {
+        if (!policy) {
+            return null;
+        }
+
         if (!policy.allow_live) {
             return STATUS_DENIED;
         }
@@ -174,6 +187,10 @@ function ReactionPolicyNotice({ policy }) {
     }, [policy, liveCountdownDuration]);
 
     const status = useMemo(() => {
+        if (!policy) {
+            return null;
+        }
+
         if (policy.policy === reactionPolicyEnum.ALLOW) {
             return STATUS_ALLOWED;
         }
@@ -192,6 +209,24 @@ function ReactionPolicyNotice({ policy }) {
 
         return STATUS_DENIED;
     }, [policy, liveStatus, videoStatus]);
+
+    if (policy === null) {
+        return (
+            <Notice
+                title="Loading..."
+                description="asdasd"
+            />
+        );
+    }
+
+    if (policy === undefined) {
+        return (
+            <Notice
+                title="No Reaction Policy"
+                description="The content creator has not defined a reaction policy"
+            />
+        );
+    }
 
     // eslint-disable-next-line default-case
     switch (status) {
@@ -259,9 +294,11 @@ ReactionPolicyNotice.propTypes = {
         video_id: PropTypes.string,
         created_at: PropTypes.string,
         updated_at: PropTypes.string,
-    }).isRequired,
+    }),
 };
 
-ReactionPolicyNotice.defaultProps = {};
+ReactionPolicyNotice.defaultProps = {
+    policy: null,
+};
 
 export default ReactionPolicyNotice;

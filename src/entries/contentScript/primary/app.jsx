@@ -12,7 +12,8 @@ import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import { getReactionPolicyForVideo } from '~/common/bridge';
 import ReactionPolicyNotice from '~/entries/contentScript/primary/components/reaction-policy-notice';
-import { findCurrentVideoChannel, buildFrontendUrl } from '~/common/utility';
+import { findCurrentVideoChannel, buildFrontendUrl, findVideoPlayerBar } from '~/common/utility';
+import ContentRatingHeadless from '~/entries/contentScript/primary/components/content-rating-headless';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -31,6 +32,8 @@ function App() {
     const [showMarkReactionModal, setShowMarkReactionModal] = useState(false);
     const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
 
+    // Location navigation listener
+
     useEffect(() => {
         const statusInterval = setInterval(refreshUserData, 5 * 1000);
 
@@ -47,6 +50,15 @@ function App() {
         };
     }, []);
 
+    // Initial user data loading
+
+    useEffect(() => {
+        refreshUserData();
+        setCurrentUrl(window.location.href);
+    }, []);
+
+    // Reaction Policy
+
     useEffect(() => {
         async function fetchPolicy() {
             try {
@@ -56,7 +68,7 @@ function App() {
                 });
 
                 setReactionPolicy(policy);
-                log.debug('reaction-policy', policy);
+                log.debug('reaction policy', policy);
             } catch (err) {
                 log.warn('error fetching reaction policy', err);
                 setReactionPolicy(null);
@@ -67,11 +79,6 @@ function App() {
             fetchPolicy();
         }
     }, [currentUrl]);
-
-    useEffect(() => {
-        refreshUserData();
-        setCurrentUrl(window.location.href);
-    }, []);
 
     function onSuggestionSubmitted() {
         setShowSubmitSuggestionModal(false);
@@ -157,9 +164,9 @@ function App() {
                 </div>
             )}
 
-            {reactionPolicy && (
-                <ReactionPolicyNotice policy={reactionPolicy} />
-            )}
+            <ReactionPolicyNotice policy={reactionPolicy} />
+
+            <ContentRatingHeadless />
 
             {user && (
                 <>
