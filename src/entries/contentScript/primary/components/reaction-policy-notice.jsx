@@ -101,7 +101,11 @@ NoticeLine.propTypes = {
     status: PropTypes.number.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     countdown: PropTypes.object.isRequired,
-    maxPercentage: PropTypes.number.isRequired,
+    maxPercentage: PropTypes.number,
+};
+
+NoticeLine.defaultProps = {
+    maxPercentage: null,
 };
 
 function ReactionPolicyNotice({ policy }) {
