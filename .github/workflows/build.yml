@@ -136,6 +136,7 @@ jobs:
 
   publish-firefox:
     name: "Publish Firefox"
+    if: ${{ contains(github.ref_name, 'dev') == false }}
     runs-on: ubuntu-latest
     needs: [ pack-firefox ]
     steps:
@@ -172,6 +173,7 @@ jobs:
 
   publish-chrome:
     name: "Publish Chrome"
+    if: ${{ contains(github.ref_name, 'dev') == false }}
     runs-on: ubuntu-latest
     needs: [ pack-chrome ]
     steps:
