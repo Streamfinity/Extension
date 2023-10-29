@@ -82,3 +82,13 @@ export async function getReactionPolicy({ videoUrl, channelUrl }) {
 
     return policy;
 }
+
+export async function getContentRatings({ videoUrl }) {
+    const { data: ratings } = await api('content-ratings/by-video', {
+        query: {
+            url: videoUrl,
+        },
+    });
+
+    return ratings;
+}

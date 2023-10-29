@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import {
-    api, searchSuggestionAccounts, submitSuggestion, getWatchedReactions, submitReaction, getReactionPolicy,
+    api, searchSuggestionAccounts, submitSuggestion, getWatchedReactions, submitReaction, getReactionPolicy, getContentRatings,
 } from '~/entries/background/common/api';
 import {
     storageGetUser, storageGetToken, STORAGE_USER, STORAGE_TOKEN,
@@ -15,7 +15,7 @@ import {
     WATCHED_REACTIONS_GET,
     REACTION_SUBMIT,
     REACTION_POLICY_GET,
-    LOGIN,
+    LOGIN, CONTENT_RATINGS_GET,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -174,6 +174,8 @@ async function getResponse(type, data) {
         return submitReaction(data);
     case REACTION_POLICY_GET:
         return getReactionPolicy(data);
+    case CONTENT_RATINGS_GET:
+        return getContentRatings(data);
     default:
         return null;
     }

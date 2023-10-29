@@ -2,7 +2,7 @@
 
 import browser from 'webextension-polyfill';
 import {
-    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT, REACTION_POLICY_GET, LOGOUT, LOGIN,
+    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT, REACTION_POLICY_GET, LOGOUT, LOGIN, CONTENT_RATINGS_GET,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -61,6 +61,14 @@ export async function submitReaction(data) {
 
 export async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
     const data = await browser.runtime.sendMessage({ type: REACTION_POLICY_GET, data: { videoUrl, channelUrl } });
+
+    return { data: data?.data };
+}
+
+export async function getContentRatings({ videoUrl }) {
+    const data = await browser.runtime.sendMessage({
+        type: CONTENT_RATINGS_GET, data: { videoUrl },
+    });
 
     return { data: data?.data };
 }

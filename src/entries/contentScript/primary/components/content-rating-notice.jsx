@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { findVideoPlayerBar } from '~/common/utility';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
+import { getContentRatings } from '~/common/bridge';
 
 const log = createLogger('Content-Rating');
 
 function ContentRatingNotice() {
+    const { currentUrl } = useAppStore();
+
+    const [contentRatings, setContentRatings] = useState([]);
+
     const [playerBarElement, setPlayerBarElement] = useState(null);
     const [initialized, setInitialized] = useState(false);
 
@@ -31,6 +36,21 @@ function ContentRatingNotice() {
 
         log.debug('appended segments');
     }
+
+    // eslint-disable-next-line no-return-await
+    useEffect(() => {
+        async function get() {
+            if (!currentUrl) {
+                return;
+            }
+
+            const response = await getContentRatings({ videoUrl: currentUrl });
+
+            setContentRatings(response?.data || []);
+        }
+
+        get();
+    }, [currentUrl]);
 
     useEffect(() => {
         let clear = null;
@@ -59,14 +79,22 @@ function ContentRatingNotice() {
         }
     }, [playerBarElement]);
 
+    if (contentRatings.length === 0) {
+        return (<div />);
+    }
+
     return (
         <Card className="p-4 rounded-xl">
             <CardTitle>
                 Content Rating
             </CardTitle>
-            <p>
-                asd
-            </p>
+            <div>
+                {contentRatings.map((rating) => (
+                    <div key={`${rating.from}-${rating.to}-${rating.type}`}>
+                        {rating.type_title}
+                    </div>
+                ))}
+            </div>
         </Card>
     );
 }
