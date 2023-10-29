@@ -5,6 +5,7 @@ import moment from 'moment';
 import { reactionPolicyEnum } from '~/enums';
 import { findCurrentVideoPublishDate } from '~/common/utility';
 import { childrenShape } from '~/shapes';
+import useReactionPolicy from '~/hooks/useReactionPolicy';
 
 const STATUS_ALLOWED = 0;
 const STATUS_DENIED = 1;
@@ -109,7 +110,9 @@ NoticeLine.defaultProps = {
     maxPercentage: null,
 };
 
-function ReactionPolicyNotice({ loading, policy }) {
+function ReactionPolicyNotice() {
+    const { policy, loading } = useReactionPolicy();
+
     const [liveCountdownDuration, setLiveCountdownDuration] = useState(null);
     const [videoCountdownDuration, setVideoCountdownDuration] = useState(null);
 
@@ -277,32 +280,5 @@ function ReactionPolicyNotice({ loading, policy }) {
         />
     );
 }
-
-ReactionPolicyNotice.propTypes = {
-    loading: PropTypes.bool,
-    policy: PropTypes.shape({
-        id: PropTypes.string,
-        policy: PropTypes.number,
-
-        allow_live: PropTypes.bool,
-        allow_video: PropTypes.bool,
-
-        live_min_hours: PropTypes.number,
-        video_min_hours: PropTypes.number,
-
-        live_max_percentage: PropTypes.number,
-        video_max_percentage: PropTypes.number,
-
-        account_id: PropTypes.string,
-        video_id: PropTypes.string,
-        created_at: PropTypes.string,
-        updated_at: PropTypes.string,
-    }),
-};
-
-ReactionPolicyNotice.defaultProps = {
-    policy: null,
-    loading: false,
-};
 
 export default ReactionPolicyNotice;

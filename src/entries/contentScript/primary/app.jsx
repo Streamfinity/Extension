@@ -13,8 +13,9 @@ import { useAppStore } from '~/entries/contentScript/primary/state';
 import ReactionPolicyNotice from '~/entries/contentScript/primary/components/reaction-policy-notice';
 import { buildFrontendUrl } from '~/common/utility';
 import ContentRatingHeadless from '~/entries/contentScript/primary/components/content-rating-headless';
-import useReactionPolicy from '~/hooks/useReactionPolicy';
 import { childrenShape } from '~/shapes';
+import { WINDOW_NAVIGATE } from '~/events';
+import Card from '~/entries/contentScript/primary/components/card';
 
 const log = createLogger('App');
 const dev = false; // import.meta.env.DEV;
@@ -53,10 +54,8 @@ AppContainer.defaultProps = {
 };
 
 function App() {
-    const { login, logout, loadingLogout } = useAuth();
-
     const {
-        user, refreshUserData, loading: loadingStatus, hasData, isLive,
+        user, refreshUserData, loading: loadingStatus, hasData, isLive, login, logout, loadingLogout,
     } = useAuth();
 
     const { setCurrentUrl } = useAppStore();
@@ -69,16 +68,18 @@ function App() {
     useEffect(() => {
         const statusInterval = setInterval(refreshUserData, 5 * 1000);
 
+        setCurrentUrl(window.location.href);
+
         /** @param {CustomEvent} event */
         function onChangePage(event) {
             setCurrentUrl(event.detail.currentUrl);
         }
 
-        window.addEventListener('pushstate', onChangePage);
+        window.addEventListener(WINDOW_NAVIGATE, onChangePage);
 
         return () => {
             clearInterval(statusInterval);
-            window.removeEventListener('pushstate', onChangePage);
+            window.removeEventListener(WINDOW_NAVIGATE, onChangePage);
         };
     }, []);
 
@@ -86,12 +87,7 @@ function App() {
 
     useEffect(() => {
         refreshUserData();
-        setCurrentUrl(window.location.href);
     }, []);
-
-    // Reaction Policy
-
-    const { policy: reactionPolicy, loading: loadingReactionPolicy } = useReactionPolicy();
 
     // Modals
 
@@ -102,6 +98,14 @@ function App() {
     // User item
 
     const [toggleLogout, setToggleLogout] = useState(false);
+
+    async function onClickLogout() {
+        if (toggleLogout) {
+            await logout();
+        } else {
+            setToggleLogout(true);
+        }
+    }
 
     useEffect(() => {
         const countdown = setTimeout(() => setToggleLogout(false), 5000);
@@ -143,24 +147,21 @@ function App() {
 
     return (
         <AppContainer user={(
-            <div
-                onClick={() => setToggleLogout(true)}
-                className="relative flex gap-4 px-4 py-2 bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700 rounded-full overflow-hidden cursor-pointer"
+            <button
+                onClick={onClickLogout}
+                type="button"
             >
-                {toggleLogout && (
-                    <button
-                        onClick={logout}
-                        disabled={loadingLogout}
-                        type="button"
-                        className="absolute left-0 top-0 w-full h-full flex items-center justify-center"
-                    >
-                        Logout
-                    </button>
-                )}
-                <div className={classNames(toggleLogout && 'invisible')}>
-                    {user.display_name}
-                </div>
-            </div>
+                <Card className="relative flex gap-4 px-4 py-2 rounded-full overflow-hidden cursor-pointer">
+                    {toggleLogout && (
+                        <div className="absolute left-0 top-0 w-full h-full flex items-center justify-center">
+                            Logout
+                        </div>
+                    )}
+                    <div className={classNames(toggleLogout && 'invisible')}>
+                        {user.display_name}
+                    </div>
+                </Card>
+            </button>
         )}
         >
 
@@ -178,17 +179,14 @@ function App() {
                             </a>
                         </div>
                     ) : (
-                        <div className="py-1 rounded-full bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700 text-center text-sm dark:text-white/60">
+                        <Card className="py-1 rounded-full text-center text-sm dark:text-white/60">
                             You are currently offline
-                        </div>
+                        </Card>
                     )}
                 </div>
             )}
 
-            <ReactionPolicyNotice
-                loading={loadingReactionPolicy}
-                policy={reactionPolicy}
-            />
+            <ReactionPolicyNotice />
 
             <ContentRatingHeadless />
 

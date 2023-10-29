@@ -3,8 +3,27 @@ import { createLogger } from '~/common/log';
 import { INTERVAL_SEND_PLAYER_PROGRESS, INTERVAL_WATCHED_REACTIONS_FIND } from '~/config';
 import { getWatchedReactions, sendPlayerProgress } from '~/common/bridge';
 import { getIdFromLink, retryFind } from '~/common/utility';
+import { WINDOW_NAVIGATE } from '~/events';
 
 const log = createLogger('Content-Script');
+
+function bindWindowEvents() {
+    let currentUrl = window.location.href;
+
+    setInterval(() => {
+        if (currentUrl !== window.location.href) {
+            log.debug('navigated', `${currentUrl} -> ${window.location.href}`);
+
+            currentUrl = window.location.href;
+
+            window.dispatchEvent(new CustomEvent(WINDOW_NAVIGATE, {
+                detail: {
+                    currentUrl,
+                },
+            }));
+        }
+    }, 1000);
+}
 
 async function spawnContainer() {
     const [findFunc, clearFunc] = retryFind(
@@ -58,6 +77,8 @@ export async function renderContent(
         });
     }
 
+    bindWindowEvents();
+
     shadowRoot.appendChild(appRoot);
 
     render(appRoot);
@@ -97,21 +118,7 @@ export async function markVideosWatched() {
         log.debug('find watched reaction elements', countFound);
     }
 
-    let currentUrl = window.location.href;
-
-    setInterval(() => {
-        if (currentUrl !== window.location.href) {
-            currentUrl = window.location.href;
-            window.dispatchEvent(new CustomEvent('pushstate', {
-                detail: {
-                    currentUrl,
-                },
-            }));
-        }
-    }, 1000);
-
-    window.addEventListener('pushstate', () => {
-        log.debug('pushstate');
+    window.addEventListener(WINDOW_NAVIGATE, () => {
         markElements();
     });
 
