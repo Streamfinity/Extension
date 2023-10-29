@@ -35,9 +35,9 @@ function Notice({ title, description, className }) {
                 {title}
             </div>
 
-            <p className="text-sm">
+            <div className="text-sm">
                 {description}
-            </p>
+            </div>
         </div>
     );
 }
