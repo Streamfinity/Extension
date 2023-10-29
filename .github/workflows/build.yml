@@ -4,6 +4,9 @@ on:
   push:
     tags: [ '*' ]
 
+env:
+  CHROME_EXTENSION_ID: mkaledojmamkljdldoeefpabbgfdkack
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -23,7 +26,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    name: "Build (Manifest ${{ matrix.manifest_version }})"
+    name: "Build (MV${{ matrix.manifest_version }})"
     needs: [ release ]
 
     strategy:
@@ -32,7 +35,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -66,18 +69,163 @@ jobs:
       - name: Create archive
         run: cd dist && zip -r ${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip .
 
-      - name: Upload Assets to Release
-        uses: csexton/release-asset-action@v2
+      - uses: actions/upload-artifact@v3
         with:
-          pattern: "dist/*.zip"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          release-url: ${{ needs.release.outputs.release_upload_url }}
+          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
+          path: "dist/*.zip"
+
+  pack-chrome:
+    name: "Pack (Chrome MV${{ matrix.manifest_version }})"
+    runs-on: ubuntu-latest
+    needs: [ release, build ]
+
+    strategy:
+      matrix:
+        manifest_version: [ 2, 3 ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
+          path: artifacts/
+
+      - run: ls -la artifacts
+
+      - uses: cardinalby/webext-buildtools-chrome-crx-action@v2
+        with:
+          zipFilePath: "artifacts/${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
+          crxFilePath: "dist/Chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
+          privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
+          path: "dist/*.crx"
+
+  pack-firefox:
+    name: "Pack (Firefox MV${{ matrix.manifest_version }})"
+    runs-on: ubuntu-latest
+    needs: [ release, build ]
+
+    strategy:
+      matrix:
+        manifest_version: [ 2, 3 ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
+          path: artifacts/
+
+      - run: ls -la artifacts
+
+      - run: |
+          mkdir -p dist/
+          mv artifacts/${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip dist/Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
+          path: "dist/*.xpi"
+
+  publish-firefox:
+    name: "Publish Firefox"
+    runs-on: ubuntu-latest
+    needs: [ pack-firefox ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "Firefox_${{ github.ref_name }}_mv2.xpi"
+          path: artifacts/
+
+      - run: tree artifacts/
+      - run: mkdir -p dist/
+
+      - name: "web-ext sign"
+        id: web-ext-sign
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: sign
+          source: "artifacts/Firefox_${{ github.ref_name }}_mv2.xpi"
+          artifacts: dist
+          channel: unlisted
+          apiKey: ${{ secrets.FIREFOX_API_KEY }}
+          apiSecret: ${{ secrets.FIREFOX_API_SECRET }}
+          timeout: 900000
+
+      - run: |
+          mv ${{ steps.web-ext-sign.outputs.target }} dist/Firefox_${{ github.ref_name }}_mv2_signed.xpi
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "Firefox_${{ github.ref_name }}_mv2_signed.xpi"
+          path: "dist/*.xpi"
+
+  publish-chrome:
+    name: "Publish Chrome"
+    runs-on: ubuntu-latest
+    needs: [ pack-chrome ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: "16.10"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "${{ github.ref_name }}_mv3.zip"
+          path: artifacts/
+
+      - run: tree artifacts/
+      - run: mkdir -p dist/
+
+      - name: Submit to Google
+        run: npx chrome-webstore-upload-cli@2 upload --source "artifacts/${{ github.ref_name }}_mv3.zip"
+        env:
+          EXTENSION_ID: ${{ env.CHROME_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "Firefox_${{ github.ref_name }}_mv2_signed.xpi"
+          path: "dist/*.xpi"
 
   release-publish:
     name: "Publish release"
     runs-on: ubuntu-latest
-    needs: [ build ]
+    needs: [ release, pack-chrome, pack-firefox, publish-firefox ]
     steps:
+      - uses: actions/download-artifact@v3
+        with:
+          path: artifacts/
+
+      - run: tree artifacts/
+
+      - run: mkdir dist
+      - run: find artifacts/ -type f -print0 | xargs -0 mv -t dist/
+
+      - run: ls -lisah dist/
+
+      - name: Upload Assets to Release
+        uses: csexton/release-asset-action@v2
+        with:
+          pattern: "dist/*"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-url: ${{ needs.release.outputs.release_upload_url }}
+
       - name: Publish Release
         id: release
         uses: ncipollo/release-action@v1
