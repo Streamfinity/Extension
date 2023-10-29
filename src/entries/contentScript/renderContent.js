@@ -25,39 +25,34 @@ function bindWindowEvents() {
     }, 1000);
 }
 
-async function spawnContainer() {
-    const [findFunc, clearFunc] = retryFind(
+async function appendShadowRootToDom(appContainer) {
+    const [findParentFunc] = retryFind(
         () => {
             const el = document.querySelector('#related');
-
             return (el?.firstChild) ? el : null;
         },
         300,
         100,
     );
 
-    const container = await findFunc();
+    const parent = await findParentFunc();
 
-    log.debug('container', container);
+    if (!parent.querySelector('#streamfinity')) {
+        parent.prepend(appContainer);
 
-    const injectedContainer = document.createElement('div');
-    injectedContainer.id = 'streamfinity';
-
-    container.prepend(injectedContainer);
-
-    log.debug('injected', injectedContainer);
-    log.debug('injected check', container.querySelector('#streamfinity'));
-
-    return injectedContainer;
+        log.debug('injected', parent);
+    }
 }
 
 export async function renderContent(
     cssPaths,
     render = (_appRoot) => {},
 ) {
-    const appContainer = await spawnContainer();
+    const appContainer = document.createElement('div');
+    appContainer.id = 'streamfinity';
 
-    const appRoot = document.createElement('div');
+    // appRoot is in shadow root
+    const appRoot = document.createElement('section');
     const shadowRoot = appContainer.attachShadow({
         mode: import.meta.env.DEV ? 'open' : 'closed',
     });
@@ -82,6 +77,10 @@ export async function renderContent(
     shadowRoot.appendChild(appRoot);
 
     render(appRoot);
+
+    setInterval(async () => {
+        await appendShadowRootToDom(appContainer);
+    }, 2000);
 }
 
 export async function markVideosWatched() {
