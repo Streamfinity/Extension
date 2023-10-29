@@ -152,6 +152,7 @@ jobs:
           mkdir -p dist/
 
       - name: Sign extension
+        id: web-ext-sign
         uses: kewisch/action-web-ext@v1
         with:
           cmd: sign
