@@ -69,11 +69,22 @@ bun run serve:firefox
 
 ### Firefox
 
-- Download & Unpack extension
+#### Option 1: Install via unpacked .zip
+
+- [Download](https://github.com/Streamfinity/Extension/releases) & Unpack extension
 - Open [**about:debugging**](https://developer.mozilla.org/en-US/docs/Tools/about:debugging) page
 - Navigate to "**This Firefox**" tab
 - Click "Load Temporary Add-on..."
 - Select the [manifest.json](dist/manifest.json) file 
+
+#### Option 2: Install unsigned .xpi
+
+_This is only possible if you are on Firefox Developer or Nightly Edition._
+
+- Navigate to `about:config`
+- Search for `xpinstall.signatures.required` and double click until the value shows `false`
+- [Download](https://github.com/Streamfinity/Extension/releases) the `.xpi` version
+- Firefox shoul
 
 ### Chrome
 
