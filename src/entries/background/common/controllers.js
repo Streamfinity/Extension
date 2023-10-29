@@ -7,7 +7,6 @@ import {
 } from '~/entries/background/common/storage';
 import {
     GET_STATUS,
-    HANDSHAKE_VALIDATE,
     DEBUG_DUMP_STORAGE,
     PLAYER_PROGRESS,
     LOGOUT,
@@ -50,46 +49,6 @@ export async function getStatus() {
     };
 }
 
-export async function validateHandshakeData(data) {
-    try {
-        const { data: response } = await api('users/@me', {
-            token: data.token,
-        });
-
-        if (response.data.id === data.user.id) {
-            log.debug('handshake', 'ok');
-            log.debug('handshake', 'response', response.data);
-            log.debug('handshake', 'provided', data);
-
-            const storeToken = data.token;
-            const storeUser = response.data;
-
-            delete storeUser.avatar;
-            delete storeUser.fetch_preferences;
-            delete storeUser.subscriptions;
-
-            storeUser.accounts = storeUser.accounts.map((acc) => ({
-                id: acc.id,
-                name: acc.name,
-                display_name: acc.display_name,
-                enable_monitoring: acc.enable_monitoring,
-            }));
-
-            log.debug('storing token...', storeToken);
-            await browser.storage.sync.set({ [STORAGE_TOKEN]: storeToken });
-
-            log.debug('storing user...', storeUser);
-            await browser.storage.sync.set({ [STORAGE_USER]: storeUser });
-
-            return { success: true, user: response.data };
-        }
-    } catch (err) {
-        log.error('error checking handshake data', err);
-    }
-
-    return { success: false };
-}
-
 export async function dumpStorage() {
     return browser.storage.sync.get();
 }
@@ -125,8 +84,7 @@ async function loginFetchUser(accessToken) {
             token: accessToken,
         });
 
-        log.debug('handshake', 'ok');
-        log.debug('handshake', 'response', response.data);
+        log.debug('login validate', 'ok');
 
         const storeToken = accessToken;
         const storeUser = response.data;
@@ -150,7 +108,7 @@ async function loginFetchUser(accessToken) {
 
         return { success: true, user: response.data };
     } catch (err) {
-        log.error('error checking handshake data', err);
+        log.error('error checking data', err);
     }
 
     return { success: false };
@@ -202,8 +160,6 @@ async function getResponse(type, data) {
         return login(data);
     case GET_STATUS:
         return getStatus(data);
-    case HANDSHAKE_VALIDATE:
-        return validateHandshakeData(data);
     case DEBUG_DUMP_STORAGE:
         return dumpStorage();
     case PLAYER_PROGRESS:

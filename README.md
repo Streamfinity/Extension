@@ -17,10 +17,11 @@ bun install
 ```sh
 MANIFEST_VERSION=3
 MANIFEST_HOST_API=*://*.streamfinity.code/*
-MANIFEST_HOST_FRONTEND=http://localhost:3000/dashboard/settings/extension
 
 VITE_API_URL=http://streamfinity.code
 VITE_FRONTEND_URL=http://localhost:3000
+
+VITE_OAUTH_CLIENT_ID=
 ```
 
 ## Commands
