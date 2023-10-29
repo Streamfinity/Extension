@@ -3,8 +3,8 @@
 ## Download
 
 - [**Manual .zip Download**](https://github.com/Streamfinity/Extension/releases/latest)
-- [Chrome Web Store](https://chrome.google.com/webstore)
-- [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/)
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/mkaledojmamkljdldoeefpabbgfdkack)
+- [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/streamfinity)
 
 ## Setup
 
