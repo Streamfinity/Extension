@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
 import { reactionPolicyEnum } from '~/enums';
-import { findCurrentVideoPublishDate } from '~/common/utility';
+import { findCurrentVideoPublishDate, findCurrentVideoChannel } from '~/common/utility';
 import { childrenShape } from '~/shapes';
-import useReactionPolicy from '~/hooks/useReactionPolicy';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
+import { useReactionPolicyForVideo } from '~/common/bridge';
+import { useAppStore } from '~/entries/contentScript/primary/state';
 
 const STATUS_ALLOWED = 0;
 const STATUS_DENIED = 1;
@@ -117,7 +118,12 @@ NoticeLine.defaultProps = {
 };
 
 function ReactionPolicyNotice() {
-    const { policy, loading } = useReactionPolicy();
+    const { currentUrl } = useAppStore();
+
+    const { item: policy, isLoading } = useReactionPolicyForVideo({
+        videoUrl: currentUrl,
+        channelUrl: findCurrentVideoChannel(),
+    });
 
     const [liveCountdownDuration, setLiveCountdownDuration] = useState(null);
     const [videoCountdownDuration, setVideoCountdownDuration] = useState(null);
@@ -219,7 +225,7 @@ function ReactionPolicyNotice() {
         return STATUS_DENIED;
     }, [policy, liveStatus, videoStatus]);
 
-    if (loading) {
+    if (isLoading) {
         return (
             <Notice
                 cardColor="default"

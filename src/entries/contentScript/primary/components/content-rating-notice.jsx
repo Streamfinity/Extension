@@ -36,8 +36,6 @@ function ContentRatingNotice() {
 
     const { items: contentRatings } = useContentRatings({ videoUrl: currentUrl });
 
-    console.log(contentRatings);
-
     useEffect(() => {
         let clear = null;
 

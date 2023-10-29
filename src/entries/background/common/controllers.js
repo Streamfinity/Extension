@@ -143,9 +143,7 @@ async function login() {
     const expiresIn = params.get('expires_in');
     const accessToken = params.get('access_token');
 
-    console.log(
-        await loginFetchUser(accessToken),
-    );
+    await loginFetchUser(accessToken);
 }
 
 // ------------------------------------------------------------------------------------------------------------------------

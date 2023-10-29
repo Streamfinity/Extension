@@ -67,6 +67,22 @@ export async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
     return { data: data?.data };
 }
 
+export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
+    const query = useQuery({
+        queryKey: ['reaction-policies', videoUrl],
+        queryFn: () => browser.runtime.sendMessage({
+            type: REACTION_POLICY_GET,
+            data: { videoUrl, channelUrl },
+        }),
+        enabled: !!videoUrl || !!channelUrl,
+    });
+
+    return {
+        ...query,
+        item: query.data?.data,
+    };
+}
+
 export function useContentRatings({ videoUrl }) {
     const query = useQuery({
         queryKey: ['content-ratings', videoUrl],
