@@ -1,7 +1,7 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
 import { useStatus } from '~/hooks/useStatus';
-import { loginUrl, buildUrl } from '~/hooks/useAuth';
+import useAuth from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/primary/components/submit-suggestion-modal';
 import H2Header from '~/entries/contentScript/primary/components/h2-header';
 import Button from '~/entries/contentScript/primary/components/button';
@@ -12,12 +12,14 @@ import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import { getReactionPolicyForVideo } from '~/common/bridge';
 import ReactionPolicyNotice from '~/entries/contentScript/primary/components/reaction-policy-notice';
-import { findCurrentVideoChannel } from '~/common/utility';
+import { findCurrentVideoChannel, buildFrontendUrl } from '~/common/utility';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
 
 function App() {
+    const { login, logout, loadingLogout } = useAuth();
+
     const {
         user, refresh: refreshStatus, loading: loadingStatus, hasData, isLive,
     } = useStatus();
@@ -87,8 +89,6 @@ function App() {
         };
     }, [toggleLogout]);
 
-    console.log(reactionPolicy);
-
     return (
         <div className="relative mb-6 text-base bg-neutral-200/80 dark:bg-neutral-800/30 dark:border dark:border-neutral-700 rounded-[10px] p-[12px] text-gray-900 dark:text-white shadow-lg dark:shadow-white/5 overflow-y-auto">
 
@@ -121,14 +121,17 @@ function App() {
                     >
                         {toggleLogout && (
                             <button
+                                onClick={logout}
+                                disabled={loadingLogout}
                                 type="button"
-                                className="absolute left-0 top-0 w-full h-full  flex items-center justify-center bg-gray-700"
+                                className="absolute left-0 top-0 w-full h-full flex items-center justify-center"
                             >
                                 Logout
                             </button>
                         )}
-                        <div className="h-6 w-6 bg-gray-600 rounded-full" />
-                        {user.display_name}
+                        <div className={toggleLogout && 'invisible'}>
+                            {user.display_name}
+                        </div>
                     </div>
                 )}
             </div>
@@ -138,7 +141,7 @@ function App() {
                     {isLive ? (
                         <div>
                             <a
-                                href={buildUrl('/dashboard/streams')}
+                                href={buildFrontendUrl('/dashboard/streams')}
                                 target="_blank"
                                 className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white"
                                 rel="noreferrer"
@@ -195,7 +198,7 @@ function App() {
                 <div className="flex gap-2">
                     {(!loadingStatus && !user) && (
                         <a
-                            href={loginUrl}
+                            href={() => login()}
                             target="_blank"
                             className="flex items-center font-medium rounded-full px-6 h-[36px] bg-primary-500 text-white"
                             rel="noreferrer"

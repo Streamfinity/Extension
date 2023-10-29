@@ -1,5 +1,9 @@
 import moment from 'moment';
 
+export function buildFrontendUrl(path) {
+    return `${import.meta.env.VITE_FRONTEND_URL}${path}`;
+}
+
 export function getIdFromLink(link) {
     const match = link.match(/watch(.*)v=(?<id>[A-Za-z0-9\-_]+)/);
 

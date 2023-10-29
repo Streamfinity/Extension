@@ -1,13 +1,38 @@
 import browser from 'webextension-polyfill';
-
-export function buildUrl(path) {
-    return `${import.meta.env.VITE_FRONTEND_URL}${path}`;
-}
-
-export const loginUrl = buildUrl('/dashboard/settings/extension?auto=1');
+import { useState } from 'react';
+import { logout } from '~/common/bridge';
+import { buildFrontendUrl } from '~/common/utility';
 
 export async function openLoginPage() {
     await browser.tabs.create({
-        url: loginUrl,
+        url: buildFrontendUrl('/dashboard/settings/extension?auto=1'),
     });
+}
+
+export default function useAuth() {
+    const [loadingLogin, setLoadingLogin] = useState(false);
+    const [loadingLogout, setLoadingLogout] = useState(false);
+
+    async function initLogout() {
+        setLoadingLogout(true);
+
+        await logout();
+
+        setLoadingLogout(false);
+    }
+
+    async function login() {
+        setLoadingLogin(true);
+        await openLoginPage();
+        setLoadingLogin(false);
+    }
+
+    return {
+        // Login
+        loadingLogin,
+        login,
+        // Logout
+        loadingLogout,
+        logout: initLogout,
+    };
 }

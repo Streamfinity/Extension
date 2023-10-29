@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function InfoView({ user, refreshStatus }) {
+function InfoView({ user }) {
     return (
         <div>
             info
@@ -13,7 +13,6 @@ InfoView.propTypes = {
     user: PropTypes.shape({
         display_name: PropTypes.string,
     }).isRequired,
-    refreshStatus: PropTypes.func.isRequired,
 };
 
 export default InfoView;

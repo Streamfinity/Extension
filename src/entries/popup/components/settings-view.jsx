@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import browser from 'webextension-polyfill';
-import { LOGOUT } from '~/messages';
+import useAuth from '~/hooks/useAuth';
 
-function SettingsView({ user, refreshStatus }) {
-    const [loading, setLoading] = useState(false);
-
-    async function logout() {
-        setLoading(true);
-        const response = await browser.runtime.sendMessage({ type: LOGOUT });
-        console.log(response);
-        await refreshStatus();
-        setLoading(false);
-    }
+function SettingsView({ user }) {
+    const { logout, loadingLogout } = useAuth();
 
     return (
         <div>
             <button
                 type="submit"
-                disabled={loading}
+                disabled={loadingLogout}
                 onClick={logout}
             >
                 Logout
@@ -31,7 +22,6 @@ SettingsView.propTypes = {
     user: PropTypes.shape({
         display_name: PropTypes.string,
     }).isRequired,
-    refreshStatus: PropTypes.func.isRequired,
 };
 
 export default SettingsView;

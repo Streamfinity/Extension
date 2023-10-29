@@ -59,10 +59,7 @@ function App() {
             <div className="h-full p-2">
                 <div className="h-full p-2 bg-gray-50 rounded-lg">
                     {(!loadingStatus && hasData) && (
-                        <ActiveViewComponent
-                            user={user}
-                            refreshStatus={refreshStatus}
-                        />
+                        <ActiveViewComponent user={user} />
                     )}
 
                     {(!loadingStatus && !hasData) && (
