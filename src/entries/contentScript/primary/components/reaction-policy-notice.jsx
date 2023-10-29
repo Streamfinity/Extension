@@ -28,7 +28,7 @@ function Notice({ title, description, className }) {
     return (
         <div className={classNames(
             className,
-            'mt-4 py-2 px-4 rounded-xl border text-sm text-white/60 leading-normal',
+            'mt-4 p-4 rounded-xl border text-sm text-white/60 leading-normal',
         )}
         >
             <div className="mb-2 text-base font-semibold text-center">
@@ -57,39 +57,40 @@ function NoticeLine({
 }) {
     return (
         <div>
-            <b className="font-semibold">
+            <div className="font-semibold text-base">
                 {title}
                 {' '}
-                Reactions:
+                Reactions
                 {' '}
-            </b>
+            </div>
             {status === STATUS_ALLOWED && (
-                <span className="font-semibold text-green-500">
-                    Allowed!
-                </span>
+                <div className="font-semibold text-green-500">
+                    Reactions Allowed!
+                </div>
             )}
             {status === STATUS_DENIED && (
-                <span className="font-semibold text-red-500">
+                <div className="font-semibold text-red-500">
                     Not allowed
-                </span>
+                </div>
             )}
             {status === STATUS_ON_COUNTDOWN && (
-                <span className="font-semibold text-orange-500">
-                    Please wait
+                <div className="font-semibold dark:text-orange-500 text-orange-800">
+                    Reactions allowed in:
                     {' '}
-                    {prettyFormatCountdown(countdown)}
-                    {' '}
-                    before reacting.
-                </span>
+                    <span>
+                        {prettyFormatCountdown(countdown)}
+                    </span>
+                </div>
             )}
             {maxPercentage > 0 && (
-                <span className="font-semibold text-orange-500">
+                <div className="font-semibold dark:text-orange-500 text-orange-800">
+                    Restrictions:
                     {' '}
                     You may only react to
                     {' '}
                     {maxPercentage}
                     % of this video.
-                </span>
+                </div>
             )}
         </div>
     );
@@ -194,8 +195,8 @@ function ReactionPolicyNotice({ policy }) {
         return (
             <Notice
                 className="text-center border-green-700 bg-green-700/30"
-                description="The content creator has approved live & video reactions"
                 title="Reactions Allowed"
+                description="The content creator has approved live & video reactions"
             />
         );
 
@@ -203,39 +204,35 @@ function ReactionPolicyNotice({ policy }) {
         return (
             <Notice
                 className="text-center border-red-700 bg-red-700/30"
-                description="The content creator asks not to reaction on to video"
                 title="Reactions Not Allowed"
+                description="The content creator asks not to reaction on to video"
             />
         );
     }
 
     return (
         <Notice
-            className="border-yellow-800/80 bg-yellow-700/10"
+            className="border-yellow-500/50 bg-yellow-700/10 dark:border-yellow-800/80 dark:bg-yellow-700/10 text-gray-900"
+            title="Conditions Policy"
             description={(
-                <div>
+                <div className="flex flex-col gap-4">
                     <p className="mb-2">
-                        The content creator has set conditions for reactions:
+                        The content creator has set conditions for reactions.
                     </p>
-                    <div>
-                        <NoticeLine
-                            title="Live"
-                            status={liveStatus}
-                            countdown={liveCountdownDuration}
-                            maxPercentage={policy.live_max_percentage}
-                        />
-                    </div>
-                    <div>
-                        <NoticeLine
-                            title="Video"
-                            status={videoStatus}
-                            countdown={videoCountdownDuration}
-                            maxPercentage={policy.video_max_percentage}
-                        />
-                    </div>
+                    <NoticeLine
+                        title="Live"
+                        status={liveStatus}
+                        countdown={liveCountdownDuration}
+                        maxPercentage={policy.live_max_percentage}
+                    />
+                    <NoticeLine
+                        title="Video"
+                        status={videoStatus}
+                        countdown={videoCountdownDuration}
+                        maxPercentage={policy.video_max_percentage}
+                    />
                 </div>
             )}
-            title="Conditions"
         />
     );
 }

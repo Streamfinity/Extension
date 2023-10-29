@@ -90,7 +90,7 @@ function App() {
     console.log(reactionPolicy);
 
     return (
-        <div className="relative mb-6 text-base border border-neutral-700 bg-neutral-800/30 rounded-[10px] p-[12px] text-white shadow-lg shadow-white/5 overflow-y-auto">
+        <div className="relative mb-6 text-base bg-neutral-200/80 dark:bg-neutral-800/30 dark:border dark:border-neutral-700 rounded-[10px] p-[12px] text-gray-900 dark:text-white shadow-lg dark:shadow-white/5 overflow-y-auto">
 
             {showMarkReactionModal && (
                 <Overlay
@@ -117,7 +117,7 @@ function App() {
                 {user && (
                     <div
                         onClick={() => setToggleLogout(true)}
-                        className="relative flex gap-4 border border-neutral-700 bg-neutral-700/30 px-4 rounded-full py-2 overflow-hidden cursor-pointer"
+                        className="relative flex gap-4 px-4 py-2 bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700 rounded-full overflow-hidden cursor-pointer"
                     >
                         {toggleLogout && (
                             <button
@@ -147,7 +147,7 @@ function App() {
                             </a>
                         </div>
                     ) : (
-                        <div className="py-1 rounded-full border border-neutral-700 bg-neutral-700/30 text-center text-sm text-white/60">
+                        <div className="py-1 rounded-full bg-gray-300 dark:bg-neutral-700/30 border border-gray-400/30 dark:border-neutral-700 text-center text-sm dark:text-white/60">
                             You are currently offline
                         </div>
                     )}
