@@ -148,8 +148,10 @@ jobs:
           name: "Firefox_${{ github.ref_name }}_mv2.xpi"
           path: artifacts/
 
-      - run: tree artifacts/
-      - run: mkdir -p dist/
+      - run: |
+          tree artifacts/
+          mkdir -p dist/
+        if: ${{ contains(github.ref_name, 'dev') == false }}
 
       - name: Sign extension
         if: ${{ contains(github.ref_name, 'dev') == false }}
@@ -192,7 +194,6 @@ jobs:
           name: "${{ github.ref_name }}_mv3.zip"
           path: artifacts/
 
-      - run: tree artifacts/
       - run: mkdir -p dist/
 
       - name: Submit to Google
