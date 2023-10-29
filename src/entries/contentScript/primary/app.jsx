@@ -1,5 +1,6 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import useAuth from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/primary/components/submit-suggestion-modal';
 import H2Header from '~/entries/contentScript/primary/components/h2-header';
@@ -128,7 +129,7 @@ function App() {
                                 Logout
                             </button>
                         )}
-                        <div className={toggleLogout && 'invisible'}>
+                        <div className={classNames(toggleLogout && 'invisible')}>
                             {user.display_name}
                         </div>
                     </div>
