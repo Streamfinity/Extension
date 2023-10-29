@@ -136,7 +136,6 @@ jobs:
 
   publish-firefox:
     name: "Publish Firefox"
-    if: ${{ contains(github.ref_name, 'dev') == false }}
     runs-on: ubuntu-latest
     needs: [ pack-firefox ]
     steps:
@@ -144,6 +143,7 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: actions/download-artifact@v3
+        if: ${{ contains(github.ref_name, 'dev') == false }}
         with:
           name: "Firefox_${{ github.ref_name }}_mv2.xpi"
           path: artifacts/
@@ -151,8 +151,8 @@ jobs:
       - run: tree artifacts/
       - run: mkdir -p dist/
 
-      - name: "web-ext sign"
-        id: web-ext-sign
+      - name: Sign extension
+        if: ${{ contains(github.ref_name, 'dev') == false }}
         uses: kewisch/action-web-ext@v1
         with:
           cmd: sign
@@ -165,15 +165,16 @@ jobs:
 
       - run: |
           mv ${{ steps.web-ext-sign.outputs.target }} dist/Firefox_${{ github.ref_name }}_mv2_signed.xpi
+        if: ${{ contains(github.ref_name, 'dev') == false }}
 
       - uses: actions/upload-artifact@v3
+        if: ${{ contains(github.ref_name, 'dev') == false }}
         with:
           name: "Firefox_${{ github.ref_name }}_mv2_signed.xpi"
           path: "dist/*.xpi"
 
   publish-chrome:
     name: "Publish Chrome"
-    if: ${{ contains(github.ref_name, 'dev') == false }}
     runs-on: ubuntu-latest
     needs: [ pack-chrome ]
     steps:
@@ -181,10 +182,12 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: actions/setup-node@v2-beta
+        if: ${{ contains(github.ref_name, 'dev') == false }}
         with:
           node-version: "16.10"
 
       - uses: actions/download-artifact@v3
+        if: ${{ contains(github.ref_name, 'dev') == false }}
         with:
           name: "${{ github.ref_name }}_mv3.zip"
           path: artifacts/
@@ -193,6 +196,7 @@ jobs:
       - run: mkdir -p dist/
 
       - name: Submit to Google
+        if: ${{ contains(github.ref_name, 'dev') == false }}
         run: npx chrome-webstore-upload-cli@2 upload --source "artifacts/${{ github.ref_name }}_mv3.zip"
         env:
           EXTENSION_ID: ${{ env.CHROME_EXTENSION_ID }}
@@ -201,6 +205,7 @@ jobs:
           REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
 
       - uses: actions/upload-artifact@v3
+        if: ${{ contains(github.ref_name, 'dev') == false }}
         with:
           name: "Firefox_${{ github.ref_name }}_mv2_signed.xpi"
           path: "dist/*.xpi"
