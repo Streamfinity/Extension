@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import browser from 'webextension-polyfill';
 import { DEBUG_DUMP_STORAGE } from '~/messages';
-import { useStatus } from '~/hooks/useStatus';
+import useAuth from '~/hooks/useAuth';
 
 function DevTools() {
     const [showDebugStorage, setShowDebugStorage] = useState(false);
@@ -15,7 +15,7 @@ function DevTools() {
 
     const {
         user, status, isLive,
-    } = useStatus();
+    } = useAuth();
 
     useEffect(() => {
         const storageInterval = setInterval(checkStorage, 5 * 1000);

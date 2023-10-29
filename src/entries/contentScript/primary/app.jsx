@@ -1,6 +1,5 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
-import { useStatus } from '~/hooks/useStatus';
 import useAuth from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/primary/components/submit-suggestion-modal';
 import H2Header from '~/entries/contentScript/primary/components/h2-header';
@@ -21,8 +20,8 @@ function App() {
     const { login, logout, loadingLogout } = useAuth();
 
     const {
-        user, refresh: refreshStatus, loading: loadingStatus, hasData, isLive,
-    } = useStatus();
+        user, refreshUserData, loading: loadingStatus, hasData, isLive,
+    } = useAuth();
 
     const {
         setCurrentUrl, currentUrl, setReactionPolicy, reactionPolicy,
@@ -32,7 +31,7 @@ function App() {
     const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
 
     useEffect(() => {
-        const statusInterval = setInterval(refreshStatus, 5 * 1000);
+        const statusInterval = setInterval(refreshUserData, 5 * 1000);
 
         /** @param {CustomEvent} event */
         function onChangePage(event) {
@@ -69,7 +68,7 @@ function App() {
     }, [currentUrl]);
 
     useEffect(() => {
-        refreshStatus();
+        refreshUserData();
         setCurrentUrl(window.location.href);
     }, []);
 
@@ -197,20 +196,19 @@ function App() {
             <div className="flex justify-between">
                 <div className="flex gap-2">
                     {(!loadingStatus && !user) && (
-                        <a
-                            href={() => login()}
-                            target="_blank"
+                        <button
+                            type="button"
+                            onClick={login}
                             className="flex items-center font-medium rounded-full px-6 h-[36px] bg-primary-500 text-white"
-                            rel="noreferrer"
                         >
                             Login with Streamfinity
-                        </a>
+                        </button>
                     )}
 
                     {loadingStatus && (
                         <button
                             type="button"
-                            onClick={refreshStatus}
+                            onClick={refreshUserData}
                             className="flex items-center font-medium rounded-full px-6 h-[36px] bg-yt-button-light"
                         >
                             Loading...

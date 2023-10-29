@@ -3,8 +3,8 @@ import './app.css';
 import classNames from 'classnames';
 import InfoView from '~/entries/popup/components/info-view';
 import SettingsView from '~/entries/popup/components/settings-view';
-import { useStatus } from '~/hooks/useStatus';
 import IndexView from '~/entries/popup/components/index-view';
+import useAuth from '~/hooks/useAuth';
 
 const availableViews = [
     {
@@ -21,11 +21,11 @@ function App() {
     const ActiveViewComponent = activeView.component;
 
     const {
-        user, refresh: refreshStatus, hasData, loading: loadingStatus,
-    } = useStatus();
+        user, refreshUserData, hasData, loading: loadingStatus,
+    } = useAuth();
 
     useEffect(() => {
-        refreshStatus();
+        refreshUserData();
     }, []);
 
     return (
