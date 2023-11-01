@@ -1,0 +1,21 @@
+@keyframes contentRatingAlert {
+    0%,100% {
+        --tw-bg-opacity: 0.2;
+        --tw-border-opacity: 0.2;
+        transform: scale(1);
+    }
+    50% {
+        --tw-bg-opacity: 1;
+        --tw-border-opacity: 1;
+        transform: scale(1.03);
+    }
+}
+
+.contentRatingAlert {
+    @apply bg-red-200 border-red-300;
+    animation-name: contentRatingAlert;
+    animation-duration: 900ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+    animation-direction: normal;
+}

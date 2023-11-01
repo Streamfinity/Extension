@@ -60,13 +60,18 @@ export function retryFindWithClearFn(callback, intervalMs = 300, maxTries = 300)
 export async function retryFind(callback, intervalMs = 300, maxTries = 300) {
     const [findFn, clearFn] = retryFindWithClearFn(callback, intervalMs, maxTries);
 
-    return findFn;
+    const found = await findFn();
+    return found;
 }
 
 // Get elements on page
 
 export function getYouTubePlayer() {
     return document.querySelector('video.video-stream.html5-main-video');
+}
+
+export function getYouTubePlayerProgressBar() {
+    return document.querySelector('.ytp-progress-bar-container .ytp-progress-bar .ytp-timed-markers-container');
 }
 
 export function getCurrentVideoChannel() {

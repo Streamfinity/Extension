@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { findVideoPlayerBar, findYouTubePlayer } from '~/common/utility';
+import React, { useState, useEffect, useMemo } from 'react';
+import classNames from 'classnames';
+import {
+    findVideoPlayerBar, findYouTubePlayer, retryFind, getYouTubePlayer, getYouTubePlayerProgressBar,
+} from '~/common/utility';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 import { useContentRatings } from '~/common/bridge';
+import { prettyDuration } from '~/common/pretty';
+import styles from '~/styles/content-rating.module.css';
+import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 
 const log = createLogger('Content-Rating');
 
 function ContentRatingNotice() {
     const { currentUrl } = useAppStore();
+
+    const { progress: playerProgress } = useYouTubePlayer();
 
     const [playerBarElement, setPlayerBarElement] = useState(null);
     const [initialized, setInitialized] = useState(false);
@@ -22,26 +30,53 @@ function ContentRatingNotice() {
 
         setInitialized(true);
 
-        const player = await findYouTubePlayer();
-        const playBar = await findVideoPlayerBar();
+        const player = await retryFind(() => getYouTubePlayer());
+        const progressBar = await retryFind(() => getYouTubePlayerProgressBar());
 
-        console.log(player, playBar);
+        const videoDurationSeconds = player.duration;
 
-        const foo = document.createElement('div');
-        foo.style.position = 'absolute';
-        foo.style.width = '30px';
-        foo.style.height = '100%';
-        foo.style.left = '120px';
-        foo.style.top = '0px';
-        foo.style.zIndex = '60';
-        foo.style.backgroundColor = '#2563eb';
+        segments.forEach((segment) => {
+            const segmentDuration = segment.to - segment.from;
+            const id = `content-rating-${segment.from}-${segment.to}-${segment.type}`;
 
-        parentElement.append(foo);
+            if (progressBar.querySelector(id)) {
+                return;
+            }
+
+            const foo = document.createElement('div');
+            foo.id = id;
+            foo.style.position = 'absolute';
+            foo.style.width = `${(segmentDuration / videoDurationSeconds) * 100}%`;
+            foo.style.height = '100%';
+            foo.style.left = `${(segment.from / videoDurationSeconds) * 100}%`;
+            foo.style.top = '0px';
+            foo.style.zIndex = '60';
+            foo.style.backgroundColor = '#2563eb';
+
+            log.debug('segment inserted', { segmentDuration, videoDurationSeconds }, foo);
+            progressBar.append(foo);
+        });
 
         log.debug('appended segments');
     }
 
+    // API
+
     const { items: contentRatings } = useContentRatings({ videoUrl: currentUrl });
+
+    const computedContentRatings = useMemo(() => contentRatings?.map((segment) => {
+        if (!playerProgress) {
+            return segment;
+        }
+
+        console.log(playerProgress, segment.from);
+        return {
+            ...segment,
+            alert: playerProgress <= segment.from && playerProgress >= (segment.from - 10),
+        };
+    }), [contentRatings, playerProgress]);
+
+    // Find player bar
 
     useEffect(() => {
         let clear = null;
@@ -83,10 +118,27 @@ function ContentRatingNotice() {
             <CardTitle>
                 Content Rating
             </CardTitle>
-            <div>
-                {contentRatings.map((rating) => (
-                    <div key={`${rating.from}-${rating.to}-${rating.type}`}>
-                        {rating.type_title}
+            <div className="text-sm flex flex-col gap-1">
+                {computedContentRatings?.map((rating) => (
+                    <div
+                        key={`${rating.from}-${rating.to}-${rating.type}`}
+                        className={classNames(
+                            rating.alert ? styles.contentRatingAlert : 'hover:bg-gray-600/10 border-transparent',
+                            'flex justify-between transition-colors rounded-lg py-1 px-2 border',
+                        )}
+                    >
+                        <div>
+                            <span className="font-bold pr-2">
+                                {prettyDuration(rating.from)}
+                                {' - '}
+                                {prettyDuration(rating.to)}
+                            </span>
+                            {rating.type_title}
+                        </div>
+                        <div className="flex gap-3">
+                            <div className="font-bold uppercase text-green-500">Confirm</div>
+                            <div className="font-bold uppercase text-red-500">Wrong</div>
+                        </div>
                     </div>
                 ))}
             </div>
