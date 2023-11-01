@@ -23,13 +23,13 @@ function Card({
     const colorClassName = {
         default: 'bg-gray-300/30 dark:bg-neutral-700/30 border border-gray-400/20 dark:border-neutral-700',
         green: 'border-green-700 bg-green-700/30',
-        red: 'border-red-700 bg-red-700/30',
+        red: 'border border-red-500/20 bg-red-500/40',
         yellow: 'border-yellow-500/50 bg-yellow-700/10 dark:border-yellow-800/80 dark:bg-yellow-700/10 text-gray-900',
     }[color];
 
     return (
         <div className={classNames(
-            rounded && 'py-1 rounded-full text-center text-sm',
+            rounded ? 'py-1 rounded-full text-center text-sm' : 'p-4 rounded-xl',
             className,
             colorClassName,
         )}

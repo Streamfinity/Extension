@@ -18,12 +18,13 @@ export default function useAuth() {
     const [loadingLogout, setLoadingLogout] = useState(false);
 
     const hasData = useMemo(() => !loading && user, [loading, user]);
-    const isLive = useMemo(() => status?.live_streams?.length > 0, [status]);
+    const liveStream = useMemo(() => status?.live_streams?.find(() => true), [status]);
+    const isLive = useMemo(() => !!liveStream, [liveStream]);
 
     async function refreshUserData() {
         const { status: statusResponse, user: userResponse } = await getStatus();
 
-        log.debug('refreshing', { status, user });
+        log.debug('refreshing', { status: statusResponse, user: userResponse });
 
         setStatus(statusResponse);
         setUser(userResponse);
@@ -65,6 +66,7 @@ export default function useAuth() {
         user,
         status,
         hasData,
+        liveStream,
         isLive,
         refreshUserData,
         // Login

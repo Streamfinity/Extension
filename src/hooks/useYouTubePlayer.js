@@ -15,14 +15,14 @@ export function useYouTubePlayer({ pollInterval } = {}) {
     }, []);
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
+        const progressIntervalId = setInterval(() => {
             if (playerElement) {
                 setProgress(playerElement.currentTime);
             }
         }, pollInterval || 2000);
 
         return () => {
-            clearInterval(intervalId);
+            clearInterval(progressIntervalId);
         };
     }, [playerElement]);
 

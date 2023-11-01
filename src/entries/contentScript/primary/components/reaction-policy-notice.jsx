@@ -8,6 +8,7 @@ import { childrenShape } from '~/shapes';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/primary/state';
+import { usePage } from '~/hooks/usePage';
 
 const STATUS_ALLOWED = 0;
 const STATUS_DENIED = 1;
@@ -35,7 +36,7 @@ function Notice({
             color={cardColor}
             className={classNames(
                 className,
-                'p-4 rounded-xl text-sm dark:text-white/60 text-gray-800 leading-normal',
+                'text-sm dark:text-white/60 text-gray-800 leading-normal',
             )}
         >
             <CardTitle>
@@ -118,7 +119,7 @@ NoticeLine.defaultProps = {
 };
 
 function ReactionPolicyNotice() {
-    const { currentUrl } = useAppStore();
+    const { currentUrl } = usePage();
 
     const { item: policy, isLoading } = useReactionPolicyForVideo({
         videoUrl: currentUrl,

@@ -3,18 +3,18 @@ import classNames from 'classnames';
 import {
     findVideoPlayerBar, retryFind, getYouTubePlayer, getYouTubePlayerProgressBar,
 } from '~/common/utility';
-import { useAppStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 import { useContentRatings } from '~/common/bridge';
 import { prettyDuration } from '~/common/pretty';
 import styles from '~/styles/content-rating.module.css';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
+import { usePage } from '~/hooks/usePage';
 
 const log = createLogger('Content-Rating');
 
 function ContentRatingNotice() {
-    const { currentUrl } = useAppStore();
+    const { currentUrl } = usePage();
 
     const { progress: playerProgress } = useYouTubePlayer();
 
@@ -69,7 +69,6 @@ function ContentRatingNotice() {
             return segment;
         }
 
-        console.log(playerProgress, segment.from);
         return {
             ...segment,
             alert: playerProgress <= segment.from && playerProgress >= (segment.from - 10),
@@ -114,7 +113,7 @@ function ContentRatingNotice() {
     }
 
     return (
-        <Card className="p-4 rounded-xl">
+        <Card>
             <CardTitle>
                 Content Rating
             </CardTitle>

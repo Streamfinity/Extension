@@ -18,6 +18,7 @@ import { WINDOW_NAVIGATE } from '~/events';
 import Card from '~/entries/contentScript/primary/components/card';
 import { why } from '~/common/pretty';
 import LiveStatusNotice from '~/entries/contentScript/primary/components/live-status-notice';
+import ReactionsNotice from '~/entries/contentScript/primary/components/reactions-notice';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -79,7 +80,7 @@ AppContainer.defaultProps = {
 
 function App() {
     const {
-        user, refreshUserData, loading: loadingStatus, hasData, isLive, login, logout,
+        user, refreshUserData, loading: loadingStatus, hasData, liveStream, isLive, login, logout,
     } = useAuth();
 
     const { setCurrentUrl } = useAppStore();
@@ -179,7 +180,7 @@ function App() {
                 onClick={onClickLogout}
                 type="button"
             >
-                <Card className="relative flex gap-4 px-4 py-2 rounded-full overflow-hidden cursor-pointer">
+                <Card className="relative flex gap-4 py-2 rounded-full overflow-hidden cursor-pointer">
                     {toggleLogout && (
                         <div className="absolute left-0 top-0 w-full h-full flex items-center justify-center">
                             Logout
@@ -194,12 +195,17 @@ function App() {
         >
 
             {hasData && (
-                <LiveStatusNotice isLive={isLive} />
+                <LiveStatusNotice
+                    liveStream={liveStream}
+                    isLive={isLive}
+                />
             )}
 
             <ReactionPolicyNotice />
 
             <ContentRatingNotice />
+
+            <ReactionsNotice />
 
             {user && (
                 <>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { buildFrontendUrl } from '~/common/utility';
 import Card from '~/entries/contentScript/primary/components/card';
 
-function LiveStatusNotice({ isLive }) {
+function LiveStatusNotice({ isLive, liveStream }) {
     if (isLive) {
         return (
             <a
@@ -15,7 +15,8 @@ function LiveStatusNotice({ isLive }) {
                     rounded
                     color="red"
                 >
-                    You are live!
+                    You are live
+                    {liveStream && ` on ${liveStream?.account?.display_name}`}
                 </Card>
             </a>
         );
@@ -33,8 +34,16 @@ function LiveStatusNotice({ isLive }) {
 
 LiveStatusNotice.propTypes = {
     isLive: PropTypes.bool.isRequired,
+    liveStream: PropTypes.shape({
+        title: PropTypes.string,
+        account: PropTypes.shape({
+            display_name: PropTypes.string,
+        }),
+    }),
 };
 
-LiveStatusNotice.defaultProps = {};
+LiveStatusNotice.defaultProps = {
+    liveStream: null,
+};
 
 export default LiveStatusNotice;
