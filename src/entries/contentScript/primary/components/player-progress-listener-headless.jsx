@@ -51,6 +51,11 @@ function PlayerProgressListenerHeadless() {
     }
 
     useEffect(() => {
+        setLastSent(null);
+        setLastProgress(null);
+    }, [currentUrl]);
+
+    useEffect(() => {
         send(playerProgress);
     }, [playerProgress]);
 
