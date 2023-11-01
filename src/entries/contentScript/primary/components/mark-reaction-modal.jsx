@@ -6,6 +6,7 @@ import Button from '~/entries/contentScript/primary/components/button';
 import { getYouTubePlayer } from '~/common/utility';
 import { prettyDuration } from '~/common/pretty';
 import { submitReaction } from '~/common/bridge';
+import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 
 function MarkReactionModal({ onSubmitted }) {
     const [loading, setLoading] = useState(false);
@@ -15,6 +16,10 @@ function MarkReactionModal({ onSubmitted }) {
     const [segmentFull, setSegmentFull] = useState(null);
     const [segmentStart, setSegmentStart] = useState(null);
     const [segmentEnd, setSegmentEnd] = useState(null);
+
+    const { progress: playerProgress, element: playerElement } = useYouTubePlayer({
+        pollInterval: 1000,
+    });
 
     function fullSegment() {
         if (segmentStart) {
@@ -29,13 +34,12 @@ function MarkReactionModal({ onSubmitted }) {
             return;
         }
 
-        const player = getYouTubePlayer();
-        if (!player) {
+        if (!playerElement) {
             alert('Player not found');
             return;
         }
 
-        setSegmentStart(player.currentTime);
+        setSegmentStart(playerProgress);
     }
 
     function endSegment() {
@@ -43,13 +47,12 @@ function MarkReactionModal({ onSubmitted }) {
             return;
         }
 
-        const player = getYouTubePlayer();
-        if (!player) {
+        if (!playerElement) {
             alert('Player not found');
             return;
         }
 
-        setSegmentEnd(player.currentTime);
+        setSegmentEnd(playerProgress);
     }
 
     async function submit() {
@@ -77,8 +80,13 @@ function MarkReactionModal({ onSubmitted }) {
 
     return (
         <div>
+            <p>
+                If this video is or contains a reaction to another video, you can mark it as this.
+                Please note that every submission will be reviewed.
+            </p>
+
             <H3Header step={1}>
-                Select segment
+                Wich part is the reaction?
             </H3Header>
 
             <div className="flex">
@@ -106,7 +114,7 @@ function MarkReactionModal({ onSubmitted }) {
                         className="w-full"
                         onClick={() => startSegment()}
                     >
-                        {segmentStart ? prettyDuration(segmentStart) : 'Start Segment'}
+                        {segmentStart ? prettyDuration(segmentStart) : `Start at ${prettyDuration(playerProgress)}`}
                     </Button>
                     <Button
                         color="primary"
@@ -114,13 +122,15 @@ function MarkReactionModal({ onSubmitted }) {
                         disabled={!!segmentFull || !segmentStart}
                         onClick={() => endSegment()}
                     >
-                        {segmentEnd ? prettyDuration(segmentEnd) : 'End Segment'}
+                        {segmentEnd && prettyDuration(segmentEnd)}
+                        {(!segmentEnd && segmentStart) && `End at ${prettyDuration(playerProgress)}`}
+                        {(!segmentEnd && !segmentStart) && 'End Segment'}
                     </Button>
                 </div>
             </div>
 
             <H3Header step={2}>
-                Enter the original video
+                To which video was reacted?
             </H3Header>
 
             <div>

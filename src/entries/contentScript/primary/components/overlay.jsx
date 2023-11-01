@@ -5,8 +5,8 @@ import H2Header from '~/entries/contentScript/primary/components/h2-header';
 
 function Overlay({ children, onHide, title }) {
     return (
-        <div className="absolute left-0 top-0 w-full h-full z-20 p-10 rounded-[10px] overflow-hidden backdrop-blur bg-black/30">
-            <div className="w-full h-full rounded-lg bg-gray-700 p-8 overflow-y-auto">
+        <div className="absolute left-0 top-0 w-full h-full z-20 p-10 rounded-[10px] overflow-hidden backdrop-blur bg-gray-300/30 dark:bg-black/30">
+            <div className="w-full h-full rounded-lg bg-white dark:bg-gray-700 p-8 overflow-y-auto">
                 <div className="flex justify-between items-start mb-6">
                     <H2Header
                         mt={false}
@@ -19,7 +19,7 @@ function Overlay({ children, onHide, title }) {
                         onClick={onHide}
                     >
                         <svg
-                            fill="#fff"
+                            fill="currentColor"
                             height="12px"
                             width="12px"
                             version="1.1"
