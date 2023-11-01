@@ -2,7 +2,7 @@ import '../enableDevHmr';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { renderContent, listenPlayerEvents, markVideosWatched } from '../renderContent';
+import { renderContent, listenPlayerEvents } from '../renderContent';
 import App from './app';
 import { createLogger } from '~/common/log';
 
@@ -23,5 +23,4 @@ renderContent(import.meta.PLUGIN_WEB_EXT_CHUNK_CSS_PATHS, (appRoot) => {
         );
 });
 
-markVideosWatched();
 listenPlayerEvents();

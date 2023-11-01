@@ -25,16 +25,6 @@ export async function storageGetToken() {
     return (await browser.storage.sync.get(STORAGE_TOKEN)).token;
 }
 
-export async function storageGetAuth() {
-    const authInfo = await browser.storage.sync.get(STORAGE_AUTH_INFO);
-
-    if (!authInfo.token) {
-        return authDefaults;
-    }
-
-    return { ...authDefaults, ...authInfo, loggedIn: true };
-}
-
 export function storageGetAll() {
     return browser.storage.sync.get();
 }

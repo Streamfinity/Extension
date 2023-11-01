@@ -74,6 +74,9 @@ export function useStatus() {
     return useQuery({
         queryKey: ['status'],
         queryFn: () => getStatus(),
+        keepPreviousData: true,
+        retry: false,
+        refetchInterval: 10000,
     });
 }
 

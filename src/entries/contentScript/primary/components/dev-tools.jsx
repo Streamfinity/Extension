@@ -1,29 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import browser from 'webextension-polyfill';
-import { DEBUG_DUMP_STORAGE } from '~/messages';
+import React from 'react';
 import useAuth from '~/hooks/useAuth';
 
 function DevTools() {
-    const [showDebugStorage, setShowDebugStorage] = useState(false);
-    const [debugStorage, setDebugStorage] = useState({});
-
-    async function checkStorage() {
-        setDebugStorage(
-            await browser.runtime.sendMessage({ type: DEBUG_DUMP_STORAGE }),
-        );
-    }
-
     const {
         user, liveStreams, accounts, isLive,
     } = useAuth();
-
-    useEffect(() => {
-        const storageInterval = setInterval(checkStorage, 5 * 1000);
-
-        return () => {
-            clearInterval(storageInterval);
-        };
-    }, []);
 
     return (
         <div className="relative p-2 pt-8 mt-6 mb-2 border-2 border-red-600 rounded-md overflow-hidden text-sm">
@@ -66,22 +47,6 @@ function DevTools() {
                 ))}
             </div>
             <hr />
-            {showDebugStorage ? (
-                <textarea
-                    value={JSON.stringify(debugStorage, null, 4)}
-                    readOnly
-                    rows={15}
-                    className="w-full text-base font-mono text-black"
-                />
-            ) : (
-                <button
-                    type="button"
-                    onClick={() => setShowDebugStorage(true)}
-                    className="underline"
-                >
-                    Show storage debug
-                </button>
-            )}
         </div>
     );
 }

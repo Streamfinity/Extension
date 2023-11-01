@@ -68,9 +68,8 @@ export async function submitSuggestion(data) {
     return suggestion;
 }
 
-export async function getWatchedReactions(data) {
-    const user = await storageGetUser();
-    const { data: watchedReactions } = await api(`users/${user.id}/watched-reactions`, {
+export async function getWatchedReactions({ userId }) {
+    const { data: watchedReactions } = await api(`users/${userId}/watched-reactions`, {
         token: await storageGetToken(),
     });
 

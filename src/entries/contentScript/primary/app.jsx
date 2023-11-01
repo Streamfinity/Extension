@@ -19,6 +19,7 @@ import Card from '~/entries/contentScript/primary/components/card';
 import { why } from '~/common/pretty';
 import LiveStatusNotice from '~/entries/contentScript/primary/components/live-status-notice';
 import ReactionsNotice from '~/entries/contentScript/primary/components/reactions-notice';
+import WatchedVideosHeadless from '~/entries/contentScript/primary/components/watched-videos-headless';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -91,8 +92,6 @@ function App() {
     // Location navigation listener
 
     useEffect(() => {
-        const statusInterval = setInterval(refreshUserData, 5 * 1000);
-
         setCurrentUrl(window.location.href);
 
         /** @param {CustomEvent} event */
@@ -103,15 +102,8 @@ function App() {
         window.addEventListener(WINDOW_NAVIGATE, onChangePage);
 
         return () => {
-            clearInterval(statusInterval);
             window.removeEventListener(WINDOW_NAVIGATE, onChangePage);
         };
-    }, []);
-
-    // Initial user data loading
-
-    useEffect(() => {
-        refreshUserData();
     }, []);
 
     // Modals
@@ -206,6 +198,8 @@ function App() {
             <ContentRatingNotice />
 
             <ReactionsNotice />
+
+            <WatchedVideosHeadless />
 
             {user && (
                 <>

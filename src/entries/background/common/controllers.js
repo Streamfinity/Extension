@@ -1,6 +1,5 @@
 import browser from 'webextension-polyfill';
 import {
-    api,
     searchSuggestionAccounts,
     submitSuggestion,
     getWatchedReactions,
@@ -11,11 +10,10 @@ import {
     getExtensionStatus, getAuthenticatedUser,
 } from '~/entries/background/common/api';
 import {
-    storageGetUser, storageGetToken, STORAGE_USER, STORAGE_TOKEN, clearStorage, storageGetAll, storageGetAuth, storageSetToken,
+    storageGetToken, clearStorage, storageGetAll, storageSetToken,
 } from '~/entries/background/common/storage';
 import {
     GET_STATUS,
-    DEBUG_DUMP_STORAGE,
     PLAYER_PROGRESS,
     LOGOUT,
     SUGGESTIONS_SEARCH_ACCOUNT,
@@ -30,9 +28,10 @@ import { why } from '~/common/pretty';
 
 const log = createLogger('Background');
 
-const backgroundState = {
-    status: null,
-};
+/**
+ * @type {{user}}
+ */
+let extensionStatus = {};
 
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
@@ -47,7 +46,7 @@ async function getStatus() {
 
     const { data } = await getExtensionStatus();
 
-    backgroundState.status = data?.data;
+    extensionStatus = data?.data || {};
 
     return {
         data: data?.data,
@@ -61,19 +60,19 @@ async function logout() {
 }
 
 async function sendPlayerProgress(data) {
-    if (!backgroundState.status) {
+    if (!extensionStatus.user) {
         log.debug('no status adata, dont send player progress');
         return;
     }
 
-    if (backgroundState.status.live_streams.length === 0) {
+    if (extensionStatus.live_streams.length === 0) {
         log.debug('on stream live');
         return;
     }
 
     await createPlaybackProgress({
         data,
-        liveStreamId: backgroundState.status.live_streams[0].id,
+        liveStreamId: extensionStatus.live_streams[0].id,
     });
 }
 
@@ -151,8 +150,6 @@ async function getResponse(type, data) {
         return login(data);
     case GET_STATUS:
         return getStatus(data);
-    case DEBUG_DUMP_STORAGE:
-        return storageGetAll();
     case PLAYER_PROGRESS:
         return sendPlayerProgress(data);
     case SUGGESTIONS_SEARCH_ACCOUNT:
@@ -160,7 +157,7 @@ async function getResponse(type, data) {
     case SUGGESTIONS_SUBMIT:
         return submitSuggestion(data);
     case WATCHED_REACTIONS_GET:
-        return getWatchedReactions();
+        return getWatchedReactions(data);
     case REACTION_SUBMIT:
         return submitReaction(data);
     case REACTION_POLICY_GET:
@@ -196,6 +193,5 @@ export async function handleMessage(msg, sender, sendResponse) {
 
 (async () => {
     log.debug('storage', await storageGetAll());
-    log.debug('storage auth', await storageGetAuth());
     log.debug('----------------------------------------------');
 })();
