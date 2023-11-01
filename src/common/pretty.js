@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { createLogger } from '~/common/log';
 
 export function prettyNumber(number) {
     return new Intl.NumberFormat('en-US').format(number);
@@ -66,4 +67,38 @@ export function durationToSeconds(duration) {
     }
 
     return moment.duration(modifiedDuration).asSeconds();
+}
+
+const log = createLogger('why');
+
+export function why(e) {
+    let message;
+
+    log.debug('error', { type: typeof e, name: e?.name, err: e });
+
+    if (typeof e === 'string') {
+        message = e;
+    } else if (typeof e === 'object') {
+        if (e.message) {
+            message = e.message;
+            // eslint-disable-next-line no-underscore-dangle
+        } else if (e.response && (e.response.data || e.response._data)) {
+            // eslint-disable-next-line no-underscore-dangle
+            const data = e.response.data || e.response._data;
+
+            if (typeof data.errors === 'object' && Object.values(data.errors).length > 0) {
+                [[message]] = Object.values(data.errors);
+            } else if (typeof data.messages === 'object' && Object.values(data.messages).length > 0) {
+                [[message]] = Object.values(data.messages);
+            } else if (typeof data.error === 'string') {
+                message = data.error;
+            } else if (typeof data.message === 'string') {
+                message = data.message;
+            }
+        }
+    } else {
+        message = `${e}`;
+    }
+
+    return message;
 }

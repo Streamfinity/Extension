@@ -18,6 +18,7 @@ import {
     LOGIN, CONTENT_RATINGS_GET,
 } from '~/messages';
 import { createLogger } from '~/common/log';
+import { why } from '~/common/pretty';
 
 const log = createLogger('Background');
 
@@ -36,8 +37,17 @@ export async function logout() {
 }
 
 export async function getStatus() {
+    const token = await storageGetToken();
+
+    if (!token) {
+        return {
+            status: null,
+            user: null,
+        };
+    }
+
     const { status, data } = await api('extension/status', {
-        token: await storageGetToken(),
+        token,
     });
 
     store.status = data?.data;
@@ -127,23 +137,34 @@ async function login() {
     log.debug('login', 'reidrect', redirectUri);
     log.debug('login', url);
 
-    // https://cfiiggfhnccbchheekifachmajflgcgn.chromiumapp.org/
-    //     #access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ
-    //     &token_type=Bearer
-    //     &expires_in=31622400
-    const responseUrl = await browser.identity.launchWebAuthFlow({
-        url,
-        interactive: true,
-    });
+    try {
+        // https://cfiiggfhnccbchheekifachmajflgcgn.chromiumapp.org/
+        //     #access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ
+        //     &token_type=Bearer
+        //     &expires_in=31622400
+        const responseUrl = await browser.identity.launchWebAuthFlow({
+            url,
+            interactive: true,
+        });
 
-    const parsedUrl = new URL(responseUrl);
-    const paramsString = parsedUrl.hash.substring(1);
-    const params = new URLSearchParams(paramsString);
+        const parsedUrl = new URL(responseUrl);
+        const paramsString = parsedUrl.hash.substring(1);
+        const params = new URLSearchParams(paramsString);
 
-    const expiresIn = params.get('expires_in');
-    const accessToken = params.get('access_token');
+        const expiresIn = params.get('expires_in');
+        const accessToken = params.get('access_token');
 
-    await loginFetchUser(accessToken);
+        log.debug('login', 'received success response');
+
+        return loginFetchUser(accessToken);
+    } catch (err) {
+        log.warn('login', 'error', err);
+
+        return {
+            success: false,
+            error: why(err),
+        };
+    }
 }
 
 // ------------------------------------------------------------------------------------------------------------------------

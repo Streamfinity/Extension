@@ -16,11 +16,14 @@ import ContentRatingNotice from '~/entries/contentScript/primary/components/cont
 import { childrenShape } from '~/shapes';
 import { WINDOW_NAVIGATE } from '~/events';
 import Card from '~/entries/contentScript/primary/components/card';
+import { why } from '~/common/pretty';
 
 const log = createLogger('App');
 const dev = false; // import.meta.env.DEV;
 
 function AppContainer({ children, user }) {
+    const { appError, setAppError } = useAppStore();
+
     return (
         <div className="relative mb-6 text-base rounded-[10px] p-[12px] overflow-y-auto
                         bg-black/[0.05] dark:bg-neutral-800/30 dark:border dark:border-neutral-700
@@ -33,6 +36,25 @@ function AppContainer({ children, user }) {
                 </div>
                 {user}
             </div>
+
+            {appError && (
+                <div className="px-4 py-2 bg-red-100 border border-red-200 rounded-xl text-sm text-red-950">
+                    <div className="flex">
+                        <div className="grow">
+                            Error:
+                            {' '}
+                            {why(appError)}
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setAppError(null)}
+                            className="shrink pl-2 font-bold"
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {children}
 

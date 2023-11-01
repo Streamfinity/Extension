@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { logout as bridgeLogut, getStatus, login as bridgeLogin } from '~/common/bridge';
-import { useContentStore } from '~/entries/contentScript/primary/state';
+import { logout, getStatus, login } from '~/common/bridge';
+import { useContentStore, useAppStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('useAuth');
@@ -11,6 +11,8 @@ export default function useAuth() {
         status, setStatus,
         loading, setLoading,
     } = useContentStore();
+
+    const { setAppError } = useAppStore();
 
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [loadingLogout, setLoadingLogout] = useState(false);
@@ -28,20 +30,32 @@ export default function useAuth() {
         setLoading(false);
     }
 
-    async function logout() {
+    async function performLogout() {
         setLoadingLogout(true);
 
-        await bridgeLogut();
+        await logout();
         await refreshUserData();
 
         setLoadingLogout(false);
     }
 
-    async function login() {
+    async function performLogin() {
         setLoadingLogin(true);
 
-        await bridgeLogin();
-        await refreshUserData();
+        try {
+            const response = await login();
+
+            log.debug('login response', response);
+
+            if (response?.error) {
+                setAppError(response.error);
+                return;
+            }
+
+            await refreshUserData();
+        } catch (err) {
+            setAppError(err);
+        }
 
         setLoadingLogin(false);
     }
@@ -55,9 +69,9 @@ export default function useAuth() {
         refreshUserData,
         // Login
         loadingLogin,
-        login,
+        login: performLogin,
         // Logout
-        loadingLogout,
-        logout,
+        logout: loadingLogout,
+        performLogout,
     };
 }
