@@ -51,7 +51,7 @@ function ContentRatingNotice() {
             foo.style.left = `${(segment.from / videoDurationSeconds) * 100}%`;
             foo.style.top = '0px';
             foo.style.zIndex = '60';
-            foo.style.backgroundColor = '#2563eb';
+            foo.style.backgroundColor = 'rgba(37, 99, 235, 0.5)';
 
             log.debug('segment inserted', { segmentDuration, videoDurationSeconds }, foo);
             progressBar.append(foo);
