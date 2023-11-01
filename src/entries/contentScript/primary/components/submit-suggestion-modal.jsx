@@ -41,6 +41,27 @@ function SubmitSuggestionModal({ onSubmit }) {
         onSubmit(suggestion);
     }
 
+    function onInput(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        setSearchTerm(e.target.value);
+    }
+
+    /**
+     * @param {KeyboardEvent} e
+     */
+    function disableWebsiteHotkeys(e) {
+        e.stopPropagation();
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', disableWebsiteHotkeys, true);
+
+        return () => {
+            window.removeEventListener('keydown', disableWebsiteHotkeys, true);
+        };
+    }, []);
+
     const accounts = useMemo(() => {
         if (searchedAccounts.length > 0) {
             return searchedAccounts || [];
@@ -97,7 +118,7 @@ function SubmitSuggestionModal({ onSubmit }) {
                     type="text"
                     autoComplete="off"
                     placeholder="Search here..."
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => onInput(e)}
                     className={styles.input}
                 />
 
