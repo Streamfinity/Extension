@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { retryFind, getYouTubePlayer } from '~/common/utility';
 
 export function useYouTubePlayer({ pollInterval } = {}) {
-    const [progress, setProgress] = useState(0);
+    const [progress, setProgress] = useState(null);
     const [playerElement, setPlayerElement] = useState(null);
 
     useEffect(() => {

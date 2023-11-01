@@ -20,6 +20,7 @@ import { why } from '~/common/pretty';
 import LiveStatusNotice from '~/entries/contentScript/primary/components/live-status-notice';
 import ReactionsNotice from '~/entries/contentScript/primary/components/reactions-notice';
 import WatchedVideosHeadless from '~/entries/contentScript/primary/components/watched-videos-headless';
+import PlayerProgressListenerHeadless from '~/entries/contentScript/primary/components/player-progress-listener-headless';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -200,6 +201,8 @@ function App() {
             <ReactionsNotice />
 
             <WatchedVideosHeadless />
+
+            <PlayerProgressListenerHeadless />
 
             {user && (
                 <>
