@@ -26,7 +26,7 @@ function DevTools() {
     }, []);
 
     return (
-        <div className="relative p-2 pt-6 mt-6 mb-2 border-2 border-red-600 rounded-md overflow-hidden">
+        <div className="relative p-2 pt-8 mt-6 mb-2 border-2 border-red-600 rounded-md overflow-hidden text-sm">
             <div className="absolute left-0 top-0 px-2 text-sm bg-red-600 text-white font-medium uppercase rounded-br-md leading-normal">
                 Streamfinity Dev Tools
             </div>
@@ -35,6 +35,9 @@ function DevTools() {
                 {' '}
                 {user ? (
                     <>
+                        <br />
+                        -
+                        {' '}
                         <span>{user.display_name}</span>
                         {' '}
                         <span className="opacity-50">{`(${user.id})`}</span>
@@ -43,7 +46,7 @@ function DevTools() {
             </div>
             <hr />
             <div>
-                <b>Accounts:</b>
+                <b>Accounts for reaction tracking:</b>
                 {' '}
                 {status?.accounts?.map((a) => (
                     <div key={a.id}>

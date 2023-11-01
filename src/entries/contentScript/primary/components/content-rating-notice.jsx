@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import {
-    findVideoPlayerBar, findYouTubePlayer, retryFind, getYouTubePlayer, getYouTubePlayerProgressBar,
+    findVideoPlayerBar, retryFind, getYouTubePlayer, getYouTubePlayerProgressBar,
 } from '~/common/utility';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';

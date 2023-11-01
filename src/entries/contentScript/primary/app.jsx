@@ -17,15 +17,17 @@ import { childrenShape } from '~/shapes';
 import { WINDOW_NAVIGATE } from '~/events';
 import Card from '~/entries/contentScript/primary/components/card';
 import { why } from '~/common/pretty';
+import LiveStatusNotice from '~/entries/contentScript/primary/components/live-status-notice';
 
 const log = createLogger('App');
-const dev = false; // import.meta.env.DEV;
+const dev = import.meta.env.DEV;
 
 function AppContainer({ children, user }) {
     const { appError, setAppError } = useAppStore();
 
     return (
         <div className="relative mb-6 text-base rounded-[10px] p-[12px] overflow-y-auto
+                        flex flex-col gap-4
                         bg-black/[0.05] dark:bg-neutral-800/30 dark:border dark:border-neutral-700
                         text-gray-900 dark:text-white
                         dark:shadow-lg dark:shadow-white/5"
@@ -192,24 +194,7 @@ function App() {
         >
 
             {hasData && (
-                <div>
-                    {isLive ? (
-                        <div>
-                            <a
-                                href={buildFrontendUrl('/dashboard/streams')}
-                                target="_blank"
-                                className="flex items-center font-medium rounded-full px-6 h-[36px] bg-red-500 text-white"
-                                rel="noreferrer"
-                            >
-                                LIVE
-                            </a>
-                        </div>
-                    ) : (
-                        <Card className="py-1 rounded-full text-center text-sm dark:text-white/60">
-                            You are currently offline
-                        </Card>
-                    )}
-                </div>
+                <LiveStatusNotice isLive={isLive} />
             )}
 
             <ReactionPolicyNotice />
@@ -247,6 +232,18 @@ function App() {
                     </div>
 
                 </>
+            )}
+
+            {hasData && (
+                <a
+                    href={buildFrontendUrl('/dashboard')}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <Card rounded>
+                        Your Streamfinity Dashboard
+                    </Card>
+                </a>
             )}
 
             {showMarkReactionModal && (

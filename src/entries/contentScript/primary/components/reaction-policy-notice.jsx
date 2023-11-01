@@ -35,7 +35,7 @@ function Notice({
             color={cardColor}
             className={classNames(
                 className,
-                'mt-4 p-4 rounded-xl text-sm dark:text-white/60 text-gray-800 leading-normal',
+                'p-4 rounded-xl text-sm dark:text-white/60 text-gray-800 leading-normal',
             )}
         >
             <CardTitle>
