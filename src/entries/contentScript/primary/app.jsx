@@ -82,7 +82,7 @@ AppContainer.defaultProps = {
 
 function App() {
     const {
-        user, refreshUserData, loadingAuth, liveStream, isLive, login, logout,
+        user, loadingAuth, liveStream, isLive, login, logout,
     } = useAuth();
 
     const { setCurrentUrl } = useAppStore();
