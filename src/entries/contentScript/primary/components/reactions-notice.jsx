@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { usePage } from '~/hooks/usePage';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
+import useAuth from '~/hooks/useAuth';
 
 function ReactionsNotice() {
     const { currentUrl } = usePage();
+    const { user } = useAuth();
 
     return (
         <Card>
@@ -16,9 +17,7 @@ function ReactionsNotice() {
     );
 }
 
-ReactionsNotice.propTypes = {
-
-};
+ReactionsNotice.propTypes = {};
 
 ReactionsNotice.defaultProps = {};
 

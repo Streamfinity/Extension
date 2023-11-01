@@ -1,9 +1,17 @@
 import browser from 'webextension-polyfill';
 import {
-    api, searchSuggestionAccounts, submitSuggestion, getWatchedReactions, submitReaction, getReactionPolicy, getContentRatings,
+    api,
+    searchSuggestionAccounts,
+    submitSuggestion,
+    getWatchedReactions,
+    submitReaction,
+    getReactionPolicy,
+    getContentRatings,
+    createPlaybackProgress,
+    getExtensionStatus, getAuthenticatedUser,
 } from '~/entries/background/common/api';
 import {
-    storageGetUser, storageGetToken, STORAGE_USER, STORAGE_TOKEN,
+    storageGetUser, storageGetToken, STORAGE_USER, STORAGE_TOKEN, clearStorage, storageGetAll, storageGetAuth, storageSetToken,
 } from '~/entries/background/common/storage';
 import {
     GET_STATUS,
@@ -22,7 +30,7 @@ import { why } from '~/common/pretty';
 
 const log = createLogger('Background');
 
-const store = {
+const backgroundState = {
     status: null,
 };
 
@@ -30,98 +38,62 @@ const store = {
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 
-export async function logout() {
-    await browser.storage.sync.remove([STORAGE_TOKEN, STORAGE_USER]);
+async function getStatus() {
+    const token = await storageGetToken();
+
+    if (!token) {
+        return { user: null };
+    }
+
+    const { data } = await getExtensionStatus();
+
+    backgroundState.status = data?.data;
+
+    return {
+        data: data?.data,
+    };
+}
+
+async function logout() {
+    await clearStorage();
 
     return { success: true };
 }
 
-export async function getStatus() {
-    const token = await storageGetToken();
-
-    if (!token) {
-        return {
-            status: null,
-            user: null,
-        };
-    }
-
-    const { status, data } = await api('extension/status', {
-        token,
-    });
-
-    store.status = data?.data;
-
-    return {
-        success: status === 200,
-        status: data?.data,
-        user: await storageGetUser(),
-    };
-}
-
-export async function dumpStorage() {
-    return browser.storage.sync.get();
-}
-
-export async function sendPlayerProgress(data) {
-    if (!store.status) {
+async function sendPlayerProgress(data) {
+    if (!backgroundState.status) {
         log.debug('no status adata, dont send player progress');
         return;
     }
 
-    if (store.status.live_streams.length === 0) {
+    if (backgroundState.status.live_streams.length === 0) {
         log.debug('on stream live');
         return;
     }
 
-    const items = [{
-        timestamp: Math.round(data.timestamp),
-        created_at: data.date,
-        original_url: data.url,
-        stream_id: store.status.live_streams[0].id,
-    }];
-
-    await api('extension/playback', {
-        token: await storageGetToken(),
-        method: 'post',
-        json: { items },
+    await createPlaybackProgress({
+        data,
+        liveStreamId: backgroundState.status.live_streams[0].id,
     });
 }
 
 async function loginFetchUser(accessToken) {
     try {
-        const { data: response } = await api('users/@me', {
+        const { data } = await getAuthenticatedUser({
             token: accessToken,
         });
 
         log.debug('login validate', 'ok');
+        log.debug('storing token...', accessToken);
 
-        const storeToken = accessToken;
-        const storeUser = response.data;
+        await storageSetToken(accessToken);
 
-        delete storeUser.avatar;
-        delete storeUser.fetch_preferences;
-        delete storeUser.subscriptions;
-
-        storeUser.accounts = storeUser.accounts.map((acc) => ({
-            id: acc.id,
-            name: acc.name,
-            display_name: acc.display_name,
-            enable_monitoring: acc.enable_monitoring,
-        }));
-
-        log.debug('storing token...', storeToken);
-        await browser.storage.sync.set({ [STORAGE_TOKEN]: storeToken });
-
-        log.debug('storing user...', storeUser);
-        await browser.storage.sync.set({ [STORAGE_USER]: storeUser });
-
-        return { success: true, user: response.data };
+        return { user: data.data };
     } catch (err) {
         log.error('error checking data', err);
     }
 
-    return { success: false };
+    return { user: null };
 }
 
 async function login() {
@@ -180,7 +152,7 @@ async function getResponse(type, data) {
     case GET_STATUS:
         return getStatus(data);
     case DEBUG_DUMP_STORAGE:
-        return dumpStorage();
+        return storageGetAll();
     case PLAYER_PROGRESS:
         return sendPlayerProgress(data);
     case SUGGESTIONS_SEARCH_ACCOUNT:
@@ -207,7 +179,7 @@ export async function handleMessage(msg, sender, sendResponse) {
     }
 
     const { type, data } = msg;
-    log.debug('onMessage', type, data);
+    log.debug('message ->', type, data);
 
     const response = getResponse(type, data);
 
@@ -217,3 +189,13 @@ export async function handleMessage(msg, sender, sendResponse) {
 
     return response;
 }
+
+// ------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+
+(async () => {
+    log.debug('storage', await storageGetAll());
+    log.debug('storage auth', await storageGetAuth());
+    log.debug('----------------------------------------------');
+})();

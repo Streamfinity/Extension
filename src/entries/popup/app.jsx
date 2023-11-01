@@ -20,9 +20,7 @@ function App() {
     const [activeView, setActiveView] = useState(availableViews[0]);
     const ActiveViewComponent = activeView.component;
 
-    const {
-        user, refreshUserData, hasData, loading: loadingStatus,
-    } = useAuth();
+    const { user, refreshUserData, loadingAuth } = useAuth();
 
     useEffect(() => {
         refreshUserData();
@@ -58,11 +56,11 @@ function App() {
 
             <div className="h-full p-2">
                 <div className="h-full p-2 bg-gray-50 rounded-lg">
-                    {(!loadingStatus && hasData) && (
+                    {(!loadingAuth && user) && (
                         <ActiveViewComponent user={user} />
                     )}
 
-                    {(!loadingStatus && !hasData) && (
+                    {(!loadingAuth && !user) && (
                         <IndexView />
                     )}
                 </div>

@@ -14,7 +14,7 @@ function DevTools() {
     }
 
     const {
-        user, status, isLive,
+        user, liveStreams, accounts, isLive,
     } = useAuth();
 
     useEffect(() => {
@@ -48,7 +48,7 @@ function DevTools() {
             <div>
                 <b>Accounts for reaction tracking:</b>
                 {' '}
-                {status?.accounts?.map((a) => (
+                {accounts?.map((a) => (
                     <div key={a.id}>
                         {`  - ${a.name}`}
                         {' '}
@@ -61,7 +61,7 @@ function DevTools() {
                 <b>Live:</b>
                 {' '}
                 {!isLive && 'not live'}
-                {status?.live_streams?.map((a) => (
+                {liveStreams?.map((a) => (
                     <div key={a.id}>{`  - ${a.title} (${a.id})`}</div>
                 ))}
             </div>

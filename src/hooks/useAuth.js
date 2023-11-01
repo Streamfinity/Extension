@@ -1,35 +1,25 @@
 import { useState, useMemo } from 'react';
-import { logout, getStatus, login } from '~/common/bridge';
-import { useContentStore, useAppStore } from '~/entries/contentScript/primary/state';
+import { logout, login, useStatus } from '~/common/bridge';
+import { useAppStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('useAuth');
 
 export default function useAuth() {
-    const {
-        user, setUser,
-        status, setStatus,
-        loading, setLoading,
-    } = useContentStore();
-
     const { setAppError } = useAppStore();
+
+    const { data: statusData, refetch: refreshUserData, isLoading: loadingAuth } = useStatus();
+
+    const [user, accounts, liveStreams] = useMemo(
+        () => [statusData?.user, statusData?.accounts, statusData?.live_streams],
+        [statusData],
+    );
 
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [loadingLogout, setLoadingLogout] = useState(false);
 
-    const hasData = useMemo(() => !loading && user, [loading, user]);
-    const liveStream = useMemo(() => status?.live_streams?.find(() => true), [status]);
+    const liveStream = useMemo(() => liveStreams?.find(() => true), [liveStreams]);
     const isLive = useMemo(() => !!liveStream, [liveStream]);
-
-    async function refreshUserData() {
-        const { status: statusResponse, user: userResponse } = await getStatus();
-
-        log.debug('refreshing', { status: statusResponse, user: userResponse });
-
-        setStatus(statusResponse);
-        setUser(userResponse);
-        setLoading(false);
-    }
 
     async function performLogout() {
         setLoadingLogout(true);
@@ -64,16 +54,18 @@ export default function useAuth() {
     return {
         // User state
         user,
-        status,
-        hasData,
+        accounts,
+        liveStreams,
         liveStream,
         isLive,
+        loadingAuth,
+        // Query
         refreshUserData,
         // Login
         loadingLogin,
         login: performLogin,
         // Logout
-        logout: loadingLogout,
-        performLogout,
+        loadingLogout,
+        logout: performLogout,
     };
 }

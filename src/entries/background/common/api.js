@@ -1,4 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
+import browser from 'webextension-polyfill';
 import { storageGetToken, storageGetUser } from '~/entries/background/common/storage';
+import { REACTION_POLICY_GET } from '~/messages';
 
 export async function api(url, opts) {
     const options = opts;
@@ -30,6 +33,18 @@ export async function api(url, opts) {
         status: response.status,
         data: await response.json(),
     };
+}
+
+export async function getExtensionStatus() {
+    return api('extension/status', {
+        token: await storageGetToken(),
+    });
+}
+
+export async function getAuthenticatedUser({ token }) {
+    return api('users/@me', {
+        token,
+    });
 }
 
 export async function searchSuggestionAccounts({ query }) {
@@ -91,4 +106,19 @@ export async function getContentRatings({ videoUrl }) {
     });
 
     return ratings;
+}
+
+export async function createPlaybackProgress({ data, liveStreamId }) {
+    const items = [{
+        timestamp: Math.round(data.timestamp),
+        created_at: data.date,
+        original_url: data.url,
+        stream_id: liveStreamId,
+    }];
+
+    await api('extension/playback', {
+        token: await storageGetToken(),
+        method: 'post',
+        json: { items },
+    });
 }

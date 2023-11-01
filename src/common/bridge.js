@@ -45,9 +45,9 @@ export async function getWatchedReactions(data) {
 }
 
 export async function getStatus() {
-    const data = await browser.runtime.sendMessage({ type: GET_STATUS });
+    const { data } = await browser.runtime.sendMessage({ type: GET_STATUS });
 
-    return { status: data?.status, user: data?.user };
+    return data || null;
 }
 
 export async function submitReaction(data) {
@@ -64,6 +64,17 @@ export async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
     const data = await browser.runtime.sendMessage({ type: REACTION_POLICY_GET, data: { videoUrl, channelUrl } });
 
     return { data: data?.data };
+}
+
+// ------------------------------------------------------------------------------------------------------------------------
+// Hooks
+// ------------------------------------------------------------------------------------------------------------------------
+
+export function useStatus() {
+    return useQuery({
+        queryKey: ['status'],
+        queryFn: () => getStatus(),
+    });
 }
 
 export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {

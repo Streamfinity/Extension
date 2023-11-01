@@ -80,7 +80,7 @@ AppContainer.defaultProps = {
 
 function App() {
     const {
-        user, refreshUserData, loading: loadingStatus, hasData, liveStream, isLive, login, logout,
+        user, refreshUserData, loadingAuth, liveStream, isLive, login, logout,
     } = useAuth();
 
     const { setCurrentUrl } = useAppStore();
@@ -156,13 +156,13 @@ function App() {
                     <button
                         type="button"
                         onClick={login}
-                        disabled={loadingStatus}
+                        disabled={loadingAuth}
                         className={classNames(
-                            loadingStatus && 'opacity-50',
+                            loadingAuth && 'opacity-50',
                             'w-full font-medium rounded-full px-6 h-[36px] bg-primary-500 hover:bg-primary-600 transition-colors text-center text-white',
                         )}
                     >
-                        {loadingStatus ? 'Loading...' : 'Login with Streamfinity'}
+                        {loadingAuth ? 'Loading...' : 'Login with Streamfinity'}
                     </button>
 
                     <p className="text-sm text-gray-500">
@@ -194,7 +194,7 @@ function App() {
         )}
         >
 
-            {hasData && (
+            {user && (
                 <LiveStatusNotice
                     liveStream={liveStream}
                     isLive={isLive}
@@ -240,7 +240,7 @@ function App() {
                 </>
             )}
 
-            {hasData && (
+            {user && (
                 <a
                     href={buildFrontendUrl('/dashboard')}
                     target="_blank"
