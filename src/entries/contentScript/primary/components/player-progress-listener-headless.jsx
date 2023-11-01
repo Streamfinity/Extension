@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 import { usePage } from '~/hooks/usePage';
 import { INTERVAL_SEND_PLAYER_PROGRESS } from '~/config';
