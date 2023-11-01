@@ -92,7 +92,7 @@ export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
 
     return {
         ...query,
-        item: query.data?.data,
+        data: query.data?.data,
     };
 }
 
@@ -107,6 +107,6 @@ export function useContentRatings({ videoUrl }) {
 
     return {
         ...query,
-        items: query.data?.data,
+        data: query.data?.data,
     };
 }
