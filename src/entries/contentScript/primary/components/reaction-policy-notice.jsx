@@ -121,7 +121,7 @@ NoticeLine.defaultProps = {
 function ReactionPolicyNotice() {
     const { currentUrl } = usePage();
 
-    const { item: policy, isLoading } = useReactionPolicyForVideo({
+    const { data: policy, isLoading } = useReactionPolicyForVideo({
         videoUrl: currentUrl,
         channelUrl: getCurrentVideoChannel(),
     });

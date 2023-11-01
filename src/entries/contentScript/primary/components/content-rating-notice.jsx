@@ -62,7 +62,7 @@ function ContentRatingNotice() {
 
     // API
 
-    const { items: contentRatings } = useContentRatings({ videoUrl: currentUrl });
+    const { data: contentRatings } = useContentRatings({ videoUrl: currentUrl });
 
     const computedContentRatings = useMemo(() => contentRatings?.map((segment) => {
         if (!playerProgress) {
