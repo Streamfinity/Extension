@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { findVideoPlayerBar } from '~/common/utility';
+import { findVideoPlayerBar, findYouTubePlayer } from '~/common/utility';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import { createLogger } from '~/common/log';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
@@ -13,12 +13,19 @@ function ContentRatingNotice() {
     const [playerBarElement, setPlayerBarElement] = useState(null);
     const [initialized, setInitialized] = useState(false);
 
-    function initContentRating(element) {
+    async function displayContentRatingSegmentsInPlayer(segments) {
         if (initialized) {
             return;
         }
 
+        log.debug('spitting into player', segments);
+
         setInitialized(true);
+
+        const player = await findYouTubePlayer();
+        const playBar = await findVideoPlayerBar();
+
+        console.log(player, playBar);
 
         const foo = document.createElement('div');
         foo.style.position = 'absolute';
@@ -29,7 +36,7 @@ function ContentRatingNotice() {
         foo.style.zIndex = '60';
         foo.style.backgroundColor = '#2563eb';
 
-        element.append(foo);
+        parentElement.append(foo);
 
         log.debug('appended segments');
     }
@@ -57,11 +64,15 @@ function ContentRatingNotice() {
         return () => clear();
     }, []);
 
+    // Listen for content rating results and mount in player
+
     useEffect(() => {
-        if (playerBarElement) {
-            initContentRating(playerBarElement);
+        if (!contentRatings?.length || !playerBarElement) {
+            return;
         }
-    }, [playerBarElement]);
+
+        displayContentRatingSegmentsInPlayer(contentRatings, playerBarElement);
+    }, [contentRatings, playerBarElement]);
 
     if (!contentRatings || contentRatings.length === 0) {
         return (<div />);

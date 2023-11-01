@@ -26,7 +26,7 @@ function bindWindowEvents() {
 }
 
 async function appendShadowRootToDom(appContainer) {
-    const [findParentFunc] = retryFind(
+    const parent = await retryFind(
         () => {
             const el = document.querySelector('#related');
             return (el?.firstChild) ? el : null;
@@ -34,8 +34,6 @@ async function appendShadowRootToDom(appContainer) {
         300,
         100,
     );
-
-    const parent = await findParentFunc();
 
     if (!parent.querySelector('#streamfinity')) {
         parent.prepend(appContainer);

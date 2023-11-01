@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
 import { reactionPolicyEnum } from '~/enums';
-import { findCurrentVideoPublishDate, findCurrentVideoChannel } from '~/common/utility';
+import { getCurrentVideoPublishDate, getCurrentVideoChannel } from '~/common/utility';
 import { childrenShape } from '~/shapes';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
@@ -122,14 +122,14 @@ function ReactionPolicyNotice() {
 
     const { item: policy, isLoading } = useReactionPolicyForVideo({
         videoUrl: currentUrl,
-        channelUrl: findCurrentVideoChannel(),
+        channelUrl: getCurrentVideoChannel(),
     });
 
     const [liveCountdownDuration, setLiveCountdownDuration] = useState(null);
     const [videoCountdownDuration, setVideoCountdownDuration] = useState(null);
 
     useEffect(() => {
-        const publishDate = findCurrentVideoPublishDate();
+        const publishDate = getCurrentVideoPublishDate();
 
         if (!policy) {
             return () => {};

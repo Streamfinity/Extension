@@ -14,40 +14,13 @@ export function getIdFromLink(link) {
     return match.groups.id;
 }
 
-export function getYouTubePlayer() {
-    return document.querySelector('video.video-stream.html5-main-video');
-}
-
-export function findCurrentVideoChannel() {
-    const channelNameElement = document.querySelector('ytd-channel-name#channel-name a[href]');
-    if (channelNameElement) {
-        return channelNameElement.href;
-    }
-
-    const channelAvatarElement = document.querySelector('ytd-video-owner-renderer > a[href]');
-    if (channelAvatarElement) {
-        return channelAvatarElement.href;
-    }
-
-    return null;
-}
-
-export function findCurrentVideoPublishDate() {
-    const metaPublish = document.querySelector('meta[itemprop="datePublished"]');
-    if (metaPublish) {
-        return moment(metaPublish.content);
-    }
-
-    return null;
-}
-
 /**
  * @param callback
  * @param {number} intervalMs
  * @param {number} maxTries
  * @returns {(Promise<HTMLElement>|function)[]}
  */
-export function retryFind(callback, intervalMs = 300, maxTries = 300) {
+export function retryFindWithClearFn(callback, intervalMs = 300, maxTries = 300) {
     let intervalId;
     let tries = 0;
 
@@ -78,8 +51,59 @@ export function retryFind(callback, intervalMs = 300, maxTries = 300) {
     ];
 }
 
-export function findVideoPlayerBar(interval = 300, maxTries = 300) {
+/**
+ * @param callback
+ * @param {number} intervalMs
+ * @param {number} maxTries
+ * @returns {Promise<HTMLElement>}
+ */
+export async function retryFind(callback, intervalMs = 300, maxTries = 300) {
+    const [findFn, clearFn] = retryFindWithClearFn(callback, intervalMs, maxTries);
+
+    return findFn;
+}
+
+// Get elements on page
+
+export function getYouTubePlayer() {
+    return document.querySelector('video.video-stream.html5-main-video');
+}
+
+export function getCurrentVideoChannel() {
+    const channelNameElement = document.querySelector('ytd-channel-name#channel-name a[href]');
+    if (channelNameElement) {
+        return channelNameElement.href;
+    }
+
+    const channelAvatarElement = document.querySelector('ytd-video-owner-renderer > a[href]');
+    if (channelAvatarElement) {
+        return channelAvatarElement.href;
+    }
+
+    return null;
+}
+
+export function getCurrentVideoPublishDate() {
+    const metaPublish = document.querySelector('meta[itemprop="datePublished"]');
+    if (metaPublish) {
+        return moment(metaPublish.content);
+    }
+
+    return null;
+}
+
+// Retry find elements on page
+
+export function findYouTubePlayer(interval = 300, maxTries = 300) {
     return retryFind(
+        () => getYouTubePlayer(),
+        interval,
+        maxTries,
+    );
+}
+
+export function findVideoPlayerBar(interval = 300, maxTries = 300) {
+    return retryFindWithClearFn(
         () => document.querySelector('.ytp-progress-bar-container .ytp-progress-bar .ytp-progress-list'),
         interval,
         maxTries,
