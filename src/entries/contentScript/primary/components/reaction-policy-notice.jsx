@@ -7,7 +7,6 @@ import { getCurrentVideoPublishDate, getCurrentVideoChannel } from '~/common/uti
 import { childrenShape } from '~/shapes';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
-import { useAppStore } from '~/entries/contentScript/primary/state';
 import { usePage } from '~/hooks/usePage';
 
 const STATUS_ALLOWED = 0;
