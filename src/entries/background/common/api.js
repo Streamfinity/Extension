@@ -83,6 +83,18 @@ export async function submitReaction(data) {
     return response;
 }
 
+export async function getReactionsForVideo({ videoUrl }) {
+    const { data: policy } = await api('reactions/to-video', {
+        token: await storageGetToken(),
+        query: {
+            video_url: videoUrl,
+            only_followed: 1,
+        },
+    });
+
+    return policy;
+}
+
 export async function getReactionPolicy({ videoUrl, channelUrl }) {
     const { data: policy } = await api('reaction-policies/for-video', {
         query: {

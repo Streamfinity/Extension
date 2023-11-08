@@ -3,7 +3,17 @@
 import browser from 'webextension-polyfill';
 import { useQuery } from '@tanstack/react-query';
 import {
-    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT, WATCHED_REACTIONS_GET, PLAYER_PROGRESS, GET_STATUS, REACTION_SUBMIT, REACTION_POLICY_GET, LOGOUT, LOGIN, CONTENT_RATINGS_GET,
+    SUGGESTIONS_SEARCH_ACCOUNT,
+    SUGGESTIONS_SUBMIT,
+    WATCHED_REACTIONS_GET,
+    PLAYER_PROGRESS,
+    GET_STATUS,
+    REACTION_SUBMIT,
+    REACTION_POLICY_GET,
+    LOGOUT,
+    LOGIN,
+    CONTENT_RATINGS_GET,
+    REACTIONS_GET_FOR_VIDEO,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -101,6 +111,21 @@ export function useContentRatings({ videoUrl }) {
         queryKey: ['content-ratings', videoUrl],
         queryFn: () => browser.runtime.sendMessage({
             type: CONTENT_RATINGS_GET, data: { videoUrl },
+        }),
+        enabled: !!videoUrl,
+    });
+
+    return {
+        ...query,
+        data: query.data?.data,
+    };
+}
+
+export function useReactions({ videoUrl }) {
+    const query = useQuery({
+        queryKey: ['reactions-for-video', videoUrl],
+        queryFn: () => browser.runtime.sendMessage({
+            type: REACTIONS_GET_FOR_VIDEO, data: { videoUrl },
         }),
         enabled: !!videoUrl,
     });

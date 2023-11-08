@@ -7,4 +7,5 @@ export const SUGGESTIONS_SUBMIT = 'suggestions.submit';
 export const WATCHED_REACTIONS_GET = 'watched-reactions.get';
 export const REACTION_SUBMIT = 'reaction-suggestion.submit';
 export const REACTION_POLICY_GET = 'reaction-policy.get';
+export const REACTIONS_GET_FOR_VIDEO = 'reactions-for-video.submit';
 export const CONTENT_RATINGS_GET = 'content-ratings.get';

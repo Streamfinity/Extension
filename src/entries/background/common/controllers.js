@@ -7,7 +7,7 @@ import {
     getReactionPolicy,
     getContentRatings,
     createPlaybackProgress,
-    getExtensionStatus, getAuthenticatedUser,
+    getExtensionStatus, getAuthenticatedUser, getReactionsForVideo,
 } from '~/entries/background/common/api';
 import {
     storageGetToken, clearStorage, storageGetAll, storageSetToken,
@@ -21,7 +21,7 @@ import {
     WATCHED_REACTIONS_GET,
     REACTION_SUBMIT,
     REACTION_POLICY_GET,
-    LOGIN, CONTENT_RATINGS_GET,
+    LOGIN, CONTENT_RATINGS_GET, REACTIONS_GET_FOR_VIDEO,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 import { why } from '~/common/pretty';
@@ -164,6 +164,8 @@ async function getResponse(type, data) {
         return getReactionPolicy(data);
     case CONTENT_RATINGS_GET:
         return getContentRatings(data);
+    case REACTIONS_GET_FOR_VIDEO:
+        return getReactionsForVideo(data);
     default:
         return null;
     }
