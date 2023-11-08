@@ -6,13 +6,6 @@ export const STORAGE_TOKEN = 'token';
 export const STORAGE_TOKEN_EXPIRES = 'tokenExpiresIn';
 export const STORAGE_USER = 'user';
 
-const authDefaults = {
-    loggedIn: false,
-    token: null,
-    tokenExpires: null,
-    userId: null,
-};
-
 export async function storageSetToken(token) {
     await browser.storage.sync.set({ [STORAGE_TOKEN]: token });
 }

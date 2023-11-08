@@ -169,7 +169,7 @@ async function getResponse(type, data) {
     }
 }
 
-export async function handleMessage(msg, sender, sendResponse) {
+export async function handleMessage(msg) {
     if (typeof msg !== 'object') {
         log.warn('message is not an object', { msg });
         return Promise.resolve();

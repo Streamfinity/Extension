@@ -1,7 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
-import browser from 'webextension-polyfill';
-import { storageGetToken, storageGetUser } from '~/entries/background/common/storage';
-import { REACTION_POLICY_GET } from '~/messages';
+import { storageGetToken } from '~/entries/background/common/storage';
 
 export async function api(url, opts) {
     const options = opts;

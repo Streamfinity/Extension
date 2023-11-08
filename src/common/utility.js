@@ -58,7 +58,7 @@ export function retryFindWithClearFn(callback, intervalMs = 300, maxTries = 300)
  * @returns {Promise<HTMLElement>}
  */
 export async function retryFind(callback, intervalMs = 300, maxTries = 300) {
-    const [findFn, clearFn] = retryFindWithClearFn(callback, intervalMs, maxTries);
+    const [findFn] = retryFindWithClearFn(callback, intervalMs, maxTries);
 
     const found = await findFn();
     return found;

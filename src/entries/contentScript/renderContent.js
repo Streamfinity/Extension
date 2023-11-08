@@ -1,8 +1,6 @@
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
-import { INTERVAL_SEND_PLAYER_PROGRESS, INTERVAL_WATCHED_REACTIONS_FIND } from '~/config';
-import { getWatchedReactions, sendPlayerProgress } from '~/common/bridge';
-import { getIdFromLink, retryFind } from '~/common/utility';
+import { retryFind } from '~/common/utility';
 import { WINDOW_NAVIGATE } from '~/events';
 
 const log = createLogger('Content-Script');
