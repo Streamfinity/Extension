@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './page-content.css';
-import logo from '~/assets/logo.svg';
+import logo from '~/assets/Logo-Dark.svg';
 import { childrenShape } from '~/shapes';
 
 function PageContent({ children }) {
