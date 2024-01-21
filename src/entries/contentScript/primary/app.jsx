@@ -21,52 +21,65 @@ import LiveStatusNotice from '~/entries/contentScript/primary/components/live-st
 import ReactionsNotice from '~/entries/contentScript/primary/components/reactions-notice';
 import WatchedVideosHeadless from '~/entries/contentScript/primary/components/watched-videos-headless';
 import PlayerProgressListenerHeadless from '~/entries/contentScript/primary/components/player-progress-listener-headless';
+import logo from '~/assets/Logo-Dark-400.png';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
 
 function AppContainer({ children, user }) {
     const { appError, setAppError } = useAppStore();
+    const imageUrl = new URL(logo, import.meta.url).href;
 
     return (
-        <div className="relative mb-6 text-base rounded-[10px] p-[12px] overflow-y-auto
+        <div>
+            <div className="p-[2px] mb-6 rounded-[12px] overflow-y-auto bg-gradient-to-br from-primary-gradient-from to-primary-gradient-to">
+                <div className="relative text-base rounded-[10px] p-[16px]
                         flex flex-col gap-4
-                        bg-black/[0.05] dark:bg-neutral-800/30 dark:border dark:border-neutral-700
+                        bg-white dark:bg-neutral-800/30 dark:border dark:border-neutral-700
                         text-gray-900 dark:text-white
                         dark:shadow-lg dark:shadow-white/5"
-        >
-            <div className="flex justify-between items-center mb-4">
-                <div className="text-4xl font-semibold">
-                    Streamfinity
-                </div>
-                {user}
-            </div>
-
-            {appError && (
-                <div className="px-4 py-2 bg-red-100 border border-red-200 rounded-xl text-sm text-red-950">
-                    <div className="flex">
-                        <div className="grow">
-                            Error:
-                            {' '}
-                            {why(appError)}
+                >
+                    <div className="flex justify-between items-center mb-4">
+                        <div className="flex items-center gap-4">
+                            <img
+                                src={imageUrl}
+                                className="h-9 w-9"
+                                alt="Logo"
+                            />
+                            <div className="text-4xl font-semibold">
+                                Streamfinity Copilot
+                            </div>
                         </div>
-                        <button
-                            type="button"
-                            onClick={() => setAppError(null)}
-                            className="shrink pl-2 font-bold"
-                        >
-                            OK
-                        </button>
+                        {user}
                     </div>
-                </div>
-            )}
 
-            {children}
+                    {appError && (
+                        <div className="px-4 py-2 bg-red-100 border border-red-200 rounded-xl text-sm text-red-950">
+                            <div className="flex">
+                                <div className="grow">
+                                    Error:
+                                    {' '}
+                                    {why(appError)}
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setAppError(null)}
+                                    className="shrink pl-2 font-bold"
+                                >
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {children}
+
+                </div>
+            </div>
 
             {dev && (
                 <DevTools />
             )}
-
         </div>
     );
 }
@@ -152,7 +165,7 @@ function App() {
                         disabled={loadingAuth}
                         className={classNames(
                             loadingAuth && 'opacity-50',
-                            'w-full font-medium rounded-full px-6 h-[36px] bg-primary-500 hover:bg-primary-600 transition-colors text-center text-white',
+                            'w-full font-medium rounded-full px-6 h-[36px] bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to hover:bg-primary-600 transition-colors text-center text-black',
                         )}
                     >
                         {loadingAuth ? 'Loading...' : 'Login with Streamfinity'}

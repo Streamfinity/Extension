@@ -16,7 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "@samrum/vite-plugin-web-extension": "^5.1.0",
-    "@streamfinity/streamfinity-branding": "^1.0.9",
+    "@streamfinity/streamfinity-branding": "^1.0.10",
     "@types/chrome": "^0.0.258",
     "@types/webextension-polyfill": "^0.10.7",
     "@vitejs/plugin-react": "^3.0.1",
