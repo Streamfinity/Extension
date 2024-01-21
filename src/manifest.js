@@ -50,9 +50,8 @@ const sharedManifest = {
 const browserAction = {
     default_icon: {
         16: 'icons/16.png',
-        19: 'icons/19.png',
         32: 'icons/32.png',
-        38: 'icons/38.png',
+        48: 'icons/48.png',
     },
     default_popup: 'src/entries/popup/index.html',
 };
