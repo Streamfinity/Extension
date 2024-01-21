@@ -10,7 +10,8 @@
     "dev": "vite",
     "serve:firefox": "web-ext run --start-url \"about:debugging#/runtime/this-firefox\"  --source-dir ./dist/",
     "serve:chrome": "web-ext run -t chromium --start-url \"https://google.com\" --source-dir ./dist/",
-    "lint": "eslint --ext .js,.vue,.jsx,.tsx ."
+    "lint": "eslint --ext .js,.vue,.jsx,.tsx .",
+    "outdated": "bunx npm-check-updates"
   },
   "license": "MIT",
   "devDependencies": {
