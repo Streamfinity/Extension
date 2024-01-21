@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@samrum/vite-plugin-web-extension": "^5.0.0",
+    "@samrum/vite-plugin-web-extension": "^5.1.0",
     "@streamfinity/streamfinity-branding": "^1.0.9",
     "@types/chrome": "^0.0.237",
     "@types/webextension-polyfill": "^0.10.0",
@@ -36,7 +36,7 @@
     "web-ext": "^7.4.0"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.4.3",
+    "@tanstack/react-query": "^5.17.19",
     "axios": "^1.3.4",
     "dotenv": "^16.0.3",
     "moment": "^2.29.4",
