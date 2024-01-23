@@ -35,30 +35,31 @@ function Notice({
             color={cardColor}
             className={classNames(
                 className,
-                'text-sm dark:text-white/60 text-gray-800 leading-normal',
+                'text-sm dark:text-white/60 text-gray-800 leading-normal flex flex-col gap-3',
             )}
         >
-            {title && (
-                <div className="mb-3">
-                    The Content Creator has set conditions for reactions.
+            <div>
+                {title || 'The Content Creator has set conditions for reactions.'}
+            </div>
+
+            {description && (
+                <div className="text-sm">
+                    {description}
                 </div>
             )}
-
-            <div className="text-sm">
-                {description}
-            </div>
         </Card>
     );
 }
 
 Notice.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     description: childrenShape.isRequired,
     className: PropTypes.string,
     cardColor: PropTypes.string.isRequired,
 };
 
 Notice.defaultProps = {
+    title: null,
     className: '',
 };
 
@@ -260,7 +261,6 @@ function ReactionPolicyNotice() {
             <Notice
                 cardColor="default"
                 title="Loading..."
-                description="asdasd"
             />
         );
     }
@@ -269,8 +269,7 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="default"
-                title="No Reaction Policy"
-                description="The content creator has not defined a reaction policy"
+                title="The Content Creator has not set conditions for reactions."
             />
         );
     }
@@ -281,7 +280,6 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="green"
-                title="Reactions Allowed"
                 description={(
                     <div className="flex flex-col gap-4">
                         <NoticeLine
@@ -301,7 +299,6 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="red"
-                title="Reactions Not Allowed"
                 description={(
                     <div className="flex flex-col gap-4">
                         <NoticeLine
@@ -321,7 +318,6 @@ function ReactionPolicyNotice() {
     return (
         <Notice
             cardColor="yellow"
-            title="Conditions Policy"
             description={(
                 <div className="flex flex-col gap-4">
                     <NoticeLine
