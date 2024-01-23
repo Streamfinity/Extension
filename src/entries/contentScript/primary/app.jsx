@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useAuth from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/primary/components/submit-suggestion-modal';
-import H2Header from '~/entries/contentScript/primary/components/h2-header';
 import Button from '~/entries/contentScript/primary/components/button';
 import DevTools from '~/entries/contentScript/primary/components/dev-tools';
 import Overlay from '~/entries/contentScript/primary/components/overlay';
