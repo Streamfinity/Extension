@@ -182,7 +182,7 @@ function ReactionPolicyNotice() {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [policy]);
 
     const videoStatus = useMemo(() => {
         if (!policy) {

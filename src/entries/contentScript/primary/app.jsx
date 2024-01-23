@@ -208,7 +208,7 @@ function App() {
                         <div className="flex grow items-end">
                             <Button
                                 color="gray"
-                                className="w-full rounded-xl"
+                                className="w-full"
                                 onClick={() => setShowMarkReactionModal(true)}
                             >
                                 Mark as Reaction
@@ -225,7 +225,7 @@ function App() {
                         <div className="flex grow items-end">
                             <Button
                                 color="gray"
-                                className="w-full rounded-xl"
+                                className="w-full"
                                 onClick={() => setShowSubmitSuggestionModal(true)}
                             >
                                 Submit as Suggestion
