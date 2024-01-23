@@ -25,6 +25,7 @@ function Card({
         green: 'border border-positive-500 bg-positive-400/10',
         red: 'border border-negative-500 bg-negative-400/10',
         yellow: 'border border-warning-500 bg-warning-400/[0.15] text-gray-900',
+        'primary-gradient': 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
     }[color];
 
     return (
@@ -46,6 +47,7 @@ Card.propTypes = {
         'green',
         'red',
         'yellow',
+        'primary-gradient',
     ]),
     rounded: PropTypes.bool,
     children: childrenShape.isRequired,

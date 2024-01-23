@@ -54,7 +54,7 @@ function WatchedVideosHeadless() {
     }, [currentUrl, user]);
 
     return (
-        <div />
+        null
     );
 }
 

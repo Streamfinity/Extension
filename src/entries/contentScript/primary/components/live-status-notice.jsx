@@ -13,7 +13,8 @@ function LiveStatusNotice({ isLive, liveStream }) {
             >
                 <Card
                     rounded
-                    color="red"
+                    color="primary-gradient"
+                    className="text-sm font-medium"
                 >
                     You are live
                     {liveStream && ` on ${liveStream?.service?.title} (${liveStream?.account?.display_name})`}

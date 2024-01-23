@@ -196,50 +196,60 @@ function App() {
             <PlayerProgressListenerHeadless />
 
             {user && (
-                <>
-
-                    <H2Header>
-                        Actions
-                    </H2Header>
-
-                    <div className="flex gap-4">
-                        <Button
-                            color="gray"
-                            onClick={() => setShowMarkReactionModal(true)}
-                        >
-                            Mark as reaction
-                        </Button>
-                        <Button
-                            color="gray"
-                            onClick={() => setShowSubmitSuggestionModal(true)}
-                        >
-                            Submit as suggestion
-                        </Button>
-                    </div>
-
-                </>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                    <Card className="flex flex-col gap-4">
+                        <h3 className="text-base font-medium">
+                            Reaction
+                        </h3>
+                        <p>
+                            If this video is a reaction to another type of content, you can help use by
+                            providing information.
+                        </p>
+                        <div className="flex grow items-end">
+                            <Button
+                                color="gray"
+                                className="w-full rounded-xl"
+                                onClick={() => setShowMarkReactionModal(true)}
+                            >
+                                Mark as Reaction
+                            </Button>
+                        </div>
+                    </Card>
+                    <Card className="flex flex-col gap-4">
+                        <h3 className="text-base font-medium">
+                            Suggestion
+                        </h3>
+                        <p>
+                            You can submit this video as a suggestion to your favorite streamers.
+                        </p>
+                        <div className="flex grow items-end">
+                            <Button
+                                color="gray"
+                                className="w-full rounded-xl"
+                                onClick={() => setShowSubmitSuggestionModal(true)}
+                            >
+                                Submit as Suggestion
+                            </Button>
+                        </div>
+                    </Card>
+                </div>
             )}
 
             {user && (
-                <div className="flex gap-4">
+                <div className="flex gap-4 text-sm text-gray-500 font-medium">
                     <a
                         href={buildFrontendUrl('/dashboard')}
                         target="_blank"
                         rel="noreferrer"
                         className="grow"
                     >
-                        <Card
-                            rounded
-                            className="text-sm"
-                        >
-                            Your Streamfinity Dashboard
-                        </Card>
+                        Your Streamfinity Dashboard
                     </a>
                     <button
                         onClick={onClickLogout}
                         type="button"
                     >
-                        <Card className="relative flex gap-4 rounded-full overflow-hidden cursor-pointer text-sm">
+                        <div className="relative flex overflow-hidden cursor-pointer">
                             {toggleLogout && (
                                 <div className="absolute left-0 top-0 w-full h-full flex items-center justify-center">
                                     Logout
@@ -248,7 +258,7 @@ function App() {
                             <div className={classNames(toggleLogout && 'invisible')}>
                                 {user.display_name}
                             </div>
-                        </Card>
+                        </div>
                     </button>
                 </div>
             )}

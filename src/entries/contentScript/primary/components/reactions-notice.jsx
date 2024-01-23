@@ -9,7 +9,7 @@ function ReactionsNotice() {
     const { data: reactions } = useReactions({ videoUrl: currentUrl });
 
     if (!reactions || reactions?.length === 0) {
-        return (<div />);
+        return (null);
     }
 
     return (

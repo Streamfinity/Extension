@@ -58,7 +58,7 @@ function PlayerProgressListenerHeadless() {
     }, [playerProgress]);
 
     return (
-        <div />
+        null
     );
 }
 
