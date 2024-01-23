@@ -12,7 +12,6 @@ import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/primary/state';
 import ReactionPolicyNotice from '~/entries/contentScript/primary/components/reaction-policy-notice';
 import { buildFrontendUrl } from '~/common/utility';
-import ContentRatingNotice from '~/entries/contentScript/primary/components/content-rating-notice';
 import { childrenShape } from '~/shapes';
 import { WINDOW_NAVIGATE } from '~/events';
 import Card from '~/entries/contentScript/primary/components/card';
@@ -153,8 +152,6 @@ function App() {
 
                     <ReactionPolicyNotice />
 
-                    <ContentRatingNotice />
-
                     <p className="text-sm text-gray-500">
                         Get started by logging in with your YouTube account!
                     </p>
@@ -181,24 +178,7 @@ function App() {
     }
 
     return (
-        <AppContainer user={(
-            <button
-                onClick={onClickLogout}
-                type="button"
-            >
-                <Card className="relative flex gap-4 py-2 rounded-full overflow-hidden cursor-pointer">
-                    {toggleLogout && (
-                        <div className="absolute left-0 top-0 w-full h-full flex items-center justify-center">
-                            Logout
-                        </div>
-                    )}
-                    <div className={classNames(toggleLogout && 'invisible')}>
-                        {user.display_name}
-                    </div>
-                </Card>
-            </button>
-        )}
-        >
+        <AppContainer>
 
             {user && (
                 <LiveStatusNotice
@@ -209,8 +189,6 @@ function App() {
 
             <ReactionPolicyNotice />
 
-            <ContentRatingNotice />
-
             <ReactionsNotice />
 
             <WatchedVideosHeadless />
@@ -219,14 +197,6 @@ function App() {
 
             {user && (
                 <>
-
-                    <H2Header>
-                        Content Rating
-                    </H2Header>
-
-                    <Button color="gray">
-                        Add Rating
-                    </Button>
 
                     <H2Header>
                         Actions
@@ -251,15 +221,36 @@ function App() {
             )}
 
             {user && (
-                <a
-                    href={buildFrontendUrl('/dashboard')}
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    <Card rounded>
-                        Your Streamfinity Dashboard
-                    </Card>
-                </a>
+                <div className="flex gap-4">
+                    <a
+                        href={buildFrontendUrl('/dashboard')}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="grow"
+                    >
+                        <Card
+                            rounded
+                            className="text-sm"
+                        >
+                            Your Streamfinity Dashboard
+                        </Card>
+                    </a>
+                    <button
+                        onClick={onClickLogout}
+                        type="button"
+                    >
+                        <Card className="relative flex gap-4 rounded-full overflow-hidden cursor-pointer text-sm">
+                            {toggleLogout && (
+                                <div className="absolute left-0 top-0 w-full h-full flex items-center justify-center">
+                                    Logout
+                                </div>
+                            )}
+                            <div className={classNames(toggleLogout && 'invisible')}>
+                                {user.display_name}
+                            </div>
+                        </Card>
+                    </button>
+                </div>
             )}
 
             {showMarkReactionModal && (

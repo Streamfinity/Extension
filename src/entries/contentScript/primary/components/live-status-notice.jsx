@@ -16,7 +16,7 @@ function LiveStatusNotice({ isLive, liveStream }) {
                     color="red"
                 >
                     You are live
-                    {liveStream && ` on ${liveStream?.account?.display_name}`}
+                    {liveStream && ` on ${liveStream?.service?.title} (${liveStream?.account?.display_name})`}
                 </Card>
             </a>
         );
@@ -38,6 +38,9 @@ LiveStatusNotice.propTypes = {
         title: PropTypes.string,
         account: PropTypes.shape({
             display_name: PropTypes.string,
+        }),
+        service: PropTypes.shape({
+            title: PropTypes.string,
         }),
     }),
 };

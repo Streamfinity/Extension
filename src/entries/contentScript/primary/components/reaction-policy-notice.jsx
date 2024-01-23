@@ -38,9 +38,11 @@ function Notice({
                 'text-sm dark:text-white/60 text-gray-800 leading-normal',
             )}
         >
-            <CardTitle>
-                {title}
-            </CardTitle>
+            {title && (
+                <div className="mb-3">
+                    The Content Creator has set conditions for reactions.
+                </div>
+            )}
 
             <div className="text-sm">
                 {description}
@@ -61,43 +63,69 @@ Notice.defaultProps = {
 };
 
 function NoticeLine({
-    title, status, countdown, maxPercentage,
+    title, status, countdown, maxPercentage, comment,
 }) {
     return (
         <div>
-            <div className="font-semibold text-base">
+            <div className="font-semibold">
                 {title}
-                {' '}
-                Reactions
-                {' '}
             </div>
             {status === STATUS_ALLOWED && (
-                <div className="font-semibold text-green-500">
-                    Reactions Allowed!
+                <div className="flex items-center">
+                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20" />
+                    <div className="text-emerald-500 font-medium">
+                        No Restriction
+                    </div>
                 </div>
             )}
             {status === STATUS_DENIED && (
-                <div className="font-semibold text-red-500">
-                    Not allowed
+                <div className="flex items-center">
+                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
+                    <div className="text-red-500 font-medium">
+                        Not Allowed
+                    </div>
                 </div>
             )}
             {status === STATUS_ON_COUNTDOWN && (
-                <div className="font-semibold dark:text-orange-500 text-orange-800">
-                    Reactions allowed in:
-                    {' '}
-                    <span>
-                        {prettyFormatCountdown(countdown)}
-                    </span>
+                <div className="flex items-center">
+                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
+                    <div className="font-medium">
+                        <span className="text-red-500">
+                            Reactions allowed in:
+                        </span>
+                        {' '}
+                        <span>
+                            {prettyFormatCountdown(countdown)}
+                        </span>
+                    </div>
                 </div>
             )}
             {maxPercentage > 0 && (
-                <div className="font-semibold dark:text-orange-500 text-orange-800">
-                    Restrictions:
-                    {' '}
-                    You may only react to
-                    {' '}
-                    {maxPercentage}
-                    % of this video.
+                <div className="flex items-center">
+                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
+                    <div className="font-medium">
+                        <span className="dark:text-orange-500 text-orange-800">
+                            Notice:
+                        </span>
+                        {' '}
+                        You may only react to
+                        {' '}
+                        {maxPercentage}
+                        % of this video.
+                    </div>
+                </div>
+            )}
+
+            {comment && (
+                <div className="flex items-center">
+                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
+                    <div className="font-medium">
+                        <span className="dark:text-orange-500 text-orange-800">
+                            Notice:
+                        </span>
+                        {' '}
+                        {comment}
+                    </div>
                 </div>
             )}
         </div>
@@ -110,11 +138,13 @@ NoticeLine.propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     countdown: PropTypes.object,
     maxPercentage: PropTypes.number,
+    comment: PropTypes.string,
 };
 
 NoticeLine.defaultProps = {
     countdown: null,
     maxPercentage: null,
+    comment: null,
 };
 
 function ReactionPolicyNotice() {
@@ -251,9 +281,19 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="green"
-                className="text-center"
                 title="Reactions Allowed"
-                description="The content creator has approved live & video reactions"
+                description={(
+                    <div className="flex flex-col gap-4">
+                        <NoticeLine
+                            title="Live Reactions"
+                            status={STATUS_ALLOWED}
+                        />
+                        <NoticeLine
+                            title="Video Reactions"
+                            status={STATUS_ALLOWED}
+                        />
+                    </div>
+                )}
             />
         );
 
@@ -262,7 +302,18 @@ function ReactionPolicyNotice() {
             <Notice
                 cardColor="red"
                 title="Reactions Not Allowed"
-                description="The content creator asks not to reaction on to video"
+                description={(
+                    <div className="flex flex-col gap-4">
+                        <NoticeLine
+                            title="Live Reactions"
+                            status={STATUS_DENIED}
+                        />
+                        <NoticeLine
+                            title="Video Reactions"
+                            status={STATUS_DENIED}
+                        />
+                    </div>
+                )}
             />
         );
     }
@@ -273,20 +324,19 @@ function ReactionPolicyNotice() {
             title="Conditions Policy"
             description={(
                 <div className="flex flex-col gap-4">
-                    <p className="mb-2">
-                        The content creator has set conditions for reactions.
-                    </p>
                     <NoticeLine
-                        title="Live"
+                        title="Live Reactions"
                         status={liveStatus}
                         countdown={liveCountdownDuration}
                         maxPercentage={policy.live_max_percentage}
+                        comment={policy.comment}
                     />
                     <NoticeLine
-                        title="Video"
+                        title="Video Reactions"
                         status={videoStatus}
                         countdown={videoCountdownDuration}
                         maxPercentage={policy.video_max_percentage}
+                        comment={policy.comment}
                     />
                 </div>
             )}

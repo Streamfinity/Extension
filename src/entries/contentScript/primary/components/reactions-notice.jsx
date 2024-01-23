@@ -8,8 +8,6 @@ function ReactionsNotice() {
     const { currentUrl } = usePage();
     const { data: reactions } = useReactions({ videoUrl: currentUrl });
 
-    console.log(reactions);
-
     if (!reactions || reactions?.length === 0) {
         return (<div />);
     }
