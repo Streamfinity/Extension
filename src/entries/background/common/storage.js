@@ -20,15 +20,15 @@ export async function storageSetSettingVisible(visible) {
 // Getter
 
 export async function storageGetSettingVisible() {
-    return (await browser.storage.sync.get(STORAGE_SETTING_SCRIPT_VISIBLE)).invis;
+    return (await browser.storage.sync.get(STORAGE_SETTING_SCRIPT_VISIBLE))[STORAGE_SETTING_SCRIPT_VISIBLE] !== false;
 }
 
 export async function storageGetUser() {
-    return (await browser.storage.sync.get(STORAGE_USER)).user;
+    return (await browser.storage.sync.get(STORAGE_USER))[STORAGE_USER];
 }
 
 export async function storageGetToken() {
-    return (await browser.storage.sync.get(STORAGE_TOKEN)).token;
+    return (await browser.storage.sync.get(STORAGE_TOKEN))[STORAGE_TOKEN];
 }
 
 export function storageGetAll() {
