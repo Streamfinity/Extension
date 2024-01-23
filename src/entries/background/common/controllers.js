@@ -33,9 +33,9 @@ const log = createLogger('Background');
 let extensionStatus = {};
 
 async function sendMessageToContentScript(type, data = {}) {
-    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
 
-    await chrome.tabs.sendMessage(tab.id, {
+    await browser.tabs.sendMessage(tab.id, {
         type: EVENT_REFRESH_SETTINGS,
         data,
     });
