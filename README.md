@@ -89,10 +89,10 @@ _This is only possible if you are on Firefox Developer or Nightly Edition._
 
 ### Chrome
 
-- [Download](https://github.com/Streamfinity/Extension/releases) extension
+- [Download](https://github.com/Streamfinity/Extension/releases) extension (`*_mv3.zip`)
 - Open `chrome://extensions/` page
 - Toggle "**Developmer mode**" in the top right corner
-- Drag the `.zip` file into the browser window or select the extracted the parent folder via "Load unpacked"
+- Drag the `.zip` file into the browser window (or select the extracted the parent folder via "Load unpacked")
 
 ## Known Issues
 
