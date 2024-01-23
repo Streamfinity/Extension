@@ -20,16 +20,23 @@ import ReactionsNotice from '~/entries/contentScript/primary/components/reaction
 import WatchedVideosHeadless from '~/entries/contentScript/primary/components/watched-videos-headless';
 import PlayerProgressListenerHeadless from '~/entries/contentScript/primary/components/player-progress-listener-headless';
 import logo from '~/assets/Logo-Dark-400.png';
+import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
 
 function AppContainer({ children, user }) {
-    const { appError, setAppError } = useAppStore();
+    const { appError, isVisible, setAppError } = useAppStore();
+
     const imageUrl = new URL(logo, import.meta.url).href;
 
+    useBackgroundEvents();
+
     return (
-        <div>
+        <div className={classNames(
+            !isVisible && 'hidden',
+        )}
+        >
             <div className="p-[2px] mb-6 rounded-[12px] overflow-y-auto bg-gradient-to-br from-primary-gradient-from to-primary-gradient-to">
                 <div className="relative text-base rounded-[10px] p-[16px]
                         flex flex-col gap-4

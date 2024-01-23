@@ -10,18 +10,17 @@ import {
     getExtensionStatus, getAuthenticatedUser, getReactionsForVideo,
 } from '~/entries/background/common/api';
 import {
-    storageGetToken, clearStorage, storageGetAll, storageSetToken,
+    storageGetToken, clearStorage, storageGetAll, storageSetToken, storageSetSettingVisible,
 } from '~/entries/background/common/storage';
 import {
     GET_STATUS,
     PLAYER_PROGRESS,
     LOGOUT,
-    SUGGESTIONS_SEARCH_ACCOUNT,
-    SUGGESTIONS_SUBMIT,
+    SUGGESTIONS_SEARCH_ACCOUNT, SUGGESTIONS_SUBMIT,
     WATCHED_REACTIONS_GET,
-    REACTION_SUBMIT,
-    REACTION_POLICY_GET,
+    REACTION_SUBMIT, REACTION_POLICY_GET,
     LOGIN, CONTENT_RATINGS_GET, REACTIONS_GET_FOR_VIDEO,
+    SETTING_UPDATE_VISIBLE, EVENT_REFRESH_SETTINGS,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 import { why } from '~/common/pretty';
@@ -32,6 +31,15 @@ const log = createLogger('Background');
  * @type {{user}}
  */
 let extensionStatus = {};
+
+async function sendMessageToContentScript(type, data = {}) {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+
+    await chrome.tabs.sendMessage(tab.id, {
+        type: EVENT_REFRESH_SETTINGS,
+        data,
+    });
+}
 
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
@@ -138,6 +146,14 @@ async function login() {
     }
 }
 
+async function updateSettingUpdateVisible(data) {
+    await storageSetSettingVisible(data.visible);
+
+    await sendMessageToContentScript(EVENT_REFRESH_SETTINGS);
+
+    return {};
+}
+
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
@@ -166,6 +182,8 @@ async function getResponse(type, data) {
         return getContentRatings(data);
     case REACTIONS_GET_FOR_VIDEO:
         return getReactionsForVideo(data);
+    case SETTING_UPDATE_VISIBLE:
+        return updateSettingUpdateVisible(data);
     default:
         return null;
     }

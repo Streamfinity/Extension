@@ -13,7 +13,7 @@ import {
     LOGOUT,
     LOGIN,
     CONTENT_RATINGS_GET,
-    REACTIONS_GET_FOR_VIDEO,
+    REACTIONS_GET_FOR_VIDEO, SETTING_UPDATE_VISIBLE,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -74,6 +74,13 @@ export async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
     const data = await browser.runtime.sendMessage({ type: REACTION_POLICY_GET, data: { videoUrl, channelUrl } });
 
     return { data: data?.data };
+}
+
+export async function settingsUpdateVisible({ visible }) {
+    return browser.runtime.sendMessage({
+        type: SETTING_UPDATE_VISIBLE,
+        data: { visible },
+    });
 }
 
 // ------------------------------------------------------------------------------------------------------------------------

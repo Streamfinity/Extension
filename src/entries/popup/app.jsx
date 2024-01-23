@@ -5,6 +5,7 @@ import InfoView from '~/entries/popup/components/info-view';
 import SettingsView from '~/entries/popup/components/settings-view';
 import IndexView from '~/entries/popup/components/index-view';
 import useAuth from '~/hooks/useAuth';
+import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 
 const availableViews = [
     {
@@ -21,6 +22,8 @@ function App() {
     const ActiveViewComponent = activeView.component;
 
     const { user, refreshUserData, loadingAuth } = useAuth();
+
+    useBackgroundEvents();
 
     useEffect(() => {
         refreshUserData();

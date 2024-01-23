@@ -5,7 +5,7 @@ import moment from 'moment';
 import { reactionPolicyEnum } from '~/enums';
 import { getCurrentVideoPublishDate, getCurrentVideoChannel } from '~/common/utility';
 import { childrenShape } from '~/shapes';
-import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
+import Card from '~/entries/contentScript/primary/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
 import { usePage } from '~/hooks/usePage';
 
@@ -53,13 +53,14 @@ function Notice({
 
 Notice.propTypes = {
     title: PropTypes.string,
-    description: childrenShape.isRequired,
+    description: childrenShape,
     className: PropTypes.string,
     cardColor: PropTypes.string.isRequired,
 };
 
 Notice.defaultProps = {
     title: null,
+    description: null,
     className: '',
 };
 
