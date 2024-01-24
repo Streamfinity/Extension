@@ -54,7 +54,7 @@ jobs:
         run: cp .env.development .env.local
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -62,7 +62,7 @@ jobs:
         run: ./tag-version.sh ${{ github.ref_name }}
 
       - name: Build extension
-        run: bun run build
+        run: npm run build
         env:
           MANIFEST_VERSION: ${{ matrix.manifest_version }}
 
