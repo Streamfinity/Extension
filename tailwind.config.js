@@ -13,18 +13,6 @@ module.exports = {
         extend: {
             colors: {
                 gray: colors.neutral,
-                positive: {
-                    500: '#00F397',
-                    400: '#01FF94',
-                },
-                warning: {
-                    500: '#EBC257',
-                    400: '#FFA800',
-                },
-                negative: {
-                    500: '#EB5757',
-                    400: '#FF5C00',
-                },
             },
             fontSize: {
                 base: '14px',
