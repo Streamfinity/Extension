@@ -9,7 +9,7 @@
 ## Setup
 
 ```sh
-bun install
+npm install
 ```
 
 ### Create local env file
@@ -31,35 +31,40 @@ VITE_OAUTH_CLIENT_ID=
 #### Development, HMR
 
 Hot Module Reloading is used to load changes inline without requiring extension rebuilds and extension/page reloads
-Currently only works in Chromium based browsers.
+Currently **only works in Chromium based browsers**.
 ```sh
-bun run dev
+npm run dev
 ```
 
 #### Development, Watch
 
-Rebuilds extension on file changes. Requires a reload of the extension (and page reload if using content scripts)
+Rebuilds extension on file changes. Requires a reload of the extension (and page reload if using content scripts).
 ```sh
-bun run watch
+npm run watch
 ```
 
 #### Production
 
 Minifies and optimizes extension build
 ```sh
-bun run build
+npm run build
 ```
 
-### Load extension in browser
+## Load Extension in Browser
 
-Loads the contents of the dist directory into the specified browser
-```sh
-bun run serve:chrome
-```
+### Firefox
 
-```sh
-bun run serve:firefox
-```
+- Open [`about:debugging`](https://developer.mozilla.org/en-US/docs/Tools/about:debugging) page
+- Navigate to "**This Firefox**" tab
+- Click the "**Load Temporary Add-on...**" button
+- Navigate to the `dist/` folder of this repository
+
+### Chrome
+
+- Open `chrome://extensions/` page
+- Toggle "**Developmer mode**" in the top right corner
+- Click the "**Load unpacked**" button
+- Navigate to the `dist/` folder of this repository
 
 ## Installation
 
