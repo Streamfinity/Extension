@@ -174,10 +174,6 @@ function App() {
                         {loadingAuth ? 'Loading...' : 'Login with Streamfinity'}
                     </button>
 
-                    <p className="text-sm text-gray-500">
-                        By logging in you aggree to our Terms of Service and Privacy Policy.
-                    </p>
-
                 </div>
             </AppContainer>
         );
