@@ -14,14 +14,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - uses: oven-sh/setup-bun@v1
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: 18
 
       - name: Install dependencies
-        run: bun install
+        run: npm install
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Run linter
-        run: bun run lint
+        run: npm run lint
