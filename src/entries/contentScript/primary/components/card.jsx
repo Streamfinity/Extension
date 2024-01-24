@@ -5,7 +5,7 @@ import { childrenShape } from '~/shapes';
 
 function CardTitleComponent({ children }) {
     return (
-        <div className="mb-2 text-base font-semibold text-center">
+        <div className="mb-2 text-base font-medium">
             {children}
         </div>
     );

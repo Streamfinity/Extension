@@ -13,13 +13,14 @@ import ReactionPolicyNotice from '~/entries/contentScript/primary/components/rea
 import { buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
 import { WINDOW_NAVIGATE } from '~/events';
-import Card from '~/entries/contentScript/primary/components/card';
+import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 import { why } from '~/common/pretty';
 import LiveStatusNotice from '~/entries/contentScript/primary/components/live-status-notice';
 import ReactionsNotice from '~/entries/contentScript/primary/components/reactions-notice';
 import WatchedVideosHeadless from '~/entries/contentScript/primary/components/watched-videos-headless';
 import PlayerProgressListenerHeadless from '~/entries/contentScript/primary/components/player-progress-listener-headless';
-import logo from '~/assets/Logo-Dark-400.png';
+import logoDark from '~/assets/Logo-Dark-400.png';
+import logoWhite from '~/assets/Logo-Light-400.png';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 
 const log = createLogger('App');
@@ -28,7 +29,8 @@ const dev = import.meta.env.DEV;
 function AppContainer({ children, user }) {
     const { appError, isVisible, setAppError } = useAppStore();
 
-    const imageUrl = new URL(logo, import.meta.url).href;
+    const imageUrlDark = new URL(logoDark, import.meta.url).href;
+    const imageUrlLight = new URL(logoWhite, import.meta.url).href;
 
     useBackgroundEvents();
 
@@ -40,15 +42,20 @@ function AppContainer({ children, user }) {
             <div className="p-[2px] mb-6 rounded-[12px] overflow-y-auto bg-gradient-to-br from-primary-gradient-from to-primary-gradient-to">
                 <div className="relative text-base rounded-[10px] p-[16px]
                         flex flex-col gap-4
-                        bg-white dark:bg-neutral-800/30 dark:border dark:border-neutral-700
+                        bg-white dark:bg-black
                         text-gray-900 dark:text-white
                         dark:shadow-lg dark:shadow-white/5"
                 >
                     <div className="flex justify-between items-center mb-4">
                         <div className="flex items-center gap-4">
                             <img
-                                src={imageUrl}
-                                className="h-9 w-9"
+                                src={imageUrlDark}
+                                className="h-9 w-9 block dark:hidden"
+                                alt="Logo"
+                            />
+                            <img
+                                src={imageUrlLight}
+                                className="h-9 w-9 hidden dark:block"
                                 alt="Logo"
                             />
                             <div className="text-4xl font-semibold">
@@ -199,39 +206,43 @@ function App() {
 
             {user && (
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                    <Card className="flex flex-col gap-4">
-                        <h3 className="text-base font-medium">
+                    <Card className="flex flex-col">
+                        <CardTitle>
                             Reaction
-                        </h3>
-                        <p>
-                            If this video is a reaction to another type of content, you can help use by
-                            providing information.
-                        </p>
-                        <div className="flex grow items-end">
-                            <Button
-                                color="gray"
-                                className="w-full"
-                                onClick={() => setShowMarkReactionModal(true)}
-                            >
-                                Mark as Reaction
-                            </Button>
+                        </CardTitle>
+                        <div className="flex flex-col grow">
+                            <p>
+                                If this video is a reaction to another type of content, you can help use by
+                                providing information.
+                            </p>
+                            <div className="flex grow items-end mt-4">
+                                <Button
+                                    color="gray"
+                                    className="w-full"
+                                    onClick={() => setShowMarkReactionModal(true)}
+                                >
+                                    Mark as Reaction
+                                </Button>
+                            </div>
                         </div>
                     </Card>
-                    <Card className="flex flex-col gap-4">
-                        <h3 className="text-base font-medium">
+                    <Card className="flex flex-col">
+                        <CardTitle>
                             Suggestion
-                        </h3>
-                        <p>
-                            You can submit this video as a suggestion to your favorite streamers.
-                        </p>
-                        <div className="flex grow items-end">
-                            <Button
-                                color="gray"
-                                className="w-full"
-                                onClick={() => setShowSubmitSuggestionModal(true)}
-                            >
-                                Submit as Suggestion
-                            </Button>
+                        </CardTitle>
+                        <div className="flex flex-col grow">
+                            <p>
+                                You can submit this video as a suggestion to your favorite streamers.
+                            </p>
+                            <div className="flex grow items-end mt-4">
+                                <Button
+                                    color="gray"
+                                    className="w-full"
+                                    onClick={() => setShowSubmitSuggestionModal(true)}
+                                >
+                                    Submit as Suggestion
+                                </Button>
+                            </div>
                         </div>
                     </Card>
                 </div>
