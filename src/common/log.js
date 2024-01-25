@@ -1,5 +1,9 @@
 import moment from 'moment';
 
+/**
+ * Represents a logging utility with different log levels.
+ * @namespace log
+ */
 const log = {
     enabled: true,
     section: null,
@@ -35,6 +39,12 @@ const log = {
         },
     },
 
+    /**
+     * Logs a message with the specified log level.
+     *
+     * @param {string} level - The log level.
+     * @param {Array} args - The arguments to be logged.
+     */
     log(level, args) {
         if (!this.enabled) {
             return;
@@ -77,6 +87,13 @@ const log = {
     },
 };
 
+/**
+ * Creates a logger with the specified section and options.
+ * @param {string} section - The section name for the logger.
+ * @param {Object} options - The options for the logger.
+ * @param {Function} options.forwardCallback - The callback function to forward log messages.
+ * @returns {Object} The created logger object.
+ */
 export function createLogger(section, options = {}) {
     const logger = { ...log };
     logger.section = section;
