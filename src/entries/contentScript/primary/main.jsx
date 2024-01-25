@@ -1,3 +1,10 @@
+/**
+ * The main entry point for the content script.
+ * Renders the React app and provides the QueryClient for data fetching.
+ *
+ * @module ContentScriptMain
+ * @returns {void}
+ */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';

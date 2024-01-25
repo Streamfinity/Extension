@@ -1,3 +1,9 @@
+/**
+ * This file serves as the main entry point for the content script in the extension.
+ * It imports necessary dependencies, sets up the query client, and renders the main App component.
+ * The content script is responsible for injecting and rendering content into the web page.
+ */
+
 import '../enableDevHmr';
 import React from 'react';
 import { createRoot } from 'react-dom/client';

@@ -5,6 +5,23 @@ import { createLogger } from '~/common/log';
 
 const log = createLogger('useAuth');
 
+/**
+ * Custom hook for handling authentication.
+ *
+ * @returns {{
+ *   user: any,
+ *   accounts: any,
+ *   liveStreams: any,
+ *   liveStream: any,
+ *   isLive: boolean,
+ *   loadingAuth: boolean,
+ *   refreshUserData: () => Promise<void>,
+ *   loadingLogin: boolean,
+ *   login: () => Promise<void>,
+ *   loadingLogout: boolean,
+ *   logout: () => Promise<void>
+ * }}
+ */
 export default function useAuth() {
     const { setAppError } = useAppStore();
 

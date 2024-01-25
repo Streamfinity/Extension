@@ -1,3 +1,19 @@
+/**
+ * This file represents the manifest configuration for a browser extension.
+ * It defines the content scripts, icons, options UI, permissions, and other settings.
+ * The manifest can be generated for both Manifest V2 and Manifest V3.
+ * @module manifest
+ */
+
+/**
+ * Retrieves the manifest configuration based on the specified manifest version.
+ * @param {number} manifestVersion - The version of the manifest (2 or 3).
+ * @returns {Object} - The manifest configuration object.
+ * @throws {Error} - If the manifest definition is missing for the specified version.
+ */
+export function getManifest(manifestVersion) {
+    // ...
+}
 import * as dotenv from 'dotenv';
 import pkg from '../package.json';
 

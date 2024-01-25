@@ -26,6 +26,15 @@ import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackground
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
 
+/**
+ * Renders the main container component for the app.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The child components to render.
+ * @param {string} props.user - The user name.
+ * @returns {JSX.Element} The rendered component.
+ */
 function AppContainer({ children, user }) {
     const { appError, isVisible, setAppError } = useAppStore();
 
@@ -105,6 +114,12 @@ AppContainer.defaultProps = {
     user: null,
 };
 
+/**
+ * The main component of the application.
+ * Renders the user interface based on the user's authentication status and provides various functionalities.
+ *
+ * @returns {JSX.Element} The rendered application component.
+ */
 function App() {
     const {
         user, loadingAuth, liveStream, isLive, login, logout,

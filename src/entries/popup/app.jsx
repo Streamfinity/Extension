@@ -17,6 +17,11 @@ const availableViews = [
     },
 ];
 
+/**
+ * Represents the main component of the popup application.
+ *
+ * @returns {JSX.Element} The rendered App component.
+ */
 function App() {
     const [activeView, setActiveView] = useState(availableViews[0]);
     const ActiveViewComponent = activeView.component;

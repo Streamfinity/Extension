@@ -1,6 +1,11 @@
 import React from 'react';
 import useAuth from '~/hooks/useAuth';
 
+/**
+ * Renders the IndexView component.
+ *
+ * @returns {JSX.Element} The rendered IndexView component.
+ */
 function IndexView() {
     const { login, loadingLogin } = useAuth();
 

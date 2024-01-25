@@ -6,6 +6,13 @@ import { settingsUpdateVisible } from '~/common/bridge';
 
 import { useAppStore } from '~/entries/contentScript/primary/state';
 
+/**
+ * Renders the settings view component.
+ * 
+ * @param {Object} props - The component props.
+ * @param {Object} props.user - The user object.
+ * @returns {JSX.Element} The rendered component.
+ */
 function SettingsView({ user }) {
     const { logout, loadingLogout } = useAuth();
 

@@ -5,6 +5,9 @@ import { WINDOW_NAVIGATE } from '~/events';
 
 const log = createLogger('Content-Script');
 
+/**
+ * Binds window events and dispatches a custom event when the URL changes.
+ */
 function bindWindowEvents() {
     let currentUrl = window.location.href;
 
@@ -23,6 +26,12 @@ function bindWindowEvents() {
     }, 1000);
 }
 
+/**
+ * Appends the shadow root to the DOM.
+ * 
+ * @param {HTMLElement} appContainer - The container element for the shadow root.
+ * @returns {Promise<void>} - A promise that resolves when the shadow root is appended to the DOM.
+ */
 async function appendShadowRootToDom(appContainer) {
     const parent = await retryFind(
         () => {
@@ -40,6 +49,13 @@ async function appendShadowRootToDom(appContainer) {
     }
 }
 
+/**
+ * Renders the content of the application.
+ *
+ * @param {string[]} cssPaths - An array of CSS file paths.
+ * @param {Function} render - A function that renders the application content.
+ * @returns {Promise<void>} - A promise that resolves when the content is rendered.
+ */
 export async function renderContent(
     cssPaths,
     render = (_appRoot) => {},
