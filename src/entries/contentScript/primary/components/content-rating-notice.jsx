@@ -13,6 +13,14 @@ import { usePage } from '~/hooks/usePage';
 
 const log = createLogger('Content-Rating');
 
+/**
+ * Represents a component that displays content ratings and allows users to confirm or mark them as wrong.
+ *
+ * @component
+ * @example
+ * // Usage
+ * <ContentRatingNotice />
+ */
 function ContentRatingNotice() {
     const { currentUrl } = usePage();
 

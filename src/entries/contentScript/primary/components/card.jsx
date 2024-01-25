@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { childrenShape } from '~/shapes';
 
+/**
+ * Renders the title component for a card.
+ *
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The content to be rendered inside the title component.
+ * @returns {JSX.Element} The rendered title component.
+ */
 function CardTitleComponent({ children }) {
     return (
         <div className="mb-2 text-base font-medium">
@@ -17,6 +24,17 @@ CardTitleComponent.propTypes = {
 
 export const CardTitle = CardTitleComponent;
 
+/**
+ * Renders a card component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The content of the card.
+ * @param {string} props.color - The color of the card. Possible values: 'default', 'green', 'red', 'yellow', 'primary-gradient'.
+ * @param {boolean} props.rounded - Determines if the card should have rounded corners.
+ * @param {string} props.className - Additional CSS class names for the card.
+ * @returns {JSX.Element} The rendered card component.
+ */
 function Card({
     children, color, rounded, className,
 }) {

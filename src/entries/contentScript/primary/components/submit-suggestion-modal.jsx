@@ -10,6 +10,14 @@ const RESULTS_LOADING = 1;
 const RESULTS_EMPTY = 2;
 const RESULTS_OK = 3;
 
+/**
+ * A modal component for submitting a suggestion.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Function} props.onSubmit - The function to be called when the suggestion is submitted.
+ * @returns {JSX.Element} The JSX element representing the submit suggestion modal.
+ */
 function SubmitSuggestionModal({ onSubmit }) {
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
     const [suggestedAccounts, setSuggestedAccounts] = useState([]);

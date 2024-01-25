@@ -7,6 +7,11 @@ import useAuth from '~/hooks/useAuth';
 
 const log = createLogger('WatchedReactions');
 
+/**
+ * Marks the watched videos in the media elements.
+ * @param {Array} watchedVideos - The array of watched videos.
+ * @returns {void}
+ */
 function markElements(watchedVideos) {
     let countFound = 0;
     const mediaElements = document.querySelectorAll('ytd-rich-grid-media,ytd-playlist-video-renderer');
@@ -38,6 +43,11 @@ function markElements(watchedVideos) {
     log.debug('find watched reaction elements', countFound);
 }
 
+/**
+ * Renders the component for displaying watched videos.
+ *
+ * @returns {null} The rendered component.
+ */
 function WatchedVideosHeadless() {
     const { currentUrl } = usePage();
     const { user } = useAuth();

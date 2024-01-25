@@ -4,6 +4,11 @@ import { usePage } from '~/hooks/usePage';
 import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
 import { useReactions } from '~/common/bridge';
 
+/**
+ * Renders a notice component displaying reactions to a video.
+ *
+ * @returns {JSX.Element} The ReactionsNotice component.
+ */
 function ReactionsNotice() {
     const { currentUrl } = usePage();
     const { data: reactions } = useReactions({ videoUrl: currentUrl });

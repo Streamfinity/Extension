@@ -7,6 +7,10 @@ import { sendPlayerProgress } from '~/common/bridge';
 
 const log = createLogger('PlayerProgress');
 
+/**
+ * PlayerProgressListenerHeadless component.
+ * Listens to the progress of the YouTube player and sends the progress to the server.
+ */
 function PlayerProgressListenerHeadless() {
     const { element: playerElement, progress: playerProgress } = useYouTubePlayer();
     const { currentUrl } = usePage();

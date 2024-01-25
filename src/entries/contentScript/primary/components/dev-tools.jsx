@@ -1,6 +1,11 @@
 import React from 'react';
 import useAuth from '~/hooks/useAuth';
 
+/**
+ * Renders the DevTools component.
+ *
+ * @returns {JSX.Element} The rendered DevTools component.
+ */
 function DevTools() {
     const {
         user, liveStreams, accounts, isLive,

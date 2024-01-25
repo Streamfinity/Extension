@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 import styles from '~/styles/input.module.css';
 import H3Header from '~/entries/contentScript/primary/components/h3-header';
 import Button from '~/entries/contentScript/primary/components/button';
-import { getYouTubePlayer } from '~/common/utility';
 import { prettyDuration } from '~/common/pretty';
 import { submitReaction } from '~/common/bridge';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 
+/**
+ * Represents a modal component for marking a reaction in a video.
+ * @param {Object} props - The component props.
+ * @param {Function} props.onSubmitted - The callback function to be called when the reaction is submitted.
+ * @returns {JSX.Element} The JSX element representing the MarkReactionModal component.
+ */
 function MarkReactionModal({ onSubmitted }) {
     const [loading, setLoading] = useState(false);
 

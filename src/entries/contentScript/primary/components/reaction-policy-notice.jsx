@@ -16,6 +16,11 @@ const STATUS_CONDITION = 2;
 const STATUS_ON_COUNTDOWN = 3;
 const STATUS_OTHER_CONDITION = 4;
 
+/**
+ * Formats the countdown difference into a pretty string representation.
+ * @param {number} diff - The difference in milliseconds.
+ * @returns {string} The formatted countdown string.
+ */
 function prettyFormatCountdown(diff) {
     const duration = moment.duration(diff);
 
@@ -27,6 +32,16 @@ function prettyFormatCountdown(diff) {
     return `${days}d ${hours}:${minutes}:${seconds}`;
 }
 
+/**
+ * Renders a notice component with a title and optional description.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.title - The title of the notice. If not provided, a default message will be displayed.
+ * @param {string} props.description - The description of the notice.
+ * @param {string} props.cardColor - The color of the card component.
+ * @param {string} props.className - Additional CSS class names for the notice component.
+ * @returns {JSX.Element} The rendered notice component.
+ */
 function Notice({
     title, description, cardColor, className,
 }) {

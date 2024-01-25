@@ -6,6 +6,26 @@ import classNames from 'classnames';
 import LoadingSpinner from '~/components/loading-spinner';
 import { childrenShape } from '~/shapes';
 
+/**
+ * Renders a button component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The content of the button.
+ * @param {ReactNode} props.icon - The icon element to be displayed in the button.
+ * @param {string} props.iconDir - The direction of the icon ('left' or 'right').
+ * @param {string} props.color - The color of the button.
+ * @param {boolean} props.sm - Whether the button should be small.
+ * @param {boolean} props.loading - Whether the button is in a loading state.
+ * @param {boolean} props.disabled - Whether the button is disabled.
+ * @param {string} props.href - The URL to navigate to when the button is clicked (if provided, the button will be rendered as an anchor element).
+ * @param {string} props.target - The target attribute for the anchor element.
+ * @param {string} props.hslaColor - The HSLA color value for custom button background and text color.
+ * @param {function} props.onClick - The click event handler for the button.
+ * @param {string} props.className - Additional CSS classes for the button.
+ * @param {string} props.type - The type attribute for the button element.
+ * @returns {JSX.Element} The rendered button component.
+ */
 function Button({
     children,
     icon,

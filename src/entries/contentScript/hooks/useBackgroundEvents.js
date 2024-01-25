@@ -7,6 +7,12 @@ import { createLogger } from '~/common/log';
 
 const log = createLogger('Background-Events');
 
+/**
+ * Refreshes the settings and updates the visibility state.
+ * @param {Object} options - The options object.
+ * @param {Function} options.setIsVisible - The function to set the visibility state.
+ * @returns {Promise<void>} - A promise that resolves when the settings are refreshed.
+ */
 async function refreshSettings({ setIsVisible }) {
     log.debug('refreshing settings...');
 
@@ -15,6 +21,11 @@ async function refreshSettings({ setIsVisible }) {
     );
 }
 
+/**
+ * Custom hook for handling background events.
+ *
+ * @returns {Object} An empty object.
+ */
 export function useBackgroundEvents() {
     const { setIsVisible } = useAppStore();
 
