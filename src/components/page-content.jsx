@@ -3,6 +3,13 @@ import './page-content.css';
 import logo from '~/assets/Logo-Dark.svg';
 import { childrenShape } from '~/shapes';
 
+/**
+ * Renders the page content with a logo, title, and a counter button.
+ * 
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The content to be rendered inside the component.
+ * @returns {JSX.Element} The rendered page content.
+ */
 function PageContent({ children }) {
     const imageUrl = new URL(logo, import.meta.url).href;
 
