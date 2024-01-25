@@ -32,6 +32,12 @@ const log = createLogger('Background');
  */
 let extensionStatus = {};
 
+/**
+ * Sends a message to the content script.
+ * @param {string} type - The type of the message.
+ * @param {Object} [data={}] - The data to be sent along with the message.
+ * @returns {Promise<void>} - A promise that resolves when the message is sent.
+ */
 async function sendMessageToContentScript(type, data = {}) {
     const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
 
@@ -45,6 +51,10 @@ async function sendMessageToContentScript(type, data = {}) {
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Retrieves the status of the extension.
+ * @returns {Promise<{ data: any }>} The status of the extension.
+ */
 async function getStatus() {
     const token = await storageGetToken();
 
@@ -61,12 +71,22 @@ async function getStatus() {
     };
 }
 
+/**
+ * Logs out the user.
+ * @returns {Promise<{ success: boolean }>} A promise that resolves to an object indicating the success of the logout operation.
+ */
 async function logout() {
     await clearStorage();
 
     return { success: true };
 }
 
+/**
+ * Sends the player progress data to the server.
+ * 
+ * @param {Object} data - The player progress data.
+ * @returns {Promise<void>} - A promise that resolves when the player progress is sent.
+ */
 async function sendPlayerProgress(data) {
     if (!extensionStatus.user) {
         log.debug('no status adata, dont send player progress');
@@ -84,6 +104,11 @@ async function sendPlayerProgress(data) {
     });
 }
 
+/**
+ * Fetches the authenticated user data and stores the access token.
+ * @param {string} accessToken - The access token for authentication.
+ * @returns {Promise<{ user: object }>} - The user data object.
+ */
 async function loginFetchUser(accessToken) {
     try {
         const { data } = await getAuthenticatedUser({
@@ -103,6 +128,10 @@ async function loginFetchUser(accessToken) {
     return { user: null };
 }
 
+/**
+ * Performs the login process.
+ * @returns {Promise<Object>} A promise that resolves to an object containing the login result.
+ */
 async function login() {
     const redirectUri = browser.identity.getRedirectURL();
 
@@ -146,6 +175,11 @@ async function login() {
     }
 }
 
+/**
+ * Updates the visibility of a setting and sends a message to the content script to refresh the settings.
+ * @param {Object} data - The data containing the visibility of the setting.
+ * @returns {Object} - An empty object.
+ */
 async function updateSettingUpdateVisible(data) {
     await storageSetSettingVisible(data.visible);
 
@@ -158,6 +192,12 @@ async function updateSettingUpdateVisible(data) {
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Retrieves the response based on the given type and data.
+ * @param {string} type - The type of response to retrieve.
+ * @param {any} data - The data associated with the response.
+ * @returns {Promise<any>} - The response based on the given type and data.
+ */
 async function getResponse(type, data) {
     switch (type) {
     case LOGOUT:
@@ -189,6 +229,11 @@ async function getResponse(type, data) {
     }
 }
 
+/**
+ * Handles the incoming message.
+ * @param {Object} msg - The incoming message.
+ * @returns {Promise} - A promise that resolves with the response.
+ */
 export async function handleMessage(msg) {
     if (typeof msg !== 'object') {
         log.warn('message is not an object', { msg });
