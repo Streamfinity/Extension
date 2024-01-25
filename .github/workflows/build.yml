@@ -1,3 +1,15 @@
+# This YAML file defines a GitHub Actions workflow for building and publishing a browser extension.
+# The workflow consists of several jobs:
+# - release: Creates a release draft on GitHub.
+# - build: Builds the extension and creates a zip file.
+# - pack-chrome: Packs the extension for Chrome and creates a CRX file.
+# - pack-firefox: Packs the extension for Firefox and creates an XPI file.
+# - publish-firefox: Signs and publishes the Firefox extension.
+# - publish-chrome: Uploads the Chrome extension to the Chrome Web Store.
+# - release-publish: Publishes the release and uploads the extension assets.
+# The workflow is triggered on push events with tags.
+# It uses environment variables and secrets for configuration.
+# The workflow is designed to support multiple manifest versions (2 and 3).
 name: "Build"
 
 on:
