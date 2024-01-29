@@ -11,6 +11,7 @@ module.exports = {
         'plugin:react/recommended',
         'plugin:import/recommended',
         'airbnb',
+        // 'plugin:tailwindcss/recommended', // TODO enable
     ],
     plugins: [
         'react',
