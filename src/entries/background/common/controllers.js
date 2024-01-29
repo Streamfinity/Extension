@@ -83,7 +83,7 @@ async function logout() {
 
 /**
  * Sends the player progress data to the server.
- * 
+ *
  * @param {Object} data - The player progress data.
  * @returns {Promise<void>} - A promise that resolves when the player progress is sent.
  */

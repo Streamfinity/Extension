@@ -5,15 +5,6 @@
  * @module manifest
  */
 
-/**
- * Retrieves the manifest configuration based on the specified manifest version.
- * @param {number} manifestVersion - The version of the manifest (2 or 3).
- * @returns {Object} - The manifest configuration object.
- * @throws {Error} - If the manifest definition is missing for the specified version.
- */
-export function getManifest(manifestVersion) {
-    // ...
-}
 import * as dotenv from 'dotenv';
 import pkg from '../package.json';
 
@@ -98,6 +89,12 @@ const ManifestV3 = {
     ],
 };
 
+/**
+ * Retrieves the manifest object based on the specified manifest version.
+ * @param {number} manifestVersion - The version of the manifest.
+ * @returns {object} - The manifest object.
+ * @throws {Error} - If the manifest definition is missing for the specified manifest version.
+ */
 export function getManifest(manifestVersion) {
     const manifest = {
         author: pkg.author,

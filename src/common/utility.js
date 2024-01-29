@@ -2,7 +2,7 @@ import moment from 'moment';
 
 /**
  * Builds the frontend URL by appending the given path to the VITE_FRONTEND_URL.
- * 
+ *
  * @param {string} path - The path to be appended to the frontend URL.
  * @returns {string} The complete frontend URL.
  */
@@ -26,13 +26,12 @@ export function getIdFromLink(link) {
     return match.groups.id;
 }
 
-
 /**
  * Retries to find an element using the provided callback function at a specified interval.
  * @param {Function} callback - The callback function to be executed to find the element.
  * @param {number} [intervalMs=300] - The interval in milliseconds at which the callback function is executed.
  * @param {number} [maxTries=300] - The maximum number of tries before giving up.
- * @returns {Array<Function>} - An array containing two functions: 
+ * @returns {Array<Function>} - An array containing two functions:
  *   - The first function is an async function that returns a promise which resolves when the element is found.
  *   - The second function is used to clear the interval and stop further retries.
  */
@@ -66,7 +65,6 @@ export function retryFindWithClearFn(callback, intervalMs = 300, maxTries = 300)
         clear,
     ];
 }
-
 
 /**
  * Retries the specified callback function until a result is found.
@@ -103,7 +101,7 @@ export function getYouTubePlayerProgressBar() {
 
 /**
  * Returns the URL of the current video channel.
- * 
+ *
  * @returns {string|null} The URL of the current video channel, or null if not found.
  */
 export function getCurrentVideoChannel() {
@@ -151,7 +149,7 @@ export function findYouTubePlayer(interval = 300, maxTries = 300) {
 
 /**
  * Finds the video player bar element.
- * 
+ *
  * @param {number} interval - The interval in milliseconds between each retry.
  * @param {number} maxTries - The maximum number of retries.
  * @returns {Element|null} - The video player bar element, or null if not found.

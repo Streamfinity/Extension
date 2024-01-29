@@ -28,7 +28,7 @@ function bindWindowEvents() {
 
 /**
  * Appends the shadow root to the DOM.
- * 
+ *
  * @param {HTMLElement} appContainer - The container element for the shadow root.
  * @returns {Promise<void>} - A promise that resolves when the shadow root is appended to the DOM.
  */

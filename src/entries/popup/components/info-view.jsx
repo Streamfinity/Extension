@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 /**
  * Renders the info view component.
- * 
+ *
  * @param {Object} props - The component props.
  * @param {Object} props.user - The user object.
  * @returns {JSX.Element} The rendered info view component.

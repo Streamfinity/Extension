@@ -23,8 +23,8 @@ export function prettyShortNumber(number) {
 
 /**
  * Formats a number as a pretty price.
- * 
- * @param {number} number - The number to format.
+ *
+ *  * @param {number} number - The number to format.
  * @returns {string} The formatted pretty price.
  */
 export function prettyPrice(number) {
@@ -36,7 +36,7 @@ export function prettyPrice(number) {
 
 /**
  * Formats a number as a pretty currency string.
- * 
+ *
  * @param {number} number - The number to format.
  * @param {string} [currency='EUR'] - The currency code to use (default: 'EUR').
  * @returns {string} The formatted currency string.
@@ -68,7 +68,7 @@ export function prettyDuration(seconds) {
 
 /**
  * Capitalizes the first letter of a string.
- * 
+ *
  * @param {string} string - The input string.
  * @returns {string} The input string with the first letter capitalized.
  */
@@ -130,7 +130,7 @@ const log = createLogger('why');
 
 /**
  * Extracts the error message from an error object or string.
- * 
+ *
  * @param {Error|string} e - The error object or string.
  * @returns {string} - The extracted error message.
  */
