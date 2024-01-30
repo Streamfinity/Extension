@@ -155,7 +155,7 @@ async function updateSettingUpdateVisible(data) {
 }
 
 async function openPopup() {
-    await browser.browserAction.openPopup();
+    await browser.action?.openPopup();
 
     return {};
 }
