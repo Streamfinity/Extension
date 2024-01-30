@@ -117,12 +117,12 @@ function App() {
             setCurrentUrl(event.detail.currentUrl);
         }
 
-        window.matchMedia.addEventListener('change', onChangeScheme);
+        window.matchMedia('(prefers-color-scheme: dark)')?.addEventListener('change', onChangeScheme);
         window.addEventListener(WINDOW_NAVIGATE, onChangePage);
 
         return () => {
             window.removeEventListener(WINDOW_NAVIGATE, onChangePage);
-            window.matchMedia.removeEventListener('change', onChangeScheme);
+            window.matchMedia('(prefers-color-scheme: dark)')?.removeEventListener('change', onChangeScheme);
         };
     }, []);
 
