@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { usePage } from '~/hooks/usePage';
-import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
+import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { useReactions } from '~/common/bridge';
 
 function ReactionsNotice() {

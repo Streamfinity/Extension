@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { childrenShape } from '~/shapes';
-import H2Header from '~/entries/contentScript/primary/components/h2-header';
+import H2Header from '~/entries/contentScript/components/h2-header';
 
 function Overlay({ children, onHide, title }) {
     return (

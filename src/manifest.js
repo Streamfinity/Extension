@@ -13,7 +13,7 @@ const hostMatches = {
 const sharedManifest = {
     content_scripts: [
         {
-            js: [`src/entries/contentScript/primary/${process.env.NODE_ENV === 'production' ? 'main.jsx' : 'main.dev.jsx'}`],
+            js: [`src/entries/contentScript/${process.env.NODE_ENV === 'production' ? 'main.jsx' : 'main.dev.jsx'}`],
             matches: [
                 hostMatches.youtube,
             ],

@@ -5,7 +5,7 @@ import moment from 'moment';
 import { reactionPolicyEnum } from '~/enums';
 import { getCurrentVideoPublishDate, getCurrentVideoChannel } from '~/common/utility';
 import { childrenShape } from '~/shapes';
-import Card from '~/entries/contentScript/primary/components/card';
+import Card from '~/entries/contentScript/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
 import { usePage } from '~/hooks/usePage';
 

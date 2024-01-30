@@ -2,7 +2,7 @@ import browser from 'webextension-polyfill';
 import { useEffect } from 'react';
 import { EVENT_REFRESH_SETTINGS } from '~/messages';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
-import { useAppStore } from '~/entries/contentScript/primary/state';
+import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('Background-Events');

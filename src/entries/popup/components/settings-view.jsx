@@ -4,7 +4,7 @@ import useAuth from '~/hooks/useAuth';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible } from '~/common/bridge';
 
-import { useAppStore } from '~/entries/contentScript/primary/state';
+import { useAppStore } from '~/entries/contentScript/state';
 
 function SettingsView({ user }) {
     const { logout, loadingLogout } = useAuth();

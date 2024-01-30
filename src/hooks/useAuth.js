@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { logout, login, useStatus } from '~/common/bridge';
-import { useAppStore } from '~/entries/contentScript/primary/state';
+import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('useAuth');

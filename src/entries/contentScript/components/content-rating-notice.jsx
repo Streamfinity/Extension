@@ -4,7 +4,7 @@ import {
     findVideoPlayerBar, retryFind, getYouTubePlayer, getYouTubePlayerProgressBar,
 } from '~/common/utility';
 import { createLogger } from '~/common/log';
-import Card, { CardTitle } from '~/entries/contentScript/primary/components/card';
+import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { useContentRatings } from '~/common/bridge';
 import { prettyDuration } from '~/common/pretty';
 import styles from '~/styles/content-rating.module.css';

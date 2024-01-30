@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from '~/styles/input.module.css';
-import H3Header from '~/entries/contentScript/primary/components/h3-header';
-import Button from '~/entries/contentScript/primary/components/button';
+import H3Header from '~/entries/contentScript/components/h3-header';
+import Button from '~/entries/contentScript/components/button';
 import { getYouTubePlayer } from '~/common/utility';
 import { prettyDuration } from '~/common/pretty';
 import { submitReaction } from '~/common/bridge';

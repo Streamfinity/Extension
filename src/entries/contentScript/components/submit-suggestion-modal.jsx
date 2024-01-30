@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
-import Button from '~/entries/contentScript/primary/components/button';
+import Button from '~/entries/contentScript/components/button';
 import styles from '~/styles/input.module.css';
 
 const RESULTS_PENDING = 0;

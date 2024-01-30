@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { buildFrontendUrl } from '~/common/utility';
-import Card from '~/entries/contentScript/primary/components/card';
+import Card from '~/entries/contentScript/components/card';
 
 function LiveStatusNotice({ isLive, liveStream }) {
     if (isLive) {

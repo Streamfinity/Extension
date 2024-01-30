@@ -1,7 +1,8 @@
+import '../enableDevHmr';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { renderContent } from '../renderContent';
+import { renderContent } from './renderContent';
 import App from './app';
 import { createLogger } from '~/common/log';
 
