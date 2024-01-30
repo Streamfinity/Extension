@@ -25,10 +25,6 @@ const sharedManifest = {
         48: 'icons/48.png',
         128: 'icons/128.png',
     },
-    options_ui: {
-        page: 'src/entries/options/index.html',
-        open_in_tab: true,
-    },
     permissions: [
         'storage',
         'identity',
@@ -61,10 +57,6 @@ const ManifestV2 = {
         persistent: false,
     },
     browser_action: browserAction,
-    options_ui: {
-        ...sharedManifest.options_ui,
-        chrome_style: false,
-    },
     permissions: [...sharedManifest.permissions],
 };
 
