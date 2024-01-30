@@ -4,7 +4,7 @@ import './app.css';
 function App() {
     return (
         <main>
-            <div className="text-xl text-black borderred500 p-4">
+            <div className="p-4 text-xl text-black">
                 Streamfinity Popup
             </div>
         </main>

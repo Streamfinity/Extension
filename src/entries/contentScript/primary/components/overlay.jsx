@@ -5,9 +5,9 @@ import H2Header from '~/entries/contentScript/primary/components/h2-header';
 
 function Overlay({ children, onHide, title }) {
     return (
-        <div className="absolute left-0 top-0 w-full h-full z-20 p-10 rounded-[10px] overflow-hidden backdrop-blur bg-gray-300/30 dark:bg-black/30">
-            <div className="w-full h-full rounded-lg bg-white dark:bg-gray-700 p-8 overflow-y-auto">
-                <div className="flex justify-between items-start mb-6">
+        <div className="absolute left-0 top-0 z-20 size-full overflow-hidden rounded-[10px] bg-gray-300/30 p-10 backdrop-blur dark:bg-black/30">
+            <div className="size-full overflow-y-auto rounded-lg bg-white p-8 dark:bg-gray-700">
+                <div className="mb-6 flex items-start justify-between">
                     <H2Header
                         mt={false}
                         mb={false}

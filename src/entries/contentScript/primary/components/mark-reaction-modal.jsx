@@ -100,14 +100,14 @@ function MarkReactionModal({ onSubmitted }) {
                         Full Video
                     </Button>
                 </div>
-                <div className="w-14 flex flex-col items-center justify-center">
-                    <div className="w-px h-16 bg-gray-500" />
+                <div className="flex w-14 flex-col items-center justify-center">
+                    <div className="h-16 w-px bg-gray-500" />
                     <div className="py-2 text-gray-400">
                         OR
                     </div>
-                    <div className="w-px h-16 bg-gray-500" />
+                    <div className="h-16 w-px bg-gray-500" />
                 </div>
-                <div className="flex-1 flex flex-col gap-4">
+                <div className="flex flex-1 flex-col gap-4">
                     <Button
                         color="primary"
                         disabled={!!segmentFull || !!segmentStart}

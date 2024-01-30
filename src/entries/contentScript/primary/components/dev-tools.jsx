@@ -7,8 +7,8 @@ function DevTools() {
     } = useAuth();
 
     return (
-        <div className="relative p-2 pt-8 my-6 border-2 border-red-600 rounded-md overflow-hidden text-sm">
-            <div className="absolute left-0 top-0 px-2 text-sm bg-red-600 text-white font-medium uppercase rounded-br-md leading-normal">
+        <div className="relative my-6 overflow-hidden rounded-md border-2 border-red-600 p-2 pt-8 text-sm">
+            <div className="absolute left-0 top-0 rounded-br-md bg-red-600 px-2 text-sm font-medium uppercase leading-normal text-white">
                 Streamfinity Dev Tools
             </div>
             <div>

@@ -74,23 +74,23 @@ function NoticeLine({
             </div>
             {status === STATUS_ALLOWED && (
                 <div className="flex items-center">
-                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20" />
-                    <div className="text-emerald-500 font-medium">
+                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20" />
+                    <div className="font-medium text-emerald-500">
                         No Restriction
                     </div>
                 </div>
             )}
             {status === STATUS_DENIED && (
                 <div className="flex items-center">
-                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
-                    <div className="text-red-500 font-medium">
+                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
+                    <div className="font-medium text-red-500">
                         Not Allowed
                     </div>
                 </div>
             )}
             {status === STATUS_ON_COUNTDOWN && (
                 <div className="flex items-center">
-                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
+                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
                     <div className="font-medium">
                         <span className="text-red-500">
                             Reactions allowed in:
@@ -104,9 +104,9 @@ function NoticeLine({
             )}
             {maxPercentage > 0 && (
                 <div className="flex items-center">
-                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
+                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
                     <div className="font-medium">
-                        <span className="dark:text-orange-500 text-orange-800">
+                        <span className="text-orange-800 dark:text-orange-500">
                             Notice:
                         </span>
                         {' '}
@@ -120,9 +120,9 @@ function NoticeLine({
 
             {comment && (
                 <div className="flex items-center">
-                    <div className="w-4 h-4 mr-2 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
+                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
                     <div className="font-medium">
-                        <span className="dark:text-orange-500 text-orange-800">
+                        <span className="text-orange-800 dark:text-orange-500">
                             Notice:
                         </span>
                         {' '}

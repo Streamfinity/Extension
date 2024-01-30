@@ -39,23 +39,23 @@ function AppContainer({ children, user }) {
             !isVisible && 'hidden',
         )}
         >
-            <div className="p-[2px] mb-6 rounded-[12px] overflow-y-auto bg-gradient-to-br from-primary-gradient-from to-primary-gradient-to">
-                <div className="relative text-base rounded-[10px] p-[16px]
-                        flex flex-col gap-4
-                        bg-white dark:bg-black
-                        text-gray-900 dark:text-white
+            <div className="mb-6 overflow-y-auto rounded-[12px] bg-gradient-to-br from-primary-gradient-from to-primary-gradient-to p-[2px]">
+                <div className="relative flex flex-col gap-4
+                        rounded-[10px] bg-white p-[16px]
+                        text-base text-gray-900
+                        dark:bg-black dark:text-white
                         dark:shadow-lg dark:shadow-white/5"
                 >
-                    <div className="flex justify-between items-center mb-4">
+                    <div className="mb-4 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <img
                                 src={imageUrlDark}
-                                className="h-9 w-9 block dark:hidden"
+                                className="block size-9 dark:hidden"
                                 alt="Logo"
                             />
                             <img
                                 src={imageUrlLight}
-                                className="h-9 w-9 hidden dark:block"
+                                className="hidden size-9 dark:block"
                                 alt="Logo"
                             />
                             <div className="text-4xl font-semibold">
@@ -66,7 +66,7 @@ function AppContainer({ children, user }) {
                     </div>
 
                     {appError && (
-                        <div className="px-4 py-2 bg-red-100 border border-red-200 rounded-xl text-sm text-red-950">
+                        <div className="rounded-xl border border-red-200 bg-red-100 px-4 py-2 text-sm text-red-950">
                             <div className="flex">
                                 <div className="grow">
                                     Error:
@@ -210,12 +210,12 @@ function App() {
                         <CardTitle>
                             Reaction
                         </CardTitle>
-                        <div className="flex flex-col grow">
+                        <div className="flex grow flex-col">
                             <p>
                                 If this video is a reaction to another type of content, you can help use by
                                 providing information.
                             </p>
-                            <div className="flex grow items-end mt-4">
+                            <div className="mt-4 flex grow items-end">
                                 <Button
                                     color="gray"
                                     className="w-full"
@@ -230,11 +230,11 @@ function App() {
                         <CardTitle>
                             Suggestion
                         </CardTitle>
-                        <div className="flex flex-col grow">
+                        <div className="flex grow flex-col">
                             <p>
                                 You can submit this video as a suggestion to your favorite streamers.
                             </p>
-                            <div className="flex grow items-end mt-4">
+                            <div className="mt-4 flex grow items-end">
                                 <Button
                                     color="gray"
                                     className="w-full"
@@ -249,7 +249,7 @@ function App() {
             )}
 
             {user && (
-                <div className="flex gap-4 text-sm text-gray-500 font-medium">
+                <div className="flex gap-4 text-sm font-medium text-gray-500">
                     <a
                         href={buildFrontendUrl('/dashboard')}
                         target="_blank"
@@ -262,9 +262,9 @@ function App() {
                         onClick={onClickLogout}
                         type="button"
                     >
-                        <div className="relative flex overflow-hidden cursor-pointer">
+                        <div className="relative flex cursor-pointer overflow-hidden">
                             {toggleLogout && (
-                                <div className="absolute left-0 top-0 w-full h-full flex items-center justify-center">
+                                <div className="absolute left-0 top-0 flex size-full items-center justify-center">
                                     Logout
                                 </div>
                             )}

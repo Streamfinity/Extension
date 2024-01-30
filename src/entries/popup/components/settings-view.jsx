@@ -36,7 +36,7 @@ function SettingsView({ user }) {
                 <button
                     type="button"
                     onClick={toggleSettingVisible}
-                    className="underline text-red-500"
+                    className="text-red-500 underline"
                 >
                     {isVisible ? 'visible' : 'INVISIBLE'}
                 </button>

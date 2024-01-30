@@ -30,15 +30,15 @@ function App() {
     }, []);
 
     return (
-        <main className="min-w-[21rem] h-[21rem] flex flex-col">
+        <main className="flex h-[21rem] min-w-[21rem] flex-col">
             <div>
                 <div className="p-3 text-center">
-                    <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-gray-600 dark:from-gray-200 to-gray-800 dark:to-gray-400">
+                    <div className="bg-gradient-to-b from-gray-600 to-gray-800 bg-clip-text text-xl font-bold text-transparent dark:from-gray-200 dark:to-gray-400">
                         Streamfinity
                     </div>
                 </div>
 
-                <div className="flex text-center gap-2 px-2">
+                <div className="flex gap-2 px-2 text-center">
                     {availableViews.map((view) => (
                         <button
                             key={view.title}
@@ -58,7 +58,7 @@ function App() {
             </div>
 
             <div className="h-full p-2">
-                <div className="h-full p-2 bg-gray-50 rounded-lg">
+                <div className="h-full rounded-lg bg-gray-50 p-2">
                     {(!loadingAuth && user) && (
                         <ActiveViewComponent user={user} />
                     )}

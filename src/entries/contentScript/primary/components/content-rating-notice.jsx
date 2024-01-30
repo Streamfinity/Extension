@@ -117,7 +117,7 @@ function ContentRatingNotice() {
             <CardTitle>
                 Content Rating
             </CardTitle>
-            <div className="text-sm flex flex-col gap-1">
+            <div className="flex flex-col gap-1 text-sm">
                 {computedContentRatings?.map((rating) => (
                     <div
                         key={`${rating.from}-${rating.to}-${rating.type}`}
@@ -127,7 +127,7 @@ function ContentRatingNotice() {
                         )}
                     >
                         <div>
-                            <span className="font-bold pr-2">
+                            <span className="pr-2 font-bold">
                                 {prettyDuration(rating.from)}
                                 {' - '}
                                 {prettyDuration(rating.to)}

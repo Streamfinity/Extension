@@ -9,7 +9,7 @@ function H3Header({
     return (
         <h3 className={classNames(mt, mb, 'flex items-center text-2xl font-semibold')}>
             {step !== null && (
-                <div className="h-7 w-7 mr-3 rounded-full bg-gray-200 dark:bg-gray-300 text-gray-700 flex items-center justify-center text-sm">
+                <div className="mr-3 flex size-7 items-center justify-center rounded-full bg-gray-200 text-sm text-gray-700 dark:bg-gray-300">
                     {step}
                 </div>
             )}
