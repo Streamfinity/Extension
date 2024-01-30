@@ -19,19 +19,15 @@ import LiveStatusNotice from '~/entries/contentScript/components/live-status-not
 import ReactionsNotice from '~/entries/contentScript/components/reactions-notice';
 import WatchedVideosHeadless from '~/entries/contentScript/components/watched-videos-headless';
 import PlayerProgressListenerHeadless from '~/entries/contentScript/components/player-progress-listener-headless';
-import logoDark from '~/assets/Logo-Dark-400.png';
-import logoWhite from '~/assets/Logo-Light-400.png';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import Logo from '~/components/logo';
+import { openSettings, setTheme } from '~/common/bridge';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
 
 function AppContainer({ children, user }) {
     const { appError, isVisible, setAppError } = useAppStore();
-
-    const imageUrlDark = new URL(logoDark, import.meta.url).href;
-    const imageUrlLight = new URL(logoWhite, import.meta.url).href;
 
     useBackgroundEvents();
 
@@ -104,7 +100,16 @@ function App() {
 
     // Location navigation listener
 
+    function isDarkMode() {
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    function onChangeScheme() {
+        setTheme({ isDark: isDarkMode() });
+    }
+
     useEffect(() => {
+        onChangeScheme();
         setCurrentUrl(window.location.href);
 
         /** @param {CustomEvent} event */
@@ -112,10 +117,12 @@ function App() {
             setCurrentUrl(event.detail.currentUrl);
         }
 
+        window.matchMedia.addEventListener('change', onChangeScheme);
         window.addEventListener(WINDOW_NAVIGATE, onChangePage);
 
         return () => {
             window.removeEventListener(WINDOW_NAVIGATE, onChangePage);
+            window.matchMedia.removeEventListener('change', onChangeScheme);
         };
     }, []);
 
@@ -135,6 +142,10 @@ function App() {
         } else {
             setToggleLogout(true);
         }
+    }
+
+    async function onClickSettings() {
+        await openSettings();
     }
 
     useEffect(() => {
@@ -245,6 +256,12 @@ function App() {
                     >
                         Your Streamfinity Dashboard
                     </a>
+                    <button
+                        onClick={onClickSettings}
+                        type="button"
+                    >
+                        Settings
+                    </button>
                     <button
                         onClick={onClickLogout}
                         type="button"

@@ -20,7 +20,7 @@ import {
     WATCHED_REACTIONS_GET,
     REACTION_SUBMIT, REACTION_POLICY_GET,
     LOGIN, CONTENT_RATINGS_GET, REACTIONS_GET_FOR_VIDEO,
-    SETTING_UPDATE_VISIBLE, EVENT_REFRESH_SETTINGS,
+    SETTING_UPDATE_VISIBLE, EVENT_REFRESH_SETTINGS, OPEN_POPUP, SET_BROWSER_THEME,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 import { why } from '~/common/pretty';
@@ -154,12 +154,37 @@ async function updateSettingUpdateVisible(data) {
     return {};
 }
 
+async function openPopup() {
+    await browser.browserAction.openPopup();
+
+    return {};
+}
+
+async function updateScheme({ dark }) {
+    const sizes = ['16', '32', '48', '128'];
+    const icons = {};
+    sizes.forEach((size) => {
+        icons[size] = `icons/transparent/${dark ? 'light' : 'dark'}-${size}.png`;
+    });
+
+    log.debug('updateScheme', dark, icons);
+
+    await browser.action.setIcon({
+        path: icons,
+    });
+}
+
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 
 async function getResponse(type, data) {
     switch (type) {
+    case OPEN_POPUP:
+        return openPopup();
+    case SET_BROWSER_THEME:
+        return updateScheme(data);
+
     case LOGOUT:
         return logout(data);
     case LOGIN:
@@ -182,8 +207,10 @@ async function getResponse(type, data) {
         return getContentRatings(data);
     case REACTIONS_GET_FOR_VIDEO:
         return getReactionsForVideo(data);
+
     case SETTING_UPDATE_VISIBLE:
         return updateSettingUpdateVisible(data);
+
     default:
         return null;
     }

@@ -12,6 +12,8 @@ export const REACTION_POLICY_GET = 'reaction-policy.get';
 export const REACTIONS_GET_FOR_VIDEO = 'reactions-for-video.submit';
 export const CONTENT_RATINGS_GET = 'content-ratings.get';
 export const SETTING_UPDATE_VISIBLE = 'settings.visible';
+export const OPEN_POPUP = 'internal.open-popup';
+export const SET_BROWSER_THEME = 'internal.theme';
 
 // Background -> Content-Script
 

@@ -13,7 +13,7 @@ import {
     LOGOUT,
     LOGIN,
     CONTENT_RATINGS_GET,
-    REACTIONS_GET_FOR_VIDEO, SETTING_UPDATE_VISIBLE,
+    REACTIONS_GET_FOR_VIDEO, SETTING_UPDATE_VISIBLE, OPEN_POPUP, SET_BROWSER_THEME,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -80,6 +80,19 @@ export async function settingsUpdateVisible({ visible }) {
     return browser.runtime.sendMessage({
         type: SETTING_UPDATE_VISIBLE,
         data: { visible },
+    });
+}
+
+export async function openSettings() {
+    return browser.runtime.sendMessage({
+        type: OPEN_POPUP,
+    });
+}
+
+export async function setTheme({ isDark }) {
+    return browser.runtime.sendMessage({
+        type: SET_BROWSER_THEME,
+        data: { dark: isDark },
     });
 }
 

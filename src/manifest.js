@@ -23,10 +23,7 @@ const sharedManifest = {
         16: 'icons/16.png',
         32: 'icons/32.png',
         48: 'icons/48.png',
-        64: 'icons/64.png',
         128: 'icons/128.png',
-        256: 'icons/256.png',
-        512: 'icons/512.png',
     },
     options_ui: {
         page: 'src/entries/options/index.html',
@@ -52,6 +49,7 @@ const browserAction = {
         16: 'icons/16.png',
         32: 'icons/32.png',
         48: 'icons/48.png',
+        128: 'icons/128.png',
     },
     default_popup: 'src/entries/popup/index.html',
 };
