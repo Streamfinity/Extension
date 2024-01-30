@@ -130,7 +130,6 @@ async function login() {
         const paramsString = parsedUrl.hash.substring(1);
         const params = new URLSearchParams(paramsString);
 
-        const expiresIn = params.get('expires_in');
         const accessToken = params.get('access_token');
 
         log.debug('login', 'received success response');
