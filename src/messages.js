@@ -17,4 +17,5 @@ export const SET_BROWSER_THEME = 'internal.theme';
 
 // Background -> Content-Script
 
+export const EVENT_REFRESH_AUTH = 'events.refresh-auth';
 export const EVENT_REFRESH_SETTINGS = 'events.refresh-settings';

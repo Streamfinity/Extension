@@ -22,6 +22,7 @@ import PlayerProgressListenerHeadless from '~/entries/contentScript/components/p
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import Logo from '~/components/logo';
 import { openSettings, setTheme } from '~/common/bridge';
+import LoginButton from '~/components/login-button';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -167,17 +168,10 @@ function App() {
                         Get started by logging in with your YouTube account!
                     </p>
 
-                    <button
-                        type="button"
+                    <LoginButton
+                        loading={loadingAuth}
                         onClick={login}
-                        disabled={loadingAuth}
-                        className={classNames(
-                            loadingAuth && 'opacity-50',
-                            'w-full font-medium rounded-full px-6 h-[36px] bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to hover:bg-primary-600 transition-colors text-center text-black',
-                        )}
-                    >
-                        {loadingAuth ? 'Loading...' : 'Login with Streamfinity'}
-                    </button>
+                    />
 
                 </div>
             </AppContainer>

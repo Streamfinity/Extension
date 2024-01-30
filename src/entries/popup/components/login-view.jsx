@@ -1,5 +1,6 @@
 import React from 'react';
 import useAuth from '~/hooks/useAuth';
+import LoginButton from '~/components/login-button';
 
 function LoginView() {
     const { login, loadingLogin } = useAuth();
@@ -7,14 +8,10 @@ function LoginView() {
     return (
         <div className="flex h-full items-center justify-center">
 
-            <button
-                type="button"
-                disabled={loadingLogin}
+            <LoginButton
+                loading={loadingLogin}
                 onClick={login}
-                className="rounded-md bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to px-8 py-2 font-semibold text-white hover:bg-primary-600"
-            >
-                Login with Streamfinity
-            </button>
+            />
         </div>
     );
 }

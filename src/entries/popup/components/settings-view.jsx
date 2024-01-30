@@ -5,6 +5,7 @@ import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible } from '~/common/bridge';
 
 import { useAppStore } from '~/entries/contentScript/state';
+import Button from '~/entries/contentScript/components/button';
 
 function SettingsView({ user }) {
     const { logout, loadingLogout } = useAuth();
@@ -19,35 +20,43 @@ function SettingsView({ user }) {
         })();
     }, []);
 
-    async function toggleSettingVisible() {
-        const current = await storageGetSettingVisible();
+    async function toggleSettingVisible(value) {
+        await settingsUpdateVisible({ visible: value });
 
-        await settingsUpdateVisible({ visible: !current });
-
-        setIsVisible(!current);
+        setIsVisible(value);
     }
 
     return (
-        <div>
+        <div className="flex h-full flex-col justify-between">
             <div>
-                Extension visibility status:
-                {' '}
-                {' '}
-                <button
-                    type="button"
-                    onClick={toggleSettingVisible}
-                    className="text-red-500 underline"
-                >
-                    {isVisible ? 'visible' : 'INVISIBLE'}
-                </button>
+                <h2 className="mb-2 text-lg font-semibold">
+                    Settings
+                </h2>
+
+                <div className="flex items-center gap-2">
+                    <input
+                        id="visibility"
+                        type="checkbox"
+                        className="accent-primary-500"
+                        checked={isVisible}
+                        onChange={() => toggleSettingVisible(!isVisible)}
+                    />
+                    <label htmlFor="visibility">
+                        Show Extension on Web Pages
+                    </label>
+                </div>
             </div>
-            <button
-                type="submit"
-                disabled={loadingLogout}
-                onClick={logout}
-            >
-                Logout
-            </button>
+            <div>
+                <Button
+                    color="primary-secondary"
+                    disabled={loadingLogout}
+                    onClick={logout}
+                    className="w-full"
+                    sm
+                >
+                    Logout
+                </Button>
+            </div>
         </div>
     );
 }

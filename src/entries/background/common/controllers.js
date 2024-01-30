@@ -20,7 +20,7 @@ import {
     WATCHED_REACTIONS_GET,
     REACTION_SUBMIT, REACTION_POLICY_GET,
     LOGIN, CONTENT_RATINGS_GET, REACTIONS_GET_FOR_VIDEO,
-    SETTING_UPDATE_VISIBLE, EVENT_REFRESH_SETTINGS, OPEN_POPUP, SET_BROWSER_THEME,
+    SETTING_UPDATE_VISIBLE, EVENT_REFRESH_SETTINGS, OPEN_POPUP, SET_BROWSER_THEME, EVENT_REFRESH_AUTH,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 import { why } from '~/common/pretty';
@@ -33,12 +33,33 @@ const log = createLogger('Background');
 let extensionStatus = {};
 
 async function sendMessageToContentScript(type, data = {}) {
-    const [tab] = await browser.tabs.query({ active: true, lastFocusedWindow: true });
+    const tabs = await browser.tabs.query({ active: true });
 
-    await browser.tabs.sendMessage(tab.id, {
-        type: EVENT_REFRESH_SETTINGS,
-        data,
+    const promises = [
+        browser.runtime.sendMessage({
+            type,
+            data,
+        }),
+    ];
+
+    tabs.forEach((tab) => {
+        promises.push(
+            browser.tabs.sendMessage(tab.id, {
+                type,
+                data,
+            }),
+        );
     });
+
+    log.debug('SEND <-', type, `(${tabs.length} tabs)`);
+
+    try {
+        await Promise.all(promises);
+
+        log.debug('SEND <-', type, `(${tabs.length} tabs) ✅ SENT`);
+    } catch (err) {
+        log.error('SEND <-', type, err);
+    }
 }
 
 // ------------------------------------------------------------------------------------------------------------------------
@@ -71,6 +92,8 @@ async function getStatus() {
 
 async function logout() {
     await clearStorage();
+
+    await sendMessageToContentScript(EVENT_REFRESH_AUTH);
 
     return { success: true };
 }
@@ -142,7 +165,11 @@ async function login() {
 
         log.debug('login', 'received success response');
 
-        return loginFetchUser(accessToken);
+        const response = await loginFetchUser(accessToken);
+
+        await sendMessageToContentScript(EVENT_REFRESH_AUTH, {});
+
+        return response;
     } catch (err) {
         log.warn('login', 'error', err);
 
@@ -230,7 +257,7 @@ export async function handleMessage(msg) {
     }
 
     const { type, data } = msg;
-    log.debug('message ->', type, data);
+    log.debug('RECV ->', type, data);
 
     const response = getResponse(type, data);
 
