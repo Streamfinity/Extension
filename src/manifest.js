@@ -35,7 +35,7 @@ const sharedManifest = {
     browser_specific_settings: {
         gecko: {
             id: 'extension@streamfinity.tv',
-            strict_min_version: '53.0',
+            strict_min_version: '57.0',
         },
     },
 };
