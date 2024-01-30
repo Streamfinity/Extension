@@ -44,6 +44,16 @@ export async function getAuthenticatedUser({ token }) {
     });
 }
 
+export async function updateExtensionVisibility(data) {
+    const { data: suggestion } = await api('extension/visibility', {
+        method: 'POST',
+        token: await storageGetToken(),
+        json: data,
+    });
+
+    return suggestion;
+}
+
 export async function searchSuggestionAccounts({ query }) {
     const { data } = await api('suggestions/search-account', {
         token: await storageGetToken(),
