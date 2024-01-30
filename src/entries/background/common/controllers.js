@@ -56,6 +56,14 @@ async function getStatus() {
 
     extensionStatus = data?.data || {};
 
+    if (extensionStatus?.accounts?.length > 0) {
+        await browser.action.setBadgeText({ text: `${extensionStatus.accounts.length}` });
+        await browser.action.setBadgeTextColor({ color: '#fff' });
+        await browser.action.setBadgeBackgroundColor({ color: '#f00' });
+    } else {
+        await browser.action.setBadgeText({ text: null });
+    }
+
     return {
         data: data?.data,
     };
