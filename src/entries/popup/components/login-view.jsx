@@ -1,7 +1,7 @@
 import React from 'react';
 import useAuth from '~/hooks/useAuth';
 
-function IndexView() {
+function LoginView() {
     const { login, loadingLogin } = useAuth();
 
     return (
@@ -19,4 +19,4 @@ function IndexView() {
     );
 }
 
-export default IndexView;
+export default LoginView;

@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './app.css';
 import classNames from 'classnames';
-import InfoView from '~/entries/popup/components/info-view';
 import SettingsView from '~/entries/popup/components/settings-view';
-import IndexView from '~/entries/popup/components/index-view';
+import LoginView from '~/entries/popup/components/login-view';
 import useAuth from '~/hooks/useAuth';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
+import Logo from '~/components/logo';
 
 const availableViews = [
     {
-        title: 'Info',
-        component: InfoView,
-    }, {
         title: 'Options',
         component: SettingsView,
     },
@@ -19,7 +16,7 @@ const availableViews = [
 
 function App() {
     const [activeView, setActiveView] = useState(availableViews[0]);
-    const ActiveViewComponent = activeView.component;
+    const ActiveViewComponent = useMemo(() => activeView.component, [activeView]);
 
     const { user, refreshUserData, loadingAuth } = useAuth();
 
@@ -32,28 +29,8 @@ function App() {
     return (
         <main className="flex h-[21rem] min-w-[21rem] flex-col">
             <div>
-                <div className="p-3 text-center">
-                    <div className="bg-gradient-to-b from-gray-600 to-gray-800 bg-clip-text text-xl font-bold text-transparent dark:from-gray-200 dark:to-gray-400">
-                        Streamfinity
-                    </div>
-                </div>
-
-                <div className="flex gap-2 px-2 text-center">
-                    {availableViews.map((view) => (
-                        <button
-                            key={view.title}
-                            type="button"
-                            onClick={() => setActiveView(view)}
-                            className={classNames(
-                                view.title === activeView.title
-                                    ? 'bg-primary-50 text-primary-600'
-                                    : 'hover:bg-gray-100/80 text-gray-600 bg-gray-50',
-                                'flex-1 font-semibold rounded-md p-2 transition-colors duration-100',
-                            )}
-                        >
-                            {view.title}
-                        </button>
-                    ))}
+                <div className="flex justify-center p-3">
+                    <Logo size="small" />
                 </div>
             </div>
 
@@ -64,7 +41,7 @@ function App() {
                     )}
 
                     {(!loadingAuth && !user) && (
-                        <IndexView />
+                        <LoginView />
                     )}
                 </div>
             </div>

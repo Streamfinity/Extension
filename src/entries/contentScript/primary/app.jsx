@@ -22,6 +22,7 @@ import PlayerProgressListenerHeadless from '~/entries/contentScript/primary/comp
 import logoDark from '~/assets/Logo-Dark-400.png';
 import logoWhite from '~/assets/Logo-Light-400.png';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
+import Logo from '~/components/logo';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -47,21 +48,7 @@ function AppContainer({ children, user }) {
                         dark:shadow-lg dark:shadow-white/5"
                 >
                     <div className="mb-4 flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <img
-                                src={imageUrlDark}
-                                className="block size-9 dark:hidden"
-                                alt="Logo"
-                            />
-                            <img
-                                src={imageUrlLight}
-                                className="hidden size-9 dark:block"
-                                alt="Logo"
-                            />
-                            <div className="text-4xl font-semibold">
-                                Streamfinity Copilot
-                            </div>
-                        </div>
+                        <Logo />
                         {user}
                     </div>
 
