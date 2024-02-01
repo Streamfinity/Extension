@@ -239,3 +239,8 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref_name, 'dev') == true }}
           allowUpdates: true
+
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
