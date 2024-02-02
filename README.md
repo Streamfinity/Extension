@@ -11,8 +11,10 @@
 ![](img/streamfinity-dark-32.png#gh-light-mode-only)    ![](img/streamfinity-light-32.png#gh-dark-mode-only)    Streamfinity Extension
 </h1>
 
-[![](img/chrome.png)](https://chromewebstore.google.com/detail/streamfinity/mkaledojmamkljdldoeefpabbgfdkack)
-[![](img/amo.png)](https://addons.mozilla.org/en-US/firefox/addon/streamfinity/)
+<p align="center">
+<a href="https://chromewebstore.google.com/detail/streamfinity/mkaledojmamkljdldoeefpabbgfdkack"><img src="img/chrome.png" /></a>
+<a href="https://addons.mozilla.org/en-US/firefox/addon/streamfinity/"><img src="img/amo.png" /></a>
+</p>
 
 ***
 
