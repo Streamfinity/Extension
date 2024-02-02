@@ -1,4 +1,19 @@
-# Streamfinity Extension
+<h1 align="center">
+![](img/streamfinity-dark-32.png#gh-light-mode-only)
+![](img/streamfinity-light-32.png#gh-dark-mode-only)
+Streamfinity Extension
+</h1>
+
+***
+
+<p align="center">
+
+[![](img/chrome.png)](https://chromewebstore.google.com/detail/streamfinity/mkaledojmamkljdldoeefpabbgfdkack)
+[![](img/amo.png)](https://addons.mozilla.org/en-US/firefox/addon/streamfinity/)
+
+</p>
+
+***
 
 ## Download
 
@@ -98,6 +113,14 @@ _This is only possible if you are on Firefox Developer or Nightly Edition._
 - Open `chrome://extensions/` page
 - Toggle "**Developmer mode**" in the top right corner
 - Drag the `.zip` file into the browser window (or select the extracted the parent folder via "Load unpacked")
+
+## Deployment & Publishing
+
+By tagging a commit, the Extension will be built and sent to the **Chrome Web Store** (Manifest 3) & **Mozilla AMO** platform (Manifest 2).
+
+- Commits tagged with `-dev` (eg. `0.0.1-dev.1`) will only be signed (Mozilla AMO) or uploaded in _unlisted_ (Chrome Web Store).
+- Commits without development tags will be published instantly (eg. `0.0.1`)
+- The **core version prefix must be unique** across all tags. There can not be a `0.0.1` and `0.0.1-dev.1` (or `0.0.1-dev.2` etc.) at the same time because the Extensions Manifest requires all versions to be in a `{int}.{int}.{int}` format. Thus the specific version prefix will also be unique on the Chrome Web Store and Mozilla AMO platform.
 
 ## Known Issues
 
