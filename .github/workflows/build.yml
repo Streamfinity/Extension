@@ -163,10 +163,14 @@ jobs:
           apiSecret: ${{ secrets.FIREFOX_API_SECRET }}
           timeout: 900000
 
-      - run: |
+      - id: firefox-mv
+        if: ${{ steps.web-ext-sign.outputs.target }}
+        run: |
           mv ${{ steps.web-ext-sign.outputs.target }} dist/Firefox_${{ github.ref_name }}_mv2_signed.xpi
+          echo "success=1" >> "$GITHUB_OUTPUT"
 
       - uses: actions/upload-artifact@v3
+        if: steps.firefox-mv.outputs.success
         with:
           name: "Firefox_${{ github.ref_name }}_mv2_signed.xpi"
           path: "dist/*.xpi"
