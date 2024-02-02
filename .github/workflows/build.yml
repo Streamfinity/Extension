@@ -158,7 +158,7 @@ jobs:
           cmd: sign
           source: "artifacts/Firefox_${{ github.ref_name }}_mv2.xpi"
           artifacts: dist
-          channel: listed
+          channel: ${{ contains(github.ref_name, 'dev') == false && 'listed' || 'unlisted' }}
           apiKey: ${{ secrets.FIREFOX_API_KEY }}
           apiSecret: ${{ secrets.FIREFOX_API_SECRET }}
           timeout: 900000
