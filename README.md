@@ -1,17 +1,18 @@
+[![Build](https://github.com/Streamfinity/Extension/actions/workflows/build.yml/badge.svg)](https://github.com/Streamfinity/Extension/actions/workflows/build.yml)
+[![Lint](https://github.com/Streamfinity/Extension/actions/workflows/lint.yml/badge.svg)](https://github.com/Streamfinity/Extension/actions/workflows/lint.yml)
+![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/mkaledojmamkljdldoeefpabbgfdkack?label=Chrome)
+![Mozilla Add-on Version](https://img.shields.io/amo/v/streamfinity?label=Firefox)
+![GitHub License](https://img.shields.io/github/license/Streamfinity/Extension?label=License)
+
+---
+
 <h1 align="center">
-![](img/streamfinity-dark-32.png#gh-light-mode-only)
-![](img/streamfinity-light-32.png#gh-dark-mode-only)
-Streamfinity Extension
+
+![](img/streamfinity-dark-32.png#gh-light-mode-only)    ![](img/streamfinity-light-32.png#gh-dark-mode-only)    Streamfinity Extension
 </h1>
-
-***
-
-<p align="center">
 
 [![](img/chrome.png)](https://chromewebstore.google.com/detail/streamfinity/mkaledojmamkljdldoeefpabbgfdkack)
 [![](img/amo.png)](https://addons.mozilla.org/en-US/firefox/addon/streamfinity/)
-
-</p>
 
 ***
 
