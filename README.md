@@ -109,6 +109,10 @@ _This is only possible if you are on Firefox Developer or Nightly Edition._
 
 - [Roman Zipp](https://ich.wtf)
 
+## License
+
+CC BY-ND 4.0 Deed. Please see the [License File](LICENSE.txt) for more information.
+
 ## Credits
 
 Based on [samrum/vite-plugin-web-extension](https://github.com/samrum/vite-plugin-web-extension) (via [create-vite-plugin-web-extension](https://github.com/samrum/create-vite-plugin-web-extension)).
