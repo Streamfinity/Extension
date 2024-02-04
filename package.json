@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "displayName": "Streamfinity",
   "author": "Roman Zipp",
-  "description": "Streamfintiy browser extension",
+  "description": "Tools to bridge the gap between reaction streamers & video content creators while leveraging viewer engagement",
   "scripts": {
     "build": "vite build",
     "watch": "vite build --watch --mode development --minify false",
