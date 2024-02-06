@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
 import Button from '~/entries/contentScript/components/button';
 import styles from '~/styles/input.module.css';
+import useAuth from '~/hooks/useAuth';
 
 const RESULTS_PENDING = 0;
 const RESULTS_LOADING = 1;
@@ -11,6 +12,8 @@ const RESULTS_EMPTY = 2;
 const RESULTS_OK = 3;
 
 function SubmitSuggestionModal({ onSubmit }) {
+    const { accounts: userAccounts } = useAuth();
+
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
     const [suggestedAccounts, setSuggestedAccounts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -34,7 +37,8 @@ function SubmitSuggestionModal({ onSubmit }) {
 
         const suggestion = await submitSuggestion({
             video_url: window.location.href,
-            account_id: selectedAccount.id,
+            to_account_id: selectedAccount.id,
+            account_id: userAccounts.find(() => true),
         });
 
         setLoadingSubmit(false);
