@@ -24,6 +24,10 @@ function prettyFormatCountdown(diff) {
     const minutes = String(duration.minutes()).padStart(2, '0');
     const seconds = String(duration.seconds()).padStart(2, '0');
 
+    if (days === 0) {
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
     return `${days}d ${hours}:${minutes}:${seconds}`;
 }
 
