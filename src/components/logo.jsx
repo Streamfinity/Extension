@@ -27,7 +27,7 @@ function Logo({ size }) {
                 'font-semibold',
             )}
             >
-                Streamfinity Copilot
+                Streamfinity Buddy
             </div>
         </div>
     );
