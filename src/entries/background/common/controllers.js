@@ -199,14 +199,25 @@ async function updateSettingUpdateVisible(data) {
 }
 
 async function openPopup() {
+    if (!browser.action || !('openPopup' in browser.action)) {
+        log.warn('openPopup', 'not available in browser.action');
+        return {};
+    }
+
     await browser.action?.openPopup();
 
     return {};
 }
 
 async function updateScheme({ dark }) {
+    if (!browser.action) {
+        log.warn('updateScheme', 'no browser action available');
+        return;
+    }
+
     const sizes = ['16', '32', '48', '128'];
     const icons = {};
+
     sizes.forEach((size) => {
         icons[size] = `icons/transparent/${dark ? 'light' : 'dark'}-${size}.png`;
     });
