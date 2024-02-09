@@ -35,30 +35,40 @@ let extensionStatus = {};
 async function sendMessageToContentScript(type, data = {}) {
     const tabs = await browser.tabs.query({ active: true });
 
-    const promises = [
-        browser.runtime.sendMessage({
-            type,
-            data,
-        }),
-    ];
-
-    tabs.forEach((tab) => {
-        promises.push(
-            browser.tabs.sendMessage(tab.id, {
+    const promises = [async () => {
+        try {
+            await browser.runtime.sendMessage({
                 type,
                 data,
-            }),
-        );
+            });
+
+            log.debug('SEND <-', type, 'browser.runtime ✅ SENT');
+        } catch (err) {
+            log.error('SEND <-', type, err);
+        }
+    }];
+
+    tabs.forEach((tab) => {
+        promises.push(async () => {
+            try {
+                await browser.tabs.sendMessage(tab.id, {
+                    type,
+                    data,
+                });
+
+                log.debug('SEND <-', type, tab, ' ✅ SENT');
+            } catch (err) {
+                log.error('SEND <-', type, tab, err);
+            }
+        });
     });
 
-    log.debug('SEND <-', type, `(${tabs.length} tabs)`);
+    log.debug('SEND <-', type, `(${tabs.length} tabs)`, tabs);
 
     try {
         await Promise.all(promises);
-
-        log.debug('SEND <-', type, `(${tabs.length} tabs) ✅ SENT`);
     } catch (err) {
-        log.error('SEND <-', type, err);
+        log.error('SEND <-', 'error executing promises');
     }
 }
 
