@@ -23,6 +23,7 @@ import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackground
 import Logo from '~/components/logo';
 import { openSettings, setTheme } from '~/common/bridge';
 import LoginButton from '~/components/login-button';
+import CommunityNoteNotice from '~/entries/contentScript/components/community-note-notice';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -239,6 +240,8 @@ function App() {
                     </Card>
                 </div>
             )}
+
+            <CommunityNoteNotice />
 
             {user && (
                 <div className="flex gap-4 text-sm font-medium text-gray-500">
