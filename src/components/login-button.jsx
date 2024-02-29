@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Button from '~/entries/contentScript/components/button';
 
 function LoginButton({ onClick, loading }) {
     return (
-
-        <button
+        <Button
             type="button"
             onClick={onClick}
             disabled={loading}
@@ -15,7 +15,7 @@ function LoginButton({ onClick, loading }) {
             )}
         >
             {loading ? 'Loading...' : 'Login with Streamfinity'}
-        </button>
+        </Button>
     );
 }
 
