@@ -12,7 +12,6 @@ function LiveStatusNotice({ isLive, liveStream }) {
                 rel="noreferrer"
             >
                 <Card
-                    rounded
                     color="primary-gradient"
                     className="text-sm font-medium"
                 >
@@ -24,10 +23,7 @@ function LiveStatusNotice({ isLive, liveStream }) {
     }
     return (
 
-        <Card
-            rounded
-            className="dark:text-white/60"
-        >
+        <Card className="dark:text-white/60">
             You are currently offline
         </Card>
     );

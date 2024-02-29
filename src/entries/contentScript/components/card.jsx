@@ -18,27 +18,34 @@ CardTitleComponent.propTypes = {
 export const CardTitle = CardTitleComponent;
 
 function Card({
-    children, color, rounded, className,
+    children, color, className,
 }) {
     const colorClassName = {
-        default: 'bg-gray-300/30 dark:bg-neutral-700/30 border border-gray-400/20 dark:border-neutral-700',
-        green: 'border border-positive-500 bg-positive-400/10',
-        red: 'border border-negative-500 bg-negative-400/10',
-        yellow: 'border border-warning-500 bg-warning-400/[0.15] text-gray-900',
+        default: 'bg-gray-300/30 dark:bg-neutral-700/30',
         'primary-gradient': 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
+        // Colors
+        green: 'bg-positive-400',
+        red: 'bg-negative-400',
+        yellow: 'bg-warning-400 text-gray-900',
+        // Brand
         'brand-viewer': 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',
     }[color];
 
     const innerColorClassName = {
-        'brand-viewer': 'bg-white/90',
+        // Colors
+        green: 'bg-white/90 dark:bg-black/90',
+        red: 'bg-white/90 dark:bg-black/90',
+        yellow: 'bg-white/90 dark:bg-black/90',
+        // Brand
+        'brand-viewer': 'bg-white/90 dark:bg-black/90',
     }[color];
 
-    const hasInner = ['brand-viewer'].includes(color);
+    const hasInner = !!innerColorClassName;
 
     if (hasInner) {
         return (
             <div className={classNames(colorClassName, 'rounded-[12px] p-[2px]')}>
-                <div className={classNames(innerColorClassName, 'rounded-[10px] p-4')}>
+                <div className={classNames(className, innerColorClassName, 'rounded-[10px] p-4')}>
                     {children}
                 </div>
             </div>
@@ -47,7 +54,7 @@ function Card({
 
     return (
         <div className={classNames(
-            rounded ? 'py-1 rounded-full text-center' : 'p-4 rounded-2xl',
+            'p-4 rounded-[12px]',
             className,
             colorClassName,
         )}
@@ -67,13 +74,11 @@ Card.propTypes = {
         'brand-viewer',
         'primary-gradient',
     ]),
-    rounded: PropTypes.bool,
     children: childrenShape.isRequired,
 };
 
 Card.defaultProps = {
     className: null,
-    rounded: false,
     color: 'default',
 };
 

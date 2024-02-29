@@ -5,7 +5,7 @@ import moment from 'moment';
 import { reactionPolicyEnum } from '~/enums';
 import { getCurrentVideoPublishDate, getCurrentVideoChannel } from '~/common/utility';
 import { childrenShape } from '~/shapes';
-import Card from '~/entries/contentScript/components/card';
+import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
 import { usePage } from '~/hooks/usePage';
 
@@ -39,10 +39,12 @@ function Notice({
             color={cardColor}
             className={classNames(
                 className,
-                'text-sm dark:text-white/60 text-gray-800 leading-normal flex flex-col gap-3',
+                'text-sm dark:text-white/60 text-gray-800 leading-normal',
             )}
         >
-            <div>
+            <CardTitle>Reaction Policy</CardTitle>
+
+            <div className="mb-2">
                 {title || 'The Content Creator has set conditions for reactions.'}
             </div>
 
