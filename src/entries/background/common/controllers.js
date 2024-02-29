@@ -7,7 +7,7 @@ import {
     getReactionPolicy,
     getContentRatings,
     createPlaybackProgress,
-    getExtensionStatus, getAuthenticatedUser, getReactionsForVideo,
+    getExtensionStatus, getAuthenticatedUser, getReactionsForVideo, getOriginalVideosForVideo,
 } from '~/entries/background/common/api';
 import {
     storageGetToken, clearStorage, storageGetAll, storageSetToken, storageSetSettingVisible,
@@ -20,7 +20,7 @@ import {
     WATCHED_REACTIONS_GET,
     REACTION_SUBMIT, REACTION_POLICY_GET,
     LOGIN, CONTENT_RATINGS_GET, REACTIONS_GET_FOR_VIDEO,
-    SETTING_UPDATE_VISIBLE, EVENT_REFRESH_SETTINGS, OPEN_POPUP, SET_BROWSER_THEME, EVENT_REFRESH_AUTH,
+    SETTING_UPDATE_VISIBLE, EVENT_REFRESH_SETTINGS, OPEN_POPUP, SET_BROWSER_THEME, EVENT_REFRESH_AUTH, REACTIONS_GET_ORIGINAL_VIDEOS,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 import { why } from '~/common/pretty';
@@ -262,6 +262,8 @@ async function getResponse(type, data) {
         return getContentRatings(data);
     case REACTIONS_GET_FOR_VIDEO:
         return getReactionsForVideo(data);
+    case REACTIONS_GET_ORIGINAL_VIDEOS:
+        return getOriginalVideosForVideo(data);
 
     case SETTING_UPDATE_VISIBLE:
         return updateSettingUpdateVisible(data);

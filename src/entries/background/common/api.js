@@ -119,11 +119,21 @@ export async function getReactionPolicy({ videoUrl, channelUrl }) {
 export async function getContentRatings({ videoUrl }) {
     const { data: ratings } = await api('content-ratings/by-video', {
         query: {
-            url: videoUrl,
+            video_url: videoUrl,
         },
     });
 
     return ratings;
+}
+
+export async function getOriginalVideosForVideo({ videoUrl }) {
+    const { data: videos } = await api('reactions/original-videos', {
+        query: {
+            video_url: videoUrl,
+        },
+    });
+
+    return videos;
 }
 
 export async function createPlaybackProgress({ data, liveStreamId }) {

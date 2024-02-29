@@ -25,6 +25,7 @@ import { openSettings, setTheme } from '~/common/bridge';
 import LoginButton from '~/components/login-button';
 import SubmitSuggestionNotice from '~/entries/contentScript/components/submit-suggestion-notice';
 import MarkReactionNotice from '~/entries/contentScript/components/mark-reaction-notice';
+import OriginalVideoNotice from '~/entries/contentScript/components/original-video-notice';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -197,6 +198,8 @@ function App() {
             <ReactionsNotice />
 
             <WatchedVideosHeadless />
+
+            <OriginalVideoNotice />
 
             <MarkReactionNotice onClick={() => setShowMarkReactionModal(true)} />
 

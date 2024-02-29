@@ -13,7 +13,11 @@ import {
     LOGOUT,
     LOGIN,
     CONTENT_RATINGS_GET,
-    REACTIONS_GET_FOR_VIDEO, SETTING_UPDATE_VISIBLE, OPEN_POPUP, SET_BROWSER_THEME,
+    REACTIONS_GET_FOR_VIDEO,
+    SETTING_UPDATE_VISIBLE,
+    OPEN_POPUP,
+    SET_BROWSER_THEME,
+    REACTIONS_GET_ORIGINAL_VIDEOS,
 } from '~/messages';
 import { createLogger } from '~/common/log';
 
@@ -146,6 +150,21 @@ export function useReactions({ videoUrl }) {
         queryKey: ['reactions-for-video', videoUrl],
         queryFn: () => browser.runtime.sendMessage({
             type: REACTIONS_GET_FOR_VIDEO, data: { videoUrl },
+        }),
+        enabled: !!videoUrl,
+    });
+
+    return {
+        ...query,
+        data: query.data?.data,
+    };
+}
+
+export function useOriginalVideos({ videoUrl }) {
+    const query = useQuery({
+        queryKey: ['original-videos-for-video', videoUrl],
+        queryFn: () => browser.runtime.sendMessage({
+            type: REACTIONS_GET_ORIGINAL_VIDEOS, data: { videoUrl },
         }),
         enabled: !!videoUrl,
     });
