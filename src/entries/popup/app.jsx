@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './app.css';
-import classNames from 'classnames';
 import SettingsView from '~/entries/popup/components/settings-view';
 import LoginView from '~/entries/popup/components/login-view';
 import useAuth from '~/hooks/useAuth';
@@ -15,7 +14,7 @@ const availableViews = [
 ];
 
 function App() {
-    const [activeView, setActiveView] = useState(availableViews[0]);
+    const [activeView] = useState(availableViews[0]);
     const ActiveViewComponent = useMemo(() => activeView.component, [activeView]);
 
     const { user, refreshUserData, loadingAuth } = useAuth();

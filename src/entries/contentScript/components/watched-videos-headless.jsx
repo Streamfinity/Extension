@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { getIdFromLink } from '~/common/utility';
 import { usePage } from '~/hooks/usePage';
 import { getWatchedReactions } from '~/common/bridge';

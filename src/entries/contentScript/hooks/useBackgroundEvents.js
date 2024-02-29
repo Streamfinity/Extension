@@ -22,7 +22,7 @@ export function useBackgroundEvents() {
     const { refetch: refetchStatus } = useStatus();
     const { refreshUserData } = useAuth();
 
-    async function onBackgroundMessageCallback({ type, data }, sender, sendResponse) {
+    async function onBackgroundMessageCallback({ type, data }) {
         log.debug('RECV ->', type, data);
 
         switch (type) {

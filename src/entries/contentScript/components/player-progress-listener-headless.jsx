@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 import { usePage } from '~/hooks/usePage';
 import { INTERVAL_SEND_PLAYER_PROGRESS } from '~/config';

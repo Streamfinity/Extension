@@ -42,7 +42,7 @@ async function appendShadowRootToDom(appContainer) {
 
 export async function renderContent(
     cssPaths,
-    render = (_appRoot) => {},
+    render = () => {},
 ) {
     const appContainer = document.createElement('div');
     appContainer.id = 'streamfinity';

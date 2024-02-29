@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useAuth from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/components/submit-suggestion-modal';
-import Button from '~/entries/contentScript/components/button';
 import DevTools from '~/entries/contentScript/components/dev-tools';
 import Overlay from '~/entries/contentScript/components/overlay';
 import MarkReactionModal from '~/entries/contentScript/components/mark-reaction-modal';
@@ -13,7 +12,6 @@ import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-po
 import { buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
 import { WINDOW_NAVIGATE } from '~/events';
-import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { why } from '~/common/pretty';
 import LiveStatusNotice from '~/entries/contentScript/components/live-status-notice';
 import ReactionsNotice from '~/entries/contentScript/components/reactions-notice';
