@@ -1,7 +1,50 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { usePage } from '~/hooks/usePage';
 import { useOriginalVideos } from '~/common/bridge';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
+import { reactionShape } from '~/shapes';
+
+function ReactionPreview({ reaction }) {
+    return (
+        <a
+            href={reaction.to_video.external_tracking_url}
+            className="flex gap-3"
+        >
+            <div className="w-2/5 shrink-0">
+                <img
+                    src={reaction.to_video.thumbnail_url}
+                    alt={reaction.to_video.title}
+                    className="aspect-video rounded-lg object-cover"
+                />
+            </div>
+            <div className="flex flex-col justify-between gap-2">
+                <div>
+                    <div className="line-clamp-2 font-semibold leading-7">
+                        {reaction.to_video.title}
+                    </div>
+                    {reaction.to_video.channel && (
+                        <div className="mt-1 text-xs text-black/80 dark:text-white/70">
+                            {reaction.to_video.channel.title}
+                        </div>
+                    )}
+                </div>
+                <div className="flex items-center text-xs font-semibold text-black">
+                    <div className="rounded-lg bg-primary-gradient-from px-2 py-[1px]">
+                        00:00
+                    </div>
+                    <div className="h-2 w-4 bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to" />
+                    <div className="rounded-lg bg-primary-gradient-to px-2 py-[1px]">
+                        00:00
+                    </div>
+                </div>
+            </div>
+        </a>
+    );
+}
+
+ReactionPreview.propTypes = {
+    reaction: reactionShape.isRequired,
+};
 
 function OriginalVideoNotice() {
     const { currentUrl } = usePage();
@@ -10,8 +53,6 @@ function OriginalVideoNotice() {
         videoUrl: currentUrl,
     });
 
-    console.log(originalVideoReactions);
-
     if (originalVideoReactions?.length > 0) {
         return (
             <Card color="brand-viewer">
@@ -19,7 +60,14 @@ function OriginalVideoNotice() {
                     Original Video
                     {originalVideoReactions.length > 1 ? 's' : ''}
                 </CardTitle>
-                dings hier
+
+                <div className="flex flex-col gap-3">
+                    {originalVideoReactions.map((reaction) => (
+                        <Fragment key={reaction.id}>
+                            <ReactionPreview reaction={reaction} />
+                        </Fragment>
+                    ))}
+                </div>
             </Card>
         );
     }
