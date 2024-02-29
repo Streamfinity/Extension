@@ -23,6 +23,8 @@ import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackground
 import Logo from '~/components/logo';
 import { openSettings, setTheme } from '~/common/bridge';
 import LoginButton from '~/components/login-button';
+import SubmitSuggestionNotice from '~/entries/contentScript/components/submit-suggestion-notice';
+import MarkReactionNotice from '~/entries/contentScript/components/mark-reaction-notice';
 
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
@@ -188,57 +190,17 @@ function App() {
                 />
             )}
 
+            <SubmitSuggestionNotice onClick={() => setShowSubmitSuggestionModal(true)} />
+
             <ReactionPolicyNotice />
 
             <ReactionsNotice />
 
             <WatchedVideosHeadless />
 
-            <PlayerProgressListenerHeadless />
+            <MarkReactionNotice onClick={() => setShowMarkReactionModal(true)} />
 
-            {user && (
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                    <Card className="flex flex-col">
-                        <CardTitle>
-                            Reaction
-                        </CardTitle>
-                        <div className="flex grow flex-col">
-                            <p>
-                                If this video is a reaction to another type of content, you can help use by
-                                providing information.
-                            </p>
-                            <div className="mt-4 flex grow items-end">
-                                <Button
-                                    color="gray"
-                                    className="w-full"
-                                    onClick={() => setShowMarkReactionModal(true)}
-                                >
-                                    Mark as Reaction
-                                </Button>
-                            </div>
-                        </div>
-                    </Card>
-                    <Card className="flex flex-col">
-                        <CardTitle>
-                            Suggestion
-                        </CardTitle>
-                        <div className="flex grow flex-col">
-                            <p>
-                                You can submit this video as a suggestion to your favorite streamers.
-                            </p>
-                            <div className="mt-4 flex grow items-end">
-                                <Button
-                                    color="gray"
-                                    className="w-full"
-                                    onClick={() => setShowSubmitSuggestionModal(true)}
-                                >
-                                    Submit as Suggestion
-                                </Button>
-                            </div>
-                        </div>
-                    </Card>
-                </div>
-            )}
+            <PlayerProgressListenerHeadless />
 
             {user && (
                 <div className="flex gap-4 text-sm font-medium text-gray-500">

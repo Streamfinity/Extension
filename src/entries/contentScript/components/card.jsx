@@ -5,7 +5,7 @@ import { childrenShape } from '~/shapes';
 
 function CardTitleComponent({ children }) {
     return (
-        <div className="mb-2 text-base font-medium">
+        <div className="mb-2 text-lg font-bold">
             {children}
         </div>
     );
@@ -26,7 +26,24 @@ function Card({
         red: 'border border-negative-500 bg-negative-400/10',
         yellow: 'border border-warning-500 bg-warning-400/[0.15] text-gray-900',
         'primary-gradient': 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
+        'brand-viewer': 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',
     }[color];
+
+    const innerColorClassName = {
+        'brand-viewer': 'bg-white/90',
+    }[color];
+
+    const hasInner = ['brand-viewer'].includes(color);
+
+    if (hasInner) {
+        return (
+            <div className={classNames(colorClassName, 'rounded-[12px] p-[2px]')}>
+                <div className={classNames(innerColorClassName, 'rounded-[10px] p-4')}>
+                    {children}
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={classNames(
@@ -47,6 +64,7 @@ Card.propTypes = {
         'green',
         'red',
         'yellow',
+        'brand-viewer',
         'primary-gradient',
     ]),
     rounded: PropTypes.bool,
