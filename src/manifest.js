@@ -32,12 +32,6 @@ const sharedManifest = {
     // content_security_policy: {
     //     extension_pages: "script-src 'unsafe-inline' 'self' http://localhost:5173 ; object-src 'self'",
     // },
-    browser_specific_settings: {
-        gecko: {
-            id: 'extension-firefox@streamfinity.tv',
-            strict_min_version: '57.0',
-        },
-    },
 };
 
 const browserAction = {
@@ -85,6 +79,12 @@ export function getManifest(manifestVersion) {
             ...manifest,
             ...ManifestV2,
             manifest_version: manifestVersion,
+            browser_specific_settings: {
+                gecko: {
+                    id: 'extension-firefox@streamfinity.tv',
+                    strict_min_version: '57.0',
+                },
+            },
         };
     }
 
