@@ -7,6 +7,7 @@ dotenv.config({
 
 const hostMatches = {
     youtube: '*://*.youtube.com/*',
+    twitch: '*://*.twitch.tv/*',
     api: process.env.MANIFEST_HOST_API,
 };
 
@@ -16,6 +17,7 @@ const sharedManifest = {
             js: [`src/entries/contentScript/${process.env.NODE_ENV === 'production' ? 'main.jsx' : 'main.dev.jsx'}`],
             matches: [
                 hostMatches.youtube,
+                hostMatches.twitch,
             ],
         },
     ],
@@ -62,6 +64,7 @@ const ManifestV3 = {
     },
     host_permissions: [
         hostMatches.youtube,
+        hostMatches.twitch,
         hostMatches.api,
     ],
 };
