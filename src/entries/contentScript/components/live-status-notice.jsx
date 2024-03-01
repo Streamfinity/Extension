@@ -12,7 +12,7 @@ function LiveStatusNotice({ isLive, liveStream }) {
                 rel="noreferrer"
             >
                 <Card
-                    color="primary-gradient"
+                    color="primary"
                     className="text-sm font-medium"
                 >
                     You are live

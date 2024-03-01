@@ -22,12 +22,12 @@ function Card({
 }) {
     const colorClassName = {
         default: 'bg-gray-300/30 dark:bg-neutral-700/30',
-        'primary-gradient': 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
         // Colors
         green: 'bg-positive-400',
         red: 'bg-negative-400',
         yellow: 'bg-warning-400 text-gray-900',
         // Brand
+        primary: 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
         'brand-viewer': 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',
     }[color];
 
@@ -37,6 +37,7 @@ function Card({
         red: 'bg-white/90 dark:bg-black/90',
         yellow: 'bg-white/90 dark:bg-black/90',
         // Brand
+        primary: 'bg-white/90 dark:bg-black/90',
         'brand-viewer': 'bg-white/90 dark:bg-black/90',
     }[color];
 
@@ -72,7 +73,7 @@ Card.propTypes = {
         'red',
         'yellow',
         'brand-viewer',
-        'primary-gradient',
+        'primary',
     ]),
     children: childrenShape.isRequired,
 };

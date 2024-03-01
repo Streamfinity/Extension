@@ -3,6 +3,7 @@ import { usePage } from '~/hooks/usePage';
 import { useOriginalVideos } from '~/common/bridge';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { reactionShape } from '~/shapes';
+import { prettyDuration } from '~/common/pretty';
 
 function ReactionPreview({ reaction }) {
     return (
@@ -30,11 +31,11 @@ function ReactionPreview({ reaction }) {
                 </div>
                 <div className="flex items-center text-xs font-semibold text-black">
                     <div className="rounded-lg bg-primary-gradient-from px-2 py-[1px]">
-                        00:00
+                        {reaction.video_seconds_from ? prettyDuration(reaction.video_seconds_from) : '00:00'}
                     </div>
                     <div className="h-2 w-4 bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to" />
                     <div className="rounded-lg bg-primary-gradient-to px-2 py-[1px]">
-                        00:00
+                        {reaction.video_seconds_to ? prettyDuration(reaction.video_seconds_to) : prettyDuration(reaction.to_video.duration)}
                     </div>
                 </div>
             </div>
@@ -55,13 +56,13 @@ function OriginalVideoNotice() {
 
     if (originalVideoReactions?.length > 0) {
         return (
-            <Card color="brand-viewer">
+            <Card color="primary">
                 <CardTitle>
                     Original Video
                     {originalVideoReactions.length > 1 ? 's' : ''}
                 </CardTitle>
 
-                <div className="flex flex-col gap-3">
+                <div className="mt-3 flex flex-col gap-3">
                     {originalVideoReactions.map((reaction) => (
                         <Fragment key={reaction.id}>
                             <ReactionPreview reaction={reaction} />

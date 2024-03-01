@@ -57,9 +57,7 @@ function PlayerProgressListenerHeadless() {
         send(playerProgress);
     }, [playerProgress]);
 
-    return (
-        null
-    );
+    return null;
 }
 
 PlayerProgressListenerHeadless.propTypes = {
