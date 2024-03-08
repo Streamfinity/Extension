@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import Button from '~/entries/contentScript/components/button';
 import SubmitSuggestionForm from '~/entries/contentScript/components/submit-suggestion-form';
