@@ -52,11 +52,11 @@ function Button({
         premium: ['dark:text-premium-100', 'text-black-900'],
         secondary: ['border border-gray-800/20 dark:border-gray-200/20 hover:border-gray-800/40 hover:bg-gray-800/5 dark:hover:border-gray-200/50 dark:hover:bg-gray-200/5'],
 
-        primary: ['dark:bg-primary-500', 'dark:text-primary-100', 'bg-primary-500 hover:bg-primary-600', 'text-primary-50'],
+        primary: ['dark:bg-primary-500', 'dark:text-primary-100', 'bg-gradient-to-r from-primary-gradient-lc-from to-primary-gradient-lc-to', 'text-primary-950'],
         'primary-secondary': ['dark:bg-primary-500 dark:bg-opacity-60', 'dark:text-primary-50', 'bg-primary-100', 'bg-opacity-50', 'text-primary-800'],
         'brand-streamer': ['dark:bg-brand-streamer-500', 'dark:text-brand-streamer-100', 'bg-brand-streamer-500', 'text-brand-streamer-50'],
         'brand-creator': ['dark:bg-brand-creator-500', 'dark:text-brand-creator-100', 'bg-brand-creator-500', 'text-brand-creator-50'],
-        'brand-viewer': ['bg-gradient-to-r from-brand-viewer-gradient-from-tlc to-brand-viewer-gradient-to-tlc', 'text-brand-viewer-950'],
+        'brand-viewer': ['bg-gradient-to-r from-brand-viewer-gradient-lc-from to-brand-viewer-gradient-lc-to', 'text-brand-viewer-950'],
 
         green: ['dark:bg-green-500', 'dark:text-green-100', 'bg-green-500', 'text-green-50'],
         red: ['dark:bg-red-500', 'dark:text-red-100', 'bg-red-500', 'text-red-50'],
@@ -68,6 +68,7 @@ function Button({
 
     const innerColorClassName = {
         premium: ['bg-white', 'dark:bg-gray-800'],
+        primary: ['bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to'],
         'brand-viewer': ['bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to'],
     }[color] || null;
 
