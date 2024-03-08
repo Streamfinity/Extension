@@ -6,7 +6,7 @@ import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
 import { WINDOW_NAVIGATE, THEME_CHANGE } from '~/events';
 import StatusNotice from '~/entries/contentScript/components/status-notice';
-import ReactionsNotice from '~/entries/contentScript/components/reactions-notice';
+import ReactionsHistoryNotice from '~/entries/contentScript/components/reactions-history-notice';
 import WatchedVideosHeadless from '~/entries/contentScript/components/watched-videos-headless';
 import PlayerProgressListenerHeadless from '~/entries/contentScript/components/player-progress-listener-headless';
 import { setTheme } from '~/common/bridge';
@@ -114,7 +114,9 @@ function App() {
 
             <ReactionPolicyNotice />
 
-            <ReactionsNotice />
+            {state !== STATE_LIVE && (
+                <ReactionsHistoryNotice />
+            )}
 
             <WatchedVideosHeadless />
 
