@@ -53,8 +53,7 @@ function SubmitSuggestionForm({ onSubmit }) {
         try {
             const suggestion = await submitSuggestion({
                 video_url: window.location.href,
-                to_account_id: selectedAccount.id,
-                account_id: userAccounts.find(() => true),
+                account_id: selectedAccount.id,
             });
 
             setAppMessage({ type: MESSAGE_SUCCESS, message: 'Suggestion submitted successfully' });
@@ -131,8 +130,6 @@ function SubmitSuggestionForm({ onSubmit }) {
             fetch();
         }
     }, []);
-
-    console.log(searchedAccounts);
 
     return (
         <div>

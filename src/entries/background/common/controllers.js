@@ -282,7 +282,7 @@ export async function handleMessage(msg) {
     const { type, data } = msg;
     log.debug('RECV ->', type, data);
 
-    const response = getResponse(type, data);
+    const response = await getResponse(type, data);
 
     if (response === null) {
         return Promise.resolve();

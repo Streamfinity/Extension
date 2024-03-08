@@ -47,9 +47,13 @@ export async function searchSuggestionAccounts(data) {
 }
 
 export async function submitSuggestion(data) {
-    const { data: suggestion } = await browser.runtime.sendMessage({ type: SUGGESTIONS_SUBMIT, data });
+    const response = await browser.runtime.sendMessage({ type: SUGGESTIONS_SUBMIT, data });
 
-    return suggestion;
+    if (response.message) {
+        throw new Error(response.message);
+    }
+
+    return response.suggestion;
 }
 
 export async function getWatchedReactions(data) {
