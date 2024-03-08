@@ -39,7 +39,7 @@ function Card({
         // Colors
         green: 'bg-positive-400',
         red: 'bg-negative-400',
-        yellow: 'bg-warning-400 text-gray-900',
+        yellow: 'bg-warning-400',
         // Brand
         primary: 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
         'brand-viewer': 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',

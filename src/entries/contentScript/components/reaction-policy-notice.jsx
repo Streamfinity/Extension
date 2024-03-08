@@ -71,13 +71,28 @@ Notice.defaultProps = {
 };
 
 function NoticeLine({
-    title, status, countdown, maxPercentage, comment,
+    title, status, countdown, maxPercentage, comment, options,
 }) {
     return (
         <div>
             <div className="font-semibold">
                 {title}
             </div>
+            {(status === STATUS_CONDITION && options?.length > 0) && (
+                <>
+                    {options.map((option) => (
+                        <div
+                            key={option.id}
+                            className="flex items-center"
+                        >
+                            <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
+                            <div className="font-medium text-orange-800 dark:text-orange-500">
+                                {option.title}
+                            </div>
+                        </div>
+                    ))}
+                </>
+            )}
             {status === STATUS_ALLOWED && (
                 <div className="flex items-center">
                     <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20" />
@@ -147,12 +162,17 @@ NoticeLine.propTypes = {
     countdown: PropTypes.object,
     maxPercentage: PropTypes.number,
     comment: PropTypes.string,
+    options: PropTypes.arrayOf(PropTypes.shape({
+        value: PropTypes.number,
+        title: PropTypes.string,
+    })),
 };
 
 NoticeLine.defaultProps = {
     countdown: null,
     maxPercentage: null,
     comment: null,
+    options: null,
 };
 
 function ReactionPolicyNotice() {
@@ -212,6 +232,10 @@ function ReactionPolicyNotice() {
             return STATUS_OTHER_CONDITION;
         }
 
+        if (policy.video_preset_group !== null || policy.computed.video_options.length > 0) {
+            return STATUS_CONDITION;
+        }
+
         return STATUS_ALLOWED;
     }, [policy, videoCountdownDuration]);
 
@@ -236,6 +260,10 @@ function ReactionPolicyNotice() {
             return STATUS_OTHER_CONDITION;
         }
 
+        if (policy.live_preset_group !== null || policy.computed.live_options.length > 0) {
+            return STATUS_CONDITION;
+        }
+
         return STATUS_ALLOWED;
     }, [policy, liveCountdownDuration]);
 
@@ -253,7 +281,8 @@ function ReactionPolicyNotice() {
         }
 
         if (policy.policy === reactionPolicyEnum.CONDITIONS) {
-            if (liveStatus === STATUS_ALLOWED && videoStatus === STATUS_ALLOWED) {
+            // Allow if "custom" but video & live allowed with no set conditions
+            if ((liveStatus === STATUS_ALLOWED && policy.live_preset_group === null) && (videoStatus === STATUS_ALLOWED && policy.video_preset_group === null)) {
                 return STATUS_ALLOWED;
             }
 
@@ -262,6 +291,8 @@ function ReactionPolicyNotice() {
 
         return STATUS_DENIED;
     }, [policy, liveStatus, videoStatus]);
+
+    console.log(policy);
 
     if (isLoading) {
         return (
@@ -333,6 +364,7 @@ function ReactionPolicyNotice() {
                         countdown={liveCountdownDuration}
                         maxPercentage={policy.live_max_percentage}
                         comment={policy.comment}
+                        options={policy.computed.live_options}
                     />
                     <NoticeLine
                         title="Video Reactions"
@@ -340,6 +372,7 @@ function ReactionPolicyNotice() {
                         countdown={videoCountdownDuration}
                         maxPercentage={policy.video_max_percentage}
                         comment={policy.comment}
+                        options={policy.computed.video_options}
                     />
                 </div>
             )}
