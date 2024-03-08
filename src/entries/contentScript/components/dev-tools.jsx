@@ -12,6 +12,12 @@ function DevTools() {
                 Streamfinity Dev Tools
             </div>
             <div>
+                <b>Endpoint:</b>
+                {' '}
+                {import.meta.env.VITE_API_URL}
+            </div>
+            <hr />
+            <div>
                 <b>Logged in as:</b>
                 {' '}
                 {user ? (

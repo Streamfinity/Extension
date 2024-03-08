@@ -9,7 +9,6 @@ import MarkReactionModal from '~/entries/contentScript/components/mark-reaction-
 import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
-import { buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
 import { WINDOW_NAVIGATE } from '~/events';
 import { why } from '~/common/pretty';
@@ -202,40 +201,6 @@ function App() {
             <MarkReactionNotice onClick={() => setShowMarkReactionModal(true)} />
 
             <PlayerProgressListenerHeadless />
-
-            {user && (
-                <div className="flex gap-4 text-sm font-medium text-gray-500">
-                    <a
-                        href={buildFrontendUrl('/dashboard')}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="grow"
-                    >
-                        Your Streamfinity Dashboard
-                    </a>
-                    <button
-                        onClick={onClickSettings}
-                        type="button"
-                    >
-                        Settings
-                    </button>
-                    <button
-                        onClick={onClickLogout}
-                        type="button"
-                    >
-                        <div className="relative flex cursor-pointer overflow-hidden">
-                            {toggleLogout && (
-                                <div className="absolute left-0 top-0 flex size-full items-center justify-center">
-                                    Logout
-                                </div>
-                            )}
-                            <div className={classNames(toggleLogout && 'invisible')}>
-                                {user.display_name}
-                            </div>
-                        </div>
-                    </button>
-                </div>
-            )}
 
             {showMarkReactionModal && (
                 <Overlay
