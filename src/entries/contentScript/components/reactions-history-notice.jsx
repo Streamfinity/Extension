@@ -5,6 +5,7 @@ import { useReactions } from '~/common/bridge';
 import { reactionShape } from '~/shapes';
 import ServiceIcon from '~/components/icons/service-icon';
 import { useAppStore } from '~/entries/contentScript/state';
+import useAuth from '~/hooks/useAuth';
 
 function ReactionPreview({ reaction }) {
     return (
@@ -63,15 +64,15 @@ ReactionPreview.propTypes = {
 
 function ReactionsHistoryNotice() {
     const { currentUrl } = useAppStore();
+
+    const { isOwnVideo } = useAuth();
+
     const { data: reactions } = useReactions({
         videoUrl: currentUrl,
-        onlyFollowed: false,
+        onlyFollowed: !isOwnVideo,
     });
 
-    console.log(reactions);
-
     const videoReactions = useMemo(() => reactions?.filter((reaction) => !!reaction.from_video), [reactions]);
-
     const liveReactions = useMemo(() => reactions?.filter((reaction) => !!reaction.from_stream), [reactions]);
 
     if (!reactions || reactions?.length === 0) {
@@ -83,6 +84,11 @@ function ReactionsHistoryNotice() {
             <CardTitle>
                 Reaction History
             </CardTitle>
+            {isOwnVideo && (
+                <p className="mb-4">
+                    Those are all reactions to your video.
+                </p>
+            )}
             <div className="flex flex-col gap-4 text-sm">
                 {liveReactions.length > 0 && (
                     <div>
