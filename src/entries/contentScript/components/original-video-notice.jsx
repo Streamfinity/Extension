@@ -9,7 +9,9 @@ function ReactionPreview({ reaction }) {
     return (
         <a
             href={reaction.to_video.external_tracking_url}
+            target="_blank"
             className="flex gap-3"
+            rel="noreferrer"
         >
             <div className="w-2/5 shrink-0">
                 <img
@@ -62,7 +64,7 @@ function OriginalVideoNotice() {
                     {originalVideoReactions.length > 1 ? 's' : ''}
                 </CardTitle>
 
-                <div className="mt-3 flex flex-col gap-3">
+                <div className="mt-3 flex flex-col gap-4">
                     {originalVideoReactions.map((reaction) => (
                         <Fragment key={reaction.id}>
                             <ReactionPreview reaction={reaction} />
