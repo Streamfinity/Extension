@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import useAuth, { STATE_LIVE } from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/components/submit-suggestion-modal';
 import Overlay from '~/entries/contentScript/components/overlay';
-import MarkReactionModal from '~/entries/contentScript/components/mark-reaction-modal';
 import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
@@ -29,7 +28,6 @@ function App() {
     const { setCurrentUrl } = useAppStore();
 
     const [isDarkTheme, setIsDarkTheme] = useState(false);
-    const [showMarkReactionModal, setShowMarkReactionModal] = useState(false);
     const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
 
     // Location navigation listener
@@ -132,19 +130,10 @@ function App() {
             <OriginalVideoNotice />
 
             {state !== STATE_LIVE && (
-                <MarkReactionNotice onClick={() => setShowMarkReactionModal(true)} />
+                <MarkReactionNotice />
             )}
 
             <PlayerProgressListenerHeadless />
-
-            {showMarkReactionModal && (
-                <Overlay
-                    title="Mark Reaction"
-                    onHide={() => setShowMarkReactionModal(false)}
-                >
-                    <MarkReactionModal onSubmitted={() => setShowMarkReactionModal(false)} />
-                </Overlay>
-            )}
 
             {showSubmitSuggestionModal && (
                 <Overlay
