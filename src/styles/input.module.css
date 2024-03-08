@@ -6,7 +6,7 @@
     @apply w-full;
     @apply px-4;
     @apply py-3;
-    @apply bg-gray-600;
+    @apply bg-black/70;
     @apply border-2;
     @apply border-gray-500;
     @apply rounded-lg;

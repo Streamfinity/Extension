@@ -5,6 +5,7 @@ import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
 import Button from '~/entries/contentScript/components/button';
 import styles from '~/styles/input.module.css';
 import useAuth from '~/hooks/useAuth';
+import { useAppStore, MESSAGE_SUCCESS, MESSAGE_ERROR } from '~/entries/contentScript/state';
 
 const RESULTS_PENDING = 0;
 const RESULTS_LOADING = 1;
@@ -14,15 +15,18 @@ const RESULTS_OK = 3;
 function SubmitSuggestionForm({ onSubmit }) {
     const { accounts: userAccounts } = useAuth();
 
+    const { setAppMessage } = useAppStore();
+
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
     const [suggestedAccounts, setSuggestedAccounts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchedAccounts, setSearchedAccounts] = useState([]);
     const [loadingSearch, setLoadingSearch] = useState(false);
     const [selectedAccount, setSelectedAccount] = useState(null);
-    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
-    const canSubmit = useMemo(() => !loadingSubmit && !!selectedAccount?.id, [selectedAccount, loadingSubmit]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const canSubmit = useMemo(() => !isLoading && !!selectedAccount?.id, [selectedAccount, isLoading]);
 
     async function searchAccounts() {
         setLoadingSearch(true);
@@ -33,16 +37,26 @@ function SubmitSuggestionForm({ onSubmit }) {
     }
 
     async function submit() {
-        setLoadingSubmit(true);
+        if (isLoading) {
+            return;
+        }
 
-        const suggestion = await submitSuggestion({
-            video_url: window.location.href,
-            to_account_id: selectedAccount.id,
-            account_id: userAccounts.find(() => true),
-        });
+        setIsLoading(true);
 
-        setLoadingSubmit(false);
-        onSubmit(suggestion);
+        try {
+            const suggestion = await submitSuggestion({
+                video_url: window.location.href,
+                to_account_id: selectedAccount.id,
+                account_id: userAccounts.find(() => true),
+            });
+
+            setAppMessage({ type: MESSAGE_SUCCESS, message: 'Suggestion submitted successfully' });
+            onSubmit(suggestion);
+        } catch (err) {
+            setAppMessage({ type: MESSAGE_ERROR, message: err });
+        }
+
+        setIsLoading(false);
     }
 
     function onInput(e) {
@@ -111,9 +125,11 @@ function SubmitSuggestionForm({ onSubmit }) {
         }
     }, []);
 
+    console.log(searchedAccounts);
+
     return (
         <div>
-            <p className="text-white/70">
+            <p className="text-sm">
                 You can submit the currently playing video as a suggestion for any streamer.
             </p>
             <div className="mt-4">
@@ -139,21 +155,37 @@ function SubmitSuggestionForm({ onSubmit }) {
                         </div>
                     )}
                     {accounts?.map((account) => (
-                        <div
+                        <button
+                            type="button"
                             key={account.id}
                             className={classNames(
                                 account.id === selectedAccount?.id ? 'bg-primary-500/20' : 'hover:bg-white/10',
-                                'py-2 px-3 rounded-md cursor-pointer transition-colors duration-100',
+                                'flex items-center gap-2 py-2 px-3 rounded-md cursor-pointer transition-colors duration-100',
                             )}
                             onClick={() => setSelectedAccount(account)}
                         >
-                            {account.display_name}
-                        </div>
+                            {account.avatar && (
+                                <img
+                                    src={account.avatar.url}
+                                    alt={account.display_name}
+                                    className="size-16 rounded-full"
+                                />
+                            )}
+                            <div className="flex flex-col items-start">
+                                <div className="font-semibold">
+                                    {account.display_name}
+                                </div>
+                                <div className="text-xs opacity-50">
+                                    {account.service.title}
+                                </div>
+                            </div>
+                        </button>
                     ))}
                 </div>
 
                 <Button
                     disabled={!canSubmit}
+                    loading={isLoading}
                     color="primary"
                     type="button"
                     className="w-full"
