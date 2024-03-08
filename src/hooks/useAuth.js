@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { logout, login, useStatus } from '~/common/bridge';
 import { useAppStore, MESSAGE_ERROR } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
+import { accountServices } from '~/enums';
 
 const log = createLogger('useAuth');
 
@@ -10,7 +11,9 @@ export const STATE_LIVE = 'live';
 export const STATE_OWN_VIDEO = 'own-video';
 
 export default function useAuth() {
-    const { setAppMessage, overrideState, setOverrideState } = useAppStore();
+    const {
+        setAppMessage, overrideState, setOverrideState, currentChannel,
+    } = useAppStore();
 
     const { data: statusData, refetch: refreshUserData, isLoading: loadingAuth } = useStatus();
 
@@ -25,6 +28,16 @@ export default function useAuth() {
     const liveStream = useMemo(() => liveStreams?.find(() => true), [liveStreams]);
     const isLive = useMemo(() => !!liveStream, [liveStream]);
 
+    const isOwnVideo = useMemo(() => {
+        if (!currentChannel?.handle) {
+            return false;
+        }
+
+        const ownedAccounts = accounts?.filter((account) => account.user_pivot.is_initial);
+
+        return !!ownedAccounts?.find((account) => account.service.id === accountServices.YOUTUBE && account.service_user_name.toLowerCase() === currentChannel.handle.toLowerCase());
+    }, [currentChannel, accounts]);
+
     const state = useMemo(() => {
         if (overrideState !== null) {
             return overrideState;
@@ -38,8 +51,12 @@ export default function useAuth() {
             return STATE_LIVE;
         }
 
+        if (isOwnVideo) {
+            return STATE_OWN_VIDEO;
+        }
+
         return STATE_DEFAULT;
-    }, [isLive, overrideState]);
+    }, [isLive, isOwnVideo, overrideState]);
 
     async function performLogout() {
         setLoadingLogout(true);
@@ -78,6 +95,7 @@ export default function useAuth() {
         liveStreams,
         liveStream,
         isLive,
+        isOwnVideo,
         loadingAuth,
         // Status
         state,

@@ -2,12 +2,14 @@ import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
+import { PencilSquareIcon } from '@heroicons/react/16/solid';
 import { reactionPolicyEnum } from '~/enums';
-import { getCurrentVideoPublishDate, getCurrentVideoChannel } from '~/common/utility';
+import { getCurrentVideoPublishDate, getCurrentVideoChannel, buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
+import useAuth from '~/hooks/useAuth';
 
 const STATUS_ALLOWED = 0;
 const STATUS_DENIED = 1;
@@ -34,6 +36,8 @@ function prettyFormatCountdown(diff) {
 function Notice({
     title, description, cardColor, className,
 }) {
+    const { isOwnVideo } = useAuth();
+
     return (
         <Card
             color={cardColor}
@@ -42,7 +46,21 @@ function Notice({
                 'text-sm leading-normal',
             )}
         >
-            <CardTitle>Reaction Policy</CardTitle>
+            <CardTitle>
+                <div className="flex justify-between">
+                    Reaction Policy
+                    {isOwnVideo && (
+                        <a
+                            href={buildFrontendUrl('/dashboard/policy')}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="hover:opacity-75"
+                        >
+                            <PencilSquareIcon className="size-8" />
+                        </a>
+                    )}
+                </div>
+            </CardTitle>
 
             <div className="mb-2">
                 {title || 'The Content Creator has set conditions for reactions.'}
