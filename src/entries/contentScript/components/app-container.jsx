@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useAppStore } from '~/entries/contentScript/state';
+import { useAppStore, MESSAGE_ERROR, MESSAGE_SUCCESS } from '~/entries/contentScript/state';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import Logo from '~/components/logo';
 import { why } from '~/common/pretty';
@@ -14,7 +14,7 @@ const dev = import.meta.env.DEV;
 function AppContainer({
     children, dark, user, state,
 }) {
-    const { appError, isVisible, setAppError } = useAppStore();
+    const { appMessage, isVisible, setAppMessage } = useAppStore();
 
     useBackgroundEvents();
 
@@ -42,17 +42,26 @@ function AppContainer({
                         {user}
                     </div>
 
-                    {appError && (
-                        <div className="rounded-xl border border-red-200 bg-red-100 px-4 py-2 text-sm text-red-950">
+                    {appMessage && (
+                        <div className={classNames(
+                            'rounded-xl border px-4 py-2 text-sm',
+                            appMessage.type === MESSAGE_ERROR && 'border-red-200 bg-red-100 text-red-950',
+                            appMessage.type === MESSAGE_SUCCESS && 'border-green-200 bg-green-100 text-green-950',
+                        )}
+                        >
                             <div className="flex">
                                 <div className="grow">
-                                    Error:
-                                    {' '}
-                                    {why(appError)}
+                                    {appMessage.type === MESSAGE_ERROR && (
+                                        <>
+                                            Error:
+                                            {' '}
+                                        </>
+                                    )}
+                                    {why(appMessage.message)}
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => setAppError(null)}
+                                    onClick={() => setAppMessage(null)}
                                     className="shrink pl-2 font-bold"
                                 >
                                     OK

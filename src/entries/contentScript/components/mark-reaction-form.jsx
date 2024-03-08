@@ -6,6 +6,7 @@ import Button from '~/entries/contentScript/components/button';
 import { prettyDuration } from '~/common/pretty';
 import { submitReaction } from '~/common/bridge';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
+import { useAppStore, MESSAGE_ERROR, MESSAGE_SUCCESS } from '~/entries/contentScript/state';
 
 function MarkReactionForm({ onSubmitted }) {
     const [loading, setLoading] = useState(false);
@@ -15,6 +16,8 @@ function MarkReactionForm({ onSubmitted }) {
     const [segmentFull, setSegmentFull] = useState(null);
     const [segmentStart, setSegmentStart] = useState(null);
     const [segmentEnd, setSegmentEnd] = useState(null);
+
+    const { setAppMessage } = useAppStore();
 
     const { progress: playerProgress, element: playerElement } = useYouTubePlayer({
         pollInterval: 1000,
@@ -51,7 +54,7 @@ function MarkReactionForm({ onSubmitted }) {
         }
 
         if (!playerElement) {
-            alert('Player not found');
+            setAppMessage({ type: MESSAGE_ERROR, message: 'Player not found' });
             return;
         }
 
@@ -64,7 +67,7 @@ function MarkReactionForm({ onSubmitted }) {
         }
 
         if (!playerElement) {
-            alert('Player not found');
+            setAppMessage({ type: MESSAGE_ERROR, message: 'Player not found' });
             return;
         }
 
@@ -86,9 +89,11 @@ function MarkReactionForm({ onSubmitted }) {
                 from_video_url: window.location.href,
             });
 
+            setAppMessage({ type: MESSAGE_SUCCESS, message: 'Reaction has been submitted!' });
+
             onSubmitted();
         } catch (err) {
-            alert(err);
+            setAppMessage({ type: MESSAGE_ERROR, message: err });
         }
 
         setLoading(false);

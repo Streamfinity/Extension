@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { logout, login, useStatus } from '~/common/bridge';
-import { useAppStore } from '~/entries/contentScript/state';
+import { useAppStore, MESSAGE_ERROR } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('useAuth');
@@ -10,7 +10,7 @@ export const STATE_LIVE = 'live';
 export const STATE_OWN_VIDEO = 'own-video';
 
 export default function useAuth() {
-    const { setAppError } = useAppStore();
+    const { setAppMessage } = useAppStore();
 
     const { data: statusData, refetch: refreshUserData, isLoading: loadingAuth } = useStatus();
 
@@ -54,13 +54,13 @@ export default function useAuth() {
             log.debug('login response', response);
 
             if (response?.error) {
-                setAppError(response.error);
+                setAppMessage({ type: MESSAGE_ERROR, message: response.error });
                 return;
             }
 
             await refreshUserData();
         } catch (err) {
-            setAppError(err);
+            setAppMessage({ type: MESSAGE_ERROR, message: err });
         }
 
         setLoadingLogin(false);

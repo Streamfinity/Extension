@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 
+export const MESSAGE_ERROR = 'error';
+export const MESSAGE_SUCCESS = 'success';
+
 export const useAppStore = create((set) => ({
-    appError: null,
+    appMessage: null,
     currentUrl: null,
     reactionPolicy: null,
     isVisible: true,
-    setAppError: (appError) => set(() => ({ appError })),
+    setAppMessage: (appMessage) => set(() => ({ appMessage })),
     setCurrentUrl: (currentUrl) => set(() => ({ currentUrl })),
     setReactionPolicy: (reactionPolicy) => set(() => ({ reactionPolicy })),
     setIsVisible: (isVisible) => set(() => ({ isVisible })),
