@@ -39,7 +39,7 @@ function Notice({
             color={cardColor}
             className={classNames(
                 className,
-                'text-sm dark:text-white/60 text-gray-800 leading-normal',
+                'text-sm leading-normal',
             )}
         >
             <CardTitle>Reaction Policy</CardTitle>
@@ -275,7 +275,7 @@ function ReactionPolicyNotice() {
     if (!policy) {
         return (
             <Notice
-                cardColor="default"
+                cardColor="green"
                 title="The Content Creator has not set conditions for reactions."
             />
         );

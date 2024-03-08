@@ -52,7 +52,7 @@ function Button({
         premium: ['dark:text-premium-100', 'text-black-900'],
         secondary: ['border border-gray-800/20 dark:border-gray-200/20 hover:border-gray-800/40 hover:bg-gray-800/5 dark:hover:border-gray-200/50 dark:hover:bg-gray-200/5'],
 
-        primary: ['dark:bg-primary-500', 'dark:text-primary-100', 'bg-gradient-to-r from-primary-gradient-lc-from to-primary-gradient-lc-to', 'text-primary-950'],
+        primary: ['dark:bg-primary-500', 'bg-gradient-to-r from-primary-gradient-lc-from to-primary-gradient-lc-to', 'text-primary-950'],
         'primary-secondary': ['dark:bg-primary-500 dark:bg-opacity-60', 'dark:text-primary-50', 'bg-primary-100', 'bg-opacity-50', 'text-primary-800'],
         'brand-streamer': ['dark:bg-brand-streamer-500', 'dark:text-brand-streamer-100', 'bg-brand-streamer-500', 'text-brand-streamer-50'],
         'brand-creator': ['dark:bg-brand-creator-500', 'dark:text-brand-creator-100', 'bg-brand-creator-500', 'text-brand-creator-50'],

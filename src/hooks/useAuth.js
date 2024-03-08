@@ -5,6 +5,10 @@ import { createLogger } from '~/common/log';
 
 const log = createLogger('useAuth');
 
+export const STATE_DEFAULT = 'default';
+export const STATE_LIVE = 'live';
+export const STATE_OWN_VIDEO = 'own-video';
+
 export default function useAuth() {
     const { setAppError } = useAppStore();
 
@@ -20,6 +24,17 @@ export default function useAuth() {
 
     const liveStream = useMemo(() => liveStreams?.find(() => true), [liveStreams]);
     const isLive = useMemo(() => !!liveStream, [liveStream]);
+
+    const state = useMemo(() => {
+        // ++++++++++++ DEBUG
+        return STATE_DEFAULT;
+        // ++++++++++++ DEBUG
+        if (isLive) {
+            return STATE_LIVE;
+        }
+
+        return STATE_DEFAULT;
+    }, [isLive]);
 
     async function performLogout() {
         setLoadingLogout(true);
@@ -59,6 +74,8 @@ export default function useAuth() {
         liveStream,
         isLive,
         loadingAuth,
+        // Status
+        state,
         // Query
         refreshUserData,
         // Login

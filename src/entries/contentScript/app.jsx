@@ -1,101 +1,29 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import useAuth from '~/hooks/useAuth';
+import useAuth, { STATE_LIVE } from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/components/submit-suggestion-modal';
-import DevTools from '~/entries/contentScript/components/dev-tools';
 import Overlay from '~/entries/contentScript/components/overlay';
 import MarkReactionModal from '~/entries/contentScript/components/mark-reaction-modal';
 import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
-import { childrenShape } from '~/shapes';
 import { WINDOW_NAVIGATE, THEME_CHANGE } from '~/events';
-import { why } from '~/common/pretty';
-import LiveStatusNotice from '~/entries/contentScript/components/live-status-notice';
+import StatusNotice from '~/entries/contentScript/components/status-notice';
 import ReactionsNotice from '~/entries/contentScript/components/reactions-notice';
 import WatchedVideosHeadless from '~/entries/contentScript/components/watched-videos-headless';
 import PlayerProgressListenerHeadless from '~/entries/contentScript/components/player-progress-listener-headless';
-import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
-import Logo from '~/components/logo';
-import { openSettings, setTheme } from '~/common/bridge';
+import { setTheme } from '~/common/bridge';
 import LoginButton from '~/components/login-button';
 import SubmitSuggestionNotice from '~/entries/contentScript/components/submit-suggestion-notice';
 import MarkReactionNotice from '~/entries/contentScript/components/mark-reaction-notice';
 import OriginalVideoNotice from '~/entries/contentScript/components/original-video-notice';
+import AppContainer from '~/entries/contentScript/components/app-container';
 
 const log = createLogger('App');
-const dev = import.meta.env.DEV;
-
-function AppContainer({ children, dark, user }) {
-    const { appError, isVisible, setAppError } = useAppStore();
-
-    useBackgroundEvents();
-
-    return (
-        <div className={classNames(
-            !isVisible && 'hidden',
-            dark && 'dark',
-        )}
-        >
-            <div className="mb-6 overflow-y-auto rounded-[12px] bg-gradient-to-br from-primary-gradient-from to-primary-gradient-to p-[2px]">
-                <div className="relative flex flex-col gap-4
-                        rounded-[10px] bg-white p-[16px]
-                        text-base text-gray-900
-                        dark:bg-black dark:text-white
-                        dark:shadow-lg dark:shadow-white/5"
-                >
-                    <div className="mb-4 flex items-center justify-between">
-                        <Logo />
-                        {user}
-                    </div>
-
-                    {appError && (
-                        <div className="rounded-xl border border-red-200 bg-red-100 px-4 py-2 text-sm text-red-950">
-                            <div className="flex">
-                                <div className="grow">
-                                    Error:
-                                    {' '}
-                                    {why(appError)}
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={() => setAppError(null)}
-                                    className="shrink pl-2 font-bold"
-                                >
-                                    OK
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
-                    {children}
-
-                </div>
-            </div>
-
-            {dev && (
-                <DevTools />
-            )}
-        </div>
-    );
-}
-
-AppContainer.propTypes = {
-    children: childrenShape.isRequired,
-    user: childrenShape,
-    dark: PropTypes.bool,
-};
-
-AppContainer.defaultProps = {
-    user: null,
-    dark: false,
-};
 
 function App() {
     const {
-        user, loadingAuth, liveStream, isLive, login, logout,
+        user, loadingAuth, liveStream, login, state,
     } = useAuth();
 
     const { setCurrentUrl } = useAppStore();
@@ -149,18 +77,6 @@ function App() {
 
     const [toggleLogout, setToggleLogout] = useState(false);
 
-    async function onClickLogout() {
-        if (toggleLogout) {
-            await logout();
-        } else {
-            setToggleLogout(true);
-        }
-    }
-
-    async function onClickSettings() {
-        await openSettings();
-    }
-
     useEffect(() => {
         const countdown = setTimeout(() => setToggleLogout(false), 5000);
 
@@ -191,16 +107,21 @@ function App() {
     }
 
     return (
-        <AppContainer dark={isDarkTheme}>
+        <AppContainer
+            dark={isDarkTheme}
+            state={state}
+        >
 
             {user && (
-                <LiveStatusNotice
+                <StatusNotice
+                    state={state}
                     liveStream={liveStream}
-                    isLive={isLive}
                 />
             )}
 
-            <SubmitSuggestionNotice onClick={() => setShowSubmitSuggestionModal(true)} />
+            {state !== STATE_LIVE && (
+                <SubmitSuggestionNotice onClick={() => setShowSubmitSuggestionModal(true)} />
+            )}
 
             <ReactionPolicyNotice />
 
@@ -210,7 +131,9 @@ function App() {
 
             <OriginalVideoNotice />
 
-            <MarkReactionNotice onClick={() => setShowMarkReactionModal(true)} />
+            {state !== STATE_LIVE && (
+                <MarkReactionNotice onClick={() => setShowMarkReactionModal(true)} />
+            )}
 
             <PlayerProgressListenerHeadless />
 
