@@ -115,11 +115,10 @@ function MarkReactionForm({ onSubmitted }) {
         <div>
             <p className="text-sm">
                 If this video is or contains a reaction to another video, you can mark it as this.
-                Please note that every submission will be reviewed.
             </p>
 
             <H3Header step={1}>
-                Wich part is the reaction?
+                Wich part contains the reaction?
             </H3Header>
 
             <div className="flex">
@@ -209,6 +208,10 @@ function MarkReactionForm({ onSubmitted }) {
                             <H3Header step={segmentFull === true ? 3 : 4}>
                                 Submit
                             </H3Header>
+
+                            <p className="mb-4 px-16 text-center text-sm">
+                                Please note that every submission will be manually reviewed before being listed.
+                            </p>
 
                             <Button
                                 color="primary"

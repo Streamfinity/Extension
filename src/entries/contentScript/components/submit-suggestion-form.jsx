@@ -155,10 +155,10 @@ function SubmitSuggestionForm({ onSubmit }) {
                 )}
                 >
                     {accounts.length === 0 && (
-                        <div className="text-center text-gray-300">
-                            {resultStatus === RESULTS_PENDING && ('Enter search term')}
+                        <div className="px-16 text-center text-gray-300">
+                            {resultStatus === RESULTS_PENDING && ('Start typing the creator name to search')}
                             {resultStatus === RESULTS_LOADING && ('Loading...')}
-                            {resultStatus === RESULTS_EMPTY && ('No results')}
+                            {resultStatus === RESULTS_EMPTY && ('The creator is not signed up or has disabled video suggestions')}
                         </div>
                     )}
                     {accounts?.map((account) => (
