@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import Button from '~/entries/contentScript/components/button';
+import SubmitSuggestionForm from '~/entries/contentScript/components/submit-suggestion-form';
 
-function SubmitSuggestionNotice({ onClick }) {
+function SubmitSuggestionNotice() {
+    const [showForm, setShowForm] = useState(false);
+
     return (
         <Card
             color="brand-viewer"
@@ -12,29 +15,34 @@ function SubmitSuggestionNotice({ onClick }) {
             <CardTitle>
                 Suggestion
             </CardTitle>
-            <div className="flex gap-4">
-                <div className="grow">
-                    <p className="text-sm">
-                        Send this video as a suggestion to your favorite streamers.
-                    </p>
+
+            {!showForm && (
+                <div className="flex gap-4">
+                    <div className="grow">
+                        <p className="text-sm">
+                            Send this video as a suggestion to your favorite streamers.
+                        </p>
+                    </div>
+                    <div className="flex grow items-end">
+                        <Button
+                            color="brand-viewer"
+                            className="w-full"
+                            onClick={() => setShowForm(true)}
+                        >
+                            Suggest Video
+                        </Button>
+                    </div>
                 </div>
-                <div className="flex grow items-end">
-                    <Button
-                        color="brand-viewer"
-                        className="w-full"
-                        onClick={() => onClick()}
-                    >
-                        Suggest Video
-                    </Button>
-                </div>
-            </div>
+            )}
+
+            {showForm && (
+                <SubmitSuggestionForm onSubmit={() => setShowForm(false)} />
+            )}
         </Card>
     );
 }
 
-SubmitSuggestionNotice.propTypes = {
-    onClick: PropTypes.func.isRequired,
-};
+SubmitSuggestionNotice.propTypes = {};
 
 SubmitSuggestionNotice.defaultProps = {};
 

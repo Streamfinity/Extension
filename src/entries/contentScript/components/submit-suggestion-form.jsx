@@ -11,7 +11,7 @@ const RESULTS_LOADING = 1;
 const RESULTS_EMPTY = 2;
 const RESULTS_OK = 3;
 
-function SubmitSuggestionModal({ onSubmit }) {
+function SubmitSuggestionForm({ onSubmit }) {
     const { accounts: userAccounts } = useAuth();
 
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
@@ -166,10 +166,10 @@ function SubmitSuggestionModal({ onSubmit }) {
     );
 }
 
-SubmitSuggestionModal.propTypes = {
+SubmitSuggestionForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 };
 
-SubmitSuggestionModal.defaultProps = {};
+SubmitSuggestionForm.defaultProps = {};
 
-export default SubmitSuggestionModal;
+export default SubmitSuggestionForm;

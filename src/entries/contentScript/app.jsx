@@ -1,8 +1,6 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
 import useAuth, { STATE_LIVE } from '~/hooks/useAuth';
-import SubmitSuggestionModal from '~/entries/contentScript/components/submit-suggestion-modal';
-import Overlay from '~/entries/contentScript/components/overlay';
 import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
@@ -28,7 +26,6 @@ function App() {
     const { setCurrentUrl } = useAppStore();
 
     const [isDarkTheme, setIsDarkTheme] = useState(false);
-    const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
 
     // Location navigation listener
 
@@ -64,12 +61,6 @@ function App() {
             window.matchMedia('(prefers-color-scheme: dark)')?.removeEventListener('change', onChangeScheme);
         };
     }, []);
-
-    // Modals
-
-    function onSuggestionSubmitted() {
-        setShowSubmitSuggestionModal(false);
-    }
 
     // User item
 
@@ -118,7 +109,7 @@ function App() {
             )}
 
             {state !== STATE_LIVE && (
-                <SubmitSuggestionNotice onClick={() => setShowSubmitSuggestionModal(true)} />
+                <SubmitSuggestionNotice />
             )}
 
             <ReactionPolicyNotice />
@@ -134,15 +125,6 @@ function App() {
             )}
 
             <PlayerProgressListenerHeadless />
-
-            {showSubmitSuggestionModal && (
-                <Overlay
-                    title="Submit Suggestion"
-                    onHide={() => setShowSubmitSuggestionModal(false)}
-                >
-                    <SubmitSuggestionModal onSubmit={() => onSuggestionSubmitted()} />
-                </Overlay>
-            )}
 
         </AppContainer>
     );
