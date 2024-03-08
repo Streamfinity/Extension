@@ -9,12 +9,12 @@ import { useContentRatings } from '~/common/bridge';
 import { prettyDuration } from '~/common/pretty';
 import styles from '~/styles/content-rating.module.css';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
-import { usePage } from '~/hooks/usePage';
+import { useAppStore } from '~/entries/contentScript/state';
 
 const log = createLogger('Content-Rating');
 
 function ContentRatingNotice() {
-    const { currentUrl } = usePage();
+    const { currentUrl } = useAppStore();
 
     const { progress: playerProgress } = useYouTubePlayer();
 

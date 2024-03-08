@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
-import { usePage } from '~/hooks/usePage';
 import { INTERVAL_SEND_PLAYER_PROGRESS } from '~/config';
 import { createLogger } from '~/common/log';
 import { sendPlayerProgress } from '~/common/bridge';
+import { useAppStore } from '~/entries/contentScript/state';
 
 const log = createLogger('PlayerProgress');
 
 function PlayerProgressListenerHeadless() {
     const { element: playerElement, progress: playerProgress } = useYouTubePlayer();
-    const { currentUrl } = usePage();
+    const { currentUrl } = useAppStore();
 
     const [lastProgress, setLastProgress] = useState(null);
     const [lastSent, setLastSent] = useState(null);

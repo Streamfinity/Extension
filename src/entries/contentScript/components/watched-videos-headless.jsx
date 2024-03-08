@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { getIdFromLink } from '~/common/utility';
-import { usePage } from '~/hooks/usePage';
 import { getWatchedReactions } from '~/common/bridge';
 import { createLogger } from '~/common/log';
 import useAuth from '~/hooks/useAuth';
+import { useAppStore } from '~/entries/contentScript/state';
 
 const log = createLogger('WatchedReactions');
 
@@ -39,7 +39,7 @@ function markElements(watchedVideos) {
 }
 
 function WatchedVideosHeadless() {
-    const { currentUrl } = usePage();
+    const { currentUrl } = useAppStore();
     const { user } = useAuth();
 
     useEffect(() => {

@@ -7,7 +7,7 @@ import { getCurrentVideoPublishDate, getCurrentVideoChannel } from '~/common/uti
 import { childrenShape } from '~/shapes';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
-import { usePage } from '~/hooks/usePage';
+import { useAppStore } from '~/entries/contentScript/state';
 
 const STATUS_ALLOWED = 0;
 const STATUS_DENIED = 1;
@@ -176,7 +176,7 @@ NoticeLine.defaultProps = {
 };
 
 function ReactionPolicyNotice() {
-    const { currentUrl } = usePage();
+    const { currentUrl } = useAppStore();
 
     const { data: policy, isLoading } = useReactionPolicyForVideo({
         videoUrl: currentUrl,
@@ -291,8 +291,6 @@ function ReactionPolicyNotice() {
 
         return STATUS_DENIED;
     }, [policy, liveStatus, videoStatus]);
-
-    console.log(policy);
 
     if (isLoading) {
         return (

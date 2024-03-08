@@ -1,10 +1,10 @@
 import React, { useMemo, Fragment } from 'react';
 import moment from 'moment';
-import { usePage } from '~/hooks/usePage';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { useReactions } from '~/common/bridge';
 import { reactionShape } from '~/shapes';
 import ServiceIcon from '~/components/icons/service-icon';
+import { useAppStore } from '~/entries/contentScript/state';
 
 function ReactionPreview({ reaction }) {
     return (
@@ -62,7 +62,7 @@ ReactionPreview.propTypes = {
 };
 
 function ReactionsHistoryNotice() {
-    const { currentUrl } = usePage();
+    const { currentUrl } = useAppStore();
     const { data: reactions } = useReactions({
         videoUrl: currentUrl,
         onlyFollowed: false,

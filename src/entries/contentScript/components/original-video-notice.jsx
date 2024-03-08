@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
-import { usePage } from '~/hooks/usePage';
 import { useOriginalVideos } from '~/common/bridge';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { reactionShape } from '~/shapes';
 import { prettyDuration } from '~/common/pretty';
+import { useAppStore } from '~/entries/contentScript/state';
 
 function ReactionPreview({ reaction }) {
     return (
@@ -50,7 +50,7 @@ ReactionPreview.propTypes = {
 };
 
 function OriginalVideoNotice() {
-    const { currentUrl } = usePage();
+    const { currentUrl } = useAppStore();
 
     const { data: originalVideoReactions } = useOriginalVideos({
         videoUrl: currentUrl,

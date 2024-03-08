@@ -16,6 +16,7 @@ import MarkReactionNotice from '~/entries/contentScript/components/mark-reaction
 import OriginalVideoNotice from '~/entries/contentScript/components/original-video-notice';
 import AppContainer from '~/entries/contentScript/components/app-container';
 import StreamerModeNotice from '~/entries/contentScript/components/streamer-mode-notice';
+import { usePage } from '~/hooks/usePage';
 
 const log = createLogger('App');
 
@@ -23,6 +24,9 @@ function App() {
     const {
         user, loadingAuth, liveStream, login, state,
     } = useAuth();
+
+    // Add page effect which collects url + channel info
+    usePage();
 
     const { setCurrentUrl } = useAppStore();
 
