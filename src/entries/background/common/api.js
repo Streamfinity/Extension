@@ -93,12 +93,12 @@ export async function submitReaction(data) {
     return response;
 }
 
-export async function getReactionsForVideo({ videoUrl }) {
+export async function getReactionsForVideo({ videoUrl, onlyFollowed }) {
     const { data: policy } = await api('reactions/to-video', {
         token: await storageGetToken(),
         query: {
             video_url: videoUrl,
-            only_followed: 1,
+            only_followed: onlyFollowed ? 1 : '',
         },
     });
 

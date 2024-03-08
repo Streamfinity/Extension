@@ -145,11 +145,12 @@ export function useContentRatings({ videoUrl }) {
     };
 }
 
-export function useReactions({ videoUrl }) {
+export function useReactions({ videoUrl, onlyFollowed }) {
     const query = useQuery({
-        queryKey: ['reactions-for-video', videoUrl],
+        queryKey: ['reactions-to-video', videoUrl, onlyFollowed],
         queryFn: () => browser.runtime.sendMessage({
-            type: REACTIONS_GET_FOR_VIDEO, data: { videoUrl },
+            type: REACTIONS_GET_FOR_VIDEO,
+            data: { videoUrl, onlyFollowed },
         }),
         enabled: !!videoUrl,
     });

@@ -6,10 +6,15 @@ import { useReactions } from '~/common/bridge';
 
 function ReactionsNotice() {
     const { currentUrl } = usePage();
-    const { data: reactions } = useReactions({ videoUrl: currentUrl });
+    const { data: reactions } = useReactions({
+        videoUrl: currentUrl,
+        onlyFollowed: false,
+    });
+
+    console.log(reactions);
 
     if (!reactions || reactions?.length === 0) {
-        return (null);
+        return null;
     }
 
     return (
