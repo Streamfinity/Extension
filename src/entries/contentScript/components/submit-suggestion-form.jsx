@@ -28,6 +28,13 @@ function SubmitSuggestionForm({ onSubmit }) {
 
     const canSubmit = useMemo(() => !isLoading && !!selectedAccount?.id, [selectedAccount, isLoading]);
 
+    function reset() {
+        setSearchTerm('');
+        setSearchedAccounts([]);
+        setSelectedAccount(null);
+        onSubmit();
+    }
+
     async function searchAccounts() {
         setLoadingSearch(true);
         setSearchedAccounts(
@@ -194,6 +201,14 @@ function SubmitSuggestionForm({ onSubmit }) {
                     Submit
                 </Button>
             </div>
+
+            <button
+                onClick={() => reset()}
+                type="button"
+                className="mt-4 w-full text-center text-sm text-gray-500 hover:text-gray-300 dark:text-gray-400"
+            >
+                Abort
+            </button>
         </div>
     );
 }
