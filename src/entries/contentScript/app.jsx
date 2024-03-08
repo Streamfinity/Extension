@@ -1,6 +1,7 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import useAuth from '~/hooks/useAuth';
 import SubmitSuggestionModal from '~/entries/contentScript/components/submit-suggestion-modal';
 import DevTools from '~/entries/contentScript/components/dev-tools';
@@ -10,7 +11,7 @@ import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
 import { childrenShape } from '~/shapes';
-import { WINDOW_NAVIGATE } from '~/events';
+import { WINDOW_NAVIGATE, THEME_CHANGE } from '~/events';
 import { why } from '~/common/pretty';
 import LiveStatusNotice from '~/entries/contentScript/components/live-status-notice';
 import ReactionsNotice from '~/entries/contentScript/components/reactions-notice';
@@ -27,7 +28,7 @@ import OriginalVideoNotice from '~/entries/contentScript/components/original-vid
 const log = createLogger('App');
 const dev = import.meta.env.DEV;
 
-function AppContainer({ children, user }) {
+function AppContainer({ children, dark, user }) {
     const { appError, isVisible, setAppError } = useAppStore();
 
     useBackgroundEvents();
@@ -35,6 +36,7 @@ function AppContainer({ children, user }) {
     return (
         <div className={classNames(
             !isVisible && 'hidden',
+            dark && 'dark',
         )}
         >
             <div className="mb-6 overflow-y-auto rounded-[12px] bg-gradient-to-br from-primary-gradient-from to-primary-gradient-to p-[2px]">
@@ -83,10 +85,12 @@ function AppContainer({ children, user }) {
 AppContainer.propTypes = {
     children: childrenShape.isRequired,
     user: childrenShape,
+    dark: PropTypes.bool,
 };
 
 AppContainer.defaultProps = {
     user: null,
+    dark: false,
 };
 
 function App() {
@@ -96,6 +100,7 @@ function App() {
 
     const { setCurrentUrl } = useAppStore();
 
+    const [isDarkTheme, setIsDarkTheme] = useState(false);
     const [showMarkReactionModal, setShowMarkReactionModal] = useState(false);
     const [showSubmitSuggestionModal, setShowSubmitSuggestionModal] = useState(false);
 
@@ -118,11 +123,18 @@ function App() {
             setCurrentUrl(event.detail.currentUrl);
         }
 
+        /** @param {CustomEvent} event */
+        function onThemeChange(event) {
+            setIsDarkTheme(event.detail.dark);
+        }
+
         window.matchMedia('(prefers-color-scheme: dark)')?.addEventListener('change', onChangeScheme);
         window.addEventListener(WINDOW_NAVIGATE, onChangePage);
+        window.addEventListener(THEME_CHANGE, onThemeChange);
 
         return () => {
             window.removeEventListener(WINDOW_NAVIGATE, onChangePage);
+            window.removeEventListener(THEME_CHANGE, onThemeChange);
             window.matchMedia('(prefers-color-scheme: dark)')?.removeEventListener('change', onChangeScheme);
         };
     }, []);
@@ -159,7 +171,7 @@ function App() {
 
     if (!user) {
         return (
-            <AppContainer>
+            <AppContainer dark={isDarkTheme}>
                 <div className="flex flex-col gap-6">
 
                     <ReactionPolicyNotice />
@@ -179,7 +191,7 @@ function App() {
     }
 
     return (
-        <AppContainer>
+        <AppContainer dark={isDarkTheme}>
 
             {user && (
                 <LiveStatusNotice
