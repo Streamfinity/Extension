@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Card, { CardTitle } from '~/entries/contentScript/components/card';
+import Card, { CardTitle, CardTitleSubtle } from '~/entries/contentScript/components/card';
 import Button from '~/entries/contentScript/components/button';
 import MarkReactionForm from '~/entries/contentScript/components/mark-reaction-form';
 
@@ -12,9 +12,9 @@ function MarkReactionNotice() {
             {!showForm && (
                 <div className="flex gap-4">
                     <div className="grow text-sm">
-                        <b>
+                        <CardTitleSubtle>
                             Untracked Reaction?
-                        </b>
+                        </CardTitleSubtle>
                         <p>
                             If this video is a reaction to another type of content, you can help use by
                             providing information.

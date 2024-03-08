@@ -15,6 +15,7 @@ import SubmitSuggestionNotice from '~/entries/contentScript/components/submit-su
 import MarkReactionNotice from '~/entries/contentScript/components/mark-reaction-notice';
 import OriginalVideoNotice from '~/entries/contentScript/components/original-video-notice';
 import AppContainer from '~/entries/contentScript/components/app-container';
+import StreamerModeNotice from '~/entries/contentScript/components/streamer-mode-notice';
 
 const log = createLogger('App');
 
@@ -124,6 +125,10 @@ function App() {
 
             {state !== STATE_LIVE && (
                 <MarkReactionNotice />
+            )}
+
+            {state === STATE_LIVE && (
+                <StreamerModeNotice />
             )}
 
             <PlayerProgressListenerHeadless />

@@ -17,6 +17,20 @@ CardTitleComponent.propTypes = {
 
 export const CardTitle = CardTitleComponent;
 
+function CardTitleSubtleComponent({ children }) {
+    return (
+        <div className="mb-1 font-bold">
+            {children}
+        </div>
+    );
+}
+
+CardTitleSubtleComponent.propTypes = {
+    children: childrenShape.isRequired,
+};
+
+export const CardTitleSubtle = CardTitleSubtleComponent;
+
 function Card({
     children, color, className,
 }) {

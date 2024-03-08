@@ -10,7 +10,7 @@ export const STATE_LIVE = 'live';
 export const STATE_OWN_VIDEO = 'own-video';
 
 export default function useAuth() {
-    const { setAppMessage } = useAppStore();
+    const { setAppMessage, overrideState, setOverrideState } = useAppStore();
 
     const { data: statusData, refetch: refreshUserData, isLoading: loadingAuth } = useStatus();
 
@@ -26,15 +26,20 @@ export default function useAuth() {
     const isLive = useMemo(() => !!liveStream, [liveStream]);
 
     const state = useMemo(() => {
-        // ++++++++++++ DEBUG
-        return STATE_DEFAULT;
-        // ++++++++++++ DEBUG
+        if (overrideState !== null) {
+            return overrideState;
+        }
+
+        // ++++++++++++ DEBUG ++++++++++++
+        // return STATE_OWN_VIDEO;
+        // ++++++++++++ DEBUG ++++++++++++
+
         if (isLive) {
             return STATE_LIVE;
         }
 
         return STATE_DEFAULT;
-    }, [isLive]);
+    }, [isLive, overrideState]);
 
     async function performLogout() {
         setLoadingLogout(true);
@@ -76,6 +81,7 @@ export default function useAuth() {
         loadingAuth,
         // Status
         state,
+        setOverrideState,
         // Query
         refreshUserData,
         // Login

@@ -8,8 +8,10 @@ export const useAppStore = create((set) => ({
     currentUrl: null,
     reactionPolicy: null,
     isVisible: true,
+    overrideState: null,
     setAppMessage: (appMessage) => set(() => ({ appMessage })),
     setCurrentUrl: (currentUrl) => set(() => ({ currentUrl })),
     setReactionPolicy: (reactionPolicy) => set(() => ({ reactionPolicy })),
     setIsVisible: (isVisible) => set(() => ({ isVisible })),
+    setOverrideState: (overrideState) => set(() => ({ overrideState })),
 }));
