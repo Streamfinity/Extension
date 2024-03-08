@@ -22,7 +22,6 @@ function PlayerProgressListenerHeadless() {
         const now = +new Date();
 
         if (lastSent !== null && (now - lastSent) < INTERVAL_SEND_PLAYER_PROGRESS) {
-            log.debug('on cooldown');
             return;
         }
 
@@ -60,9 +59,7 @@ function PlayerProgressListenerHeadless() {
     return null;
 }
 
-PlayerProgressListenerHeadless.propTypes = {
-
-};
+PlayerProgressListenerHeadless.propTypes = {};
 
 PlayerProgressListenerHeadless.defaultProps = {};
 

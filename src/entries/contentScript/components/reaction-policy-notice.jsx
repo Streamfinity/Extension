@@ -100,7 +100,7 @@ function NoticeLine({
                 <>
                     {options.map((option) => (
                         <div
-                            key={option.id}
+                            key={option.value}
                             className="flex items-center"
                         >
                             <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
