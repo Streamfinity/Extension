@@ -74,20 +74,6 @@ export function getYouTubePlayerProgressBar() {
     return document.querySelector('.ytp-progress-bar-container .ytp-progress-bar .ytp-timed-markers-container');
 }
 
-export function getCurrentVideoChannel() {
-    const channelNameElement = document.querySelector('ytd-channel-name#channel-name a[href]');
-    if (channelNameElement) {
-        return channelNameElement.href;
-    }
-
-    const channelAvatarElement = document.querySelector('ytd-video-owner-renderer > a[href]');
-    if (channelAvatarElement) {
-        return channelAvatarElement.href;
-    }
-
-    return null;
-}
-
 export function getCurrentVideoPublishDate() {
     const metaPublish = document.querySelector('meta[itemprop="datePublished"]');
     if (metaPublish) {

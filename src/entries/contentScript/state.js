@@ -6,7 +6,7 @@ export const MESSAGE_SUCCESS = 'success';
 export const useAppStore = create((set) => ({
     appMessage: null,
     currentUrl: null,
-    currentChannel: { handle: null, id: null },
+    currentChannel: { handle: null, id: null, url: null },
     reactionPolicy: null,
     isVisible: true,
     overrideState: null,

@@ -23,6 +23,7 @@ export function usePage() {
                 const channelInfo = {
                     handle: null,
                     id: null,
+                    url: channelInfoElement.href,
                 };
 
                 const href = channelInfoElement.getAttribute('href');
@@ -31,7 +32,7 @@ export function usePage() {
                     channelInfo.handle = href.replace('/@', '');
                 }
 
-                if (currentChannel.handle !== channelInfo.handle || currentChannel.id !== channelInfo.id) {
+                if (currentChannel.handle !== channelInfo.handle || currentChannel.id !== channelInfo.id || currentChannel.url !== channelInfo.url) {
                     log.debug('setting new channel', channelInfo);
                     setCurrentChannel(channelInfo);
                 }

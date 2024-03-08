@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import { PencilSquareIcon } from '@heroicons/react/16/solid';
 import { reactionPolicyEnum } from '~/enums';
-import { getCurrentVideoPublishDate, getCurrentVideoChannel, buildFrontendUrl } from '~/common/utility';
+import { getCurrentVideoPublishDate, buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
 import Card, { CardTitle } from '~/entries/contentScript/components/card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
@@ -194,11 +194,11 @@ NoticeLine.defaultProps = {
 };
 
 function ReactionPolicyNotice() {
-    const { currentUrl } = useAppStore();
+    const { currentUrl, currentChannel } = useAppStore();
 
     const { data: policy, isLoading } = useReactionPolicyForVideo({
         videoUrl: currentUrl,
-        channelUrl: getCurrentVideoChannel(),
+        channelUrl: currentChannel.url,
     });
 
     const [liveCountdownDuration, setLiveCountdownDuration] = useState(null);

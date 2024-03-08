@@ -116,7 +116,7 @@ export function useStatus() {
 
 export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
     const query = useQuery({
-        queryKey: ['reaction-policies', videoUrl],
+        queryKey: ['reaction-policies', videoUrl, channelUrl],
         queryFn: () => browser.runtime.sendMessage({
             type: REACTION_POLICY_GET,
             data: { videoUrl, channelUrl },
