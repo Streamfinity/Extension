@@ -1,20 +1,20 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useAppStore, MESSAGE_ERROR, MESSAGE_SUCCESS } from '~/entries/contentScript/state';
+import { useAppStore } from '~/entries/contentScript/state';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import Logo from '~/components/logo';
-import { why } from '~/common/pretty';
 import DevTools from '~/entries/contentScript/components/dev-tools';
 import { childrenShape } from '~/shapes';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
+import AppMessage from '~/entries/contentScript/components/app-message';
 
 const dev = import.meta.env.DEV;
 
 function AppContainer({
     children, dark, user, state,
 }) {
-    const { appMessage, isVisible, setAppMessage } = useAppStore();
+    const { isVisible } = useAppStore();
 
     useBackgroundEvents();
 
@@ -24,6 +24,8 @@ function AppContainer({
             dark && 'dark',
         )}
         >
+            <AppMessage />
+
             <div className={classNames(
                 'mb-6 overflow-y-auto rounded-[12px] bg-gradient-to-br p-[2px]',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',
@@ -41,34 +43,6 @@ function AppContainer({
                         <Logo />
                         {user}
                     </div>
-
-                    {appMessage && (
-                        <div className={classNames(
-                            'rounded-xl border px-4 py-2 text-sm',
-                            appMessage.type === MESSAGE_ERROR && 'border-red-200 bg-red-100 text-red-950',
-                            appMessage.type === MESSAGE_SUCCESS && 'border-green-200 bg-green-100 text-green-950',
-                        )}
-                        >
-                            <div className="flex">
-                                <div className="grow">
-                                    {appMessage.type === MESSAGE_ERROR && (
-                                        <>
-                                            Error:
-                                            {' '}
-                                        </>
-                                    )}
-                                    {why(appMessage.message)}
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={() => setAppMessage(null)}
-                                    className="shrink pl-2 font-bold"
-                                >
-                                    OK
-                                </button>
-                            </div>
-                        </div>
-                    )}
 
                     {children}
 
