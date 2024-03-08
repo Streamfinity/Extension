@@ -16,6 +16,7 @@ module.exports = {
     plugins: [
         'react',
         'import',
+        'only-warn',
     ],
     ignorePatterns: [
         'dist/**/*',
