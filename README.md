@@ -49,26 +49,28 @@ VITE_OAUTH_CLIENT_ID=
 
 ## Commands
 
-### Build
+### Development
 
-#### Development, HMR
-
-Hot Module Reloading is used to load changes inline without requiring extension rebuilds and extension/page reloads
-Currently **only works in Chromium based browsers**.
-```sh
-npm run dev
-```
-
-#### Development, Watch
+#### Firefox
 
 Rebuilds extension on file changes. Requires a reload of the extension (and page reload if using content scripts).
+
 ```sh
-npm run watch
+npm run dev:firefox
 ```
 
-#### Production
+#### Chrome
 
-Minifies and optimizes extension build
+Hot Module Reloading is used to load changes inline without requiring extension rebuilds and extension/page reloads. Currently **only works in Chromium based browsers**.
+
+```sh
+npm run dev:chrome
+```
+
+### Production
+
+Minifies and optimizes extension build.
+
 ```sh
 npm run build
 ```
@@ -132,9 +134,10 @@ By tagging a commit, the Extension will be built and sent to the **Chrome Web St
 
 ## Known Issues
 
-- HMR is not available in Chromium based browsers: [vite-plugin-web-extension#85](https://github.com/samrum/vite-plugin-web-extension/issues/85)
 - Firefox is not yet supporting service workers: [stackoverflow.com](https://stackoverflow.com/questions/73440104/failing-to-export-to-background-js-from-a-common-script-under-firefox-with-mv3)
-- Can not use dynamically imported module from localhost URL in Firefox [vite-plugin-web-extension#87](https://github.com/samrum/vite-plugin-web-extension/issues/87)
+- **HMR** not available in **Firefox**:
+  - See issue [vite-plugin-web-extension#87](https://github.com/samrum/vite-plugin-web-extension/issues/87)
+  - We can not load the transpiled JS bundle from `localhost` since Firefox only allows loading content scripts from `moz-extension` URLs. (*WebExtension content scripts may only load modules with moz-extension URLs and not: “http://localhost:5173/@vite/client”.*)
 
 ## Authors
 
