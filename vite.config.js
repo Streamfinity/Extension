@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [
+            // without react() plugin: page always refreshes
             react({
                 include: ['**/*.jsx', '**/*.js'],
             }),
