@@ -72,7 +72,6 @@ jobs:
       - name: Fill env file (development)
         if: ${{ contains(github.ref_name, 'dev') == true }}
         run: |
-          touch .env.local
           echo "MANIFEST_HOST_API=*://*.streamfinity.tv/*" >> .env.local
           echo "MANIFEST_HOST_FRONTEND=*://*.streamfinity.tv/*" >> .env.local
           echo "VITE_API_URL=https://development-backend.streamfinity.tv" >> .env.local
