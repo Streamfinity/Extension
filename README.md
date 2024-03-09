@@ -132,6 +132,9 @@ By tagging a commit, the Extension will be built and sent to the **Chrome Web St
 - Commits without development tags will be published instantly (eg. `0.0.1`)
 - The **core version prefix must be unique** across all tags. There can not be a `0.0.1` and `0.0.1-dev.1` (or `0.0.1-dev.2` etc.) at the same time because the Extensions Manifest requires all versions to be in a `{int}.{int}.{int}` format. Thus the specific version prefix will also be unique on the Chrome Web Store and Mozilla AMO platform.
 
+![](img/pipeline-light.jpg#gh-light-mode-only)
+![](img/pipeline-dark.jpg#gh-dark-mode-only)
+
 ## Known Issues
 
 - Firefox is not yet supporting service workers: [stackoverflow.com](https://stackoverflow.com/questions/73440104/failing-to-export-to-background-js-from-a-common-script-under-firefox-with-mv3)
