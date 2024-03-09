@@ -43,6 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Build (${{ matrix.browser_target }} MV${{ matrix.manifest_version }})"
     needs: [ release ]
+    if: always() && !failure() && !cancelled()
 
     strategy:
       matrix:
