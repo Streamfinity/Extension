@@ -63,7 +63,7 @@ function Notice({
             </CardTitle>
 
             <div className="mb-2">
-                {title || 'The Content Creator has set conditions for reactions.'}
+                {title || `${isOwnVideo ? 'You have ' : 'The Content Creator has'} set conditions for reactions.`}
             </div>
 
             {description && (
@@ -310,6 +310,8 @@ function ReactionPolicyNotice() {
         return STATUS_DENIED;
     }, [policy, liveStatus, videoStatus]);
 
+    const { isOwnVideo } = useAuth();
+
     if (isLoading) {
         return (
             <Notice
@@ -323,7 +325,7 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="green"
-                title="The Content Creator has not set conditions for reactions."
+                title={`${isOwnVideo ? 'You have' : 'The Content Creator has'} not set conditions for reactions.`}
             />
         );
     }
