@@ -105,6 +105,8 @@ export async function renderContent(
 
     render(appRoot);
 
+    await appendShadowRootToDom(appContainer);
+
     setInterval(async () => {
         await appendShadowRootToDom(appContainer);
     }, 2000);
