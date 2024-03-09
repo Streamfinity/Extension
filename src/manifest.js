@@ -73,14 +73,14 @@ export function getManifest(manifestVersion, browserTarget, env) {
         ],
     };
 
-    if (!inProduction) {
+    if (!inProduction && browserTarget === browserTargets.chrome) {
         manifest.content_security_policy = {
             extension_pages: "script-src 'unsafe-inline' 'self' http://localhost:5173 ; object-src 'self'",
         };
     }
 
     if (manifestVersion === 2) {
-        return {
+        const manifestVersion2 = {
             ...manifest,
             background: {
                 scripts: ['src/entries/background/script.js'],
@@ -90,6 +90,14 @@ export function getManifest(manifestVersion, browserTarget, env) {
             permissions: [
                 ...manifest.permissions,
             ],
+        };
+
+        if (browserTarget === browserTargets.chrome) {
+            return manifestVersion2;
+        }
+
+        return {
+            ...manifestVersion2,
             browser_specific_settings: {
                 gecko: {
                     id: 'extension-firefox@streamfinity.tv',
