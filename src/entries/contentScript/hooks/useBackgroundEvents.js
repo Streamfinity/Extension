@@ -41,11 +41,13 @@ export function useBackgroundEvents() {
 
     useEffect(() => {
         browser.runtime.onMessage.addListener(onBackgroundMessageCallback);
+        log.debug('registered listener');
 
         refreshSettings({ setIsVisible });
 
         return () => {
             browser.runtime.onMessage.removeListener(onBackgroundMessageCallback);
+            log.debug('removed listener');
         };
     }, []);
 
