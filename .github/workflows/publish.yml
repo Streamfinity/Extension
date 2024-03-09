@@ -234,9 +234,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v2-beta
-        with:
-          node-version: "16.10" # don't ask
+      - uses: actions/setup-node@v4
 
       - uses: actions/download-artifact@v3
         with:
