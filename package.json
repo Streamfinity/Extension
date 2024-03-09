@@ -7,7 +7,7 @@
   "scripts": {
     "build": "vite build",
     "dev:firefox": "MANIFEST_VERSION=2 BROWSER_TARGET=firefox vite build --watch --mode development --minify false",
-    "dev:chrome": "MANIFEST_VERSION=3 BROWSER_TARGET=chrome vite",
+    "dev:chrome": "MANIFEST_VERSION=3 BROWSER_TARGET=chrome vite dev",
     "serve:firefox": "web-ext run --start-url \"about:debugging#/runtime/this-firefox\"  --source-dir ./dist/",
     "serve:chrome": "web-ext run -t chromium --start-url \"https://google.com\" --source-dir ./dist/",
     "lint": "eslint --ext .js,.vue,.jsx,.tsx .",
