@@ -91,10 +91,10 @@ jobs:
   # -----------------------------------------------------------------------------------------------------------------------
 
   # Create a .crx file for Chrome browsers
-  # - {ref_name}_chrome_mv2.crx
-  # - {ref_name}_chrome_mv3.crx
+  # - chrome_{ref_name}_mv2.crx
+  # - chrome_{ref_name}_mv3.crx
   pack-chrome:
-    name: "Pack (Chrome MV${{ matrix.manifest_version }})"
+    name: "Pack (chrome MV${{ matrix.manifest_version }})"
     runs-on: ubuntu-latest
     needs: [ release, build ]
 
@@ -117,19 +117,19 @@ jobs:
       - uses: cardinalby/webext-buildtools-chrome-crx-action@v2
         with:
           zipFilePath: "artifacts/${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip"
-          crxFilePath: "dist/Chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
+          crxFilePath: "dist/chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
           privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "Chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
+          name: "chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
           path: "dist/*.crx"
 
   # Creates a .xpi file for Firefox browsers
-  # - Firefox_{ref_name}_mv2.xpi
-  # - Firefox_{ref_name}_mv3.xpi
+  # - firefox_{ref_name}_mv2.xpi
+  # - firefox_{ref_name}_mv3.xpi
   pack-firefox:
-    name: "Pack (Firefox MV${{ matrix.manifest_version }})"
+    name: "Pack (firefox MV${{ matrix.manifest_version }})"
     runs-on: ubuntu-latest
     needs: [ release, build ]
 
@@ -151,11 +151,11 @@ jobs:
 
       - run: |
           mkdir -p dist/
-          mv artifacts/${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip dist/Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi
+          mv artifacts/${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip dist/firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
+          name: "firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
           path: "dist/*.xpi"
 
   # -----------------------------------------------------------------------------------------------------------------------
@@ -177,7 +177,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: "Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
+          name: "firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
           path: artifacts/
 
       - run: |
@@ -189,7 +189,7 @@ jobs:
         uses: kewisch/action-web-ext@v1
         with:
           cmd: sign
-          source: "artifacts/Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
+          source: "artifacts/firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
           artifacts: dist
           channel: ${{ contains(github.ref_name, 'dev') == false && 'listed' || 'unlisted' }}
           apiKey: ${{ secrets.FIREFOX_API_KEY }}
@@ -199,13 +199,13 @@ jobs:
       - id: firefox-mv
         if: ${{ steps.web-ext-sign.outputs.target }}
         run: |
-          mv ${{ steps.web-ext-sign.outputs.target }} dist/Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}_signed.xpi
+          mv ${{ steps.web-ext-sign.outputs.target }} dist/firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}_signed.xpi
           echo "success=1" >> "$GITHUB_OUTPUT"
 
       - uses: actions/upload-artifact@v3
         if: steps.firefox-mv.outputs.success
         with:
-          name: "Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}_signed.xpi"
+          name: "firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}_signed.xpi"
           path: "dist/*.xpi"
 
   publish-chrome:
