@@ -94,7 +94,7 @@ jobs:
       - name: Create archive
         run: cd dist && zip -r ${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip .
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: "${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip"
           path: "dist/*.zip"
@@ -118,7 +118,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v3
         with:
@@ -133,7 +133,7 @@ jobs:
           crxFilePath: "dist/chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
           privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: "chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
           path: "dist/*.crx"
@@ -153,7 +153,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v3
         with:
@@ -166,7 +166,7 @@ jobs:
           mkdir -p dist/
           mv artifacts/${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip dist/firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: "firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
           path: "dist/*.xpi"
@@ -186,7 +186,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v3
         with:
@@ -215,7 +215,7 @@ jobs:
           mv ${{ steps.web-ext-sign.outputs.target }} dist/firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}_signed.xpi
           echo "success=1" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: steps.firefox-mv.outputs.success
         with:
           name: "firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}_signed.xpi"
@@ -232,7 +232,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/setup-node@v2-beta
         with:
@@ -266,7 +266,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v3
         with:
