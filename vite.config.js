@@ -11,7 +11,9 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [
-            react(),
+            react({
+                include: ['**/*.jsx', '**/*.js'],
+            }),
             eslint(),
             webExtension({
                 manifest: getManifest(Number(env.MANIFEST_VERSION), env.BROWSER_TARGET, env),
