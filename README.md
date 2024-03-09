@@ -71,6 +71,8 @@ npm run dev:chrome
 
 Minifies and optimizes extension build.
 
+You need to explicitly prepend the `MANIFEST_VERSION` and `BROWSER_TARGET` variables if not specified in a `.env.local` file.
+
 ```sh
 npm run build
 ```
