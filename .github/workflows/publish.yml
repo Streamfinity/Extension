@@ -117,12 +117,12 @@ jobs:
       - uses: cardinalby/webext-buildtools-chrome-crx-action@v2
         with:
           zipFilePath: "artifacts/${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip"
-          crxFilePath: "dist/Chrome_${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.crx"
+          crxFilePath: "dist/Chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
           privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "Chrome_${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.crx"
+          name: "Chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
           path: "dist/*.crx"
 
   # Creates a .xpi file for Firefox browsers
