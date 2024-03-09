@@ -1,0 +1,48 @@
+name: "Build"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: "Build (${{ matrix.browser_target }} MV${{ matrix.manifest_version }})"
+
+    strategy:
+      matrix:
+        manifest_version: [ 2, 3 ]
+        browser_target: [ "chrome", "firefox" ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup jq
+        run: sudo apt-get install -y jq
+
+      - name: Prepare env files (development)
+        if: ${{ contains(github.ref_name, 'dev') == true }}
+        run: cp .env.development .env.local
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Update version
+        run: ./tag-version.sh ${{ github.ref_name }}
+
+      - name: Build extension
+        run: npm run build
+        env:
+          MANIFEST_VERSION: ${{ matrix.manifest_version }}
+          BROWSER_TARGET: ${{ matrix.browser_target }}
