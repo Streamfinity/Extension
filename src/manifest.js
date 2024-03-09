@@ -127,6 +127,7 @@ export function getManifest(manifestVersion, browserTarget, env) {
         // Chrome require ServiceWorkers for background scripts in MV3
         return {
             ...manifestVersion3,
+            minimum_chrome_version: '110',
             background: {
                 service_worker: 'src/entries/background/serviceWorker.js',
             },
