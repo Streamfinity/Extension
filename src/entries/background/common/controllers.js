@@ -35,40 +35,29 @@ let extensionStatus = {};
 async function sendMessageToContentScript(type, data = {}) {
     const tabs = await browser.tabs.query({ active: true });
 
-    const promises = [async () => {
+    const promises = tabs.map(async (tab) => {
         try {
-            await browser.runtime.sendMessage({
+            log.debug('SEND <-', `[${tab.id}]`, type, 'sending ...');
+
+            await browser.tabs.sendMessage(tab.id, {
                 type,
                 data,
             });
 
-            log.debug('SEND <-', type, 'browser.runtime ✅ SENT');
+            log.debug('SEND <-', `[${tab.id}]`, type, ' ✅ SENT');
         } catch (err) {
-            log.error('SEND <-', type, err);
+            log.error('SEND <-', `[${tab.id}]`, type, err);
         }
-    }];
-
-    tabs.forEach((tab) => {
-        promises.push(async () => {
-            try {
-                await browser.tabs.sendMessage(tab.id, {
-                    type,
-                    data,
-                });
-
-                log.debug('SEND <-', type, tab, ' ✅ SENT');
-            } catch (err) {
-                log.error('SEND <-', type, tab, err);
-            }
-        });
     });
 
-    log.debug('SEND <-', type, `(${tabs.length} tabs)`, tabs);
+    log.debug('SEND <-', 'sending message', type, 'to', tabs.length, 'tabs:', tabs);
 
     try {
         await Promise.all(promises);
+
+        log.debug('SEND <-', '✅ SENT ALL MESSAGES');
     } catch (err) {
-        log.error('SEND <-', 'error executing promises');
+        log.error('SEND <-', 'error executing promises', err);
     }
 }
 
@@ -154,7 +143,7 @@ async function login() {
         scope: '',
     })}`;
 
-    log.debug('login', 'reidrect', redirectUri);
+    log.debug('login', 'redirect', redirectUri);
     log.debug('login', url);
 
     try {
