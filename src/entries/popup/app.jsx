@@ -17,12 +17,12 @@ function App() {
     const [activeView] = useState(availableViews[0]);
     const ActiveViewComponent = useMemo(() => activeView.component, [activeView]);
 
-    const { user, refreshUserData, loadingAuth } = useAuth();
+    const { user, refreshStatusData, loadingAuth } = useAuth();
 
     useBackgroundEvents();
 
     useEffect(() => {
-        refreshUserData();
+        refreshStatusData();
     }, []);
 
     return (

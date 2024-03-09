@@ -15,7 +15,11 @@ export default function useAuth() {
         setAppMessage, overrideState, setOverrideState, currentChannel,
     } = useAppStore();
 
-    const { data: statusData, refetch: refreshUserData, isLoading: loadingAuth } = useStatus();
+    const {
+        data: statusData,
+        refetch: refreshStatusData,
+        isLoading: loadingAuth,
+    } = useStatus();
 
     const [user, accounts, liveStreams] = useMemo(
         () => [statusData?.user, statusData?.accounts, statusData?.live_streams],
@@ -62,7 +66,7 @@ export default function useAuth() {
         setLoadingLogout(true);
 
         await logout();
-        await refreshUserData();
+        await refreshStatusData();
 
         setLoadingLogout(false);
     }
@@ -80,7 +84,7 @@ export default function useAuth() {
                 return;
             }
 
-            await refreshUserData();
+            await refreshStatusData();
         } catch (err) {
             setAppMessage({ type: MESSAGE_ERROR, message: err });
         }
@@ -101,7 +105,7 @@ export default function useAuth() {
         state,
         setOverrideState,
         // Query
-        refreshUserData,
+        refreshStatusData,
         // Login
         loadingLogin,
         login: performLogin,

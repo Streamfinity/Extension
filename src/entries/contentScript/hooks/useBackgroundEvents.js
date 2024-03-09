@@ -20,14 +20,14 @@ async function refreshSettings({ setIsVisible }) {
 export function useBackgroundEvents() {
     const { setIsVisible } = useAppStore();
     const { refetch: refetchStatus } = useStatus();
-    const { refreshUserData } = useAuth();
+    const { refreshStatusData } = useAuth();
 
     async function onBackgroundMessageCallback({ type, data }) {
         log.debug('RECV ->', type, data);
 
         switch (type) {
         case EVENT_REFRESH_AUTH:
-            await refreshUserData();
+            await refreshStatusData();
             await refetchStatus();
             break;
 
