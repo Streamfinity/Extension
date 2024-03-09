@@ -48,14 +48,14 @@ export function getManifest(manifestVersion, browserTarget, env) {
         manifest_version: manifestVersion,
         content_scripts: [
             {
-                js: [`src/entries/contentScript/${inProduction ? 'main.jsx' : 'main.dev.jsx'}`],
+                js: ['src/entries/contentScript/main.jsx'],
                 matches: [
                     hostMatches.youtube,
                     hostMatches.twitch,
                 ],
             },
             {
-                js: [`src/entries/contentScriptInternal/${inProduction ? 'main.jsx' : 'main.dev.jsx'}`],
+                js: ['src/entries/contentScriptInternal/main.jsx'],
                 matches: [
                     hostMatches.frontend,
                 ],
