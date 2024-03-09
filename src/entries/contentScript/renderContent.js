@@ -77,6 +77,7 @@ export async function renderContent(
 ) {
     log.info('starting...', {
         hot: import.meta.hot,
+        envMode: import.meta.env.MODE,
     });
 
     const appContainer = document.createElement('div');
