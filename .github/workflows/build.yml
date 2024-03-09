@@ -24,14 +24,25 @@ jobs:
           name: v${{ github.ref_name }}
           draft: true
 
+  # -----------------------------------------------------------------------------------------------------------------------
+  # Build
+  #
+  # Builds the extension in a matrix mode for Browser Chrome & Firefox and Manifest Version 2 & 3
+  # - {ref_name}_chrome_mv2.zip
+  # - {ref_name}_chrome_mv3.zip
+  # - {ref_name}_firefox_mv2.zip
+  # - {ref_name}_firefox_mv3.zip
+  # -----------------------------------------------------------------------------------------------------------------------
+
   build:
     runs-on: ubuntu-latest
-    name: "Build (MV${{ matrix.manifest_version }})"
+    name: "Build (${{ matrix.browser_target }} MV${{ matrix.manifest_version }})"
     needs: [ release ]
 
     strategy:
       matrix:
         manifest_version: [ 2, 3 ]
+        browser_target: [ "chrome", "firefox" ]
 
     steps:
       - name: Checkout repository
@@ -65,15 +76,23 @@ jobs:
         run: npm run build
         env:
           MANIFEST_VERSION: ${{ matrix.manifest_version }}
+          BROWSER_TARGET: ${{ matrix.browser_target }}
 
       - name: Create archive
-        run: cd dist && zip -r ${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip .
+        run: cd dist && zip -r ${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip .
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
+          name: "${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip"
           path: "dist/*.zip"
 
+  # -----------------------------------------------------------------------------------------------------------------------
+  # Pack
+  # -----------------------------------------------------------------------------------------------------------------------
+
+  # Create a .crx file for Chrome browsers
+  # - {ref_name}_chrome_mv2.crx
+  # - {ref_name}_chrome_mv3.crx
   pack-chrome:
     name: "Pack (Chrome MV${{ matrix.manifest_version }})"
     runs-on: ubuntu-latest
@@ -82,6 +101,7 @@ jobs:
     strategy:
       matrix:
         manifest_version: [ 2, 3 ]
+        browser_target: [ "chrome" ]
 
     steps:
       - name: Checkout repository
@@ -89,22 +109,25 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
+          name: "${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip"
           path: artifacts/
 
       - run: ls -la artifacts
 
       - uses: cardinalby/webext-buildtools-chrome-crx-action@v2
         with:
-          zipFilePath: "artifacts/${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
-          crxFilePath: "dist/Chrome_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
+          zipFilePath: "artifacts/${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip"
+          crxFilePath: "dist/Chrome_${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.crx"
           privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.crx"
+          #name: "Chrome_${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.crx"
           path: "dist/*.crx"
 
+  # Creates a .xpi file for Firefox browsers
+  # - Firefox_{ref_name}_mv2.xpi
+  # - Firefox_{ref_name}_mv3.xpi
   pack-firefox:
     name: "Pack (Firefox MV${{ matrix.manifest_version }})"
     runs-on: ubuntu-latest
@@ -113,6 +136,7 @@ jobs:
     strategy:
       matrix:
         manifest_version: [ 2, 3 ]
+        browser_target: [ "firefox" ]
 
     steps:
       - name: Checkout repository
@@ -120,31 +144,40 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
+          name: "${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip"
           path: artifacts/
 
       - run: ls -la artifacts
 
       - run: |
           mkdir -p dist/
-          mv artifacts/${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip dist/Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi
+          mv artifacts/${{ github.ref_name }}_${{ matrix.browser_target }}_mv${{ matrix.manifest_version }}.zip dist/Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
+          #name: "Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
           path: "dist/*.xpi"
+
+  # -----------------------------------------------------------------------------------------------------------------------
+  # Publish
+  # -----------------------------------------------------------------------------------------------------------------------
 
   publish-firefox:
     name: "Publish Firefox"
     runs-on: ubuntu-latest
     needs: [ pack-firefox ]
+
+    strategy:
+      matrix:
+        manifest_version: [ 2 ]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - uses: actions/download-artifact@v3
         with:
-          name: "Firefox_${{ github.ref_name }}_mv2.xpi"
+          name: "Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
           path: artifacts/
 
       - run: |
@@ -156,7 +189,7 @@ jobs:
         uses: kewisch/action-web-ext@v1
         with:
           cmd: sign
-          source: "artifacts/Firefox_${{ github.ref_name }}_mv2.xpi"
+          source: "artifacts/Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}.xpi"
           artifacts: dist
           channel: ${{ contains(github.ref_name, 'dev') == false && 'listed' || 'unlisted' }}
           apiKey: ${{ secrets.FIREFOX_API_KEY }}
@@ -166,19 +199,24 @@ jobs:
       - id: firefox-mv
         if: ${{ steps.web-ext-sign.outputs.target }}
         run: |
-          mv ${{ steps.web-ext-sign.outputs.target }} dist/Firefox_${{ github.ref_name }}_mv2_signed.xpi
+          mv ${{ steps.web-ext-sign.outputs.target }} dist/Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}_signed.xpi
           echo "success=1" >> "$GITHUB_OUTPUT"
 
       - uses: actions/upload-artifact@v3
         if: steps.firefox-mv.outputs.success
         with:
-          name: "Firefox_${{ github.ref_name }}_mv2_signed.xpi"
+          name: "Firefox_${{ github.ref_name }}_mv${{ matrix.manifest_version }}_signed.xpi"
           path: "dist/*.xpi"
 
   publish-chrome:
     name: "Publish Chrome"
     runs-on: ubuntu-latest
     needs: [ pack-chrome ]
+
+    strategy:
+      matrix:
+        manifest_version: [ 3 ]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -189,7 +227,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: "${{ github.ref_name }}_mv3.zip"
+          name: "${{ github.ref_name }}_chrome_mv${{ matrix.manifest_version }}.zip"
           path: artifacts/
 
       - run: mkdir -p dist/
@@ -202,39 +240,43 @@ jobs:
           client_secret: ${{ secrets.CHROME_CLIENT_SECRET }}
           refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
           extension_id: ${{ env.CHROME_EXTENSION_ID }}
-          zip_file: "artifacts/${{ github.ref_name }}_mv3.zip"
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: "Firefox_${{ github.ref_name }}_mv2_signed.xpi"
-          path: "dist/*.xpi"
+          zip_file: "artifacts/${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
 
   publish-edge:
     name: "Publish Edge"
     runs-on: ubuntu-latest
     needs: [ build ]
+
+    strategy:
+      matrix:
+        manifest_version: [ 3 ]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - uses: actions/download-artifact@v3
         with:
-          name: "${{ github.ref_name }}_mv3.zip"
+          name: "${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
           path: artifacts/
 
       - uses: wdzeng/edge-addon@v1
         with:
           product-id: ${{ secrets.EDGE_PRODUCT_ID }}
-          zip-path: "artifacts/${{ github.ref_name }}_mv3.zip"
+          zip-path: "artifacts/${{ github.ref_name }}_mv${{ matrix.manifest_version }}.zip"
           upload-only: true # TODO change to "false" when approved
           client-id: ${{ secrets.EDGE_CLIENT_ID }}
           client-secret: ${{ secrets.EDGE_CLIENT_SECRET }}
           access-token-url: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}
 
+  # -----------------------------------------------------------------------------------------------------------------------
+  # Release
+  # -----------------------------------------------------------------------------------------------------------------------
+
   release-publish:
     name: "Publish release"
     runs-on: ubuntu-latest
-    needs: [ release, pack-chrome, pack-firefox, publish-firefox ]
+    needs: [ release, pack-chrome, pack-firefox, publish-firefox, publish-edge ]
     steps:
       - uses: actions/download-artifact@v3
         with:
