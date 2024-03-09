@@ -4,7 +4,7 @@ import useAuth, { STATE_LIVE } from '~/hooks/useAuth';
 import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
-import { WINDOW_NAVIGATE, THEME_CHANGE } from '~/events';
+import { WINDOW_NAVIGATE } from '~/events';
 import StatusNotice from '~/entries/contentScript/components/status-notice';
 import ReactionsHistoryNotice from '~/entries/contentScript/components/reactions-history-notice';
 import WatchedVideosHeadless from '~/entries/contentScript/components/watched-videos-headless';
@@ -28,22 +28,11 @@ function App() {
     // Add page effect which collects url + channel info
     usePage();
 
-    const { setCurrentUrl } = useAppStore();
-
-    const [isDarkTheme, setIsDarkTheme] = useState(false);
+    const { setCurrentUrl, isDarkMode, isDeviceDarkMode } = useAppStore();
 
     // Location navigation listener
 
-    function isDarkMode() {
-        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-
-    function onChangeScheme() {
-        setTheme({ isDark: isDarkMode() });
-    }
-
     useEffect(() => {
-        onChangeScheme();
         setCurrentUrl(window.location.href);
 
         /** @param {CustomEvent} event */
@@ -51,21 +40,18 @@ function App() {
             setCurrentUrl(event.detail.currentUrl);
         }
 
-        /** @param {CustomEvent} event */
-        function onThemeChange(event) {
-            setIsDarkTheme(event.detail.dark);
-        }
-
-        window.matchMedia('(prefers-color-scheme: dark)')?.addEventListener('change', onChangeScheme);
         window.addEventListener(WINDOW_NAVIGATE, onChangePage);
-        window.addEventListener(THEME_CHANGE, onThemeChange);
 
         return () => {
             window.removeEventListener(WINDOW_NAVIGATE, onChangePage);
-            window.removeEventListener(THEME_CHANGE, onThemeChange);
-            window.matchMedia('(prefers-color-scheme: dark)')?.removeEventListener('change', onChangeScheme);
         };
     }, []);
+
+    // Theme listener
+
+    useEffect(() => {
+        setTheme({ isDark: isDeviceDarkMode });
+    }, [isDeviceDarkMode]);
 
     // User item
 
@@ -81,7 +67,7 @@ function App() {
 
     if (!user) {
         return (
-            <AppContainer dark={isDarkTheme}>
+            <AppContainer dark={isDarkMode}>
                 <div className="flex flex-col gap-6">
 
                     <ReactionPolicyNotice />
@@ -102,7 +88,7 @@ function App() {
 
     return (
         <AppContainer
-            dark={isDarkTheme}
+            dark={isDarkMode}
             state={state}
         >
 

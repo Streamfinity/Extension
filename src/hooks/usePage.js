@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
+import { THEME_CHANGE } from '~/events';
 
 const log = createLogger('usePage');
 
@@ -8,6 +9,8 @@ export function usePage() {
     const {
         currentUrl, setCurrentUrl,
         currentChannel, setCurrentChannel,
+        isDarkMode, setIsDarkMode,
+        isDeviceDarkMode, setIsDeviceDarkMode,
     } = useAppStore();
 
     useEffect(() => {
@@ -37,6 +40,25 @@ export function usePage() {
                     setCurrentChannel(channelInfo);
                 }
             }
+
+            // Update content script dark mode
+
+            const html = document.querySelector('html');
+            if (html) {
+                const detectedDark = html.hasAttribute('dark');
+
+                if (detectedDark !== isDarkMode) {
+                    setIsDarkMode(detectedDark);
+                }
+            }
+
+            // Device dark mode, used to update popup icon color
+
+            const detectedDeviceDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (detectedDeviceDark !== isDeviceDarkMode) {
+                setIsDeviceDarkMode(detectedDeviceDark);
+            }
         }
 
         const currentUrlIntervalId = setInterval(() => {
@@ -48,7 +70,7 @@ export function usePage() {
         return () => {
             clearInterval(currentUrlIntervalId);
         };
-    }, [currentUrl, currentChannel]);
+    }, [currentUrl, currentChannel, isDarkMode, isDeviceDarkMode]);
 
     return {
         currentUrl,

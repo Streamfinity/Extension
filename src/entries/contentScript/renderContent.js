@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { retryFind } from '~/common/utility';
-import { WINDOW_NAVIGATE, THEME_CHANGE } from '~/events';
+import { WINDOW_NAVIGATE } from '~/events';
 
 const log = createLogger('Content-Script');
 
@@ -21,37 +21,6 @@ function bindWindowEvents() {
             }));
         }
     }, 1000);
-
-    function checkDarkTheme() {
-        const html = document.querySelector('html');
-        if (!html) {
-            return;
-        }
-
-        window.dispatchEvent(new CustomEvent(THEME_CHANGE, {
-            detail: {
-                // youtube.com
-                dark: html.hasAttribute('dark'),
-            },
-        }));
-    }
-
-    const maxInitialFastUpdates = 7;
-    let initialFastThemeUpdates = 0;
-
-    const intervalFast = setInterval(() => {
-        initialFastThemeUpdates += 1;
-
-        checkDarkTheme();
-
-        if (initialFastThemeUpdates >= maxInitialFastUpdates) {
-            clearInterval(intervalFast);
-        }
-    }, 1000);
-
-    setInterval(() => {
-        checkDarkTheme();
-    }, 5000);
 }
 
 async function appendShadowRootToDom(appContainer) {
