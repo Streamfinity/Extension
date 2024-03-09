@@ -35,8 +35,11 @@ npm install
 ### Create local env file
 
 ```sh
-MANIFEST_VERSION=3
+MANIFEST_VERSION=3     # available: 3, 2
+BROWSER_TARGET=chrome  # available: chrome, firefox
+
 MANIFEST_HOST_API=*://*.streamfinity.code/*
+MANIFEST_HOST_FRONTEND=*://localhost:3000/*
 
 VITE_API_URL=http://streamfinity.code
 VITE_FRONTEND_URL=http://localhost:3000
