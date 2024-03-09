@@ -30,7 +30,7 @@ jobs:
         run: sudo apt-get install -y jq
 
       - name: Prepare env file
-        run: cp .env.development .env.local
+        run: cp .env.example .env.local
 
       - name: Install dependencies
         run: npm install
