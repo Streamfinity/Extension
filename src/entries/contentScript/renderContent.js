@@ -75,13 +75,17 @@ export async function renderContent(
     cssPaths,
     render = () => {},
 ) {
+    log.info('starting...', {
+        hot: import.meta.hot,
+    });
+
     const appContainer = document.createElement('div');
     appContainer.id = 'streamfinity';
 
-    // appRoot is in shadow root
     const appRoot = document.createElement('section');
+
     const shadowRoot = appContainer.attachShadow({
-        mode: import.meta.env.DEV ? 'open' : 'closed',
+        mode: import.meta.env.MODE === 'development' ? 'open' : 'closed',
     });
 
     if (import.meta.hot) {
