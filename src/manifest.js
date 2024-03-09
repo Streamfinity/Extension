@@ -113,12 +113,6 @@ export function getManifest(manifestVersion, browserTarget, env) {
             ],
         };
 
-        if (!inProduction) {
-            manifest.content_security_policy = {
-                extension_pages: "script-src 'unsafe-inline' 'self' http://localhost:5173 ; object-src 'self'",
-            };
-        }
-
         // Firefox supported event driven background pages in MV3
         // https://extensionworkshop.com/documentation/develop/manifest-v3-migration-guide/
         if (browserTarget === browserTargets.firefox) {
