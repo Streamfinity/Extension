@@ -76,12 +76,15 @@ async function getStatus() {
 
     extensionStatus = data?.data || {};
 
-    if (extensionStatus?.accounts?.length > 0) {
-        await browser.action.setBadgeText({ text: `${extensionStatus.accounts.length}` });
-        await browser.action.setBadgeTextColor({ color: '#fff' });
-        await browser.action.setBadgeBackgroundColor({ color: '#f00' });
-    } else {
-        await browser.action.setBadgeText({ text: null });
+    // WARNING: browser.action is not available in Firefox for some reason
+    if (browser.action) {
+        if (extensionStatus?.accounts?.length > 0) {
+            await browser.action.setBadgeText({ text: `${extensionStatus.accounts.length}` });
+            await browser.action.setBadgeTextColor({ color: '#fff' });
+            await browser.action.setBadgeBackgroundColor({ color: '#f00' });
+        } else {
+            await browser.action.setBadgeText({ text: null });
+        }
     }
 
     return {
@@ -188,6 +191,7 @@ async function updateSettingUpdateVisible(data) {
 }
 
 async function openPopup() {
+    // WARNING: browser.action is not available in Firefox for some reason
     if (!browser.action || !('openPopup' in browser.action)) {
         log.warn('openPopup', 'not available in browser.action');
         return {};

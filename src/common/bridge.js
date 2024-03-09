@@ -63,9 +63,15 @@ export async function getWatchedReactions(data) {
 }
 
 export async function getStatus() {
-    const { data } = await browser.runtime.sendMessage({ type: GET_STATUS });
+    try {
+        const { data } = await browser.runtime.sendMessage({ type: GET_STATUS });
 
-    return data || null;
+        return data;
+    } catch (err) {
+        log.error('getStatus()', 'error', err);
+    }
+
+    return null;
 }
 
 export async function submitReaction(data) {
