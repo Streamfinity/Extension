@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useAppStore } from '~/entries/contentScript/state';
-import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import Logo from '~/components/logo';
 import DevTools from '~/entries/contentScript/components/dev-tools';
 import { childrenShape } from '~/shapes';
@@ -15,8 +14,6 @@ function AppContainer({
     children, dark, user, state,
 }) {
     const { isVisible } = useAppStore();
-
-    useBackgroundEvents();
 
     return (
         <div className={classNames(

@@ -16,16 +16,22 @@ import OriginalVideoNotice from '~/entries/contentScript/components/original-vid
 import AppContainer from '~/entries/contentScript/components/app-container';
 import StreamerModeNotice from '~/entries/contentScript/components/streamer-mode-notice';
 import { usePage } from '~/hooks/usePage';
+import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 
 function App() {
     const {
         user, loadingAuth, liveStream, login, state,
     } = useAuth();
 
+    const { setCurrentUrl, isDarkMode, isDeviceDarkMode } = useAppStore();
+
     // Add page effect which collects url + channel info
+
     usePage();
 
-    const { setCurrentUrl, isDarkMode, isDeviceDarkMode } = useAppStore();
+    // Listen for messages sent by background via browser.tabs.sendMessage
+
+    useBackgroundEvents();
 
     // Location navigation listener
 
