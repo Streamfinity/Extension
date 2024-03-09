@@ -23,8 +23,6 @@ const browserAction = {
  * @returns {object}
  */
 export function getManifest(manifestVersion, browserTarget, env) {
-    const inProduction = process.env.NODE_ENV === 'production';
-
     if (!Object.values(browserTargets).includes(browserTarget)) {
         throw new Error(`Invalid browser target: ${browserTarget}`);
     }

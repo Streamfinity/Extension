@@ -1,7 +1,6 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
 import useAuth, { STATE_LIVE } from '~/hooks/useAuth';
-import { createLogger } from '~/common/log';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
 import { WINDOW_NAVIGATE } from '~/events';
@@ -17,8 +16,6 @@ import OriginalVideoNotice from '~/entries/contentScript/components/original-vid
 import AppContainer from '~/entries/contentScript/components/app-container';
 import StreamerModeNotice from '~/entries/contentScript/components/streamer-mode-notice';
 import { usePage } from '~/hooks/usePage';
-
-const log = createLogger('App');
 
 function App() {
     const {

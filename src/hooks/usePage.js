@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
-import { THEME_CHANGE } from '~/events';
 
 const log = createLogger('usePage');
 

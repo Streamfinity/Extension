@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
 import Button from '~/entries/contentScript/components/button';
 import styles from '~/styles/input.module.css';
-import useAuth from '~/hooks/useAuth';
 import { useAppStore, MESSAGE_SUCCESS, MESSAGE_ERROR } from '~/entries/contentScript/state';
 
 const RESULTS_PENDING = 0;
@@ -13,8 +12,6 @@ const RESULTS_EMPTY = 2;
 const RESULTS_OK = 3;
 
 function SubmitSuggestionForm({ onSubmit }) {
-    const { accounts: userAccounts } = useAuth();
-
     const { setAppMessage } = useAppStore();
 
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
