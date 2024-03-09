@@ -73,12 +73,6 @@ export function getManifest(manifestVersion, browserTarget, env) {
         ],
     };
 
-    if (!inProduction && browserTarget === browserTargets.chrome) {
-        manifest.content_security_policy = {
-            extension_pages: "script-src 'unsafe-inline' 'self' http://localhost:5173 ; object-src 'self'",
-        };
-    }
-
     if (manifestVersion === 2) {
         const manifestVersion2 = {
             ...manifest,
@@ -118,6 +112,12 @@ export function getManifest(manifestVersion, browserTarget, env) {
                 hostMatches.frontend,
             ],
         };
+
+        if (!inProduction) {
+            manifest.content_security_policy = {
+                extension_pages: "script-src 'unsafe-inline' 'self' http://localhost:5173 ; object-src 'self'",
+            };
+        }
 
         // Firefox supported event driven background pages in MV3
         // https://extensionworkshop.com/documentation/develop/manifest-v3-migration-guide/
