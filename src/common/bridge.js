@@ -63,6 +63,7 @@ export async function getWatchedReactions(data) {
 }
 
 export async function getStatus() {
+    // TODO move this to the useStatus/useAuth hook and watch for tanstack query error property
     try {
         const { data } = await browser.runtime.sendMessage({ type: GET_STATUS });
 
