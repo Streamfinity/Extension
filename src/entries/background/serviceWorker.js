@@ -1,6 +1,6 @@
-import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { handleMessage } from '~/entries/background/common/controllers';
+import { registerListener } from '~/entries/background/common/spaceship';
 
 const log = createLogger('ServiceWorker');
 
@@ -10,4 +10,4 @@ log.debug('config', {
     FRONTEND_URL: import.meta.env.VITE_FRONTEND_URL,
 });
 
-browser.runtime.onMessage.addListener(handleMessage);
+registerListener(handleMessage);
