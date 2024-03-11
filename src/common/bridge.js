@@ -33,10 +33,10 @@ export async function logout() {
 }
 
 export async function sendPlayerProgress(data) {
-    await browser.runtime.sendMessage({
-        type: PLAYER_PROGRESS,
+    await sendMessageToBackground(
+        PLAYER_PROGRESS,
         data,
-    });
+    );
 }
 
 export async function searchSuggestionAccounts(data) {
