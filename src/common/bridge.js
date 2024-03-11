@@ -20,15 +20,16 @@ import {
     REACTIONS_GET_ORIGINAL_VIDEOS,
 } from '~/messages';
 import { createLogger } from '~/common/log';
+import { sendMessageToBackground } from '~/entries/background/common/spaceship';
 
 const log = createLogger('Bridge');
 
 export async function login() {
-    return browser.runtime.sendMessage({ type: LOGIN });
+    return sendMessageToBackground( LOGIN);
 }
 
 export async function logout() {
-    return browser.runtime.sendMessage({ type: LOGOUT });
+    return sendMessageToBackground(LOGOUT)
 }
 
 export async function sendPlayerProgress(data) {
@@ -39,7 +40,7 @@ export async function sendPlayerProgress(data) {
 }
 
 export async function searchSuggestionAccounts(data) {
-    const { data: accounts } = await browser.runtime.sendMessage({ type: SUGGESTIONS_SEARCH_ACCOUNT, data });
+    const { data: accounts } = sendMessageToBackground( SUGGESTIONS_SEARCH_ACCOUNT, data);
 
     log.debug('searchSuggestionAccounts', accounts);
 
@@ -47,7 +48,7 @@ export async function searchSuggestionAccounts(data) {
 }
 
 export async function submitSuggestion(data) {
-    const response = await browser.runtime.sendMessage({ type: SUGGESTIONS_SUBMIT, data });
+    const response = await sendMessageToBackground(SUGGESTIONS_SUBMIT, data);
 
     if (response.message) {
         throw new Error(response.message);
@@ -57,7 +58,7 @@ export async function submitSuggestion(data) {
 }
 
 export async function getWatchedReactions(data) {
-    const { data: suggestion } = await browser.runtime.sendMessage({ type: WATCHED_REACTIONS_GET, data });
+    const { data: suggestion } = await sendMessageToBackground(WATCHED_REACTIONS_GET, data);
 
     return suggestion;
 }
@@ -65,7 +66,7 @@ export async function getWatchedReactions(data) {
 export async function getStatus() {
     // TODO move this to the useStatus/useAuth hook and watch for tanstack query error property
     try {
-        const { data } = await browser.runtime.sendMessage({ type: GET_STATUS });
+        const { data } = await sendMessageToBackground( GET_STATUS );
 
         return data;
     } catch (err) {
@@ -76,7 +77,7 @@ export async function getStatus() {
 }
 
 export async function submitReaction(data) {
-    const response = await browser.runtime.sendMessage({ type: REACTION_SUBMIT, data });
+    const response = await sendMessageToBackground( REACTION_SUBMIT, data );
 
     if (response.message) {
         throw new Error(response.message);
@@ -86,29 +87,29 @@ export async function submitReaction(data) {
 }
 
 export async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
-    const data = await browser.runtime.sendMessage({ type: REACTION_POLICY_GET, data: { videoUrl, channelUrl } });
+    const data = await sendMessageToBackground( REACTION_POLICY_GET,  { videoUrl, channelUrl } );
 
     return { data: data?.data };
 }
 
 export async function settingsUpdateVisible({ visible }) {
-    return browser.runtime.sendMessage({
-        type: SETTING_UPDATE_VISIBLE,
-        data: { visible },
-    });
+    return sendMessageToBackground(
+        SETTING_UPDATE_VISIBLE,
+         { visible },
+    );
 }
 
 export async function openSettings() {
-    return browser.runtime.sendMessage({
-        type: OPEN_POPUP,
-    });
+    return sendMessageToBackground(
+         OPEN_POPUP,
+    );
 }
 
 export async function setTheme({ isDark }) {
-    return browser.runtime.sendMessage({
-        type: SET_BROWSER_THEME,
-        data: { dark: isDark },
-    });
+    return sendMessageToBackground(
+        SET_BROWSER_THEME,
+        { dark: isDark },
+    );
 }
 
 // ------------------------------------------------------------------------------------------------------------------------
@@ -128,7 +129,7 @@ export function useStatus() {
 export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
     const query = useQuery({
         queryKey: ['reaction-policies', videoUrl, channelUrl],
-        queryFn: () => browser.runtime.sendMessage({
+        queryFn: () => sendMessageToBackground(
             type: REACTION_POLICY_GET,
             data: { videoUrl, channelUrl },
         }),
@@ -144,9 +145,10 @@ export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
 export function useContentRatings({ videoUrl }) {
     const query = useQuery({
         queryKey: ['content-ratings', videoUrl],
-        queryFn: () => browser.runtime.sendMessage({
-            type: CONTENT_RATINGS_GET, data: { videoUrl },
-        }),
+        queryFn: () => sendMessageToBackground(
+             CONTENT_RATINGS_GET,
+            { videoUrl },
+        ),
         enabled: !!videoUrl,
     });
 
@@ -159,10 +161,10 @@ export function useContentRatings({ videoUrl }) {
 export function useReactions({ videoUrl, onlyFollowed }) {
     const query = useQuery({
         queryKey: ['reactions-to-video', videoUrl, onlyFollowed],
-        queryFn: () => browser.runtime.sendMessage({
-            type: REACTIONS_GET_FOR_VIDEO,
-            data: { videoUrl, onlyFollowed },
-        }),
+        queryFn: () => sendMessageToBackground(
+             REACTIONS_GET_FOR_VIDEO,
+             { videoUrl, onlyFollowed },
+        ),
         enabled: !!videoUrl,
     });
 
@@ -175,9 +177,10 @@ export function useReactions({ videoUrl, onlyFollowed }) {
 export function useOriginalVideos({ videoUrl }) {
     const query = useQuery({
         queryKey: ['original-videos-for-video', videoUrl],
-        queryFn: () => browser.runtime.sendMessage({
-            type: REACTIONS_GET_ORIGINAL_VIDEOS, data: { videoUrl },
-        }),
+        queryFn: () => sendMessageToBackground(
+             REACTIONS_GET_ORIGINAL_VIDEOS,
+            { videoUrl },
+        ),
         enabled: !!videoUrl,
     });
 
