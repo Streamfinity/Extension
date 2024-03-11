@@ -6,6 +6,9 @@ import { getExtensionStatus, createPlaybackProgress, getAuthenticatedUser } from
 import { EVENT_REFRESH_AUTH, EVENT_REFRESH_SETTINGS } from '~/messages';
 import { why } from '~/common/pretty';
 import { sendMessageToContentScript } from '~/entries/background/common/spaceship';
+import { createLogger } from '~/common/log';
+
+const log = createLogger('Background');
 
 /**
  * @type {{user}}

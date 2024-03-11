@@ -32,13 +32,7 @@ async function getResponse(type, data) {
     return null;
 }
 
-export async function handleMessage(msg) {
-    if (typeof msg !== 'object') {
-        log.warn('message is not an object', { msg });
-        return Promise.resolve();
-    }
-
-    const { type, data } = msg;
+export async function onContentScriptMessage(type, data) {
     log.debug('RECV ->', type, data);
 
     const response = await getResponse(type, data);
