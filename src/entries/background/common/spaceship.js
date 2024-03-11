@@ -1,8 +1,22 @@
 import browser from 'webextension-polyfill';
-import { handleMessage } from '~/entries/background/common/controllers';
+import { createLogger } from '~/common/log';
+
+const log = createLogger('Spaceship');
 
 export function registerListener(listener) {
-    browser.runtime.onMessage.addListener(listener);
+    browser.runtime.onMessage.addListener((req) => {
+        if (typeof req !== 'object') {
+            log.warn('message is not an object', req);
+            return Promise.resolve();
+        }
+
+        const { type, data } = req;
+        listener(type, data);
+    });
+}
+
+export function unregisterListener(listener) {
+    browser.runtime.onMessage.removeListener(listener);
 }
 
 export async function sendMessageToContentScript(type, data = {}) {
@@ -32,4 +46,11 @@ export async function sendMessageToContentScript(type, data = {}) {
     } catch (err) {
         log.error('SEND <-', 'error executing promises', err);
     }
+}
+
+export async function sendMessageToBackground(type, data) {
+    return browser.runtime.sendMessage({
+        type,
+        data,
+    });
 }

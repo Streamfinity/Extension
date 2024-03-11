@@ -6,6 +6,7 @@ import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
 import { useStatus } from '~/common/bridge';
 import useAuth from '~/hooks/useAuth';
+import { registerListener, unregisterListener } from '~/entries/background/common/spaceship';
 
 const log = createLogger('Background-Events');
 
@@ -22,7 +23,7 @@ export function useBackgroundEvents() {
     const { refetch: refetchStatus } = useStatus();
     const { refreshStatusData } = useAuth();
 
-    async function onBackgroundMessageCallback({ type, data }) {
+    async function onBackgroundMessage(type, data) {
         log.debug('RECV ->', type, data);
 
         switch (type) {
@@ -40,13 +41,13 @@ export function useBackgroundEvents() {
     }
 
     useEffect(() => {
-        browser.runtime.onMessage.addListener(onBackgroundMessageCallback);
+        registerListener(onBackgroundMessage);
         log.debug('registered listener');
 
         refreshSettings({ setIsVisible });
 
         return () => {
-            browser.runtime.onMessage.removeListener(onBackgroundMessageCallback);
+            unregisterListener(onBackgroundMessage);
             log.debug('removed listener');
         };
     }, []);
