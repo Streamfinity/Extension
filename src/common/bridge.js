@@ -7,6 +7,8 @@ import { sendMessageToBackground } from '~/entries/background/common/spaceship';
 
 const log = createLogger('Bridge');
 
+// Auth
+
 export async function login() {
     return sendMessageToBackground(messages.LOGIN);
 }
@@ -15,6 +17,8 @@ export async function logout() {
     return sendMessageToBackground(messages.LOGOUT);
 }
 
+// Player
+
 export async function sendPlayerProgress(data) {
     await sendMessageToBackground(
         messages.PLAYER_PROGRESS,
@@ -22,8 +26,25 @@ export async function sendPlayerProgress(data) {
     );
 }
 
+// Status
+
+async function getStatus() {
+    // TODO move this to the useStatus/useAuth hook and watch for tanstack query error property
+    try {
+        const { data } = await sendMessageToBackground(messages.GET_STATUS);
+
+        return data;
+    } catch (err) {
+        log.error('getStatus()', 'error', err);
+    }
+
+    return null;
+}
+
+// Suggestions
+
 export async function searchSuggestionAccounts(data) {
-    const { data: accounts } = sendMessageToBackground(messages.SUGGESTIONS_SEARCH_ACCOUNT, data);
+    const { data: accounts } = await sendMessageToBackground(messages.SUGGESTIONS_SEARCH_ACCOUNT, data);
 
     log.debug('searchSuggestionAccounts', accounts);
 
@@ -46,17 +67,29 @@ export async function getWatchedReactions(data) {
     return suggestion;
 }
 
-export async function getStatus() {
-    // TODO move this to the useStatus/useAuth hook and watch for tanstack query error property
-    try {
-        const { data } = await sendMessageToBackground(messages.GET_STATUS);
+// Content Ratings
 
-        return data;
-    } catch (err) {
-        log.error('getStatus()', 'error', err);
-    }
+async function getContentRatingsForVideo({ videoUrl }) {
+    return sendMessageToBackground(
+        messages.CONTENT_RATINGS_GET,
+        { videoUrl },
+    );
+}
 
-    return null;
+// Reactions
+
+async function getReactionsForVideo({ videoUrl, onlyFollowed }) {
+    return sendMessageToBackground(
+        messages.REACTIONS_GET_FOR_VIDEO,
+        { videoUrl, onlyFollowed },
+    );
+}
+
+async function getReactionOriginalVideos({ videoUrl }) {
+    return sendMessageToBackground(
+        messages.REACTIONS_GET_ORIGINAL_VIDEOS,
+        { videoUrl },
+    );
 }
 
 export async function submitReaction(data) {
@@ -69,11 +102,18 @@ export async function submitReaction(data) {
     return response;
 }
 
-export async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
-    const data = await sendMessageToBackground(messages.REACTION_POLICY_GET, { videoUrl, channelUrl });
+// Reaction Policy
+
+async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
+    const data = await sendMessageToBackground(
+        messages.REACTION_POLICY_GET,
+        { videoUrl, channelUrl },
+    );
 
     return { data: data?.data };
 }
+
+// Settings
 
 export async function settingsUpdateVisible({ visible }) {
     return sendMessageToBackground(
@@ -99,6 +139,8 @@ export async function setTheme({ isDark }) {
 // Hooks
 // ------------------------------------------------------------------------------------------------------------------------
 
+// TODO refactor query hooks to use method calls from above
+
 export function useStatus() {
     return useQuery({
         queryKey: ['status'],
@@ -112,10 +154,7 @@ export function useStatus() {
 export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
     const query = useQuery({
         queryKey: ['reaction-policies', videoUrl, channelUrl],
-        queryFn: () => sendMessageToBackground(
-            messages.REACTION_POLICY_GET,
-            { videoUrl, channelUrl },
-        ),
+        queryFn: () => getReactionPolicyForVideo({ videoUrl, channelUrl }),
         enabled: !!videoUrl || !!channelUrl,
     });
 
@@ -128,10 +167,7 @@ export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
 export function useContentRatings({ videoUrl }) {
     const query = useQuery({
         queryKey: ['content-ratings', videoUrl],
-        queryFn: () => sendMessageToBackground(
-            messages.CONTENT_RATINGS_GET,
-            { videoUrl },
-        ),
+        queryFn: () => getContentRatingsForVideo({ videoUrl }),
         enabled: !!videoUrl,
     });
 
@@ -144,10 +180,7 @@ export function useContentRatings({ videoUrl }) {
 export function useReactions({ videoUrl, onlyFollowed }) {
     const query = useQuery({
         queryKey: ['reactions-to-video', videoUrl, onlyFollowed],
-        queryFn: () => sendMessageToBackground(
-            messages.REACTIONS_GET_FOR_VIDEO,
-            { videoUrl, onlyFollowed },
-        ),
+        queryFn: () => getReactionsForVideo({ videoUrl, onlyFollowed }),
         enabled: !!videoUrl,
     });
 
@@ -160,10 +193,7 @@ export function useReactions({ videoUrl, onlyFollowed }) {
 export function useOriginalVideos({ videoUrl }) {
     const query = useQuery({
         queryKey: ['original-videos-for-video', videoUrl],
-        queryFn: () => sendMessageToBackground(
-            messages.REACTIONS_GET_ORIGINAL_VIDEOS,
-            { videoUrl },
-        ),
+        queryFn: () => getReactionOriginalVideos({ videoUrl }),
         enabled: !!videoUrl,
     });
 
