@@ -199,7 +199,7 @@ function SubmitSuggestionForm({ onSubmit }) {
             <button
                 onClick={() => reset()}
                 type="button"
-                className="mt-4 w-full text-center text-sm text-gray-500 hover:text-gray-300 dark:text-gray-400"
+                className="mt-4 w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
             >
                 Abort
             </button>
