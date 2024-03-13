@@ -33,8 +33,6 @@ async function getResponse(type, data) {
 }
 
 export async function onContentScriptMessage(type, data) {
-    log.debug('RECV ->', type, data);
-
     const response = await getResponse(type, data);
 
     if (response === null) {
