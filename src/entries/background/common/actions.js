@@ -165,7 +165,7 @@ export async function updateScheme({ dark }) {
         icons[size] = `icons/transparent/${dark ? 'light' : 'dark'}-${size}.png`;
     });
 
-    log.debug('updateScheme', dark, icons);
+    log.debug('updateScheme', dark);
 
     await browser.action.setIcon({
         path: icons,
