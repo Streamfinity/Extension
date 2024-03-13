@@ -29,6 +29,8 @@ async function getResponse(type, data) {
         return callback[type](data);
     }
 
+    log.error('got message without listener', type);
+
     return null;
 }
 

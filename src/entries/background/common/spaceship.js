@@ -1,20 +1,15 @@
 import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 
-const log = createLogger('Spaceship');
+const log = createLogger('Spaceship 👽');
 
 export function registerListener(listener) {
     browser.runtime.onMessage.addListener((req) => {
-        if (typeof req !== 'object') {
-            log.warn('message is not an object', req);
-            return Promise.resolve();
-        }
-
         const { type, data } = req;
 
         log.debug('RECV ⬅️', type, data);
 
-        listener(type, data);
+        return listener(type, data);
     });
 }
 
@@ -23,7 +18,7 @@ export function unregisterListener(listener) {
 }
 
 export async function sendMessageToTab(tabId, type, data) {
-    log.debug('SEND ➡️ (BG -> CS)', type, data);
+    log.debug('SEND ➡️', type, data);
 
     return browser.tabs.sendMessage(tabId, {
         type,
@@ -32,12 +27,22 @@ export async function sendMessageToTab(tabId, type, data) {
 }
 
 export async function sendMessageToBackground(type, data) {
-    log.debug('SEND ➡️ (CS -> BG)', type, data);
+    log.debug('SEND ➡️', type, data);
 
-    return browser.runtime.sendMessage({
-        type,
-        data,
-    });
+    try {
+        const response = await browser.runtime.sendMessage({
+            type,
+            data,
+        });
+
+        console.log(response);
+
+        return response;
+    } catch (err) {
+        log.error('SEND ➡️', type, err);
+
+        throw err;
+    }
 }
 
 export async function sendMessageToContentScript(type, data = {}) {
