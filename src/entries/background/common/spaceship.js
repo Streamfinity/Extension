@@ -35,8 +35,6 @@ export async function sendMessageToBackground(type, data) {
             data,
         });
 
-        console.log(response);
-
         return response;
     } catch (err) {
         log.error('SEND ➡️', type, err);
