@@ -11,6 +11,9 @@ export function registerListener(listener) {
         }
 
         const { type, data } = req;
+
+        log.debug('RECV ⬅️', type, data);
+
         listener(type, data);
     });
 }
@@ -19,38 +22,49 @@ export function unregisterListener(listener) {
     browser.runtime.onMessage.removeListener(listener);
 }
 
+export async function sendMessageToTab(tabId, type, data) {
+    log.debug('SEND ➡️ (BG -> CS)', type, data);
+
+    return browser.tabs.sendMessage(tabId, {
+        type,
+        data,
+    });
+}
+
+export async function sendMessageToBackground(type, data) {
+    log.debug('SEND ➡️ (CS -> BG)', type, data);
+
+    return browser.runtime.sendMessage({
+        type,
+        data,
+    });
+}
+
 export async function sendMessageToContentScript(type, data = {}) {
     const tabs = await browser.tabs.query({ active: true });
 
     const promises = tabs.map(async (tab) => {
         try {
-            log.debug('SEND <-', `[${tab.id}]`, type, 'sending ...');
+            log.debug('SEND ➡️', `[${tab.id}]`, type, 'sending ...');
 
-            await browser.tabs.sendMessage(tab.id, {
+            await sendMessageToTab(tab.id, {
                 type,
                 data,
             });
 
-            log.debug('SEND <-', `[${tab.id}]`, type, ' ✅ SENT');
+            log.debug('SEND ➡️', `[${tab.id}]`, type, ' ✅ SENT');
         } catch (err) {
-            log.error('SEND <-', `[${tab.id}]`, type, err);
+            log.error('SEND ➡️', `[${tab.id}]`, type, err);
         }
     });
 
-    log.debug('SEND <-', 'sending message', type, 'to', tabs.length, 'tabs:', tabs);
+    log.debug('SEND ➡️', 'sending message', type, 'to', tabs.length, 'tabs:', tabs);
 
     try {
         await Promise.all(promises);
 
-        log.debug('SEND <-', '✅ SENT ALL MESSAGES');
+        log.debug('SEND ➡️', '✅ SENT ALL MESSAGES');
     } catch (err) {
-        log.error('SEND <-', 'error executing promises', err);
+        log.error('SEND ➡️', 'error executing promises', err);
     }
-}
-
-export async function sendMessageToBackground(type, data) {
-    return browser.runtime.sendMessage({
-        type,
-        data,
-    });
 }

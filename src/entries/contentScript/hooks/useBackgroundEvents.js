@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill';
 import { useEffect } from 'react';
 import { EVENT_REFRESH_SETTINGS, EVENT_REFRESH_AUTH } from '~/messages';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
@@ -24,8 +23,6 @@ export function useBackgroundEvents() {
     const { refreshStatusData } = useAuth();
 
     async function onBackgroundMessage(type, data) {
-        log.debug('RECV ->', type, data);
-
         switch (type) {
         case EVENT_REFRESH_AUTH:
             await refreshStatusData();
@@ -42,13 +39,11 @@ export function useBackgroundEvents() {
 
     useEffect(() => {
         registerListener(onBackgroundMessage);
-        log.debug('registered listener');
 
         refreshSettings({ setIsVisible });
 
         return () => {
             unregisterListener(onBackgroundMessage);
-            log.debug('removed listener');
         };
     }, []);
 
