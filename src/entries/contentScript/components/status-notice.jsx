@@ -5,7 +5,7 @@ import { buildFrontendUrl } from '~/common/utility';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 
 function StatusNotice({ state, liveStream }) {
-    if (state === STATE_LIVE) {
+    if (liveStream) {
         return (
             <a
                 href={buildFrontendUrl('/dashboard/streams')}
@@ -24,6 +24,7 @@ function StatusNotice({ state, liveStream }) {
             </a>
         );
     }
+
     return null;
 }
 
