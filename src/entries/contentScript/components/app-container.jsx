@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useAppStore } from '~/entries/contentScript/state';
@@ -7,6 +7,7 @@ import DevTools from '~/entries/contentScript/components/dev-tools';
 import { childrenShape } from '~/shapes';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import AppMessage from '~/entries/contentScript/components/app-message';
+import SubwaySurfer from '~/entries/contentScript/components/subway-surfer';
 
 const dev = import.meta.env.DEV;
 
@@ -14,6 +15,20 @@ function AppContainer({
     children, dark, user, state,
 }) {
     const { isVisible } = useAppStore();
+
+    const [clickedCount, setClickedCount] = useState(0);
+
+    useEffect(() => {
+        const clearClicks = setTimeout(() => {
+            if (clickedCount < 5) {
+                setClickedCount(0);
+            }
+        }, 5000);
+
+        return () => {
+            clearTimeout(clearClicks);
+        };
+    }, [clickedCount]);
 
     return (
         <div className={classNames(
@@ -37,9 +52,13 @@ function AppContainer({
                         dark:shadow-lg dark:shadow-white/5"
                 >
                     <div className="mb-4 flex items-center justify-between">
-                        <Logo />
+                        <Logo onClick={() => setClickedCount((prev) => prev + 1)} />
                         {user}
                     </div>
+
+                    {clickedCount >= 5 && (
+                        <SubwaySurfer onClose={() => setClickedCount(0)} />
+                    )}
 
                     {children}
 
