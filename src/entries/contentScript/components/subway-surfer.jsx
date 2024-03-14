@@ -24,7 +24,9 @@ function SubwaySurfer({ onClose }) {
 
     useEffect(() => {
         const randomIndex = Math.floor(Math.random() * availableVideoItems.length);
-        setVideoItem(availableVideoItems[randomIndex]);
+        if (videoItem === null) {
+            setVideoItem(availableVideoItems[randomIndex]);
+        }
     }, []);
 
     if (!videoItem) {
