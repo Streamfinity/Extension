@@ -75,7 +75,6 @@ function AnalyticsNotice() {
         return null;
     }
 
-    console.log(video);
     return (
         <Card color="brand-creator">
             <CardTitle>Analytics</CardTitle>
