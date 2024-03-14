@@ -5,6 +5,18 @@ import PropTypes from 'prop-types';
 const availableVideoItems = [{
     name: 'Roman',
     url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+}, {
+    name: 'Christian',
+    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+}, {
+    name: 'Chris',
+    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+}, {
+    name: 'Matze',
+    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+}, {
+    name: 'Mina',
+    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
 }];
 
 function SubwaySurfer({ onClose }) {
