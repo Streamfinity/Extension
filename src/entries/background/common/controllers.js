@@ -22,6 +22,7 @@ async function getResponse(type, data) {
         [messages.CONTENT_RATINGS_GET]: api.getContentRatings,
         [messages.REACTIONS_GET_FOR_VIDEO]: api.getReactionsForVideo,
         [messages.REACTIONS_GET_ORIGINAL_VIDEOS]: api.getOriginalVideosForVideo,
+        [messages.VIDEO_ANALYTICS_GET]: api.getVideoAnalytics,
         [messages.SETTING_UPDATE_VISIBLE]: actions.updateSettingUpdateVisible,
     };
 

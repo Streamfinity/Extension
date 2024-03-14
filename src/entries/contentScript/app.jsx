@@ -1,6 +1,6 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
-import useAuth, { STATE_LIVE } from '~/hooks/useAuth';
+import useAuth, { STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
 import { WINDOW_NAVIGATE } from '~/events';
@@ -17,6 +17,7 @@ import AppContainer from '~/entries/contentScript/components/app-container';
 import StreamerModeNotice from '~/entries/contentScript/components/streamer-mode-notice';
 import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
+import AnalyticsNotice from '~/entries/contentScript/components/analytics-notice';
 
 function App() {
     const {
@@ -100,6 +101,10 @@ function App() {
                     state={state}
                     liveStream={liveStream}
                 />
+            )}
+
+            {state === STATE_OWN_VIDEO && (
+                <AnalyticsNotice />
             )}
 
             {state !== STATE_LIVE && (

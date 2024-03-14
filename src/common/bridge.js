@@ -113,6 +113,15 @@ async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
     return { data: data?.data };
 }
 
+// Analytics
+
+async function getVideoAnalytics({ videoUrl, accountIds }) {
+    return sendMessageToBackground(
+        messages.VIDEO_ANALYTICS_GET,
+        { videoUrl, accountIds },
+    );
+}
+
 // Settings
 
 export async function settingsUpdateVisible({ visible }) {
@@ -138,8 +147,6 @@ export async function setTheme({ isDark }) {
 // ------------------------------------------------------------------------------------------------------------------------
 // Hooks
 // ------------------------------------------------------------------------------------------------------------------------
-
-// TODO refactor query hooks to use method calls from above
 
 export function useStatus() {
     return useQuery({
@@ -195,6 +202,19 @@ export function useOriginalVideos({ videoUrl }) {
         queryKey: ['original-videos-for-video', videoUrl],
         queryFn: () => getReactionOriginalVideos({ videoUrl }),
         enabled: !!videoUrl,
+    });
+
+    return {
+        ...query,
+        data: query.data?.data,
+    };
+}
+
+export function useVideoAnalytics({ videoUrl, accountIds }) {
+    const query = useQuery({
+        queryKey: ['video-analytics', videoUrl, accountIds],
+        queryFn: () => getVideoAnalytics({ videoUrl, accountIds }),
+        enabled: !!videoUrl && !!accountIds?.length,
     });
 
     return {

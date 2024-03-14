@@ -150,3 +150,15 @@ export async function createPlaybackProgress({ data, liveStreamId }) {
         json: { items },
     });
 }
+
+export async function getVideoAnalytics({ videoUrl, accountIds }) {
+    const { data: analytics } = await api('analytics/videos', {
+        token: await storageGetToken(),
+        query: {
+            video_url: videoUrl,
+            ...Object.fromEntries(accountIds.map((id, key) => `account_id[${key}]`).map((key, i) => [key, accountIds[i]])),
+        },
+    });
+
+    return analytics;
+}

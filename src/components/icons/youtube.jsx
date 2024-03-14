@@ -32,6 +32,13 @@ function YouTubeIcon({
                         id="polygon9"
                         fill="#000"
                         d="M80.2 42.5 48.6 24.3v36.4z"
+                        className="hidden dark:block"
+                    />
+                    <path
+                        id="polygon10"
+                        fill="#fff"
+                        d="M80.2 42.5 48.6 24.3v36.4z"
+                        className="block dark:hidden"
                     />
                 </g>
             </svg>

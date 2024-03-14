@@ -43,6 +43,7 @@ function Card({
         // Brand
         primary: 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
         'brand-viewer': 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',
+        'brand-creator': 'bg-gradient-to-r from-brand-creator-gradient-from to-brand-creator-gradient-to',
     }[color];
 
     const innerColorClassName = {
@@ -53,6 +54,7 @@ function Card({
         // Brand
         primary: 'bg-white/90 dark:bg-black/90',
         'brand-viewer': 'bg-white/90 dark:bg-black/90',
+        'brand-creator': 'bg-white/90 dark:bg-black/90',
     }[color];
 
     const hasInner = !!innerColorClassName;
@@ -87,6 +89,7 @@ Card.propTypes = {
         'red',
         'yellow',
         'brand-viewer',
+        'brand-creator',
         'primary',
     ]),
     children: childrenShape.isRequired,
