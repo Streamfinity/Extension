@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ArrowUpIcon } from '@heroicons/react/16/solid';
 import classNames from 'classnames';
