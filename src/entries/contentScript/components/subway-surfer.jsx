@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/16/solid';
 import PropTypes from 'prop-types';
 
 const availableVideoItems = [{
     name: 'Roman',
-    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
 }, {
     name: 'Christian',
-    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
 }, {
     name: 'Chris',
-    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-chris.mp4',
 }, {
     name: 'Matze',
-    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
 }, {
     name: 'Mina',
-    url: 'https://cdn.streamfinity.tv/extension-assets%2Fsubway-surfer.mp4',
+    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
 }];
 
 function SubwaySurfer({ onClose }) {
@@ -28,6 +28,8 @@ function SubwaySurfer({ onClose }) {
             setVideoItem(availableVideoItems[randomIndex]);
         }
     }, []);
+
+    const video = useRef();
 
     if (!videoItem) {
         return null;
@@ -51,6 +53,8 @@ function SubwaySurfer({ onClose }) {
 
             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
             <video
+                onCanPlay={() => video.current.playbackRate = 1.5}
+                ref={video}
                 width="100%"
                 autoPlay
                 muted
