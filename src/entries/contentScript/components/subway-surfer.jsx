@@ -20,7 +20,7 @@ function SubwaySurfer({ onClose }) {
     }
 
     return (
-        <div className="relative">
+        <div className="relative overflow-hidden rounded-lg">
             <button
                 type="button"
                 onClick={() => onClose()}
@@ -29,13 +29,19 @@ function SubwaySurfer({ onClose }) {
                 <XMarkIcon className="size-8" />
             </button>
 
+            <div className="absolute left-0 top-0 w-full bg-gradient-to-b from-black/40 to-black/0 p-2 pb-12 text-center font-semibold text-white">
+                Gameplay by
+                {' '}
+                {videoItem.name}
+            </div>
+
             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
             <video
                 width="100%"
                 autoPlay
                 muted
                 loop
-                className="z-10 rounded-lg"
+                className="z-10"
             >
                 <source
                     src={videoItem.url}
@@ -43,11 +49,6 @@ function SubwaySurfer({ onClose }) {
                 />
             </video>
 
-            <div className="absolute left-0 top-0 w-full bg-gradient-to-b from-black/40 to-black/0 p-2 pb-12 text-center font-semibold text-white">
-                Gameplay by
-                {' '}
-                {videoItem.name}
-            </div>
         </div>
     );
 }
