@@ -26,19 +26,30 @@ function bindWindowEvents() {
 async function appendShadowRootToDom(appContainer) {
     const parent = await retryFind(
         () => {
-            const el = document.querySelector('#related');
+            const el = document.querySelector('#secondary-inner');
             return (el?.firstChild) ? el : null;
         },
         300,
         100,
     );
 
-    if (!parent.querySelector('#streamfinity')) {
+    const existingAppContainer = parent.querySelector('#streamfinity');
+
+    // log.debug('found parent', parent, existingAppContainer);
+
+    if (!existingAppContainer) {
         parent.prepend(appContainer);
 
         log.debug('injected', parent);
     }
 }
+
+// <div id="streamfinity">
+//   #shadow-root (open)
+//     <section>
+//        ...
+//     </section>
+// </div>
 
 export async function renderContent(
     cssPaths,
