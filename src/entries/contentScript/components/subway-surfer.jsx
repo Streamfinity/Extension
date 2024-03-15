@@ -7,7 +7,7 @@ const availableVideoItems = [{
     url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
 }, {
     name: 'Christian',
-    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
+    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-christian.mp4',
 }, {
     name: 'Chris',
     url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-chris.mp4',
@@ -16,7 +16,7 @@ const availableVideoItems = [{
     url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
 }, {
     name: 'Mina',
-    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
+    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-mina.mp4',
 }];
 
 function SubwaySurfer({ onClose }) {
