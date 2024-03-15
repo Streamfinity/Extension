@@ -13,7 +13,7 @@ const availableVideoItems = [{
     url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-chris.mp4',
 }, {
     name: 'Matze',
-    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-roman.mp4',
+    url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-matze.mp4',
 }, {
     name: 'Mina',
     url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-mina.mp4',
