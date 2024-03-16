@@ -71,40 +71,51 @@ function AnalyticsNotice() {
 
     const viewChangePercentage = useMemo(() => (video ? Math.round((video.analytics_aggregated.sum_unique_views / video.views_count) * 100) : null), [video]);
 
-    if (!video) {
-        return null;
-    }
-
     return (
         <Card color="brand-creator">
-            <CardTitle>Analytics</CardTitle>
+            <CardTitle>
+                <div className="flex justify-between">
+                    Analytics
+                    <div className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                        {video?.reactions?.length || 0}
+                        {' '}
+                        Reactions
+                    </div>
+                </div>
+            </CardTitle>
 
-            <div className="flex justify-between">
-                <Statistic
-                    title="Unique views"
-                    value={video.analytics_aggregated.sum_unique_views}
-                >
-                    {viewChangePercentage > 0 && (
-                        <StatisticChange>
-                            +
-                            {viewChangePercentage}
-                            %
-                        </StatisticChange>
-                    )}
-                </Statistic>
-                <Statistic
-                    title="Live Avg"
-                    value={video.analytics_aggregated.live_avg_views}
-                />
-                <Statistic
-                    title="Live Peak"
-                    value={video.analytics_aggregated.live_peak_views}
-                />
-                <Statistic
-                    title="Clicks"
-                    value={video.clicks?.value || 0}
-                />
-            </div>
+            {video ? (
+                <div className="flex justify-between">
+                    <Statistic
+                        title="Unique views"
+                        value={video?.analytics_aggregated.sum_unique_views || 0}
+                    >
+                        {viewChangePercentage > 0 && (
+                            <StatisticChange>
+                                +
+                                {viewChangePercentage}
+                                %
+                            </StatisticChange>
+                        )}
+                    </Statistic>
+                    <Statistic
+                        title="Live Avg"
+                        value={video?.analytics_aggregated?.live_avg_views || 0}
+                    />
+                    <Statistic
+                        title="Live Peak"
+                        value={video?.analytics_aggregated?.live_peak_views || 0}
+                    />
+                    <Statistic
+                        title="Clicks"
+                        value={video?.clicks?.value || 0}
+                    />
+                </div>
+            ) : (
+                <div className="text-sm">
+                    There are no reactions for this video yet.
+                </div>
+            )}
         </Card>
     );
 }
