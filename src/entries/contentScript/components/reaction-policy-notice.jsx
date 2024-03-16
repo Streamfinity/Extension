@@ -211,7 +211,7 @@ function ReactionPolicyNotice() {
             return () => {};
         }
 
-        const interval = setInterval(() => {
+        function refreshInterval() {
             const liveAllowedAfter = moment(publishDate).add(policy.live_min_hours, 'hours');
             const videoAllowedAfter = moment(publishDate).add(policy.video_min_hours, 'hours');
             const now = moment();
@@ -224,7 +224,13 @@ function ReactionPolicyNotice() {
 
             setLiveCountdownDuration(liveDuration);
             setVideoCountdownDuration(videoDuration);
+        }
+
+        const interval = setInterval(() => {
+            refreshInterval();
         }, 1000);
+
+        refreshInterval();
 
         return () => clearInterval(interval);
     }, [policy]);
@@ -238,11 +244,7 @@ function ReactionPolicyNotice() {
             return STATUS_DENIED;
         }
 
-        if (policy.video_min_hours > 0) {
-            if (videoCountdownDuration && videoCountdownDuration.asSeconds() < 0) {
-                return STATUS_ALLOWED;
-            }
-
+        if (policy.video_min_hours > 0 && videoCountdownDuration && videoCountdownDuration.asSeconds() > 0) {
             return STATUS_ON_COUNTDOWN;
         }
 
@@ -266,11 +268,7 @@ function ReactionPolicyNotice() {
             return STATUS_DENIED;
         }
 
-        if (policy.live_min_hours > 0) {
-            if (liveCountdownDuration && liveCountdownDuration.asSeconds() < 0) {
-                return STATUS_ALLOWED;
-            }
-
+        if (policy.live_min_hours > 0 && liveCountdownDuration && liveCountdownDuration.asSeconds() > 0) {
             return STATUS_ON_COUNTDOWN;
         }
 
