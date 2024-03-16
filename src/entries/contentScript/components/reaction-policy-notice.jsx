@@ -62,9 +62,11 @@ function Notice({
                 </div>
             </CardTitle>
 
-            <div className="mb-2">
-                {title || `${isOwnVideo ? 'You have ' : 'The Content Creator has'} set conditions for reactions.`}
-            </div>
+            {title && (
+                <div className="mb-2">
+                    {title}
+                </div>
+            )}
 
             {description && (
                 <div className="text-sm">
