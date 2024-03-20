@@ -37,7 +37,7 @@ function ReactionPreview({ reaction }) {
                     </div>
                     <div className="h-2 w-4 bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to" />
                     <div className="rounded-lg bg-primary-gradient-to px-2 py-[1px]">
-                        {reaction.video_seconds_to ? prettyDuration(reaction.video_seconds_to) : prettyDuration(reaction.to_video.duration)}
+                        {reaction.video_seconds_to ? prettyDuration(reaction.video_seconds_to) : prettyDuration(reaction.interval_duration)}
                     </div>
                 </div>
             </div>
