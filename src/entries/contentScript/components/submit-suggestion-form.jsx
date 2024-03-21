@@ -33,6 +33,10 @@ function SubmitSuggestionForm({ onSubmit }) {
     }
 
     async function searchAccounts() {
+        if (!searchTerm || searchTerm.trim().length === 0) {
+            return;
+        }
+
         setLoadingSearch(true);
         setSearchedAccounts(
             await searchSuggestionAccounts({ query: searchTerm }) || [],
@@ -118,7 +122,7 @@ function SubmitSuggestionForm({ onSubmit }) {
     useEffect(() => {
         async function fetch() {
             setSuggestedAccounts(
-                await searchSuggestionAccounts({}),
+                await searchSuggestionAccounts({ query: '' }),
             );
             setHasLoadedSuggestedAccounts(true);
         }
@@ -165,9 +169,9 @@ function SubmitSuggestionForm({ onSubmit }) {
                             )}
                             onClick={() => setSelectedAccount(account)}
                         >
-                            {account.avatar && (
+                            {account.avatar_url && (
                                 <img
-                                    src={account.avatar.url}
+                                    src={account.avatar_url}
                                     alt={account.display_name}
                                     className="size-16 rounded-full"
                                 />
