@@ -52,9 +52,18 @@ function SubmitSuggestionForm({ onSubmit }) {
         setIsLoading(true);
 
         try {
+            const data = {};
+
+            if (selectedAccount.account) {
+                data.account_id = selectedAccount.id;
+            } else {
+                data.to_unknown_service = selectedAccount.service.id;
+                data.to_unknown_service_user_id = selectedAccount.id;
+            }
+
             const suggestion = await submitSuggestion({
                 video_url: window.location.href,
-                account_id: selectedAccount.id,
+                ...data,
             });
 
             setAppMessage({ type: MESSAGE_SUCCESS, message: 'Suggestion submitted successfully' });
