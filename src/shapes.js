@@ -170,8 +170,8 @@ export const reactionShape = PropTypes.shape({
     video_seconds_to: PropTypes.number,
     interval_duration: PropTypes.number,
     aggregated: PropTypes.shape({
-        vod_avg_views: PropTypes.number,
         live_avg_views: PropTypes.number,
+        sum_unique_views: PropTypes.number,
     }),
     created_at: PropTypes.string,
     updated_at: PropTypes.string,
