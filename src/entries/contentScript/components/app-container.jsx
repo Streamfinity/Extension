@@ -52,7 +52,10 @@ function AppContainer({
                         dark:shadow-lg dark:shadow-white/5"
                 >
                     <div className="mb-4 flex items-center justify-between">
-                        <Logo onClick={() => setClickedCount((prev) => prev + 1)} />
+                        <Logo
+                            onClick={() => setClickedCount((prev) => prev + 1)}
+                            sws
+                        />
                         {user}
                     </div>
 

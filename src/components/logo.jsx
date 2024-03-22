@@ -5,7 +5,7 @@ import logoDark from '~/assets/Logo-Dark-400.png';
 import logoWhite from '~/assets/Logo-Light-400.png';
 import logoStyles from './logo.module.css';
 
-function Logo({ size, onClick }) {
+function Logo({ size, onClick, sws }) {
     const imageUrlDark = new URL(logoDark, import.meta.url).href;
     const imageUrlLight = new URL(logoWhite, import.meta.url).href;
 
@@ -24,8 +24,10 @@ function Logo({ size, onClick }) {
         <div
             ref={container}
             onClick={() => {
-                onClick();
-                resetAnimation();
+                if (sws) {
+                    onClick();
+                    resetAnimation();
+                }
             }}
             className={classNames(
                 size === 'default' ? 'gap-4' : 'gap-2',
@@ -54,6 +56,7 @@ function Logo({ size, onClick }) {
 }
 
 Logo.propTypes = {
+    sws: PropTypes.bool,
     size: PropTypes.oneOf([
         'default',
         'small',
@@ -62,6 +65,7 @@ Logo.propTypes = {
 };
 
 Logo.defaultProps = {
+    sws: false,
     size: 'default',
     onClick: () => {},
 };
