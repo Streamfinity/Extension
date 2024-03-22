@@ -8,12 +8,18 @@ const log = createLogger('Background');
 
 async function getResponse(type, data) {
     const callback = {
+        // Actions
+
         [messages.OPEN_POPUP]: actions.openPopup,
         [messages.SET_BROWSER_THEME]: actions.updateScheme,
         [messages.LOGOUT]: actions.logout,
         [messages.LOGIN]: actions.login,
         [messages.GET_STATUS]: actions.getStatus,
         [messages.PLAYER_PROGRESS]: actions.sendPlayerProgress,
+        [messages.SETTING_UPDATE_VISIBLE]: actions.updateSettingUpdateVisible,
+
+        // API
+
         [messages.SUGGESTIONS_SEARCH_ACCOUNT]: api.searchSuggestionAccounts,
         [messages.SUGGESTIONS_SUBMIT]: api.submitSuggestion,
         [messages.WATCHED_REACTIONS_GET]: api.getWatchedReactions,
@@ -23,7 +29,6 @@ async function getResponse(type, data) {
         [messages.REACTIONS_GET_FOR_VIDEO]: api.getReactionsForVideo,
         [messages.REACTIONS_GET_ORIGINAL_VIDEOS]: api.getOriginalVideosForVideo,
         [messages.VIDEO_ANALYTICS_GET]: api.getVideoAnalytics,
-        [messages.SETTING_UPDATE_VISIBLE]: actions.updateSettingUpdateVisible,
     };
 
     if (callback[type]) {
