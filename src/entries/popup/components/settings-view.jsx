@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import useAuth from '~/hooks/useAuth';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
-import { settingsUpdateVisible } from '~/common/bridge';
-
+import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
 import Button from '~/entries/contentScript/components/button';
+import { Switch } from '~/components/ui/switch';
+import Card, { CardTitle } from '~/entries/contentScript/components/card';
 
-function SettingsView({ user }) {
-    const { logout, loadingLogout } = useAuth();
+function SettingsView() {
+    const {
+        logout, loadingLogout, refreshStatusData, user,
+    } = useAuth();
 
     const { isVisible, setIsVisible } = useAppStore();
 
@@ -20,32 +23,55 @@ function SettingsView({ user }) {
         })();
     }, []);
 
-    async function toggleSettingVisible(value) {
+    async function localToggleVisible(value) {
         await settingsUpdateVisible({ visible: value });
 
         setIsVisible(value);
     }
 
+    async function localToggleIncognitoMode(enabled) {
+        await toggleIncognitoMode({
+            length: enabled ? null : '3h',
+        });
+
+        await refreshStatusData();
+    }
+
+    const isIncognito = useMemo(() => !!user?.extension_invisible_until, [user]);
+
+    console.log(user);
+
     return (
         <div className="flex h-full flex-col justify-between">
-            <div>
-                <h2 className="mb-2 text-lg font-semibold">
+            <Card color="primary">
+                <CardTitle>
                     Settings
-                </h2>
+                </CardTitle>
 
-                <div className="flex items-center gap-2">
-                    <input
-                        id="visibility"
-                        type="checkbox"
-                        className="accent-primary-500"
-                        checked={isVisible}
-                        onChange={() => toggleSettingVisible(!isVisible)}
-                    />
-                    <label htmlFor="visibility">
-                        Show Extension on Web Pages
-                    </label>
+                <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                        <Switch
+                            id="visibility"
+                            checked={isVisible}
+                            onCheckedChange={() => localToggleVisible(!isVisible)}
+                        />
+                        <label htmlFor="visibility">
+                            Show Extension on Web Pages
+                        </label>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <Switch
+                            id="incognito"
+                            checked={isIncognito}
+                            onCheckedChange={() => localToggleIncognitoMode(isIncognito)}
+                        />
+                        <label htmlFor="incognito">
+                            Incognito Mode (don&apos;t track videos)
+                        </label>
+                    </div>
                 </div>
-            </div>
+            </Card>
             <div>
                 <Button
                     color="primary-secondary"

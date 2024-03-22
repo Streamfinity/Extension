@@ -1,4 +1,6 @@
 import { storageGetToken } from '~/entries/background/common/storage';
+import { sendMessageToContentScript } from '~/entries/background/common/spaceship';
+import { EVENT_REFRESH_AUTH } from '~/messages';
 
 export async function api(url, opts) {
     const options = opts;
@@ -161,4 +163,18 @@ export async function getVideoAnalytics({ videoUrl, accountIds }) {
     });
 
     return analytics;
+}
+
+export async function updateUserIncognitoMode({ length }) {
+    const { data } = await api('extension/visibility', {
+        method: 'POST',
+        token: await storageGetToken(),
+        json: {
+            length,
+        },
+    });
+
+    await sendMessageToContentScript(EVENT_REFRESH_AUTH, {});
+
+    return data;
 }

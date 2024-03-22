@@ -17,6 +17,14 @@ export async function logout() {
     return sendMessageToBackground(messages.LOGOUT);
 }
 
+// User
+
+export async function toggleIncognitoMode({ length }) {
+    return sendMessageToBackground(messages.TOGGLE_INCOGNITO_MODE, {
+        length,
+    });
+}
+
 // Player
 
 export async function sendPlayerProgress(data) {

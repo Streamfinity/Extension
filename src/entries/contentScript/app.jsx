@@ -1,5 +1,6 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import useAuth, { STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
@@ -18,10 +19,11 @@ import StreamerModeNotice from '~/entries/contentScript/components/streamer-mode
 import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import AnalyticsNotice from '~/entries/contentScript/components/analytics-notice';
+import Card from '~/entries/contentScript/components/card';
 
 function App() {
     const {
-        user, loadingAuth, liveStream, login, state,
+        user, loadingAuth, liveStream, login, state, isIncognito,
     } = useAuth();
 
     const { setCurrentUrl, isDarkMode, isDeviceDarkMode } = useAppStore();
@@ -103,6 +105,14 @@ function App() {
                 />
             )}
 
+            {isIncognito && (
+                <div className="text-center text-sm">
+                    invislbe mode until
+                    {' '}
+                    {moment(user.extension_invisible_until).format('HH:mm')}
+                </div>
+            )}
+
             {state === STATE_OWN_VIDEO && (
                 <AnalyticsNotice />
             )}
@@ -129,7 +139,7 @@ function App() {
                 <StreamerModeNotice />
             )}
 
-            <PlayerProgressListenerHeadless active={!!liveStream} />
+            <PlayerProgressListenerHeadless active={!!liveStream && !isIncognito} />
 
         </AppContainer>
     );
