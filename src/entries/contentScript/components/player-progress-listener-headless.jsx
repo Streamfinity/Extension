@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 import { INTERVAL_SEND_PLAYER_PROGRESS } from '~/config';
 import { createLogger } from '~/common/log';
@@ -7,7 +8,7 @@ import { useAppStore } from '~/entries/contentScript/state';
 
 const log = createLogger('PlayerProgress');
 
-function PlayerProgressListenerHeadless() {
+function PlayerProgressListenerHeadless({ active }) {
     const { element: playerElement, progress: playerProgress } = useYouTubePlayer();
     const { currentUrl } = useAppStore();
 
@@ -15,7 +16,7 @@ function PlayerProgressListenerHeadless() {
     const [lastSent, setLastSent] = useState(null);
 
     async function send(progress) {
-        if (progress === null || !playerElement) {
+        if (!active || progress === null || !playerElement) {
             return;
         }
 
@@ -59,7 +60,9 @@ function PlayerProgressListenerHeadless() {
     return null;
 }
 
-PlayerProgressListenerHeadless.propTypes = {};
+PlayerProgressListenerHeadless.propTypes = {
+    active: PropTypes.bool.isRequired,
+};
 
 PlayerProgressListenerHeadless.defaultProps = {};
 

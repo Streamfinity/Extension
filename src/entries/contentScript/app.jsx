@@ -129,7 +129,7 @@ function App() {
                 <StreamerModeNotice />
             )}
 
-            <PlayerProgressListenerHeadless />
+            <PlayerProgressListenerHeadless active={!!liveStream} />
 
         </AppContainer>
     );
