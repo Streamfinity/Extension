@@ -29,16 +29,9 @@ export async function sendPlayerProgress(data) {
 // Status
 
 async function getStatus() {
-    // TODO move this to the useStatus/useAuth hook and watch for tanstack query error property
-    try {
-        const { data } = await sendMessageToBackground(messages.GET_STATUS);
+    const { data } = await sendMessageToBackground(messages.GET_STATUS);
 
-        return data;
-    } catch (err) {
-        log.error('getStatus()', 'error', err);
-    }
-
-    return null;
+    return data;
 }
 
 // Suggestions
@@ -46,17 +39,11 @@ async function getStatus() {
 export async function searchSuggestionAccounts(data) {
     const { data: accounts } = await sendMessageToBackground(messages.SUGGESTIONS_SEARCH_ACCOUNT, data);
 
-    log.debug('searchSuggestionAccounts', accounts);
-
     return accounts;
 }
 
 export async function submitSuggestion(data) {
     const response = await sendMessageToBackground(messages.SUGGESTIONS_SUBMIT, data);
-
-    if (response.message) {
-        throw new Error(response.message);
-    }
 
     return response.suggestion;
 }
@@ -128,12 +115,6 @@ export async function settingsUpdateVisible({ visible }) {
     return sendMessageToBackground(
         messages.SETTING_UPDATE_VISIBLE,
         { visible },
-    );
-}
-
-export async function openSettings() {
-    return sendMessageToBackground(
-        messages.OPEN_POPUP,
     );
 }
 

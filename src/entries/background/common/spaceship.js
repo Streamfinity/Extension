@@ -27,20 +27,30 @@ export async function sendMessageToTab(tabId, type, data) {
 }
 
 export async function sendMessageToBackground(type, data) {
-    log.debug('SEND ➡️', type, data);
+    let response;
 
     try {
-        const response = await browser.runtime.sendMessage({
+        response = await browser.runtime.sendMessage({
             type,
             data,
         });
 
-        return response;
+        if (!response) {
+            throw new Error(`No response from background (typeof: ${typeof response})`);
+        }
+
+        if ('error' in response) {
+            throw new Error(response.error);
+        }
     } catch (err) {
-        log.error('SEND ➡️', type, err);
+        log.error('SEND ➡️', type, { req: data, err });
 
         throw err;
     }
+
+    log.debug('SEND ➡️', type, { req: data, res: response });
+
+    return response;
 }
 
 export async function sendMessageToContentScript(type, data = {}) {

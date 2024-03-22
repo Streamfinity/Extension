@@ -155,7 +155,7 @@ export async function openPopup() {
 export async function updateScheme({ dark }) {
     if (!browser.action) {
         log.warn('updateScheme', 'no browser action available');
-        return;
+        return {};
     }
 
     const sizes = ['16', '32', '48', '128'];
@@ -170,4 +170,6 @@ export async function updateScheme({ dark }) {
     await browser.action.setIcon({
         path: icons,
     });
+
+    return {};
 }
