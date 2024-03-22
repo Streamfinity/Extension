@@ -19,7 +19,6 @@ import StreamerModeNotice from '~/entries/contentScript/components/streamer-mode
 import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import AnalyticsNotice from '~/entries/contentScript/components/analytics-notice';
-import Card from '~/entries/contentScript/components/card';
 
 function App() {
     const {

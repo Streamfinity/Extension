@@ -53,7 +53,9 @@ function SubwaySurfer({ onClose }) {
 
             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
             <video
-                onCanPlay={() => video.current.playbackRate = 1.5}
+                onCanPlay={() => {
+                    video.current.playbackRate = 1.5;
+                }}
                 ref={video}
                 width="100%"
                 autoPlay
