@@ -1,23 +1,23 @@
 // Content-Script -> Background
 
-export const GET_STATUS = 'status.get';
-export const PLAYER_PROGRESS = 'player.progress';
-export const LOGIN = 'auth.login';
-export const LOGOUT = 'auth.logout';
-export const SUGGESTIONS_SEARCH_ACCOUNT = 'suggestions.search-account';
-export const SUGGESTIONS_SUBMIT = 'suggestions.submit';
-export const WATCHED_REACTIONS_GET = 'watched-reactions.get';
-export const REACTION_SUBMIT = 'reaction-suggestion.submit';
-export const REACTION_POLICY_GET = 'reaction-policy.get';
-export const REACTIONS_GET_FOR_VIDEO = 'reactions-for-video.get';
-export const REACTIONS_GET_ORIGINAL_VIDEOS = 'original-videos-for-video.get';
-export const CONTENT_RATINGS_GET = 'content-ratings.get';
-export const VIDEO_ANALYTICS_GET = 'analytics.get';
-export const SETTING_UPDATE_VISIBLE = 'settings.visible';
-export const OPEN_POPUP = 'internal.open-popup';
-export const SET_BROWSER_THEME = 'internal.theme';
+export const GET_STATUS = 'GET_STATUS';
+export const PLAYER_PROGRESS = 'PLAYER_PROGRESS';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const SUGGESTIONS_SEARCH_ACCOUNT = 'SUGGESTIONS_SEARCH_ACCOUNT';
+export const SUGGESTIONS_SUBMIT = 'SUGGESTIONS_SUBMIT';
+export const WATCHED_REACTIONS_GET = 'WATCHED_REACTIONS_GET';
+export const REACTION_SUBMIT = 'REACTION_SUBMIT';
+export const REACTION_POLICY_GET = 'REACTION_POLICY_GET';
+export const REACTIONS_GET_FOR_VIDEO = 'REACTIONS_GET_FOR_VIDEO';
+export const REACTIONS_GET_ORIGINAL_VIDEOS = 'REACTIONS_GET_ORIGINAL_VIDEOS';
+export const CONTENT_RATINGS_GET = 'CONTENT_RATINGS_GET';
+export const VIDEO_ANALYTICS_GET = 'VIDEO_ANALYTICS_GET';
+export const SETTING_UPDATE_VISIBLE = 'SETTING_UPDATE_VISIBLE';
+export const OPEN_POPUP = 'OPEN_POPUP';
+export const SET_BROWSER_THEME = 'SET_BROWSER_THEME';
 
 // Background -> Content-Script
 
-export const EVENT_REFRESH_AUTH = 'events.refresh-auth';
-export const EVENT_REFRESH_SETTINGS = 'events.refresh-settings';
+export const EVENT_REFRESH_AUTH = 'EVENT_REFRESH_AUTH';
+export const EVENT_REFRESH_SETTINGS = 'EVENT_REFRESH_SETTINGS';
