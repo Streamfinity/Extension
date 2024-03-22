@@ -22,7 +22,7 @@ export function useBackgroundEvents() {
     const { refetch: refetchStatus } = useStatus();
     const { refreshStatusData } = useAuth();
 
-    async function onBackgroundMessage(type, data) {
+    async function onBackgroundMessage({ type, data }) {
         switch (type) {
         case EVENT_REFRESH_AUTH:
             await refreshStatusData();
@@ -34,6 +34,7 @@ export function useBackgroundEvents() {
             break;
 
         default:
+            log.error('unhandled message', type, data);
         }
     }
 
