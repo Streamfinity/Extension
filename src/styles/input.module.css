@@ -10,6 +10,9 @@
     @apply border-2;
     @apply border-gray-500;
     @apply rounded-lg;
-    @apply focus-visible:border-primary-500;
     @apply outline-none !important;
+
+    &:focus-visible {
+        @apply border-primary-500;
+    }
 }
