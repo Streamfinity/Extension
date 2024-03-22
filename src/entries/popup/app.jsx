@@ -26,15 +26,15 @@ function App() {
     }, []);
 
     return (
-        <main className="flex h-[21rem] min-w-[21rem] flex-col">
+        <main className="dark flex h-[21rem] min-w-[21rem] flex-col bg-black text-white">
             <div>
                 <div className="flex justify-center p-3">
                     <Logo size="small" />
                 </div>
             </div>
 
-            <div className="h-full p-2">
-                <div className="h-full rounded-lg bg-gray-50 p-2">
+            <div className="h-full p-4">
+                <div className="h-full">
                     {(!loadingAuth && user) && (
                         <ActiveViewComponent user={user} />
                     )}
