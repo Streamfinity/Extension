@@ -3,7 +3,6 @@ import { EVENT_REFRESH_SETTINGS, EVENT_REFRESH_AUTH } from '~/messages';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
-import { useStatus } from '~/common/bridge';
 import useAuth from '~/hooks/useAuth';
 import { registerListener, unregisterListener } from '~/entries/background/common/spaceship';
 
@@ -19,14 +18,12 @@ async function refreshSettings({ setIsVisible }) {
 
 export function useBackgroundEvents() {
     const { setIsVisible } = useAppStore();
-    const { refetch: refetchStatus } = useStatus();
     const { refreshStatusData } = useAuth();
 
     async function onBackgroundMessage({ type, data }) {
         switch (type) {
         case EVENT_REFRESH_AUTH:
             await refreshStatusData();
-            await refetchStatus();
             break;
 
         case EVENT_REFRESH_SETTINGS:
