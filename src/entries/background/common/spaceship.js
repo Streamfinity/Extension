@@ -74,7 +74,7 @@ export async function sendMessageToContentScript(type, data = {}) {
     log.debug('SEND ➡️', 'sending message', type, 'to', tabs.length, 'tabs:', tabs);
 
     try {
-        await Promise.all(promises);
+        await Promise.allSettled(promises);
 
         log.debug('SEND ➡️', '✅ SENT ALL MESSAGES');
     } catch (err) {
