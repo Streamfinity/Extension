@@ -1,6 +1,6 @@
 import React from 'react';
-import Card, { CardTitleSubtle } from '~/entries/contentScript/components/card';
-import Button from '~/entries/contentScript/components/button';
+import Card, { CardTitleSubtle } from '~/entries/contentScript/components/_Card';
+import Button from '~/entries/contentScript/components/_Button';
 import useAuth, { STATE_DEFAULT } from '~/hooks/useAuth';
 
 function StreamerModeNotice() {

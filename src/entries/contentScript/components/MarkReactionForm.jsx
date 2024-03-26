@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from '~/styles/input.module.css';
 import H3Header from '~/entries/contentScript/components/h3-header';
-import Button from '~/entries/contentScript/components/button';
+import Button from '~/entries/contentScript/components/_Button';
 import { prettyDuration } from '~/common/pretty';
 import { submitReaction } from '~/common/bridge';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
