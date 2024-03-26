@@ -4,22 +4,22 @@ import moment from 'moment';
 import { useShallow } from 'zustand/react/shallow';
 import useAuth, { STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
-import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
+import ReactionPolicyNotice from '~/entries/contentScript/components/ReactionPolicyNotice';
 import { WINDOW_NAVIGATE } from '~/events';
-import StatusNotice from '~/entries/contentScript/components/status-notice';
-import ReactionsHistoryNotice from '~/entries/contentScript/components/reactions-history-notice';
-import WatchedVideosHeadless from '~/entries/contentScript/components/watched-videos-headless';
-import PlayerProgressListenerHeadless from '~/entries/contentScript/components/player-progress-listener-headless';
+import StatusNotice from '~/entries/contentScript/components/StatusNotice';
+import ReactionsHistoryNotice from '~/entries/contentScript/components/ReactionsHistoryNotice';
+import WatchedVideosHeadless from '~/entries/contentScript/components/WatchedVideosHeadless';
+import PlayerProgressListenerHeadless from '~/entries/contentScript/components/PlayerProgressListenerHeadless';
 import { setTheme } from '~/common/bridge';
-import LoginButton from '~/components/login-button';
-import SubmitSuggestionNotice from '~/entries/contentScript/components/submit-suggestion-notice';
-import MarkReactionNotice from '~/entries/contentScript/components/mark-reaction-notice';
-import OriginalVideoNotice from '~/entries/contentScript/components/original-video-notice';
-import AppContainer from '~/entries/contentScript/components/app-container';
-import StreamerModeNotice from '~/entries/contentScript/components/streamer-mode-notice';
+import LoginButton from '~/components/LoginButton';
+import SubmitSuggestionNotice from '~/entries/contentScript/components/SubmitSuggestionNotice';
+import MarkReactionNotice from '~/entries/contentScript/components/MarkReactionNotice';
+import OriginalVideoNotice from '~/entries/contentScript/components/OriginalVideoNotice';
+import AppContainer from '~/entries/contentScript/components/AppContainer';
+import StreamerModeNotice from '~/entries/contentScript/components/StreamerModeNotice';
 import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
-import AnalyticsNotice from '~/entries/contentScript/components/analytics-notice';
+import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
 
 function App() {
     const {

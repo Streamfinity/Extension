@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useAppStore } from '~/entries/contentScript/state';
-import Logo from '~/components/logo';
-import DevTools from '~/entries/contentScript/components/dev-tools';
+import Logo from '~/components/Logo';
+import DevTools from '~/entries/contentScript/components/DevTools';
 import { childrenShape } from '~/shapes';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
-import AppMessage from '~/entries/contentScript/components/app-message';
-import SubwaySurfer from '~/entries/contentScript/components/subway-surfer';
+import AppMessage from '~/entries/contentScript/components/AppMessage';
+import SubwaySurfer from '~/entries/contentScript/components/SubwaySurfer';
 
 const dev = import.meta.env.DEV;
 

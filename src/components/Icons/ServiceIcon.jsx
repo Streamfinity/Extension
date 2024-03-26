@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TwitchIcon from '~/components/icons/twitch';
-import YouTubeIcon from '~/components/icons/youtube';
+import TwitchIcon from '~/components/Icons/Twitch';
+import YouTubeIcon from '~/components/Icons/Youtube';
 import { accountServices } from '~/enums';
 
 function ServiceIcon({ service, size, className }) {
