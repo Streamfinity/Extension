@@ -11,8 +11,7 @@
     "serve:firefox": "web-ext run --start-url \"about:debugging#/runtime/this-firefox\"  --source-dir ./dist/",
     "serve:chrome": "web-ext run -t chromium --start-url \"https://google.com\" --source-dir ./dist/",
     "lint": "eslint --ext .js,.vue,.jsx,.tsx .",
-    "lint:fix": "npm run lint --fix",
-    "link-local-package": "npm install --save ../streamfinity-branding"
+    "lint:fix": "npm run lint --fix"
   },
   "license": "MIT",
   "devDependencies": {
