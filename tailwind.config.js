@@ -1,8 +1,8 @@
-const { preset } = require('@streamfinity/streamfinity-branding');
-const colors = require('tailwindcss/colors');
+import { preset } from '@streamfinity/streamfinity-branding';
+import colors from 'tailwindcss/colors';
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     content: [
         './src/**/*.{js,ts,jsx,tsx,html}',
     ],
