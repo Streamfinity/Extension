@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types,react/jsx-props-no-spreading */
+
 import * as React from 'react';
 import * as SwitchPrimitives from '@radix-ui/react-switch';
 
