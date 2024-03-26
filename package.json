@@ -54,7 +54,6 @@
     "react-hot-toast": "^2.4.1",
     "react-refresh": "^0.14.0",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7",
     "webextension-polyfill": "^0.10.0",
     "zustand": "^4.4.7"
   }

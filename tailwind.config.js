@@ -1,6 +1,5 @@
 const { preset } = require('@streamfinity/streamfinity-branding');
 const colors = require('tailwindcss/colors');
-const animate = require('tailwindcss-animate');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -29,7 +28,5 @@ module.exports = {
             },
         },
     },
-    plugins: [
-        animate,
-    ],
+    plugins: [],
 };
