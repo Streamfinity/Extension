@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Card, { CardTitle } from '~/entries/contentScript/components/_Card';
-import Button from '~/entries/contentScript/components/_Button';
+import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Button from '~/entries/contentScript/components/Button';
 import SubmitSuggestionForm from '~/entries/contentScript/components/submit-suggestion-form';
 
 function SubmitSuggestionNotice() {
