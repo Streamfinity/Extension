@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Button } from '@streamfinity/streamfinity-branding';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
-import Button from '~/entries/contentScript/components/Button';
 import styles from '~/styles/input.module.css';
 import { toastSuccess, toastError } from '~/common/utility';
 

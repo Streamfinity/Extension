@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useShallow } from 'zustand/react/shallow';
+import { Button } from '@streamfinity/streamfinity-branding';
 import useAuth from '~/hooks/useAuth';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
-import Button from '~/entries/contentScript/components/Button';
 import { Switch } from '~/components/Ui/Switch';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 

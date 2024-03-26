@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button } from '@streamfinity/streamfinity-branding';
 import Card, { CardTitleSubtle } from '~/entries/contentScript/components/Card';
-import Button from '~/entries/contentScript/components/Button';
 import useAuth, { STATE_DEFAULT } from '~/hooks/useAuth';
 
 function StreamerModeNotice() {

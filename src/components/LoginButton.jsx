@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from '~/entries/contentScript/components/Button';
+import { Button } from '@streamfinity/streamfinity-branding';
 
 function LoginButton({ onClick, loading }) {
     return (

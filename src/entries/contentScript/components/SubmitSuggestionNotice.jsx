@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Button } from '@streamfinity/streamfinity-branding';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
-import Button from '~/entries/contentScript/components/Button';
 import SubmitSuggestionForm from '~/entries/contentScript/components/SubmitSuggestionForm';
 
 function SubmitSuggestionNotice() {
