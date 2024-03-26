@@ -1,4 +1,12 @@
 import moment from 'moment';
+import toast from 'react-hot-toast';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { why } from '~/common/pretty';
+
+export function cn(...inputs) {
+    return twMerge(clsx(inputs));
+}
 
 export function buildFrontendUrl(path) {
     return `${import.meta.env.VITE_FRONTEND_URL}${path}`;
@@ -99,4 +107,14 @@ export function findVideoPlayerBar(interval = 300, maxTries = 300) {
         interval,
         maxTries,
     );
+}
+
+// Toaster
+
+export function toastSuccess(message, options) {
+    toast.success(message, options);
+}
+
+export function toastError(error, options) {
+    toast.error(() => why(error), options || {});
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { Toaster } from 'react-hot-toast';
 import { useAppStore } from '~/entries/contentScript/state';
 import Logo from '~/components/Logo';
 import DevTools from '~/entries/contentScript/components/DevTools';
@@ -64,6 +65,33 @@ function AppContainer({
                     )}
 
                     {children}
+
+                    <Toaster
+                        containerStyle={{ position: 'absolute' }}
+                        toastOptions={{
+                            position: 'top-center',
+                            className: 'bg-blue-500',
+                            style: {
+                                padding: '.75rem 1.25rem',
+                            },
+                            success: {
+                                duration: 4000,
+                                className: '!bg-green-600 !text-white rounded-xl',
+                                iconTheme: {
+                                    primary: 'white',
+                                    secondary: 'green',
+                                },
+                            },
+                            error: {
+                                duration: 6500,
+                                className: '!bg-red-600 !text-white rounded-xl',
+                                iconTheme: {
+                                    primary: 'white',
+                                    secondary: 'red',
+                                },
+                            },
+                        }}
+                    />
 
                 </div>
             </div>
