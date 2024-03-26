@@ -6,7 +6,7 @@ import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
 import Button from '~/entries/contentScript/components/Button';
-import { Switch } from '~/components/ui/switch';
+import { Switch } from '~/components/Ui/Switch';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 
 function SettingsView() {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './App.css';
-import SettingsView from '~/entries/popup/components/settings-view';
-import LoginView from '~/entries/popup/components/login-view';
+import SettingsView from '~/entries/popup/components/SettingsView';
+import LoginView from '~/entries/popup/components/LoginView';
 import useAuth from '~/hooks/useAuth';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
-import Logo from '~/components/logo';
+import Logo from '~/components/Logo';
 
 const availableViews = [
     {

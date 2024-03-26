@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import Button from '~/entries/contentScript/components/Button';
-import SubmitSuggestionForm from '~/entries/contentScript/components/submit-suggestion-form';
+import SubmitSuggestionForm from '~/entries/contentScript/components/SubmitSuggestionForm';
 
 function SubmitSuggestionNotice() {
     const [showForm, setShowForm] = useState(false);

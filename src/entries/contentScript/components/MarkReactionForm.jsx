@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from '~/styles/input.module.css';
-import H3Header from '~/entries/contentScript/components/h3-header';
+import H3Header from '~/entries/contentScript/components/H3Header';
 import Button from '~/entries/contentScript/components/Button';
 import { prettyDuration } from '~/common/pretty';
 import { submitReaction } from '~/common/bridge';

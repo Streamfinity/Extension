@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import logoDark from '~/assets/Logo-Dark-400.png';
 import logoWhite from '~/assets/Logo-Light-400.png';
-import logoStyles from './logo.module.css';
+import logoStyles from './Logo.module.css';
 
 function Logo({ size, onClick, sws }) {
     const imageUrlDark = new URL(logoDark, import.meta.url).href;

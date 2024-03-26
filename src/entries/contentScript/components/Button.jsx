@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import LoadingSpinner from '~/components/loading-spinner';
+import LoadingSpinner from '~/components/LoadingSpinner';
 import { childrenShape } from '~/shapes';
 
 function Button({
