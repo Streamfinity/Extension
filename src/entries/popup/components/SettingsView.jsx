@@ -5,9 +5,9 @@ import useAuth from '~/hooks/useAuth';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
-import Button from '~/entries/contentScript/components/button';
+import Button from '~/entries/contentScript/components/_Button';
 import { Switch } from '~/components/ui/switch';
-import Card, { CardTitle } from '~/entries/contentScript/components/card';
+import Card, { CardTitle } from '~/entries/contentScript/components/_Card';
 
 function SettingsView() {
     const {

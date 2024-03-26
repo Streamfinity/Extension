@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useAppStore } from '~/entries/contentScript/state';
 import { useVideoAnalytics } from '~/common/bridge';
 import useAuth from '~/hooks/useAuth';
-import Card, { CardTitle } from '~/entries/contentScript/components/card';
+import Card, { CardTitle } from '~/entries/contentScript/components/_Card';
 import { childrenShape } from '~/shapes';
 import { prettyNumber } from '~/common/pretty';
 

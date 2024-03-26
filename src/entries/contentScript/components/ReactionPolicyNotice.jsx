@@ -7,7 +7,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { reactionPolicyEnum } from '~/enums';
 import { getCurrentVideoPublishDate, buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
-import Card, { CardTitle } from '~/entries/contentScript/components/card';
+import Card, { CardTitle } from '~/entries/contentScript/components/_Card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';

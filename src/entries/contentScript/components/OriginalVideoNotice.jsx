@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useOriginalVideos } from '~/common/bridge';
-import Card, { CardTitle } from '~/entries/contentScript/components/card';
+import Card, { CardTitle } from '~/entries/contentScript/components/_Card';
 import { reactionShape } from '~/shapes';
 import { prettyDuration } from '~/common/pretty';
 import { useAppStore } from '~/entries/contentScript/state';
