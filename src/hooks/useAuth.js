@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { logout, login, useStatus } from '~/common/bridge';
 import { useAppStore, MESSAGE_ERROR } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
@@ -11,9 +12,11 @@ export const STATE_LIVE = 'live';
 export const STATE_OWN_VIDEO = 'own-video';
 
 export default function useAuth() {
-    const {
+    const [
         setAppMessage, overrideState, setOverrideState, currentChannel,
-    } = useAppStore();
+    ] = useAppStore(
+        useShallow((state) => [state.setAppMessage, state.overrideState, state.setOverrideState, state.currentChannel]),
+    );
 
     const {
         data: statusData,

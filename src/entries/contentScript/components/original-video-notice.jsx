@@ -50,7 +50,7 @@ ReactionPreview.propTypes = {
 };
 
 function OriginalVideoNotice() {
-    const { currentUrl } = useAppStore();
+    const currentUrl = useAppStore((state) => state.currentUrl);
 
     const { data: originalVideoReactions } = useOriginalVideos({
         videoUrl: currentUrl,

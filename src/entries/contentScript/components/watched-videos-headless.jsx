@@ -39,7 +39,7 @@ function markElements(watchedVideos) {
 }
 
 function WatchedVideosHeadless() {
-    const { currentUrl } = useAppStore();
+    const currentUrl = useAppStore((state) => state.currentUrl);
     const { user } = useAuth();
 
     useEffect(() => {
@@ -53,9 +53,7 @@ function WatchedVideosHeadless() {
         })();
     }, [currentUrl, user]);
 
-    return (
-        null
-    );
+    return null;
 }
 
 WatchedVideosHeadless.propTypes = {};

@@ -1,16 +1,28 @@
 import { useEffect } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
 
 const log = createLogger('usePage');
 
 export function usePage() {
-    const {
+    const [
         currentUrl, setCurrentUrl,
         currentChannel, setCurrentChannel,
         isDarkMode, setIsDarkMode,
         isDeviceDarkMode, setIsDeviceDarkMode,
-    } = useAppStore();
+    ] = useAppStore(
+        useShallow((state) => [
+            state.currentUrl,
+            state.setCurrentUrl,
+            state.currentChannel,
+            state.setCurrentChannel,
+            state.isDarkMode,
+            state.setIsDarkMode,
+            state.isDeviceDarkMode,
+            state.setIsDeviceDarkMode,
+        ]),
+    );
 
     useEffect(() => {
         function scrape() {

@@ -10,7 +10,7 @@ const log = createLogger('PlayerProgress');
 
 function PlayerProgressListenerHeadless({ active }) {
     const { element: playerElement, progress: playerProgress } = useYouTubePlayer();
-    const { currentUrl } = useAppStore();
+    const currentUrl = useAppStore((state) => state.currentUrl);
 
     const [lastProgress, setLastProgress] = useState(null);
     const [lastSent, setLastSent] = useState(null);

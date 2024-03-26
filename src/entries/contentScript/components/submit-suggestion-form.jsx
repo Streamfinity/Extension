@@ -12,7 +12,7 @@ const RESULTS_EMPTY = 2;
 const RESULTS_OK = 3;
 
 function SubmitSuggestionForm({ onSubmit }) {
-    const { setAppMessage } = useAppStore();
+    const setAppMessage = useAppStore((state) => state.setAppMessage);
 
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
     const [suggestedAccounts, setSuggestedAccounts] = useState([]);

@@ -14,7 +14,7 @@ import { useAppStore } from '~/entries/contentScript/state';
 const log = createLogger('Content-Rating');
 
 function ContentRatingNotice() {
-    const { currentUrl } = useAppStore();
+    const currentUrl = useAppStore((state) => state.currentUrl);
 
     const { progress: playerProgress } = useYouTubePlayer();
 

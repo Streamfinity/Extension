@@ -14,7 +14,7 @@ const dev = import.meta.env.DEV;
 function AppContainer({
     children, dark, user, state,
 }) {
-    const { isVisible } = useAppStore();
+    const isVisible = useAppStore((state) => state.isVisible);
 
     const [clickedCount, setClickedCount] = useState(0);
 

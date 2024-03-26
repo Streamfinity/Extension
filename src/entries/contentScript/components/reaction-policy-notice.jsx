@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
 import { PencilSquareIcon } from '@heroicons/react/16/solid';
+import { useShallow } from 'zustand/react/shallow';
 import { reactionPolicyEnum } from '~/enums';
 import { getCurrentVideoPublishDate, buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
@@ -196,7 +197,9 @@ NoticeLine.defaultProps = {
 };
 
 function ReactionPolicyNotice() {
-    const { currentUrl, currentChannel } = useAppStore();
+    const [currentUrl, currentChannel] = useAppStore(
+        useShallow((state) => [state.currentUrl, state.currentChannel]),
+    );
 
     const { data: policy, isLoading } = useReactionPolicyForVideo({
         videoUrl: currentUrl,

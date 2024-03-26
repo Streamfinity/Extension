@@ -1,10 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
+import { useShallow } from 'zustand/react/shallow';
 import { useAppStore, MESSAGE_ERROR, MESSAGE_SUCCESS } from '~/entries/contentScript/state';
 import { why } from '~/common/pretty';
 
 function AppMessage() {
-    const { appMessage, setAppMessage } = useAppStore();
+    const [appMessage, setAppMessage] = useAppStore(
+        useShallow((state) => [state.appMessage, state.setAppMessage]),
+    );
 
     if (!appMessage) {
         return null;

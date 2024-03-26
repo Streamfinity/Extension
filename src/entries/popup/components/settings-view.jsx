@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useShallow } from 'zustand/react/shallow';
 import useAuth from '~/hooks/useAuth';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
@@ -13,7 +14,9 @@ function SettingsView() {
         logout, loadingLogout, refreshStatusData, user,
     } = useAuth();
 
-    const { isVisible, setIsVisible } = useAppStore();
+    const [isVisible, setIsVisible] = useAppStore(
+        useShallow((state) => [state.isVisible, state.setIsVisible]),
+    );
 
     useEffect(() => {
         (async () => {

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Card, { CardTitle, CardTitleSubtle } from '~/entries/contentScript/components/card';
 import Button from '~/entries/contentScript/components/button';
 import MarkReactionForm from '~/entries/contentScript/components/mark-reaction-form';
+import { useAppStore } from '~/entries/contentScript/state';
 
 function MarkReactionNotice() {
     const [showForm, setShowForm] = useState(false);
+
+    const currentUrl = useAppStore((state) => state.currentUrl);
 
     return (
         <Card className="flex flex-col">
@@ -37,7 +40,9 @@ function MarkReactionNotice() {
                     <CardTitle>
                         Submit Reaction
                     </CardTitle>
-                    <MarkReactionForm onSubmitted={() => setShowForm(false)} />
+                    <Fragment key={currentUrl}>
+                        <MarkReactionForm onSubmitted={() => setShowForm(false)} />
+                    </Fragment>
                 </>
             )}
         </Card>

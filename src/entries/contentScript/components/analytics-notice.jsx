@@ -59,7 +59,7 @@ StatisticChange.propTypes = {
 // -------------------------------------------------------------------------------------------------------
 
 function AnalyticsNotice() {
-    const { currentUrl } = useAppStore();
+    const currentUrl = useAppStore((state) => state.currentUrl);
     const { accounts } = useAuth();
 
     const { data: videos } = useVideoAnalytics({

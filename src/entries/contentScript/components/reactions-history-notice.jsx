@@ -63,7 +63,7 @@ ReactionPreview.propTypes = {
 };
 
 function ReactionsHistoryNotice() {
-    const { currentUrl } = useAppStore();
+    const currentUrl = useAppStore((state) => state.currentUrl);
 
     const { isOwnVideo } = useAuth();
 

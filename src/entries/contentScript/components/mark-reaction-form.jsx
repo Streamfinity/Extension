@@ -17,7 +17,7 @@ function MarkReactionForm({ onSubmitted }) {
     const [segmentStart, setSegmentStart] = useState(null);
     const [segmentEnd, setSegmentEnd] = useState(null);
 
-    const { setAppMessage } = useAppStore();
+    const setAppMessage = useAppStore((state) => state.setAppMessage);
 
     const { progress: playerProgress, element: playerElement } = useYouTubePlayer({
         pollInterval: 1000,

@@ -17,7 +17,7 @@ async function refreshSettings({ setIsVisible }) {
 }
 
 export function useBackgroundEvents() {
-    const { setIsVisible } = useAppStore();
+    const setIsVisible = useAppStore((state) => state.setIsVisible);
     const { refreshStatusData } = useAuth();
 
     async function onBackgroundMessage({ type, data }) {

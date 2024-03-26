@@ -1,6 +1,7 @@
 import './app.css';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useShallow } from 'zustand/react/shallow';
 import useAuth, { STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/reaction-policy-notice';
@@ -25,7 +26,9 @@ function App() {
         user, loadingAuth, liveStream, login, state, isIncognito,
     } = useAuth();
 
-    const { setCurrentUrl, isDarkMode, isDeviceDarkMode } = useAppStore();
+    const [setCurrentUrl, isDarkMode, isDeviceDarkMode] = useAppStore(
+        useShallow((storeState) => ([storeState.setCurrentUrl, storeState.isDarkMode, storeState.isDeviceDarkMode])),
+    );
 
     // Add page effect which collects url + channel info
 
