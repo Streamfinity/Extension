@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './App.css';
+import '@streamfinity/streamfinity-branding/dist/index.css';
 import SettingsView from '~/entries/popup/components/SettingsView';
 import LoginView from '~/entries/popup/components/LoginView';
 import useAuth from '~/hooks/useAuth';

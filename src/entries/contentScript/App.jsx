@@ -1,4 +1,5 @@
 import './App.css';
+import '@streamfinity/streamfinity-branding/dist/index.css';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useShallow } from 'zustand/react/shallow';
