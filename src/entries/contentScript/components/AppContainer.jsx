@@ -7,7 +7,6 @@ import Logo from '~/components/Logo';
 import DevTools from '~/entries/contentScript/components/DevTools';
 import { childrenShape } from '~/shapes';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
-import AppMessage from '~/entries/contentScript/components/AppMessage';
 import SubwaySurfer from '~/entries/contentScript/components/SubwaySurfer';
 
 const dev = import.meta.env.DEV;
@@ -37,8 +36,6 @@ function AppContainer({
             dark && 'dark',
         )}
         >
-            <AppMessage />
-
             <div className={classNames(
                 'mb-6 overflow-y-auto rounded-[12px] bg-gradient-to-br p-[2px]',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',

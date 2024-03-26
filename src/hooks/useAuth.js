@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { logout, login, useStatus } from '~/common/bridge';
-import { useAppStore, MESSAGE_ERROR } from '~/entries/contentScript/state';
+import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
 import { accountServices } from '~/enums';
+import { toastError } from '~/common/utility';
 
 const log = createLogger('useAuth');
 
@@ -13,9 +14,9 @@ export const STATE_OWN_VIDEO = 'own-video';
 
 export default function useAuth() {
     const [
-        setAppMessage, overrideState, setOverrideState, currentChannel,
+        overrideState, setOverrideState, currentChannel,
     ] = useAppStore(
-        useShallow((state) => [state.setAppMessage, state.overrideState, state.setOverrideState, state.currentChannel]),
+        useShallow((state) => [state.overrideState, state.setOverrideState, state.currentChannel]),
     );
 
     const {
@@ -84,13 +85,13 @@ export default function useAuth() {
             log.debug('login response', response);
 
             if (response?.error) {
-                setAppMessage({ type: MESSAGE_ERROR, message: response.error });
+                toastError(response.error);
                 return;
             }
 
             await refreshStatusData();
         } catch (err) {
-            setAppMessage({ type: MESSAGE_ERROR, message: err });
+            toastError(err);
         }
 
         setLoadingLogin(false);

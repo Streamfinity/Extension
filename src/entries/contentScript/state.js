@@ -1,10 +1,6 @@
 import { create } from 'zustand';
 
-export const MESSAGE_ERROR = 'error';
-export const MESSAGE_SUCCESS = 'success';
-
 export const useAppStore = create((set) => ({
-    appMessage: null,
     currentUrl: null,
     currentChannel: { handle: null, id: null, url: null },
     reactionPolicy: null,
@@ -12,7 +8,6 @@ export const useAppStore = create((set) => ({
     overrideState: null,
     isDarkMode: false,
     isDeviceDarkMode: false,
-    setAppMessage: (appMessage) => set(() => ({ appMessage })),
     setCurrentUrl: (currentUrl) => set(() => ({ currentUrl })),
     setCurrentChannel: (currentChannel) => set(() => ({ currentChannel })),
     setReactionPolicy: (reactionPolicy) => set(() => ({ reactionPolicy })),

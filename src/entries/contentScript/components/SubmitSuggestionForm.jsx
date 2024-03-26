@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
 import Button from '~/entries/contentScript/components/Button';
 import styles from '~/styles/input.module.css';
-import { useAppStore, MESSAGE_SUCCESS, MESSAGE_ERROR } from '~/entries/contentScript/state';
+import { toastSuccess, toastError } from '~/common/utility';
 
 const RESULTS_PENDING = 0;
 const RESULTS_LOADING = 1;
@@ -12,8 +12,6 @@ const RESULTS_EMPTY = 2;
 const RESULTS_OK = 3;
 
 function SubmitSuggestionForm({ onSubmit }) {
-    const setAppMessage = useAppStore((state) => state.setAppMessage);
-
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
     const [suggestedAccounts, setSuggestedAccounts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -66,10 +64,10 @@ function SubmitSuggestionForm({ onSubmit }) {
                 ...data,
             });
 
-            setAppMessage({ type: MESSAGE_SUCCESS, message: 'Suggestion submitted successfully' });
+            toastSuccess('Suggestion submitted successfully');
             onSubmit(suggestion);
         } catch (err) {
-            setAppMessage({ type: MESSAGE_ERROR, message: err });
+            toastError(err);
         }
 
         setIsLoading(false);
