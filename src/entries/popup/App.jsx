@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import './app.css';
+import './App.css';
 import SettingsView from '~/entries/popup/components/settings-view';
 import LoginView from '~/entries/popup/components/login-view';
 import useAuth from '~/hooks/useAuth';
