@@ -1,3 +1,9 @@
+<h1 align="center">
+
+![](img/streamfinity-wordmark-dark.png#gh-light-mode-only)    ![](img/streamfinity-wordmark-light.png#gh-dark-mode-only)
+
+</h1>
+
 <p align="center">
 
 [![Build](https://github.com/Streamfinity/Extension/actions/workflows/build.yml/badge.svg)](https://github.com/Streamfinity/Extension/actions/workflows/build.yml)
@@ -7,13 +13,6 @@
 ![GitHub License](https://img.shields.io/github/license/Streamfinity/Extension?label=License)
 
 </p>
----
-
-<h1 align="center">
-
-![](img/streamfinity-wordmark-dark.png#gh-light-mode-only)    ![](img/streamfinity-wordmark-light.png#gh-dark-mode-only)
-
-</h1>
 
 <p align="center">
 <a href="https://chromewebstore.google.com/detail/streamfinity/mkaledojmamkljdldoeefpabbgfdkack"><img src="img/chrome.png" /></a>
