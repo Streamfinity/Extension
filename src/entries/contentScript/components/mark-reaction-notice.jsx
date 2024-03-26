@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import Card, { CardTitle, CardTitleSubtle } from '~/entries/contentScript/components/card';
 import Button from '~/entries/contentScript/components/button';
 import MarkReactionForm from '~/entries/contentScript/components/mark-reaction-form';
@@ -8,6 +8,10 @@ function MarkReactionNotice() {
     const [showForm, setShowForm] = useState(false);
 
     const currentUrl = useAppStore((state) => state.currentUrl);
+
+    useEffect(() => {
+        setShowForm(false);
+    }, [currentUrl]);
 
     return (
         <Card className="flex flex-col">
