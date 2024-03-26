@@ -5,13 +5,15 @@
 </h1>
 
 <p align="center">
-
-[![Build](https://github.com/Streamfinity/Extension/actions/workflows/build.yml/badge.svg)](https://github.com/Streamfinity/Extension/actions/workflows/build.yml)
-[![Lint](https://github.com/Streamfinity/Extension/actions/workflows/lint.yml/badge.svg)](https://github.com/Streamfinity/Extension/actions/workflows/lint.yml)
-![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/mkaledojmamkljdldoeefpabbgfdkack?label=Chrome)
-![Mozilla Add-on Version](https://img.shields.io/amo/v/streamfinity?label=Firefox)
-![GitHub License](https://img.shields.io/github/license/Streamfinity/Extension?label=License)
-
+    <a href="https://github.com/Streamfinity/Extension/actions/workflows/build.yml">
+        <img src="https://github.com/Streamfinity/Extension/actions/workflows/build.yml/badge.svg" alt="Build">
+    </a>
+    <a href="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml">
+        <img src="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml/badge.svg" alt="Lint">
+    </a>
+    <img src="https://img.shields.io/chrome-web-store/v/mkaledojmamkljdldoeefpabbgfdkack?label=Chrome" alt="Chrome Web Store Version">
+    <img src="https://img.shields.io/amo/v/streamfinity?label=Firefox" alt="Mozilla Add-on Version">
+    <img src="https://img.shields.io/github/license/Streamfinity/Extension?label=License" alt="GitHub License">
 </p>
 
 <p align="center">
