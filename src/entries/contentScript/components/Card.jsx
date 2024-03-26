@@ -37,9 +37,9 @@ function Card({
     const colorClassName = {
         default: 'bg-gray-300/30 dark:bg-neutral-700/30',
         // Colors
-        green: 'bg-positive-400',
-        red: 'bg-negative-400',
-        yellow: 'bg-warning-400',
+        green: 'bg-[#01FF94]', // TODO
+        red: 'bg-[#FF5C00]',
+        yellow: 'bg-[#FFA800]',
         // Brand
         primary: 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
         'brand-viewer': 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',
