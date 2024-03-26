@@ -31,7 +31,7 @@ function AppContainer({
     }, [clickedCount]);
 
     return (
-        <div className={classNames(
+        <main className={classNames(
             !isVisible && 'hidden',
             dark && 'dark',
         )}
@@ -96,7 +96,7 @@ function AppContainer({
             {dev && (
                 <DevTools />
             )}
-        </div>
+        </main>
     );
 }
 

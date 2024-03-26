@@ -18,7 +18,11 @@
     }
 }
 
-html[class*="dark"] .input {
+main[class*="dark"] .input {
     @apply bg-black/70;
     @apply border-gray-500;
+
+    &:focus-visible {
+        @apply border-primary-500;
+    }
 }
