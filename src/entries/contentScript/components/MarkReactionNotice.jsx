@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import Card, { CardTitle, CardTitleSubtle } from '~/entries/contentScript/components/_Card';
-import Button from '~/entries/contentScript/components/_Button';
+import Card, { CardTitle, CardTitleSubtle } from '~/entries/contentScript/components/Card';
+import Button from '~/entries/contentScript/components/Button';
 import MarkReactionForm from '~/entries/contentScript/components/mark-reaction-form';
 import { useAppStore } from '~/entries/contentScript/state';
 

@@ -1,6 +1,6 @@
 import React, { useMemo, Fragment } from 'react';
 import moment from 'moment';
-import Card, { CardTitle } from '~/entries/contentScript/components/_Card';
+import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import { useReactions } from '~/common/bridge';
 import { reactionShape } from '~/shapes';
 import ServiceIcon from '~/components/icons/service-icon';

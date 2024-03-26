@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
-import Button from '~/entries/contentScript/components/_Button';
+import Button from '~/entries/contentScript/components/Button';
 import styles from '~/styles/input.module.css';
 import { useAppStore, MESSAGE_SUCCESS, MESSAGE_ERROR } from '~/entries/contentScript/state';
 
