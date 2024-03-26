@@ -1,4 +1,4 @@
-const { preset, plugin } = require('@streamfinity/streamfinity-branding');
+const { preset } = require('@streamfinity/streamfinity-branding');
 const colors = require('tailwindcss/colors');
 const animate = require('tailwindcss-animate');
 
@@ -30,7 +30,6 @@ module.exports = {
         },
     },
     plugins: [
-        plugin,
         animate,
     ],
 };
