@@ -21,7 +21,6 @@ import StreamerModeNotice from '~/entries/contentScript/components/StreamerModeN
 import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
-import { toastSuccess } from '~/common/utility';
 
 function App() {
     const {
@@ -31,10 +30,6 @@ function App() {
     const [setCurrentUrl, isDarkMode, isDeviceDarkMode] = useAppStore(
         useShallow((storeState) => ([storeState.setCurrentUrl, storeState.isDarkMode, storeState.isDeviceDarkMode])),
     );
-
-    useEffect(() => {
-        toastSuccess('Asdxasxd');
-    }, []);
 
     // Add page effect which collects url + channel info
 
