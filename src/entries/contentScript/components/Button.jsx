@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import LoadingSpinner from '~/components/LoadingSpinner';
+import { LoadingSpinner } from '@streamfinity/streamfinity-branding';
 import { childrenShape } from '~/shapes';
 
 function Button({

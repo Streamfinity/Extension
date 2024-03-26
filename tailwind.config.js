@@ -5,6 +5,7 @@ import colors from 'tailwindcss/colors';
 export default {
     content: [
         './src/**/*.{js,ts,jsx,tsx,html}',
+        './node_modules/@streamfinity/streamfinity-branding/**/*.{js,jsx}',
     ],
     darkMode: 'class',
     presets: [
