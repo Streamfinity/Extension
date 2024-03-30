@@ -76,7 +76,8 @@ function ReactionsHistoryNotice() {
     const currentUrl = useAppStore((state) => state.currentUrl);
 
     const { user, isOwnVideo } = useAuth();
-    const subscribed = hasSubscription(user, subscriptionIds.CREATOR);
+    const subscribedCreater = hasSubscription(user, subscriptionIds.CREATOR);
+    const subscribedViewer = hasSubscription(user, subscriptionIds.VIEWER);
 
     const { data: reactions } = useReactions({
         videoUrl: currentUrl,
@@ -87,6 +88,18 @@ function ReactionsHistoryNotice() {
     const liveReactions = useMemo(() => reactions?.filter((reaction) => !!reaction.from_stream), [reactions]);
 
     if (!reactions || reactions?.length === 0) {
+        if (!subscribedViewer && !isOwnVideo) {
+            return (
+                <PremiumCtaLabel
+                    campaign="reaction-history"
+                    feature={subscriptionFeatures.INSIGHTS}
+                    className="mt-0"
+                >
+                    Get Viewer+ to see if followed streamers reacted
+                </PremiumCtaLabel>
+            );
+        }
+
         return null;
     }
 
@@ -96,7 +109,7 @@ function ReactionsHistoryNotice() {
                 {isOwnVideo ? 'Reactions to Your Video' : 'Reaction History'}
             </CardTitle>
 
-            {(isOwnVideo && !subscribed) ? (
+            {((isOwnVideo && !subscribedCreater) || (!isOwnVideo && !subscribedViewer)) ? (
                 <>
                     <div className="select-none">
                         {new Array(3).fill(null).map((_, index) => (
@@ -117,11 +130,10 @@ function ReactionsHistoryNotice() {
                         campaign="reaction-history"
                         feature={subscriptionFeatures.INSIGHTS}
                     >
-                        Get Creator+ to see who reacted to your video
+                        {isOwnVideo ? 'Get Creator+ to see who reacted to your video' : 'Get Viewr+ to see if followed streamers reacted'}
                     </PremiumCtaLabel>
                 </>
             ) : (
-
                 <div className="flex flex-col gap-4 text-sm">
                     {liveReactions.length > 0 && (
                         <div>
