@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useMemo, Fragment } from 'react';
 import moment from 'moment';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
@@ -7,7 +8,7 @@ import ServiceIcon from '~/components/Icons/ServiceIcon';
 import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
 import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
-import { subscriptionIds, subscriptionFeatures } from '~/enums';
+import { subscriptionIds, subscriptionFeatures, accountServices } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 import { buildReactionFromUrl } from '~/common/pretty';
 
@@ -94,43 +95,62 @@ function ReactionsHistoryNotice() {
             <CardTitle>
                 {isOwnVideo ? 'Reactions to Your Video' : 'Reaction History'}
             </CardTitle>
-            <div className="flex flex-col gap-4 text-sm">
-                {liveReactions.length > 0 && (
-                    <div>
-                        <div className="mb-2 font-bold">
-                            Live Reactions
-                        </div>
 
-                        {liveReactions.map((reaction) => (
-                            <Fragment key={reaction.id}>
-                                <ReactionPreview reaction={reaction} />
-                            </Fragment>
+            {(isOwnVideo && !subscribed) ? (
+                <>
+                    <div className="select-none">
+                        {new Array(3).fill(null).map((_, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-2 text-sm blur"
+                            >
+                                <ServiceIcon
+                                    service={{ id: accountServices.TWITCH, title: 'Twitch' }}
+                                    size={12}
+                                    className="inline-block"
+                                />
+                                {['Foobar reacted in a livestream for 1h', 'Someone reacted in a twitch livestream', 'A famous streamer reacted in a video'][index]}
+                            </div>
                         ))}
                     </div>
-                )}
+                    <PremiumCtaLabel
+                        campaign="reaction-history"
+                        feature={subscriptionFeatures.INSIGHTS}
+                    >
+                        Get Creator+ to see who reacted to your video
+                    </PremiumCtaLabel>
+                </>
+            ) : (
 
-                {videoReactions.length > 0 && (
-                    <div>
-                        <div className="mb-2 font-bold">
-                            Video Reactions
+                <div className="flex flex-col gap-4 text-sm">
+                    {liveReactions.length > 0 && (
+                        <div>
+                            <div className="mb-2 font-bold">
+                                Live Reactions
+                            </div>
+
+                            {liveReactions.map((reaction) => (
+                                <Fragment key={reaction.id}>
+                                    <ReactionPreview reaction={reaction} />
+                                </Fragment>
+                            ))}
                         </div>
+                    )}
 
-                        {videoReactions.map((reaction) => (
-                            <Fragment key={reaction.id}>
-                                <ReactionPreview reaction={reaction} />
-                            </Fragment>
-                        ))}
-                    </div>
-                )}
-            </div>
+                    {videoReactions.length > 0 && (
+                        <div>
+                            <div className="mb-2 font-bold">
+                                Video Reactions
+                            </div>
 
-            {(isOwnVideo && !subscribed) && (
-                <PremiumCtaLabel
-                    campaign="reaction-history"
-                    feature={subscriptionFeatures.INSIGHTS}
-                >
-                    Get Creator+ to see who reacted to your video
-                </PremiumCtaLabel>
+                            {videoReactions.map((reaction) => (
+                                <Fragment key={reaction.id}>
+                                    <ReactionPreview reaction={reaction} />
+                                </Fragment>
+                            ))}
+                        </div>
+                    )}
+                </div>
             )}
         </Card>
     );
