@@ -2,12 +2,17 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ArrowUpIcon } from '@heroicons/react/16/solid';
 import classNames from 'classnames';
+import gradientStyles from '@streamfinity/streamfinity-branding/dist/Gradients.module.css';
 import { useAppStore } from '~/entries/contentScript/state';
 import { useVideoAnalytics } from '~/common/bridge';
 import useAuth from '~/hooks/useAuth';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import { childrenShape } from '~/shapes';
 import { prettyNumber } from '~/common/pretty';
+import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
+import { subscriptionIds, subscriptionFeatures } from '~/enums';
+import { buildFrontendUrl } from '~/common/utility';
+import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 
 // -------------------------------------------------------------------------------------------------------
 // Components
@@ -60,14 +65,37 @@ StatisticChange.propTypes = {
 
 function AnalyticsNotice() {
     const currentUrl = useAppStore((state) => state.currentUrl);
-    const { accounts } = useAuth();
+    const { accounts, user } = useAuth();
 
     const { data: videos } = useVideoAnalytics({
         videoUrl: currentUrl,
         accountIds: accounts.map((account) => account.id),
     });
 
-    const video = useMemo(() => (videos ? videos[0] : null), [videos]);
+    const subscribed = hasSubscription(user, subscriptionIds.CREATOR);
+
+    const video = useMemo(() => {
+        if (!videos) {
+            return null;
+        }
+
+        const firstVideo = videos[0];
+
+        if (!subscribed) {
+            return {
+                analytics_aggregated: {
+                    sum_unique_views: 123456,
+                    live_avg_views: 12345,
+                    live_peak_views: 12345,
+                },
+                clicks: { value: 100 },
+                views_count: 100,
+                reactions: new Array(firstVideo.reactions.length).fill(0),
+            };
+        }
+
+        return firstVideo;
+    }, [videos, subscribed]);
 
     const viewChangePercentage = useMemo(() => (video ? Math.round((video.analytics_aggregated.sum_unique_views / video.views_count) * 100) : null), [video]);
 
@@ -85,7 +113,7 @@ function AnalyticsNotice() {
             </CardTitle>
 
             {video ? (
-                <div className="flex justify-between">
+                <div className={classNames(!subscribed && 'blur select-none', 'flex justify-between')}>
                     <Statistic
                         title="Unique views"
                         value={video?.analytics_aggregated.sum_unique_views || 0}
@@ -115,6 +143,15 @@ function AnalyticsNotice() {
                 <div className="text-sm">
                     There are no reactions for this video yet.
                 </div>
+            )}
+
+            {!subscribed && (
+                <PremiumCtaLabel
+                    campaign="analytics"
+                    feature={subscriptionFeatures.INSIGHTS}
+                >
+                    Get Creator+ to see more analytics
+                </PremiumCtaLabel>
             )}
         </Card>
     );

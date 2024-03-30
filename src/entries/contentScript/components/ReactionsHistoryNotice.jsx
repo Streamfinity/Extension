@@ -6,6 +6,9 @@ import { reactionShape } from '~/shapes';
 import ServiceIcon from '~/components/Icons/ServiceIcon';
 import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
+import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
+import { subscriptionIds, subscriptionFeatures } from '~/enums';
+import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 
 function ReactionPreview({ reaction }) {
     return (
@@ -65,7 +68,8 @@ ReactionPreview.propTypes = {
 function ReactionsHistoryNotice() {
     const currentUrl = useAppStore((state) => state.currentUrl);
 
-    const { isOwnVideo } = useAuth();
+    const { user, isOwnVideo } = useAuth();
+    const subscribed = hasSubscription(user, subscriptionIds.CREATOR);
 
     const { data: reactions } = useReactions({
         videoUrl: currentUrl,
@@ -118,6 +122,15 @@ function ReactionsHistoryNotice() {
                     </div>
                 )}
             </div>
+
+            {!subscribed && (
+                <PremiumCtaLabel
+                    campaign="reaction-history"
+                    feature={subscriptionFeatures.INSIGHTS}
+                >
+                    Get Creator+ to see who reacted to your video
+                </PremiumCtaLabel>
+            )}
         </Card>
     );
 }
