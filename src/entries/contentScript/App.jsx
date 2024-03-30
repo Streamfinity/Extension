@@ -24,13 +24,22 @@ import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackground
 import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
 
 function App() {
+    const { t, i18n } = useTranslation();
     const {
         user, loadingAuth, liveStream, login, state, isIncognito,
     } = useAuth();
-    const { t } = useTranslation();
+
     const [setCurrentUrl, isDarkMode, isDeviceDarkMode] = useAppStore(
         useShallow((storeState) => ([storeState.setCurrentUrl, storeState.isDarkMode, storeState.isDeviceDarkMode])),
     );
+
+    // Set language
+
+    useEffect(() => {
+        if (user?.locale_frontend && i18n.language !== user.locale_frontend) {
+            i18n.changeLanguage(user.locale_frontend);
+        }
+    }, [user, i18n]);
 
     // Add page effect which collects url + channel info
 
@@ -101,7 +110,6 @@ function App() {
             dark={isDarkMode}
             state={state}
         >
-
             {t('hello')}
             {user && (
                 <StatusNotice
