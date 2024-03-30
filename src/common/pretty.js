@@ -102,3 +102,27 @@ export function why(e) {
 
     return message;
 }
+
+function getVideoUrlWithTimestamp(video, ts) {
+    if (!ts) {
+        return video.external_tracking_url;
+    }
+
+    return `${video.external_tracking_url}?t=${ts}`;
+}
+
+export function buildReactionFromUrl(reaction) {
+    if (reaction.from_video) {
+        return getVideoUrlWithTimestamp(reaction.from_video, reaction.video_seconds_from);
+    }
+
+    if (reaction.from_stream) {
+        const vodVideo = reaction.from_stream?.vods?.find((v) => !!v)?.video;
+
+        if (vodVideo) {
+            return getVideoUrlWithTimestamp(vodVideo, reaction.vod_seconds_from);
+        }
+    }
+
+    return reaction.from_info?.service_external_url;
+}

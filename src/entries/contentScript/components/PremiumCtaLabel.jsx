@@ -13,7 +13,11 @@ function PremiumCtaLabel({ children, campaign, feature = '' }) {
             rel="noreferrer"
             className="mt-4 block"
         >
-            <div className={classNames(gradientStyles.premiumGradientDarker, 'px-2 rounded-xl text-white text-sm py-1 text-center font-medium border border-black/20')}>
+            <div className={classNames(
+                'px-2 rounded-full text-sm text-black py-1 text-center font-medium border border-black/20',
+                'bg-black/20',
+            )}
+            >
                 {children}
             </div>
         </a>

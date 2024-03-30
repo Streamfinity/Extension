@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ArrowUpIcon } from '@heroicons/react/16/solid';
 import classNames from 'classnames';
-import gradientStyles from '@streamfinity/streamfinity-branding/dist/Gradients.module.css';
 import { useAppStore } from '~/entries/contentScript/state';
 import { useVideoAnalytics } from '~/common/bridge';
 import useAuth from '~/hooks/useAuth';
@@ -11,20 +10,26 @@ import { childrenShape } from '~/shapes';
 import { prettyNumber } from '~/common/pretty';
 import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
 import { subscriptionIds, subscriptionFeatures } from '~/enums';
-import { buildFrontendUrl } from '~/common/utility';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 
 // -------------------------------------------------------------------------------------------------------
 // Components
 // -------------------------------------------------------------------------------------------------------
 
-function Statistic({ title, value, children }) {
+function Statistic({
+    title, value, children, blur = false,
+}) {
     return (
         <div className="flex flex-col gap-2 text-left">
             <div className="text-xs font-medium text-gray-600 dark:text-gray-400">
                 {title}
             </div>
-            <div className={classNames('text-3xl font-medium', value === 0 && 'text-gray-600 dark:text-gray-400')}>
+            <div className={classNames(
+                'text-3xl font-medium',
+                blur && 'blur select-none',
+                value === 0 && 'text-gray-600 dark:text-gray-400',
+            )}
+            >
                 {prettyNumber(value)}
             </div>
             {children}
@@ -35,6 +40,7 @@ function Statistic({ title, value, children }) {
 Statistic.propTypes = {
     title: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
+    blur: PropTypes.bool,
     children: childrenShape,
 };
 
@@ -79,22 +85,7 @@ function AnalyticsNotice() {
             return null;
         }
 
-        const firstVideo = videos[0];
-
-        if (!subscribed) {
-            return {
-                analytics_aggregated: {
-                    sum_unique_views: 123456,
-                    live_avg_views: 12345,
-                    live_peak_views: 12345,
-                },
-                clicks: { value: 100 },
-                views_count: 100,
-                reactions: new Array(firstVideo.reactions.length).fill(0),
-            };
-        }
-
-        return firstVideo;
+        return videos[0];
     }, [videos, subscribed]);
 
     const viewChangePercentage = useMemo(() => (video ? Math.round((video.analytics_aggregated.sum_unique_views / video.views_count) * 100) : null), [video]);
@@ -113,31 +104,58 @@ function AnalyticsNotice() {
             </CardTitle>
 
             {video ? (
-                <div className={classNames(!subscribed && 'blur select-none', 'flex justify-between')}>
-                    <Statistic
-                        title="Unique views"
-                        value={video?.analytics_aggregated.sum_unique_views || 0}
-                    >
-                        {viewChangePercentage > 0 && (
-                            <StatisticChange>
-                                +
-                                {viewChangePercentage}
-                                %
-                            </StatisticChange>
-                        )}
-                    </Statistic>
-                    <Statistic
-                        title="Live Avg"
-                        value={video?.analytics_aggregated?.live_avg_views || 0}
-                    />
-                    <Statistic
-                        title="Live Peak"
-                        value={video?.analytics_aggregated?.live_peak_views || 0}
-                    />
-                    <Statistic
-                        title="Clicks"
-                        value={video?.clicks?.value || 0}
-                    />
+                <div className="flex justify-between px-2">
+                    {subscribed ? (
+                        <>
+                            <Statistic
+                                title="Unique views"
+                                value={video?.analytics_aggregated.sum_unique_views || 0}
+                            >
+                                {viewChangePercentage > 0 && (
+                                    <StatisticChange>
+                                        +
+                                        {viewChangePercentage}
+                                        %
+                                    </StatisticChange>
+                                )}
+                            </Statistic>
+                            <Statistic
+                                title="Live Avg"
+                                value={video?.analytics_aggregated?.live_avg_views || 0}
+                            />
+                            <Statistic
+                                title="Live Peak"
+                                value={video?.analytics_aggregated?.live_peak_views || 0}
+                            />
+                            <Statistic
+                                title="Clicks"
+                                value={video?.clicks?.value || 0}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Statistic
+                                title="Unique views"
+                                value={86455}
+                                blur
+                            />
+                            <Statistic
+                                title="Live Avg"
+                                value={624}
+                                blur
+                            />
+                            <Statistic
+                                title="Live Peak"
+                                value={466}
+                                blur
+                            />
+                            <Statistic
+                                title="Clicks"
+                                value={6428}
+                                blur
+                            />
+                        </>
+                    )}
                 </div>
             ) : (
                 <div className="text-sm">

@@ -9,6 +9,7 @@ import useAuth from '~/hooks/useAuth';
 import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
 import { subscriptionIds, subscriptionFeatures } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
+import { buildReactionFromUrl } from '~/common/pretty';
 
 function ReactionPreview({ reaction }) {
     return (
@@ -23,16 +24,21 @@ function ReactionPreview({ reaction }) {
                     className="inline-block"
                 />
             )}
-            <span className="font-bold text-primary-gradient-from">
+            <a
+                href={reaction.from_info?.service_external_url}
+                target="_blank"
+                rel="noreferrer"
+                className="font-bold text-primary-gradient-from"
+            >
                 {reaction.from_info?.display_name}
-            </span>
+            </a>
 
             {' '}
             {moment(reaction.reaction_timestamp_start).fromNow()}
 
             {reaction.from_stream && (
                 <a
-                    href={reaction.from_info?.service_external_url}
+                    href={buildReactionFromUrl(reaction)}
                     target="_blank"
                     rel="noreferrer"
                     className="font-bold text-primary-gradient-from"
@@ -48,7 +54,7 @@ function ReactionPreview({ reaction }) {
 
             {reaction.from_video && (
                 <a
-                    href={reaction.from_info?.service_external_url}
+                    href={buildReactionFromUrl(reaction)}
                     target="_blank"
                     rel="noreferrer"
                     className="font-bold text-primary-gradient-from"
@@ -86,13 +92,8 @@ function ReactionsHistoryNotice() {
     return (
         <Card color="primary">
             <CardTitle>
-                Reaction History
+                {isOwnVideo ? 'Reactions to Your Video' : 'Reaction History'}
             </CardTitle>
-            {isOwnVideo && (
-                <p className="mb-4">
-                    Those are all reactions to your video.
-                </p>
-            )}
             <div className="flex flex-col gap-4 text-sm">
                 {liveReactions.length > 0 && (
                     <div>
@@ -123,7 +124,7 @@ function ReactionsHistoryNotice() {
                 )}
             </div>
 
-            {!subscribed && (
+            {(isOwnVideo && !subscribed) && (
                 <PremiumCtaLabel
                     campaign="reaction-history"
                     feature={subscriptionFeatures.INSIGHTS}
