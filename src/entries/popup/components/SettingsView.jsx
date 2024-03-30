@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useShallow } from 'zustand/react/shallow';
 import { Button } from '@streamfinity/streamfinity-branding';
+import moment from 'moment';
 import useAuth from '~/hooks/useAuth';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
@@ -32,17 +33,18 @@ function SettingsView() {
         setIsVisible(value);
     }
 
-    async function localToggleIncognitoMode(enabled) {
+    async function localToggleIncognitoMode(length) {
         await toggleIncognitoMode({
-            length: enabled ? null : '3h',
+            length,
         });
 
         await refreshStatusData();
     }
 
-    const isIncognito = useMemo(() => !!user?.extension_invisible_until, [user]);
+    // check if "extension_invisible_until" is not in past using momentjs
+    const isIncognito = useMemo(() => !!user?.extension_invisible_until && moment(user.extension_invisible_until).isAfter(moment.utc()), [user]);
 
-    console.log(user);
+    const incognitoAvailableLengths = ['1h', '3h', '8h', '24h', '3d'];
 
     return (
         <div className="flex h-full flex-col justify-between">
@@ -51,7 +53,7 @@ function SettingsView() {
                     Settings
                 </CardTitle>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-2">
                         <Switch
                             id="visibility"
@@ -63,15 +65,36 @@ function SettingsView() {
                         </label>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                        <Switch
-                            id="incognito"
-                            checked={isIncognito}
-                            onCheckedChange={() => localToggleIncognitoMode(isIncognito)}
-                        />
-                        <label htmlFor="incognito">
+                    <div>
+                        <div className="mb-1 font-semibold">
                             Incognito Mode (don&apos;t track videos)
-                        </label>
+                        </div>
+
+                        {isIncognito ? (
+                            <button
+                                onClick={() => localToggleIncognitoMode(null)}
+                                type="button"
+                                className="inline-block rounded bg-white/20 px-2 text-white transition-colors hover:bg-white/30"
+                            >
+                                Disable (active until
+                                {' '}
+                                {moment(user.extension_invisible_until).format('HH:mm')}
+                                )
+                            </button>
+                        ) : (
+                            <div className="flex gap-2">
+                                {incognitoAvailableLengths.map((length) => (
+                                    <button
+                                        key={length}
+                                        onClick={() => localToggleIncognitoMode(length)}
+                                        type="button"
+                                        className="rounded bg-white/20 px-2 text-white transition-colors hover:bg-white/30"
+                                    >
+                                        {length}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </Card>
