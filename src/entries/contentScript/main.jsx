@@ -4,9 +4,8 @@ import { createRoot } from 'react-dom/client';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from '@/locales/en.json';
-import de from '@/locales/de.json';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { translations, defaultLocale } from '@/i18n';
 import { renderContent } from './renderContent';
 import App from './App';
 import { createLogger } from '~/common/log';
@@ -15,12 +14,11 @@ i18n
     .use(initReactI18next)
     .use(LanguageDetector)
     .init({
-        resources: {
-            en: { translation: en },
-            de: { translation: de },
-        },
-        lng: 'de',
-        fallbackLng: 'en',
+        resources: Object.entries(translations).reduce((acc, [key, value]) => {
+            acc[key] = { translation: value };
+            return acc;
+        }, {}),
+        fallbackLng: defaultLocale,
         interpolation: {
             escapeValue: false,
         },

@@ -12,7 +12,8 @@
         "markAsReaction": "Mark as Reaction",
         "showAll": "Show all",
         "suggestVideo": "Suggest Video",
-        "loginWith": "Login with Streamfinity"
+        "loginWith": "Login with Streamfinity",
+        "logout": "Logout"
     },
     "auth": {
         "loginDescription": "Get started by logging in with your YouTube account!"
@@ -83,5 +84,11 @@
     },
     "subwaySurfer": {
         "gameplayBy": "Gameplay by {{name}}"
+    },
+    "settings": {
+        "title": "Settings",
+        "showExtension": "Show Extension on Web Pages",
+        "incognito": "Incognito Mode (don't track videos)",
+        "incognitoDisable": "Disable (active until {{date}})"
     }
 }
