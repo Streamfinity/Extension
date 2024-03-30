@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useShallow } from 'zustand/react/shallow';
 import { Button } from '@streamfinity/streamfinity-branding';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import useAuth from '~/hooks/useAuth';
 import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
@@ -11,6 +12,7 @@ import { Switch } from '~/components/Ui/Switch';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 
 function SettingsView() {
+    const { t } = useTranslation();
     const {
         logout, loadingLogout, refreshStatusData, user,
     } = useAuth();
@@ -50,7 +52,7 @@ function SettingsView() {
         <div className="flex h-full flex-col justify-between">
             <Card color="primary">
                 <CardTitle>
-                    Settings
+                    {t('settings.title')}
                 </CardTitle>
 
                 <div className="flex flex-col gap-4">
@@ -61,13 +63,13 @@ function SettingsView() {
                             onCheckedChange={() => localToggleVisible(!isVisible)}
                         />
                         <label htmlFor="visibility">
-                            Show Extension on Web Pages
+                            {t('settings.showExtension')}
                         </label>
                     </div>
 
                     <div>
                         <div className="mb-1 font-semibold">
-                            Incognito Mode (don&apos;t track videos)
+                            {t('settings.incognito')}
                         </div>
 
                         {isIncognito ? (
@@ -76,10 +78,7 @@ function SettingsView() {
                                 type="button"
                                 className="inline-block rounded bg-white/20 px-2 text-white transition-colors hover:bg-white/30"
                             >
-                                Disable (active until
-                                {' '}
-                                {moment(user.extension_invisible_until).format('HH:mm')}
-                                )
+                                {t('settings.incognitoDisable', { date: moment(user.extension_invisible_until).format('HH:mm') })}
                             </button>
                         ) : (
                             <div className="flex gap-2">
@@ -106,7 +105,7 @@ function SettingsView() {
                     className="w-full"
                     sm
                 >
-                    Logout
+                    {t('words.logout')}
                 </Button>
             </div>
         </div>
