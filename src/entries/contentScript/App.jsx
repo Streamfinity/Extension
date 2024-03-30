@@ -3,6 +3,7 @@ import '@streamfinity/streamfinity-branding/dist/index.css';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useShallow } from 'zustand/react/shallow';
+import { useTranslation } from 'react-i18next';
 import useAuth, { STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 import ReactionPolicyNotice from '~/entries/contentScript/components/ReactionPolicyNotice';
@@ -26,7 +27,7 @@ function App() {
     const {
         user, loadingAuth, liveStream, login, state, isIncognito,
     } = useAuth();
-
+    const { t } = useTranslation();
     const [setCurrentUrl, isDarkMode, isDeviceDarkMode] = useAppStore(
         useShallow((storeState) => ([storeState.setCurrentUrl, storeState.isDarkMode, storeState.isDeviceDarkMode])),
     );
@@ -101,6 +102,7 @@ function App() {
             state={state}
         >
 
+            {t('hello')}
             {user && (
                 <StatusNotice
                     state={state}
