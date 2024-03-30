@@ -1,10 +1,12 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Button } from '@streamfinity/streamfinity-branding';
+import { useTranslation } from 'react-i18next';
 import Card, { CardTitle, CardTitleSubtle } from '~/entries/contentScript/components/Card';
 import MarkReactionForm from '~/entries/contentScript/components/MarkReactionForm';
 import { useAppStore } from '~/entries/contentScript/state';
 
 function MarkReactionNotice() {
+    const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);
 
     const currentUrl = useAppStore((state) => state.currentUrl);
@@ -20,11 +22,10 @@ function MarkReactionNotice() {
                 <div className="flex gap-4">
                     <div className="grow text-sm">
                         <CardTitleSubtle>
-                            Untracked Reaction?
+                            {t('markReaction.title')}
                         </CardTitleSubtle>
                         <p>
-                            If this video is a reaction to another type of content, you can help use by
-                            providing information.
+                            {t('markReaction.intro')}
                         </p>
                     </div>
                     <div className="flex grow items-center">
@@ -33,7 +34,7 @@ function MarkReactionNotice() {
                             className="w-full"
                             onClick={() => setShowForm(true)}
                         >
-                            Mark as Reaction
+                            {t('actions.markAsReaction')}
                         </Button>
                     </div>
                 </div>
@@ -42,7 +43,7 @@ function MarkReactionNotice() {
             {showForm && (
                 <>
                     <CardTitle>
-                        Submit Reaction
+                        {t('actions.submitReaction')}
                     </CardTitle>
                     <Fragment key={currentUrl}>
                         <MarkReactionForm onSubmitted={() => setShowForm(false)} />

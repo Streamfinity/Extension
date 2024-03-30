@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Button } from '@streamfinity/streamfinity-branding';
+import { useTranslation } from 'react-i18next';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import SubmitSuggestionForm from '~/entries/contentScript/components/SubmitSuggestionForm';
 
 function SubmitSuggestionNotice() {
+    const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);
 
     return (
@@ -12,14 +14,14 @@ function SubmitSuggestionNotice() {
             className="flex flex-col"
         >
             <CardTitle>
-                Suggestion
+                {t('submitSuggestion.title')}
             </CardTitle>
 
             {!showForm && (
                 <div className="flex gap-4">
                     <div className="grow">
                         <p className="text-sm">
-                            Send this video as a suggestion to your favorite streamers.
+                            {t('submitSuggestion.intro')}
                         </p>
                     </div>
                     <div className="flex grow items-end">
@@ -28,7 +30,7 @@ function SubmitSuggestionNotice() {
                             className="w-full"
                             onClick={() => setShowForm(true)}
                         >
-                            Suggest Video
+                            {t('submitSuggestion.suggestVideo')}
                         </Button>
                     </div>
                 </div>

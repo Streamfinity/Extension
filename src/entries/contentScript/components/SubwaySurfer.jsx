@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/16/solid';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const availableVideoItems = [{
     name: 'Roman',
@@ -20,6 +21,7 @@ const availableVideoItems = [{
 }];
 
 function SubwaySurfer({ onClose }) {
+    const { t } = useTranslation();
     const [videoItem, setVideoItem] = useState(null);
 
     useEffect(() => {
@@ -46,9 +48,7 @@ function SubwaySurfer({ onClose }) {
             </button>
 
             <div className="absolute left-0 top-0 w-full bg-gradient-to-b from-black/40 to-black/0 p-2 pb-12 text-center font-semibold text-white">
-                Gameplay by
-                {' '}
-                {videoItem.name}
+                {t('subwaySurfer.gameplayBy', { name: videoItem.name })}
             </div>
 
             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}

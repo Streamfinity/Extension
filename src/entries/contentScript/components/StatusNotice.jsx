@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SignalIcon } from '@heroicons/react/16/solid';
+import { useTranslation } from 'react-i18next';
 import { buildFrontendUrl } from '~/common/utility';
 import useAuth, { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 
 function StatusNotice({ state, liveStream }) {
+    const { t } = useTranslation();
     const { setOverrideState } = useAuth();
 
     return (
@@ -18,10 +20,18 @@ function StatusNotice({ state, liveStream }) {
                     <div className="flex items-center gap-3 rounded-lg bg-brand-streamer-gradient-from px-4 py-1 text-white">
                         <SignalIcon className="size-8" />
                         <div>
-                            <span className="font-bold uppercase">
-                                You are live
-                            </span>
-                            {liveStream && ` on ${liveStream?.service?.title} (${liveStream?.account?.display_name})`}
+                            {liveStream?.service?.title ? (
+                                <span className="font-bold uppercase">
+                                    {t('status.youAreLiveOn', {
+                                        service: liveStream?.service?.title,
+                                        accountName: liveStream?.account?.display_name,
+                                    })}
+                                </span>
+                            ) : (
+                                <span className="font-bold uppercase">
+                                    {t('status.youAreLive')}
+                                </span>
+                            )}
                         </div>
                     </div>
                 </a>
@@ -33,7 +43,7 @@ function StatusNotice({ state, liveStream }) {
                     type="button"
                     className="w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
                 >
-                    Enable Creator Mode
+                    {t('status.enableStreamerMode')}
                 </button>
             )}
         </>

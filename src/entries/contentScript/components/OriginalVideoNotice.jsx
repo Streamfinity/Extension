@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useOriginalVideos } from '~/common/bridge';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import { reactionShape } from '~/shapes';
@@ -50,6 +51,7 @@ ReactionPreview.propTypes = {
 };
 
 function OriginalVideoNotice() {
+    const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
 
     const { data: originalVideoReactions } = useOriginalVideos({
@@ -60,8 +62,7 @@ function OriginalVideoNotice() {
         return (
             <Card color="primary">
                 <CardTitle>
-                    Original Video
-                    {originalVideoReactions.length > 1 ? 's' : ''}
+                    {originalVideoReactions.length > 1 ? t('originalVideo.titlePlural') : t('originalVideo.title')}
                 </CardTitle>
 
                 <div className="mt-3 flex flex-col gap-4">

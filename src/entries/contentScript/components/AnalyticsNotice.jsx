@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ArrowUpIcon } from '@heroicons/react/16/solid';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { useAppStore } from '~/entries/contentScript/state';
 import { useVideoAnalytics } from '~/common/bridge';
 import useAuth from '~/hooks/useAuth';
@@ -70,6 +71,7 @@ StatisticChange.propTypes = {
 // -------------------------------------------------------------------------------------------------------
 
 function AnalyticsNotice() {
+    const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
     const { accounts, user } = useAuth();
 
@@ -94,11 +96,9 @@ function AnalyticsNotice() {
         <Card color="brand-creator">
             <CardTitle>
                 <div className="flex justify-between">
-                    Analytics
+                    {t('analytics.title')}
                     <div className="text-xs font-medium text-gray-600 dark:text-gray-400">
-                        {video?.reactions?.length || 0}
-                        {' '}
-                        Reactions
+                        {t('analytics.reactionsTitle', { count: video?.reactions?.length || 0 })}
                     </div>
                 </div>
             </CardTitle>
@@ -108,7 +108,7 @@ function AnalyticsNotice() {
                     {subscribed ? (
                         <>
                             <Statistic
-                                title="Unique views"
+                                title={t('analytics.uniqueViews')}
                                 value={video?.analytics_aggregated.sum_unique_views || 0}
                             >
                                 {viewChangePercentage > 0 && (
@@ -120,37 +120,37 @@ function AnalyticsNotice() {
                                 )}
                             </Statistic>
                             <Statistic
-                                title="Live Avg"
+                                title={t('analytics.liveAvg')}
                                 value={video?.analytics_aggregated?.live_avg_views || 0}
                             />
                             <Statistic
-                                title="Live Peak"
+                                title={t('analytics.livePeak')}
                                 value={video?.analytics_aggregated?.live_peak_views || 0}
                             />
                             <Statistic
-                                title="Clicks"
+                                title={t('analytics.clicks')}
                                 value={video?.clicks?.value || 0}
                             />
                         </>
                     ) : (
                         <>
                             <Statistic
-                                title="Unique views"
+                                title={t('analytics.uniqueViews')}
                                 value={86455}
                                 blur
                             />
                             <Statistic
-                                title="Live Avg"
+                                title={t('analytics.liveAvg')}
                                 value={624}
                                 blur
                             />
                             <Statistic
-                                title="Live Peak"
+                                title={t('analytics.livePeak')}
                                 value={466}
                                 blur
                             />
                             <Statistic
-                                title="Clicks"
+                                title={t('analytics.clicks')}
                                 value={6428}
                                 blur
                             />
@@ -159,7 +159,7 @@ function AnalyticsNotice() {
                 </div>
             ) : (
                 <div className="text-sm">
-                    There are no reactions for this video yet.
+                    {t('analytics.noReactionsYet')}
                 </div>
             )}
 
@@ -168,7 +168,7 @@ function AnalyticsNotice() {
                     campaign="analytics"
                     feature={subscriptionFeatures.INSIGHTS}
                 >
-                    Get Creator+ to see more analytics
+                    {t('analytics.ctaCreator')}
                 </PremiumCtaLabel>
             )}
         </Card>
