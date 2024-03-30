@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useMemo, Fragment } from 'react';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import { useReactions } from '~/common/bridge';
 import { reactionShape } from '~/shapes';
@@ -13,6 +14,8 @@ import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel'
 import { buildReactionFromUrl } from '~/common/pretty';
 
 function ReactionPreview({ reaction }) {
+    const { t } = useTranslation();
+
     return (
         <div
             key={reaction.id}
@@ -36,6 +39,7 @@ function ReactionPreview({ reaction }) {
 
             {' '}
             {moment(reaction.reaction_timestamp_start).fromNow()}
+            {' '}
 
             {reaction.from_stream && (
                 <a
@@ -44,12 +48,7 @@ function ReactionPreview({ reaction }) {
                     rel="noreferrer"
                     className="font-bold text-primary-gradient-from"
                 >
-                    {' '}
-                    in a
-                    {' '}
-                    {reaction.from_stream?.account?.service?.title}
-                    {' '}
-                    livestream
+                    {t('reactionHistory.inAStream', { service: reaction.from_stream?.account?.service?.title })}
                 </a>
             )}
 
@@ -60,8 +59,7 @@ function ReactionPreview({ reaction }) {
                     rel="noreferrer"
                     className="font-bold text-primary-gradient-from"
                 >
-                    {' '}
-                    in a video
+                    {t('reactionHistory.inAVideo')}
                 </a>
             )}
         </div>
@@ -73,6 +71,7 @@ ReactionPreview.propTypes = {
 };
 
 function ReactionsHistoryNotice() {
+    const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
 
     const { user, isOwnVideo } = useAuth();
@@ -106,7 +105,7 @@ function ReactionsHistoryNotice() {
     return (
         <Card color="primary">
             <CardTitle>
-                {isOwnVideo ? 'Reactions to Your Video' : 'Reaction History'}
+                {isOwnVideo ? t('reactionHistory.titleOwn') : t('reactionHistory.title')}
             </CardTitle>
 
             {((isOwnVideo && !subscribedCreater) || (!isOwnVideo && !subscribedViewer)) ? (
@@ -130,7 +129,7 @@ function ReactionsHistoryNotice() {
                         campaign="reaction-history"
                         feature={subscriptionFeatures.INSIGHTS}
                     >
-                        {isOwnVideo ? 'Get Creator+ to see who reacted to your video' : 'Get Viewr+ to see if followed streamers reacted'}
+                        {isOwnVideo ? t('reactionHistory.ctaCreator') : t('reactionHistory.ctaViewer')}
                     </PremiumCtaLabel>
                 </>
             ) : (
@@ -152,7 +151,7 @@ function ReactionsHistoryNotice() {
                     {videoReactions.length > 0 && (
                         <div>
                             <div className="mb-2 font-bold">
-                                Video Reactions
+                                {t('words.videoReactions')}
                             </div>
 
                             {videoReactions.map((reaction) => (

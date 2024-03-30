@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import { PencilSquareIcon } from '@heroicons/react/16/solid';
 import { useShallow } from 'zustand/react/shallow';
+import { useTranslation } from 'react-i18next';
 import { reactionPolicyEnum } from '~/enums';
 import { getCurrentVideoPublishDate, buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
@@ -37,6 +38,7 @@ function prettyFormatCountdown(diff) {
 function Notice({
     title, description, cardColor, className,
 }) {
+    const { t } = useTranslation();
     const { isOwnVideo } = useAuth();
 
     return (
@@ -49,7 +51,7 @@ function Notice({
         >
             <CardTitle>
                 <div className="flex justify-between">
-                    Reaction Policy
+                    {t('reactionPolicy.title')}
                     {isOwnVideo && (
                         <a
                             href={buildFrontendUrl('/dashboard/policy')}
@@ -94,6 +96,8 @@ Notice.defaultProps = {
 function NoticeLine({
     title, status, countdown, maxPercentage, comment, options,
 }) {
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className="font-semibold">
@@ -118,7 +122,7 @@ function NoticeLine({
                 <div className="flex items-center">
                     <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20" />
                     <div className="font-medium text-emerald-500">
-                        No Restriction
+                        {t('reactionPolicy.status.noRestriction')}
                     </div>
                 </div>
             )}
@@ -126,7 +130,7 @@ function NoticeLine({
                 <div className="flex items-center">
                     <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
                     <div className="font-medium text-red-500">
-                        Not Allowed
+                        {t('reactionPolicy.status.notAllowed')}
                     </div>
                 </div>
             )}
@@ -135,7 +139,7 @@ function NoticeLine({
                     <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
                     <div className="font-medium">
                         <span className="text-red-500">
-                            Reactions allowed in:
+                            {t('reactionPolicy.status.allowedIn')}
                         </span>
                         {' '}
                         <span>
@@ -149,13 +153,9 @@ function NoticeLine({
                     <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
                     <div className="font-medium">
                         <span className="text-orange-800 dark:text-orange-500">
-                            Notice:
+                            {t('reactionPolicy.status.notice')}
                         </span>
-                        {' '}
-                        You may only react to
-                        {' '}
-                        {maxPercentage}
-                        % of this video.
+                        {t('reactUpToPercentage.reactUpToPercentage', { value: maxPercentage })}
                     </div>
                 </div>
             )}
@@ -165,7 +165,7 @@ function NoticeLine({
                     <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
                     <div className="font-medium">
                         <span className="text-orange-800 dark:text-orange-500">
-                            Notice:
+                            {t('reactionPolicy.status.notice')}
                         </span>
                         {' '}
                         {comment}
@@ -197,6 +197,7 @@ NoticeLine.defaultProps = {
 };
 
 function ReactionPolicyNotice() {
+    const { t } = useTranslation();
     const [currentUrl, currentChannel] = useAppStore(
         useShallow((state) => [state.currentUrl, state.currentChannel]),
     );
@@ -319,7 +320,7 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="default"
-                title="Loading..."
+                title={t('words.loading')}
             />
         );
     }
@@ -328,7 +329,7 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="green"
-                title={`${isOwnVideo ? 'You have' : 'The Content Creator has'} not set conditions for reactions.`}
+                title={isOwnVideo ? t('reactionPolicy.notSetOwn') : t('reactionPolicy.notSet')}
             />
         );
     }
@@ -342,11 +343,11 @@ function ReactionPolicyNotice() {
                 description={(
                     <div className="flex flex-col gap-4">
                         <NoticeLine
-                            title="Live Reactions"
+                            title={t('words.liveReactions')}
                             status={STATUS_ALLOWED}
                         />
                         <NoticeLine
-                            title="Video Reactions"
+                            title={t('words.videoReactions')}
                             status={STATUS_ALLOWED}
                         />
                     </div>
@@ -361,11 +362,11 @@ function ReactionPolicyNotice() {
                 description={(
                     <div className="flex flex-col gap-4">
                         <NoticeLine
-                            title="Live Reactions"
+                            title={t('words.liveReactions')}
                             status={STATUS_DENIED}
                         />
                         <NoticeLine
-                            title="Video Reactions"
+                            title={t('words.videoReactions')}
                             status={STATUS_DENIED}
                         />
                     </div>
@@ -380,7 +381,7 @@ function ReactionPolicyNotice() {
             description={(
                 <div className="flex flex-col gap-4">
                     <NoticeLine
-                        title="Live Reactions"
+                        title={t('words.liveReactions')}
                         status={liveStatus}
                         countdown={liveCountdownDuration}
                         maxPercentage={policy.live_max_percentage}
@@ -388,7 +389,7 @@ function ReactionPolicyNotice() {
                         options={policy.computed.live_options}
                     />
                     <NoticeLine
-                        title="Video Reactions"
+                        title={t('words.videoReactions')}
                         status={videoStatus}
                         countdown={videoCountdownDuration}
                         maxPercentage={policy.video_max_percentage}

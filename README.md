@@ -31,6 +31,13 @@
 - [**Firefox** Add-On](https://addons.mozilla.org/en-US/firefox/addon/streamfinity)
 - [**Microsoft** Edge Store](https://microsoftedge.microsoft.com/addons/detail/streamfinity/oodabmjmfenpggjpfnnegmkdkkmenple)
 
+## Contributing
+
+### Adding a new language
+
+1. Create a new JSON file `locales/{locale}.json` with the according ISO 639 2-letter language code based on the default [`en.json`](locales/en.json).
+2. Import the new JSON file in the [`contentScript/main.jsx`](src/entries/contentScript/main.jsx) file and load them into the i18n instance.
+
 ## Setup
 
 ```sh

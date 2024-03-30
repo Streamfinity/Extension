@@ -1,19 +1,21 @@
 import React from 'react';
 import { Button } from '@streamfinity/streamfinity-branding';
+import { useTranslation } from 'react-i18next';
 import Card, { CardTitleSubtle } from '~/entries/contentScript/components/Card';
 import useAuth, { STATE_DEFAULT } from '~/hooks/useAuth';
 
 function StreamerModeNotice() {
+    const { t } = useTranslation();
     const { setOverrideState } = useAuth();
 
     return (
         <Card className="flex gap-4">
             <div className="grow text-sm">
                 <CardTitleSubtle>
-                    Deactivate Streamer Mode
+                    {t('status.disableStreamerMode')}
                 </CardTitleSubtle>
                 <p>
-                    Show all hidden elements of the extension until you reload the page.
+                    {t('status.disableStreamerModeDescription')}
                 </p>
             </div>
             <div className="flex grow items-center">
@@ -22,7 +24,7 @@ function StreamerModeNotice() {
                     className="w-full"
                     onClick={() => setOverrideState(STATE_DEFAULT)}
                 >
-                    Show All
+                    {t('actions.showAll')}
                 </Button>
             </div>
         </Card>

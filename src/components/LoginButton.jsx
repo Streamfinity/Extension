@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@streamfinity/streamfinity-branding';
+import { useTranslation } from 'react-i18next';
 
 function LoginButton({ onClick, loading }) {
+    const { t } = useTranslation();
+
     return (
         <Button
             type="button"
@@ -14,7 +17,7 @@ function LoginButton({ onClick, loading }) {
                 'w-full font-medium rounded-full px-6 h-[36px] bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to hover:bg-primary-600 transition-colors text-center text-black',
             )}
         >
-            {loading ? 'Loading...' : 'Login with Streamfinity'}
+            {loading ? t('words.loading') : t('actions.loginWith')}
         </Button>
     );
 }

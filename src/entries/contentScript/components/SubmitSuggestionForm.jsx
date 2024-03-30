@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@streamfinity/streamfinity-branding';
+import { useTranslation } from 'react-i18next';
 import { searchSuggestionAccounts, submitSuggestion } from '~/common/bridge';
 import styles from '~/styles/input.module.css';
 import { toastSuccess, toastError } from '~/common/utility';
@@ -12,6 +13,7 @@ const RESULTS_EMPTY = 2;
 const RESULTS_OK = 3;
 
 function SubmitSuggestionForm({ onSubmit }) {
+    const { t } = useTranslation();
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);
     const [suggestedAccounts, setSuggestedAccounts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -142,7 +144,7 @@ function SubmitSuggestionForm({ onSubmit }) {
     return (
         <div>
             <p className="text-sm">
-                You can submit the currently playing video as a suggestion for any streamer.
+                {t('submitSuggestion.description')}
             </p>
             <div className="mt-4">
                 <input
@@ -161,9 +163,9 @@ function SubmitSuggestionForm({ onSubmit }) {
                 >
                     {accounts.length === 0 && (
                         <div className="px-16 text-center text-gray-300">
-                            {resultStatus === RESULTS_PENDING && ('Start typing the creator name to search')}
-                            {resultStatus === RESULTS_LOADING && ('Loading...')}
-                            {resultStatus === RESULTS_EMPTY && ('The creator is not signed up or has disabled video suggestions')}
+                            {resultStatus === RESULTS_PENDING && t('submitSuggestion.result.pending')}
+                            {resultStatus === RESULTS_LOADING && t('submitSuggestion.result.loading')}
+                            {resultStatus === RESULTS_EMPTY && t('submitSuggestion.result.empty')}
                         </div>
                     )}
                     {accounts?.map((account) => (
@@ -203,7 +205,7 @@ function SubmitSuggestionForm({ onSubmit }) {
                     className="w-full"
                     onClick={() => submit()}
                 >
-                    Submit
+                    {t('actions.submit')}
                 </Button>
             </div>
 
@@ -212,7 +214,7 @@ function SubmitSuggestionForm({ onSubmit }) {
                 type="button"
                 className="mt-4 w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
             >
-                Abort
+                {t('actions.abort')}
             </button>
         </div>
     );

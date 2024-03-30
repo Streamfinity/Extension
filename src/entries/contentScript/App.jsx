@@ -92,7 +92,7 @@ function App() {
                     <ReactionPolicyNotice />
 
                     <p className="text-sm text-gray-500">
-                        Get started by logging in with your YouTube account!
+                        {t('auth.loginDescription')}
                     </p>
 
                     <LoginButton
@@ -110,7 +110,6 @@ function App() {
             dark={isDarkMode}
             state={state}
         >
-            {t('hello')}
             {user && (
                 <StatusNotice
                     state={state}

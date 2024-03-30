@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@streamfinity/streamfinity-branding';
+import { useTranslation } from 'react-i18next';
 import styles from '~/styles/input.module.css';
 import H3Header from '~/entries/contentScript/components/H3Header';
 import { prettyDuration } from '~/common/pretty';
@@ -9,6 +10,7 @@ import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 import { toastError, toastSuccess } from '~/common/utility';
 
 function MarkReactionForm({ onSubmitted }) {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
 
     const [originalUrl, setOriginalUrl] = useState('');
@@ -112,11 +114,11 @@ function MarkReactionForm({ onSubmitted }) {
     return (
         <div>
             <p className="text-sm">
-                If this video is or contains a reaction to another video, you can mark it as this.
+                {t('markReaction.description')}
             </p>
 
             <H3Header step={1}>
-                Wich part contains the reaction?
+                {t('markReaction.stepWhichPart')}
             </H3Header>
 
             <div className="flex">
@@ -127,12 +129,12 @@ function MarkReactionForm({ onSubmitted }) {
                         disabled={segmentFull !== null}
                         onClick={() => fullSegment()}
                     >
-                        Full Video
+                        {t('markReaction.fullVideo')}
                     </Button>
                 </div>
                 <div className="flex w-14 flex-col items-center justify-center">
                     <div className="py-2 text-xs font-medium text-gray-400">
-                        OR
+                        {t('markReaction.or')}
                     </div>
                 </div>
                 <div className="flex flex-1 flex-col gap-4">
@@ -142,7 +144,7 @@ function MarkReactionForm({ onSubmitted }) {
                         disabled={segmentFull !== null}
                         onClick={() => partSegment()}
                     >
-                        Segment of the Video
+                        {t('markReaction.segmentVideo')}
                     </Button>
                 </div>
             </div>
@@ -150,13 +152,13 @@ function MarkReactionForm({ onSubmitted }) {
             {segmentFull === false && (
                 <>
                     <H3Header step={2}>
-                        Mark beginning &  end
+                        {t('markReaction.stepMark')}
                         <button
                             onClick={() => resetSegment()}
                             type="button"
                             className="grow text-right text-sm font-normal text-gray-400"
                         >
-                            Try again
+                            {t('actions.tryAgain')}
                         </button>
                     </H3Header>
                     <div className="mt-4 flex gap-4">
@@ -185,7 +187,7 @@ function MarkReactionForm({ onSubmitted }) {
             {canEnterUrl && (
                 <>
                     <H3Header step={segmentFull === true ? 2 : 3}>
-                        To which video was reacted?
+                        {t('markReaction.stepToWhat')}
                     </H3Header>
 
                     <div>
@@ -204,11 +206,11 @@ function MarkReactionForm({ onSubmitted }) {
                     {originalUrl && (
                         <>
                             <H3Header step={segmentFull === true ? 3 : 4}>
-                                Submit
+                                {t('actions.submit')}
                             </H3Header>
 
                             <p className="mb-4 px-16 text-center text-sm">
-                                Please note that every submission will be manually reviewed before being listed.
+                                {t('markReaction.disclaimer')}
                             </p>
 
                             <Button
@@ -218,7 +220,7 @@ function MarkReactionForm({ onSubmitted }) {
                                 loading={loading}
                                 onClick={() => submit()}
                             >
-                                Submit Reaction
+                                {t('actions.submitReaction')}
                             </Button>
                         </>
                     )}
@@ -230,7 +232,7 @@ function MarkReactionForm({ onSubmitted }) {
                 type="button"
                 className="mt-4 w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
             >
-                Abort
+                {t('actions.abort')}
             </button>
         </div>
     );
