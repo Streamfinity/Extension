@@ -85,6 +85,9 @@
     "subwaySurfer": {
         "gameplayBy": "Gameplay by {{name}}"
     },
+    "watchedReactions": {
+        "badgeTitle": "Watched in a Stream {{date}}"
+    },
     "settings": {
         "title": "Settings",
         "showExtension": "Show Extension on Web Pages",
