@@ -11,7 +11,8 @@
     "serve:firefox": "web-ext run --start-url \"about:debugging#/runtime/this-firefox\"  --source-dir ./dist/",
     "serve:chrome": "web-ext run -t chromium --start-url \"https://google.com\" --source-dir ./dist/",
     "lint": "eslint --ext .js,.vue,.jsx,.tsx .",
-    "lint:fix": "npm run lint --fix"
+    "lint:fix": "npm run lint --fix",
+    "licenses:generate": "generate-license-file --config ./licenses.config.js"
   },
   "license": "MIT",
   "devDependencies": {
@@ -31,6 +32,7 @@
     "eslint-plugin-only-warn": "^1.1.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.14.0",
+    "generate-license-file-webpack-plugin": "^3.0.1",
     "postcss": "^8.4.33",
     "prop-types": "^15.8.1",
     "tailwindcss": "^3.4.1",

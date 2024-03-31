@@ -165,6 +165,8 @@ By tagging a commit, the Extension will be built and sent to the **Chrome Web St
 
 CC BY-ND 4.0 Deed. Please see the [License File](LICENSE.txt) for more information.
 
+[Third Party Licenses](licenses/licenses.txt)
+
 ## Credits
 
 Based on [samrum/vite-plugin-web-extension](https://github.com/samrum/vite-plugin-web-extension) (via [create-vite-plugin-web-extension](https://github.com/samrum/create-vite-plugin-web-extension)).
