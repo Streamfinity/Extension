@@ -30,7 +30,7 @@ function SubmitSuggestionNotice() {
                             className="w-full"
                             onClick={() => setShowForm(true)}
                         >
-                            {t('submitSuggestion.suggestVideo')}
+                            {t('actions.suggestVideo')}
                         </Button>
                     </div>
                 </div>
