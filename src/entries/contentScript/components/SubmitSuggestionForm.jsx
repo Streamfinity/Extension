@@ -66,7 +66,7 @@ function SubmitSuggestionForm({ onSubmit }) {
                 ...data,
             });
 
-            toastSuccess('Suggestion submitted successfully');
+            toastSuccess(t('messages.suggestionSubmitted'));
             onSubmit(suggestion);
         } catch (err) {
             toastError(err);

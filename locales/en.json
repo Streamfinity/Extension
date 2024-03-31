@@ -90,5 +90,10 @@
         "showExtension": "Show Extension on Web Pages",
         "incognito": "Incognito Mode (don't track videos)",
         "incognitoDisable": "Disable (active until {{date}})"
+    },
+    "messages": {
+        "reactionSubmitted": "Reaction has been submitted!",
+        "suggestionSubmitted": "Suggestion has been submitted!",
+        "playerNotFound": "The player element was not found"
     }
 }

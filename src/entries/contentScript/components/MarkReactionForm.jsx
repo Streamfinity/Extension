@@ -54,7 +54,7 @@ function MarkReactionForm({ onSubmitted }) {
         }
 
         if (!playerElement) {
-            toastError('Player not found');
+            toastError(t('messages.playerNotFound'));
             return;
         }
 
@@ -67,7 +67,7 @@ function MarkReactionForm({ onSubmitted }) {
         }
 
         if (!playerElement) {
-            toastError('Player not found');
+            toastError(t('messages.playerNotFound'));
             return;
         }
 
@@ -89,7 +89,7 @@ function MarkReactionForm({ onSubmitted }) {
                 from_video_url: window.location.href,
             });
 
-            toastSuccess('Reaction has been submitted!');
+            toastSuccess(t('messages.reactionSubmitted'));
 
             onSubmitted();
         } catch (err) {
