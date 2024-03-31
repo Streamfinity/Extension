@@ -99,7 +99,7 @@ function SettingsView() {
             </Card>
             <div>
                 <Button
-                    color="primary-secondary"
+                    color="secondary"
                     disabled={loadingLogout}
                     onClick={logout}
                     className="w-full"
