@@ -1,102 +1,99 @@
 {
-    "words": {
-        "loading": "Loading...",
-        "liveReactions": "Live Reactions",
-        "videoReactions": "Video Reactions"
-    },
     "actions": {
-        "submit": "Submit",
-        "submitReaction": "Submit Reaction",
         "abort": "Abort",
-        "tryAgain": "Try again",
+        "loginWith": "Login with Streamfinity",
+        "logout": "Logout",
         "markAsReaction": "Mark as Reaction",
         "showAll": "Show all",
+        "submit": "Submit",
+        "submitReaction": "Submit Reaction",
         "suggestVideo": "Suggest Video",
-        "loginWith": "Login with Streamfinity",
-        "logout": "Logout"
+        "tryAgain": "Try again"
+    },
+    "analytics": {
+        "clicks": "Unique views",
+        "ctaCreator": "Get Creator+ to see more analytics",
+        "liveAvg": "Live Avg",
+        "livePeak": "Live Peak",
+        "noReactionsYet": "There are no reactions for this video yet.",
+        "reactionsTitle": "{{count}} Reactions",
+        "title": "Analytics",
+        "uniqueViews": "Unique views"
     },
     "auth": {
         "loginDescription": "Get started by logging in with your YouTube account!"
     },
-    "status": {
-        "youAreLive": "You are live",
-        "youAreLiveOn": "You are live on {{service}} ({{accountName}})",
-        "enableStreamerMode": "Enable Streamer Mode",
-        "disableStreamerMode": "Disable Streamer Mode",
-        "disableStreamerModeDescription": "Show all hidden elements of the extension until you reload the page."
-    },
-    "analytics": {
-        "title": "Analytics",
-        "reactionsTitle": "{{count}} Reactions",
-        "uniqueViews": "Unique views",
-        "liveAvg": "Live Avg",
-        "livePeak": "Live Peak",
-        "clicks": "Unique views",
-        "noReactionsYet": "There are no reactions for this video yet.",
-        "ctaCreator": "Get Creator+ to see more analytics"
-    },
     "markReaction": {
-        "title": "Untracked Reaction?",
-        "intro": "If this video is a reaction to another type of content, you can help use by providing information.",
         "description": "If this video is or contains a reaction to another video, you can mark it as this.",
-        "stepWhichPart":"Wich part contains the reaction?",
-        "stepMark": "Mark beginning & end",
-        "stepToWhat": "To which video was reacted?",
+        "disclaimer": "Please note that every submission will be manually reviewed before being listed.",
         "fullVideo": "Full video",
+        "intro": "If this video is a reaction to another type of content, you can help use by providing information.",
         "or": "OR",
         "segmentVideo": "Segment of the Video",
-        "disclaimer": "Please note that every submission will be manually reviewed before being listed."
+        "stepMark": "Mark beginning & end",
+        "stepToWhat": "To which video was reacted?",
+        "stepWhichPart": "Which part contains the reaction?",
+        "title": "Untracked Reaction?"
+    },
+    "messages": {
+        "playerNotFound": "The player element was not found",
+        "reactionSubmitted": "Reaction has been submitted!",
+        "suggestionSubmitted": "Suggestion has been submitted!"
     },
     "originalVideo": {
         "title": "Original Video",
         "titlePlural": "Original Videos"
     },
-    "reactionPolicy": {
-        "title": "Reaction Policy",
-        "notSet": "The Content Creator has not set conditions for reactions.",
-        "notSetOwn": "You have not not set conditions for reactions.",
-        "status": {
-            "noRestriction": "No restrictions",
-            "notAllowed": "Not allowed",
-            "allowedIn": "Reactions allowed in:",
-            "notice": "Notice:",
-            "reactUpToPercentage": "You may only react to {{value}}% of this video"
-        }
-    },
     "reactionHistory": {
-        "title": "Reaction History",
-        "titleOwn": "Reactions to Your Video",
-        "noReactionsYet": "There are no reactions for this video yet.",
         "ctaCreator": "Get Creator+ to see who reacted to your video",
         "ctaViewer": "Get Viewer+ to see if followed streamers reacted",
         "inAStream": "in a {{service}} livestream",
-        "inAVideo": "in a video"
+        "inAVideo": "in a video",
+        "noReactionsYet": "There are no reactions for this video yet.",
+        "title": "Reaction History",
+        "titleOwn": "Reactions to your Video"
+    },
+    "reactionPolicy": {
+        "notSet": "The Content Creator has not set conditions for reactions.",
+        "notSetOwn": "You have not not set conditions for reactions.",
+        "status": {
+            "allowedIn": "Reactions allowed in:",
+            "noRestriction": "No restrictions",
+            "notAllowed": "Not allowed",
+            "notice": "Notice:",
+            "reactUpToPercentage": "You may only react to {{value}}% of this video"
+        },
+        "title": "Reaction Policy"
+    },
+    "settings": {
+        "incognito": "Incognito Mode (don't track videos)",
+        "incognitoDisable": "Disable (active until {{date}})",
+        "showExtension": "Show Extension on Web Pages",
+        "title": "Settings"
+    },
+    "status": {
+        "disableStreamerMode": "Disable Streamer Mode",
+        "disableStreamerModeDescription": "Show all hidden elements of the extension until you reload the page.",
+        "enableStreamerMode": "Enable Streamer Mode",
+        "youAreLive": "You are live",
+        "youAreLiveOn": "You are live on {{service}} ({{accountName}})"
     },
     "submitSuggestion": {
-        "title": "Suggestion",
-        "intro": "Send this video as a suggestion to your favorite streamers.",
         "description": "You can submit the currently playing video as a suggestion for any streamer.",
+        "intro": "Send this video as a suggestion to your favorite streamers.",
         "results": {
-            "pending": "Start typing the creator name to search",
+            "empty": "The Streamer/Creator is not signed up or has disabled video suggestions",
             "loading": "Loading...",
-            "empty": "The creator is not signed up or has disabled video suggestions"
-        }
+            "pending": "Start typing the creator name to search"
+        },
+        "title": "Suggestion"
     },
     "subwaySurfer": {
         "gameplayBy": "Gameplay by {{name}}"
     },
-    "watchedReactions": {
-        "badgeTitle": "Watched in a Stream {{date}}"
-    },
-    "settings": {
-        "title": "Settings",
-        "showExtension": "Show Extension on Web Pages",
-        "incognito": "Incognito Mode (don't track videos)",
-        "incognitoDisable": "Disable (active until {{date}})"
-    },
-    "messages": {
-        "reactionSubmitted": "Reaction has been submitted!",
-        "suggestionSubmitted": "Suggestion has been submitted!",
-        "playerNotFound": "The player element was not found"
+    "words": {
+        "liveReactions": "Live Reactions",
+        "loading": "Loading...",
+        "videoReactions": "Video Reactions"
     }
 }

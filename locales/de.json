@@ -1,1 +1,99 @@
-{}
+{
+    "actions": {
+        "abort": "Abbrechen",
+        "loginWith": "Login mit Streamfinity",
+        "logout": "Logout",
+        "markAsReaction": "Als Reaction markieren",
+        "showAll": "Alles anzeigen",
+        "submit": "Einreichen",
+        "submitReaction": "Reaction einreichen",
+        "suggestVideo": "Video vorschlagen",
+        "tryAgain": "Erneut versuchen"
+    },
+    "analytics": {
+        "clicks": "Eindeutige Aufrufe",
+        "ctaCreator": "Hole dir Creator+ für mehr Analysen",
+        "liveAvg": "Live Ø",
+        "livePeak": "Live Peak",
+        "noReactionsYet": "Es sind noch keine Reactions für dieses Video vorhanden.",
+        "reactionsTitle": "{{count}} Reactions",
+        "title": "Analysen",
+        "uniqueViews": "Eindeutige Aufrufe"
+    },
+    "auth": {
+        "loginDescription": "Starte, indem du dich mit deinem YoutTube Account einloggst!"
+    },
+    "markReaction": {
+        "description": "Wenn dieses Video eine Reaction enthält oder eine Reaction auf ein anderes Video ist, markiere es.",
+        "disclaimer": "Bitte beachte, dass jede Einreichung manuell überprüft wird, bevor diese gelistet wird.",
+        "fullVideo": "Ganzes Video",
+        "intro": "Wenn dieses Video eine Reaction auf anderen Content ist, kannst du uns helfen, indem du Informationen bereitstellst.",
+        "or": "oder",
+        "segmentVideo": "Abschnitt des Videos",
+        "stepMark": "Markiere Anfang & Ende",
+        "stepToWhat": "Auf welches Video wurde reagiert?",
+        "stepWhichPart": "In welchem Abschnitt ist die Reaction?",
+        "title": "Nicht getrackte Reaction?"
+    },
+    "messages": {
+        "playerNotFound": "Das Player-Element wurde nicht gefunden",
+        "reactionSubmitted": "Reaction wurde eingereicht!",
+        "suggestionSubmitted": "Vorschlag wurde eingereicht!"
+    },
+    "originalVideo": {
+        "title": "Originales Video",
+        "titlePlural": "Originale Videos"
+    },
+    "reactionHistory": {
+        "ctaCreator": "Hole dir Creator+ um zu sehen, wer auf dein Video reagiert",
+        "ctaViewer": "Hole dir Viewer+ um zu sehen, welche deiner gefolgten Streamer reagiert haben",
+        "inAStream": "in einem {{service}} Livestream",
+        "inAVideo": "In einem Video",
+        "noReactionsYet": "Es gibt noch keine Reactions für dieses Video.",
+        "title": "Reaction-Historie",
+        "titleOwn": "Reactions auf dein Video"
+    },
+    "reactionPolicy": {
+        "notSet": "Zu diesem Video sind keine Richtlinien für Reactions festgelegt.",
+        "notSetOwn": "Du hast noch keine Richtlinien für Reactions festgelegt.",
+        "status": {
+            "allowedIn": "Reactions erlaubt in:",
+            "noRestriction": "Keine Einschränkungen",
+            "notAllowed": "Nicht erlaubt",
+            "notice": "Beachte:",
+            "reactUpToPercentage": "Du darfst nur auf {{value}}% des Videos reagieren"
+        },
+        "title": "Reaction-Richtlinie"
+    },
+    "settings": {
+        "incognito": "Inkognito Modus (Videos werden nicht getracked)",
+        "incognitoDisable": "Deaktivieren (aktiv bis {{date}})",
+        "showExtension": "Erweiterung auf Seite anzeigen",
+        "title": "Einstellungen"
+    },
+    "status": {
+        "disableStreamerMode": "Deaktive Streamer-Modus",
+        "disableStreamerModeDescription": "Zeige alle ausgeblendeten Elemente der Erweiterung, bis die Seite neugeladen wird.",
+        "enableStreamerMode": "Aktiviere Streamer-Modus",
+        "youAreLive": "Du bist live",
+        "youAreLiveOn": "Du bist live auf {{service}} ({{accountName}})"
+    },
+    "submitSuggestion": {
+        "description": "Du kannst das aufgerufene Video bei allen Streamenden als Vorschlag einreichen.",
+        "intro": "Schlage dieses Video deinen Lieblingsstreamenden vor.",
+        "results": {
+            "empty": "Der Streamer/Creator ist noch nicht registriert oder hat Videovorschläge deaktiviert",
+            "loading": "Lädt...",
+            "pending": "Tippe den Creator-Namen um zu suchen"
+        },
+        "title": "Vorschlag"
+    },
+    "subwaySurfer": {
+        "gameplayBy": "Gameplay von {{name}}"
+    },
+    "words": {
+        "liveReactions": "Live-Reactions",
+        "loading": "Lädt...",
+        "videoReactions": "Video-Reactions"
+    }
+}
