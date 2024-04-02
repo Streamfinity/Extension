@@ -1,7 +1,12 @@
 import { useMemo } from 'react';
 
 export function hasSubscription(user, subscriptionId) {
-    return useMemo(() => user?.accounts?.some((account) => account.subscriptions?.filter((sub) => sub.id === subscriptionId)?.length > 0), [user]);
+    return useMemo(
+        () => user
+            ?.accounts
+            ?.some((account) => account.subscriptions?.filter((sub) => sub.is_active && sub.plan.id === subscriptionId)?.length > 0),
+        [user],
+    );
 }
 
 export function hasSubscriptionFeature(feature, account, user) {
