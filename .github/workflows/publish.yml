@@ -65,7 +65,7 @@ jobs:
         if: ${{ contains(github.ref_name, 'dev') == false }}
         run: |
           echo "MANIFEST_HOST_API=*://*.streamfinity.tv/*" >> .env.local
-          echo "MANIFEST_HOST_FRONTEND=*://streamfinity.tv/*" >> .env.local
+          echo "MANIFEST_HOST_FRONTEND=*://*.streamfinity.tv/*" >> .env.local
           echo "VITE_API_URL=https://beta-backend.streamfinity.tv" >> .env.local
           echo "VITE_FRONTEND_URL=https://beta.streamfinity.tv" >> .env.local
 

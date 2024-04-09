@@ -106,8 +106,10 @@ export function getManifest(manifestVersion, browserTarget, env) {
             host_permissions: [
                 hostMatches.youtube,
                 hostMatches.twitch,
-                hostMatches.api,
-                hostMatches.frontend,
+                ...[
+                    hostMatches.api,
+                    hostMatches.frontend,
+                ].filter((value, index, items) => items.indexOf(value) === index),
             ],
         };
 
