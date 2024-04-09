@@ -1,7 +1,7 @@
 {
   "name": "streamfinity",
   "version": "0.0.1",
-  "displayName": "Streamfinity",
+  "displayName": "Streamfinity Buddy",
   "author": "Roman Zipp",
   "description": "Tools to bridge the gap between reaction streamers & video content creators while leveraging viewer engagement",
   "scripts": {
