@@ -92,9 +92,8 @@ function ReactionsHistoryNotice() {
                 <PremiumCtaLabel
                     campaign="reaction-history"
                     feature={subscriptionFeatures.INSIGHTS}
-                    className="mt-0"
                 >
-                    Get Viewer+ to see if followed streamers reacted
+                    {t('reactionHistory.ctaViewer')}
                 </PremiumCtaLabel>
             );
         }
