@@ -105,7 +105,7 @@ function SettingsView() {
                     className="w-full"
                     sm
                 >
-                    {t('words.logout')}
+                    {t('actions.logout')}
                 </Button>
             </div>
         </div>
