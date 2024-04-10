@@ -163,9 +163,9 @@ function SubmitSuggestionForm({ onSubmit }) {
                 >
                     {accounts.length === 0 && (
                         <div className="px-16 text-center text-gray-300">
-                            {resultStatus === RESULTS_PENDING && t('submitSuggestion.result.pending')}
-                            {resultStatus === RESULTS_LOADING && t('submitSuggestion.result.loading')}
-                            {resultStatus === RESULTS_EMPTY && t('submitSuggestion.result.empty')}
+                            {resultStatus === RESULTS_PENDING && t('submitSuggestion.results.pending')}
+                            {resultStatus === RESULTS_LOADING && t('submitSuggestion.results.loading')}
+                            {resultStatus === RESULTS_EMPTY && t('submitSuggestion.results.empty')}
                         </div>
                     )}
                     {accounts?.map((account) => (
