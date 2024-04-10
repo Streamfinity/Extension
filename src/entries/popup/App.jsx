@@ -43,6 +43,7 @@ function App() {
                     {(!loadingAuth && !user) && (
                         <LoginView />
                     )}
+
                 </div>
             </div>
 

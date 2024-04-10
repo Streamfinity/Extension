@@ -48,6 +48,8 @@ function SettingsView() {
 
     const incognitoAvailableLengths = ['1h', '3h', '8h', '24h', '3d'];
 
+    const endpoint = new URL(import.meta.env.VITE_API_URL);
+
     return (
         <div className="flex h-full flex-col justify-between">
             <Card color="primary">
@@ -98,6 +100,11 @@ function SettingsView() {
                 </div>
             </Card>
             <div>
+                <div className="pb-2 text-xs text-gray-300">
+                    Environment:
+                    {' '}
+                    {endpoint.hostname}
+                </div>
                 <Button
                     color="secondary"
                     disabled={loadingLogout}

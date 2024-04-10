@@ -7,7 +7,6 @@ function LoginView() {
 
     return (
         <div className="flex h-full items-center justify-center">
-
             <LoginButton
                 loading={loadingLogin}
                 onClick={login}
