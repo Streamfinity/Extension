@@ -9,7 +9,9 @@ import ServiceIcon from '~/components/Icons/ServiceIcon';
 import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
 import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
-import { subscriptionIds, subscriptionFeatures, accountServices } from '~/enums';
+import {
+    subscriptionIds, subscriptionFeatures, accountServices, accountTypes,
+} from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 import { buildReactionFromUrl } from '~/common/pretty';
 
@@ -90,8 +92,9 @@ function ReactionsHistoryNotice() {
         if (!subscribedViewer && !isOwnVideo) {
             return (
                 <PremiumCtaLabel
+                    type={accountTypes.VIEWER}
                     campaign="reaction-history"
-                    feature={subscriptionFeatures.INSIGHTS}
+                    feature={subscriptionFeatures.VIEWER_VIDEOS_HISTORY}
                 >
                     {t('reactionHistory.ctaViewer')}
                 </PremiumCtaLabel>
@@ -125,8 +128,9 @@ function ReactionsHistoryNotice() {
                         ))}
                     </div>
                     <PremiumCtaLabel
+                        type={isOwnVideo ? accountTypes.CREATOR : accountTypes.VIEWER}
                         campaign="reaction-history"
-                        feature={subscriptionFeatures.INSIGHTS}
+                        feature={isOwnVideo ? subscriptionFeatures.ANALYTICS_LIVE_FEED : subscriptionFeatures.VIEWER_VIDEOS_HISTORY}
                     >
                         {isOwnVideo ? t('reactionHistory.ctaCreator') : t('reactionHistory.ctaViewer')}
                     </PremiumCtaLabel>
