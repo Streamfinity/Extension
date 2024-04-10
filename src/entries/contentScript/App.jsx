@@ -22,6 +22,7 @@ import StreamerModeNotice from '~/entries/contentScript/components/StreamerModeN
 import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
+import Footer from '~/entries/contentScript/components/Footer';
 
 function App() {
     const { t, i18n } = useTranslation();
@@ -29,8 +30,8 @@ function App() {
         user, loadingAuth, liveStream, login, state, isIncognito,
     } = useAuth();
 
-    const [setCurrentUrl, isDarkMode, isDeviceDarkMode] = useAppStore(
-        useShallow((storeState) => ([storeState.setCurrentUrl, storeState.isDarkMode, storeState.isDeviceDarkMode])),
+    const [setCurrentUrl, isDarkMode, isDeviceDarkMode, isMinimized] = useAppStore(
+        useShallow((storeState) => ([storeState.setCurrentUrl, storeState.isDarkMode, storeState.isDeviceDarkMode, storeState.isMinimized])),
     );
 
     // Set language
@@ -129,7 +130,7 @@ function App() {
                 <AnalyticsNotice />
             )}
 
-            {state !== STATE_LIVE && (
+            {(state !== STATE_LIVE && !isMinimized) && (
                 <SubmitSuggestionNotice />
             )}
 
@@ -139,11 +140,9 @@ function App() {
                 <ReactionsHistoryNotice />
             )}
 
-            <WatchedVideosHeadless />
-
             <OriginalVideoNotice />
 
-            {state !== STATE_LIVE && (
+            {(state !== STATE_LIVE && !isMinimized) && (
                 <MarkReactionNotice />
             )}
 
@@ -151,7 +150,10 @@ function App() {
                 <StreamerModeNotice />
             )}
 
+            <Footer />
+
             <PlayerProgressListenerHeadless active={!!liveStream && !isIncognito} />
+            <WatchedVideosHeadless />
 
         </AppContainer>
     );
