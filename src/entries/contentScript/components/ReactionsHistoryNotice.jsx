@@ -10,7 +10,7 @@ import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
 import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
 import {
-    subscriptionIds, subscriptionFeatures, accountServices, accountTypes,
+    subscriptionIds, subscriptionFeatures, accountServices,
 } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 import { buildReactionFromUrl } from '~/common/pretty';
@@ -92,7 +92,7 @@ function ReactionsHistoryNotice() {
         if (!subscribedViewer && !isOwnVideo) {
             return (
                 <PremiumCtaLabel
-                    type={accountTypes.VIEWER}
+                    plan={subscriptionIds.VIEWER}
                     campaign="reaction-history"
                     feature={subscriptionFeatures.VIEWER_VIDEOS_HISTORY}
                 >
@@ -128,7 +128,7 @@ function ReactionsHistoryNotice() {
                         ))}
                     </div>
                     <PremiumCtaLabel
-                        type={isOwnVideo ? accountTypes.CREATOR : accountTypes.VIEWER}
+                        plan={isOwnVideo ? subscriptionIds.CREATOR : subscriptionIds.VIEWER}
                         campaign="reaction-history"
                         feature={isOwnVideo ? subscriptionFeatures.ANALYTICS_LIVE_FEED : subscriptionFeatures.VIEWER_VIDEOS_HISTORY}
                     >

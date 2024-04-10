@@ -10,7 +10,7 @@ import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import { childrenShape } from '~/shapes';
 import { prettyNumber } from '~/common/pretty';
 import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
-import { subscriptionIds, subscriptionFeatures, accountTypes } from '~/enums';
+import { subscriptionIds, subscriptionFeatures } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 
 // -------------------------------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ function AnalyticsNotice() {
 
             {!subscribed && (
                 <PremiumCtaLabel
-                    type={accountTypes.CREATOR}
+                    plan={subscriptionIds.CREATOR}
                     campaign="analytics"
                     feature={subscriptionFeatures.ANALYTICS_VIDEOS}
                 >
