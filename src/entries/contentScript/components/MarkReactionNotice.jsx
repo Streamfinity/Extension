@@ -20,11 +20,11 @@ function MarkReactionNotice() {
 
             {!showForm && (
                 <div className="flex gap-4">
-                    <div className="grow text-sm">
+                    <div className="grow">
                         <CardTitleSubtle>
                             {t('markReaction.title')}
                         </CardTitleSubtle>
-                        <p>
+                        <p className="text-sm">
                             {t('markReaction.intro')}
                         </p>
                     </div>

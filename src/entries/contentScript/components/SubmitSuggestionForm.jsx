@@ -200,7 +200,7 @@ function SubmitSuggestionForm({ onSubmit }) {
                 <Button
                     disabled={!canSubmit}
                     loading={isLoading}
-                    color="primary-gradient"
+                    color="brand-viewer"
                     type="button"
                     className="w-full"
                     onClick={() => submit()}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@streamfinity/streamfinity-branding';
 import { useTranslation } from 'react-i18next';
-import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Card, { CardTitleSubtle } from '~/entries/contentScript/components/Card';
 import SubmitSuggestionForm from '~/entries/contentScript/components/SubmitSuggestionForm';
 
 function SubmitSuggestionNotice() {
@@ -13,9 +13,9 @@ function SubmitSuggestionNotice() {
             color="brand-viewer"
             className="flex flex-col"
         >
-            <CardTitle>
+            <CardTitleSubtle>
                 {t('submitSuggestion.title')}
-            </CardTitle>
+            </CardTitleSubtle>
 
             {!showForm && (
                 <div className="flex gap-4">
@@ -24,7 +24,7 @@ function SubmitSuggestionNotice() {
                             {t('submitSuggestion.intro')}
                         </p>
                     </div>
-                    <div className="flex grow items-end">
+                    <div className="flex grow items-center">
                         <Button
                             color="brand-viewer"
                             className="w-full"
