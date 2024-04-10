@@ -39,7 +39,7 @@ export async function sendPlayerProgress(data) {
 async function getStatus() {
     const { data } = await sendMessageToBackground(messages.GET_STATUS);
 
-    return data;
+    return data || null;
 }
 
 // Suggestions

@@ -35,16 +35,13 @@ function App() {
             </div>
 
             <div className="h-full p-4">
-                <div className="h-full">
-                    {(!loadingAuth && user) && (
-                        <ActiveViewComponent user={user} />
-                    )}
+                {(!loadingAuth && user) && (
+                    <ActiveViewComponent user={user} />
+                )}
 
-                    {(!loadingAuth && !user) && (
-                        <LoginView />
-                    )}
-
-                </div>
+                {(!loadingAuth && !user) && (
+                    <LoginView />
+                )}
             </div>
 
         </main>
