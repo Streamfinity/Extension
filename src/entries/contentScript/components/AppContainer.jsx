@@ -37,7 +37,7 @@ function AppContainer({
         )}
         >
             <div className={classNames(
-                'mb-6 overflow-y-auto rounded-[12px] bg-gradient-to-br p-[2px]',
+                'mb-4 overflow-y-auto rounded-[12px] bg-gradient-to-br p-[2px]',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',
                 state === STATE_LIVE && 'from-brand-streamer-gradient-from to-brand-streamer-gradient-to',
                 state === STATE_OWN_VIDEO && 'from-brand-creator-gradient-from to-brand-creator-gradient-to',
