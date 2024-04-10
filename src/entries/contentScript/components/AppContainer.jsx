@@ -34,6 +34,7 @@ function AppContainer({
         <main className={classNames(
             !isVisible && 'hidden',
             dark && 'dark',
+            'font-sans',
         )}
         >
             <div className={classNames(
