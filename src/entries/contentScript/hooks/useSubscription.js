@@ -5,7 +5,7 @@ export function hasSubscription(user, subscriptionId) {
         () => user
             ?.accounts
             ?.some((account) => account.subscriptions?.filter((sub) => sub.is_active && sub.plan.id === subscriptionId)?.length > 0),
-        [user],
+        [user, subscriptionId],
     );
 }
 
