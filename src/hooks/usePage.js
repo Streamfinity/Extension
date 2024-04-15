@@ -31,22 +31,23 @@ export function usePage() {
                 setCurrentUrl(window.location.href);
             }
 
-            const channelInfoElement = document.querySelector('ytd-channel-name yt-formatted-string a');
+            const channelUrlFull = document.querySelector('ytd-channel-name yt-formatted-string a')?.href
+                || document.querySelector('span[itemprop="name"] link[itemprop="url"]')?.href;
 
-            if (channelInfoElement) {
+            if (channelUrlFull) {
+                const channelUrl = new URL(channelUrlFull);
+
                 const channelInfo = {
                     handle: null,
                     id: null,
-                    url: channelInfoElement.href,
+                    url: channelUrl.href,
                 };
 
-                const href = channelInfoElement.getAttribute('href');
-
-                if (href && href.startsWith('/@')) {
-                    channelInfo.handle = href.replace('/@', '');
+                if (channelUrl.pathname.startsWith('/@')) {
+                    channelInfo.handle = channelUrl.pathname.replace('/@', '');
                 }
 
-                if (currentChannel.handle !== channelInfo.handle || currentChannel.id !== channelInfo.id || currentChannel.url !== channelInfo.url) {
+                if (JSON.stringify(channelInfo) !== JSON.stringify(currentChannel)) {
                     log.debug('setting new channel', channelInfo);
                     setCurrentChannel(channelInfo);
                 }

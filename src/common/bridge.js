@@ -151,7 +151,7 @@ export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
     const query = useQuery({
         queryKey: ['reaction-policies', videoUrl, channelUrl],
         queryFn: () => getReactionPolicyForVideo({ videoUrl, channelUrl }),
-        enabled: !!videoUrl || !!channelUrl,
+        enabled: !!videoUrl && !!channelUrl,
     });
 
     return {
