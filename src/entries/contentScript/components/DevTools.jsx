@@ -3,7 +3,7 @@ import useAuth from '~/hooks/useAuth';
 
 function DevTools() {
     const {
-        user, liveStreams, accounts, isLive,
+        state, user, liveStreams, accounts, isLive,
     } = useAuth();
 
     return (
@@ -15,6 +15,10 @@ function DevTools() {
                 <b>Endpoint:</b>
                 {' '}
                 {import.meta.env.VITE_API_URL}
+                <br />
+                <b>State:</b>
+                {' '}
+                {state}
             </div>
             <hr />
             <div>
