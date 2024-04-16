@@ -12,7 +12,7 @@ import SubwaySurfer from '~/entries/contentScript/components/SubwaySurfer';
 const dev = import.meta.env.DEV;
 
 function AppContainer({
-    children, dark, user, state,
+    children, dark, user, state, isMinimized = false,
 }) {
     const isVisible = useAppStore((storeState) => storeState.isVisible);
 
@@ -38,7 +38,8 @@ function AppContainer({
         )}
         >
             <div className={classNames(
-                'mb-4 overflow-y-auto rounded-[12px] bg-gradient-to-br p-[2px]',
+                'mb-4 overflow-y-auto rounded-[12px] p-[2px]',
+                isMinimized ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',
                 state === STATE_LIVE && 'from-brand-streamer-gradient-from to-brand-streamer-gradient-to',
                 state === STATE_OWN_VIDEO && 'from-brand-creator-gradient-from to-brand-creator-gradient-to',
@@ -110,6 +111,7 @@ AppContainer.propTypes = {
         STATE_LIVE,
         STATE_OWN_VIDEO,
     ]),
+    isMinimized: PropTypes.bool,
 };
 
 AppContainer.defaultProps = {

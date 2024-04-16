@@ -110,6 +110,7 @@ function App() {
         <AppContainer
             dark={isDarkMode}
             state={state}
+            isMinimized={isMinimized}
         >
             {user && (
                 <StatusNotice
