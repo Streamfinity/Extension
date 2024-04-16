@@ -21,10 +21,10 @@ function PremiumCtaLabel({
             className={classNames(className, 'block relative h-16 overflow-hidden rounded-[12px] border-2 border-purple-300/60 text-sm font-semibold group/sublabel')}
         >
             <div className={classNames(gradientStyles.premiumGradient, 'absolute left-0 top-0 w-full h-full opacity-20 transition-opacity group-hover/sublabel:opacity-40')} />
-            <dib className="absolute left-0 top-0 flex size-full items-center gap-4 px-5">
+            <div className="absolute left-0 top-0 flex size-full items-center gap-4 px-5">
                 <PlusSparklesIcon className="size-4" />
                 {children}
-            </dib>
+            </div>
         </a>
     );
 }
