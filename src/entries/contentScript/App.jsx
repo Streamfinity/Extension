@@ -27,7 +27,7 @@ import Footer from '~/entries/contentScript/components/Footer';
 function App() {
     const { t, i18n } = useTranslation();
     const {
-        user, loadingAuth, liveStream, login, state, isIncognito,
+        user, loadingAuth, liveStream, login, state, isIncognito, isTrackingVideos,
     } = useAuth();
 
     const [setCurrentUrl, isDarkMode, isDeviceDarkMode, isMinimized] = useAppStore(
@@ -111,6 +111,7 @@ function App() {
             dark={isDarkMode}
             state={state}
             isMinimized={isMinimized}
+            isTrackingVideos={isTrackingVideos}
         >
             {user && (
                 <StatusNotice
@@ -153,7 +154,7 @@ function App() {
 
             <Footer />
 
-            <PlayerProgressListenerHeadless active={!!liveStream && !isIncognito} />
+            <PlayerProgressListenerHeadless active={isTrackingVideos} />
             <WatchedVideosHeadless />
 
         </AppContainer>

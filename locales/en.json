@@ -76,7 +76,9 @@
         "disableStreamerModeDescription": "Show all hidden elements of the extension until you reload the page.",
         "enableStreamerMode": "Enable Streamer Mode",
         "youAreLive": "You are live",
-        "youAreLiveOn": "You are live on {{service}} ({{accountName}})"
+        "youAreLiveOn": "You are live on {{service}} ({{accountName}})",
+        "trackingDisabled": "We are currently not tracking any videos",
+        "trackingEnabled": "We are currently tracking your video progress"
     },
     "submitSuggestion": {
         "description": "You can submit the currently playing video as a suggestion for any streamer.",

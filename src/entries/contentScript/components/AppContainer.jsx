@@ -12,7 +12,12 @@ import SubwaySurfer from '~/entries/contentScript/components/SubwaySurfer';
 const dev = import.meta.env.DEV;
 
 function AppContainer({
-    children, dark, user, state, isMinimized = false,
+    children,
+    dark,
+    user,
+    state,
+    isMinimized = false,
+    isTrackingVideos = undefined,
 }) {
     const isVisible = useAppStore((storeState) => storeState.isVisible);
 
@@ -54,6 +59,7 @@ function AppContainer({
                     <div className="mb-4 flex items-center justify-between">
                         <Logo
                             onClick={() => setClickedCount((prev) => prev + 1)}
+                            isTrackingVideos={isTrackingVideos}
                             sws
                         />
                         {user}
@@ -112,6 +118,7 @@ AppContainer.propTypes = {
         STATE_OWN_VIDEO,
     ]),
     isMinimized: PropTypes.bool,
+    isTrackingVideos: PropTypes.bool,
 };
 
 AppContainer.defaultProps = {

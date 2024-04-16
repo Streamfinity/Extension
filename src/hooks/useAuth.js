@@ -37,6 +37,8 @@ export default function useAuth() {
     const isLive = useMemo(() => !!liveStream, [liveStream]);
     const isIncognito = useMemo(() => !!user?.extension_invisible_until, [user]);
 
+    const isTrackingVideos = useMemo(() => !!liveStream && !isIncognito, [liveStream, isIncognito]);
+
     const isOwnVideo = useMemo(() => {
         if (!currentChannel?.handle) {
             return false;
@@ -107,6 +109,7 @@ export default function useAuth() {
         isLive,
         isOwnVideo,
         isIncognito,
+        isTrackingVideos,
         loadingAuth,
         // Status
         state,

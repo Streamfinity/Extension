@@ -76,7 +76,9 @@
         "disableStreamerModeDescription": "Zeige alle ausgeblendeten Elemente der Erweiterung, bis die Seite neugeladen wird.",
         "enableStreamerMode": "Aktiviere Streamer-Modus",
         "youAreLive": "Du bist live",
-        "youAreLiveOn": "Du bist live auf {{service}} ({{accountName}})"
+        "youAreLiveOn": "Du bist live auf {{service}} ({{accountName}})",
+        "trackingDisabled": "Wir zeichnen deine Videohistorie nicht auf",
+        "trackingEnabled": "Deine Videohistorie wird gerade aufgezeichnet"
     },
     "submitSuggestion": {
         "description": "Du kannst das aufgerufene Video bei allen Streamenden als Vorschlag einreichen.",
