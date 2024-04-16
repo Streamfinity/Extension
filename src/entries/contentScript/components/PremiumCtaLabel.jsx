@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import gradientStyles from '@streamfinity/streamfinity-branding/dist/Gradients.module.css';
 import { buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
-import { subscriptionIds } from '~/enums';
+import PlusSparklesIcon from '~/components/Icons/PlusSparklesIcon';
 
 function PremiumCtaLabel({
     children,
@@ -17,16 +18,13 @@ function PremiumCtaLabel({
             href={buildFrontendUrl(`/dashboard/upgrade?utm_source=extension&utm_campaign=${campaign}&plan_id=${plan}&feature_id=${feature}`)}
             target="_blank"
             rel="noreferrer"
-            className={classNames(className, 'block')}
+            className={classNames(className, 'block relative h-16 overflow-hidden rounded-[12px] border-2 border-purple-300/60 text-sm font-semibold group/sublabel')}
         >
-            <div className={classNames(
-                plan === subscriptionIds.CREATOR && 'bg-gradient-to-r from-brand-creator-gradient-from to-brand-creator-gradient-to',
-                plan === subscriptionIds.VIEWER && 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',
-                'rounded-full border border-black/20 bg-black/20 px-2 py-1 text-center text-sm font-medium text-white',
-            )}
-            >
+            <div className={classNames(gradientStyles.premiumGradient, 'absolute left-0 top-0 w-full h-full opacity-20 transition-opacity group-hover/sublabel:opacity-40')} />
+            <dib className="absolute left-0 top-0 flex size-full items-center gap-4 px-5">
+                <PlusSparklesIcon className="size-4" />
                 {children}
-            </div>
+            </dib>
         </a>
     );
 }
