@@ -20,7 +20,13 @@ export async function storageSetSettingVisible(visible) {
 // Getter
 
 export async function storageGetSettingVisible() {
-    return (await browser.storage.sync.get(STORAGE_SETTING_SCRIPT_VISIBLE))[STORAGE_SETTING_SCRIPT_VISIBLE] !== false;
+    const value = (await browser.storage.sync.get(STORAGE_SETTING_SCRIPT_VISIBLE))[STORAGE_SETTING_SCRIPT_VISIBLE];
+
+    if (value === undefined) {
+        return false;
+    }
+
+    return value !== false;
 }
 
 export async function storageGetUser() {
