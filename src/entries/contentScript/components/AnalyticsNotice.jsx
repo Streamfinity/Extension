@@ -80,7 +80,7 @@ function AnalyticsNotice() {
         accountIds: accounts.map((account) => account.id),
     });
 
-    const subscribed = hasSubscription(user, subscriptionIds.CREATOR);
+    const isSubscribed = hasSubscription(user, subscriptionIds.CREATOR);
 
     const video = useMemo(() => {
         if (!videos) {
@@ -88,7 +88,7 @@ function AnalyticsNotice() {
         }
 
         return videos[0];
-    }, [videos, subscribed]);
+    }, [videos, isSubscribed]);
 
     const viewChangePercentage = useMemo(() => (video ? Math.round((video.analytics_aggregated.sum_unique_views / video.views_count) * 100) : null), [video]);
 
@@ -97,73 +97,78 @@ function AnalyticsNotice() {
             <CardTitle>
                 <div className="flex justify-between">
                     {t('analytics.title')}
-                    <div className="text-xs font-medium text-gray-600 dark:text-gray-400">
-                        {t('analytics.reactionsTitle', { count: video?.reactions?.length || 0 })}
-                    </div>
+
+                    {isSubscribed && (
+                        <div className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                            {t('analytics.reactionsTitle', { count: video?.reactions?.length || 0 })}
+                        </div>
+                    )}
                 </div>
             </CardTitle>
 
-            {video ? (
-                <div className="flex justify-between px-2">
-                    {subscribed ? (
-                        <>
-                            <Statistic
-                                title={t('analytics.uniqueViews')}
-                                value={video?.analytics_aggregated.sum_unique_views || 0}
-                            >
-                                {viewChangePercentage > 0 && (
-                                    <StatisticChange>
-                                        +
-                                        {viewChangePercentage}
-                                        %
-                                    </StatisticChange>
-                                )}
-                            </Statistic>
-                            <Statistic
-                                title={t('analytics.liveAvg')}
-                                value={video?.analytics_aggregated?.live_avg_views || 0}
-                            />
-                            <Statistic
-                                title={t('analytics.livePeak')}
-                                value={video?.analytics_aggregated?.live_peak_views || 0}
-                            />
-                            <Statistic
-                                title={t('analytics.clicks')}
-                                value={video?.clicks?.value || 0}
-                            />
-                        </>
-                    ) : (
-                        <>
-                            <Statistic
-                                title={t('analytics.uniqueViews')}
-                                value={86455}
-                                blur
-                            />
-                            <Statistic
-                                title={t('analytics.liveAvg')}
-                                value={624}
-                                blur
-                            />
-                            <Statistic
-                                title={t('analytics.livePeak')}
-                                value={466}
-                                blur
-                            />
-                            <Statistic
-                                title={t('analytics.clicks')}
-                                value={6428}
-                                blur
-                            />
-                        </>
-                    )}
-                </div>
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {isSubscribed ? (
+                video ? (
+                    <div className="flex justify-between px-2">
+                        {isSubscribed ? (
+                            <>
+                                <Statistic
+                                    title={t('analytics.uniqueViews')}
+                                    value={video?.analytics_aggregated.sum_unique_views || 0}
+                                >
+                                    {viewChangePercentage > 0 && (
+                                        <StatisticChange>
+                                            +
+                                            {viewChangePercentage}
+                                            %
+                                        </StatisticChange>
+                                    )}
+                                </Statistic>
+                                <Statistic
+                                    title={t('analytics.liveAvg')}
+                                    value={video?.analytics_aggregated?.live_avg_views || 0}
+                                />
+                                <Statistic
+                                    title={t('analytics.livePeak')}
+                                    value={video?.analytics_aggregated?.live_peak_views || 0}
+                                />
+                                <Statistic
+                                    title={t('analytics.clicks')}
+                                    value={video?.clicks?.value || 0}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <Statistic
+                                    title={t('analytics.uniqueViews')}
+                                    value={86455}
+                                    blur
+                                />
+                                <Statistic
+                                    title={t('analytics.liveAvg')}
+                                    value={624}
+                                    blur
+                                />
+                                <Statistic
+                                    title={t('analytics.livePeak')}
+                                    value={466}
+                                    blur
+                                />
+                                <Statistic
+                                    title={t('analytics.clicks')}
+                                    value={6428}
+                                    blur
+                                />
+                            </>
+                        )}
+                    </div>
+                ) : (
+                    <div className="text-sm">
+                        {t('analytics.noReactionsYet')}
+                    </div>
+                )
             ) : (
-                <div className="text-sm">
-                    {t('analytics.noReactionsYet')}
-                </div>
-            )}
 
-            {!subscribed && (
                 <PremiumCtaLabel
                     plan={subscriptionIds.CREATOR}
                     campaign="analytics"

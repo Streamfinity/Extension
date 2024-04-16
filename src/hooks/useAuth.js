@@ -42,9 +42,10 @@ export default function useAuth() {
             return false;
         }
 
-        const ownedAccounts = accounts?.filter((account) => account.user_pivot.is_initial);
-
-        return !!ownedAccounts?.find((account) => account.service.id === accountServices.YOUTUBE && account.service_user_name.toLowerCase() === currentChannel.handle.toLowerCase());
+        return !!accounts
+            ?.filter((account) => account.user_pivot.is_initial)
+            ?.filter((account) => account.service.id === accountServices.YOUTUBE)
+            ?.find((account) => account.service_user_name.toLowerCase() === currentChannel.handle.toLowerCase());
     }, [currentChannel, accounts]);
 
     const state = useMemo(() => {

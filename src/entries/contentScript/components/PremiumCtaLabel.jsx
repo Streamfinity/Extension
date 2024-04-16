@@ -22,7 +22,7 @@ function PremiumCtaLabel({
         >
             <div className={classNames(gradientStyles.premiumGradient, 'absolute left-0 top-0 w-full h-full opacity-20 transition-opacity group-hover/sublabel:opacity-40')} />
             <div className="absolute left-0 top-0 flex size-full items-center gap-4 px-5">
-                <PlusSparklesIcon className="size-4" />
+                <PlusSparklesIcon className="size-6 shrink-0" />
                 {children}
             </div>
         </a>
