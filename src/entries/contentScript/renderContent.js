@@ -56,7 +56,6 @@ export async function renderContent(
     render = () => {},
 ) {
     log.info('starting...', {
-        hot: import.meta.hot,
         envMode: import.meta.env.MODE,
     });
 

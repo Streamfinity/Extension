@@ -27,7 +27,7 @@ i18n
 const log = createLogger('Content-Script');
 const queryClient = new QueryClient();
 
-log.debug('content script main', { hot: import.meta.hot });
+log.debug('content script main');
 
 // eslint-disable-next-line
 renderContent(import.meta.PLUGIN_WEB_EXT_CHUNK_CSS_PATHS, (appRoot) => {
