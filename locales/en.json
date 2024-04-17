@@ -68,6 +68,7 @@
     "settings": {
         "incognito": "Incognito Mode (don't track videos)",
         "incognitoDisable": "Disable (active until {{date}})",
+        "incognitoEnable": "Enable",
         "showExtension": "Show Extension on Web Pages",
         "title": "Settings"
     },

@@ -68,6 +68,7 @@
     "settings": {
         "incognito": "Inkognito Modus (Videos werden nicht getracked)",
         "incognitoDisable": "Deaktivieren (aktiv bis {{date}})",
+        "incognitoEnable": "Aktivieren",
         "showExtension": "Erweiterung auf Seite anzeigen",
         "title": "Einstellungen"
     },

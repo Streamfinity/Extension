@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useShallow } from 'zustand/react/shallow';
 import { Button } from '@streamfinity/streamfinity-branding';
@@ -35,18 +35,33 @@ function SettingsView() {
         setIsVisible(value);
     }
 
+    // check if "extension_invisible_until" is not in past using momentjs
+    const isIncognito = useMemo(() => !!user?.extension_invisible_until && moment(user.extension_invisible_until).isAfter(moment.utc()), [user]);
+
+    const [expandIncognito, setExpandIncognito] = useState(false);
+
+    const isIncognitoToggleActive = useMemo(() => expandIncognito || isIncognito, [expandIncognito, isIncognito]);
+
+    const incognitoAvailableLengths = ['1h', '3h', '8h', '24h', '3d'];
+
     async function localToggleIncognitoMode(length) {
         await toggleIncognitoMode({
             length,
         });
 
         await refreshStatusData();
+        setExpandIncognito(false);
     }
 
-    // check if "extension_invisible_until" is not in past using momentjs
-    const isIncognito = useMemo(() => !!user?.extension_invisible_until && moment(user.extension_invisible_until).isAfter(moment.utc()), [user]);
-
-    const incognitoAvailableLengths = ['1h', '3h', '8h', '24h', '3d'];
+    async function localToggleIncognito() {
+        if (isIncognito) {
+            localToggleIncognitoMode(null);
+        } else if (!expandIncognito) {
+            setExpandIncognito(true);
+        } else if (expandIncognito) {
+            setExpandIncognito(false);
+        }
+    }
 
     const endpoint = new URL(import.meta.env.VITE_API_URL);
 
@@ -74,16 +89,21 @@ function SettingsView() {
                             {t('settings.incognito')}
                         </div>
 
-                        {isIncognito ? (
-                            <button
-                                onClick={() => localToggleIncognitoMode(null)}
-                                type="button"
-                                className="inline-block rounded bg-white/20 px-2 text-white transition-colors hover:bg-white/30"
-                            >
-                                {t('settings.incognitoDisable', { date: moment(user.extension_invisible_until).format('HH:mm') })}
-                            </button>
-                        ) : (
-                            <div className="flex gap-2">
+                        <div className="flex items-center gap-2">
+                            <Switch
+                                id="incognito"
+                                checked={isIncognitoToggleActive}
+                                onCheckedChange={() => localToggleIncognito()}
+                            />
+                            <label htmlFor="incognito">
+                                {isIncognito
+                                    ? (t('settings.incognitoDisable', { date: moment(user.extension_invisible_until).format('HH:mm') }))
+                                    : t('settings.incognitoEnable')}
+                            </label>
+                        </div>
+
+                        {expandIncognito && (
+                            <div className="mt-2 flex gap-2">
                                 {incognitoAvailableLengths.map((length) => (
                                     <button
                                         key={length}
