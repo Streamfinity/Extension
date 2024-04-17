@@ -33,6 +33,9 @@
 
 ## Contributing
 
+> [!NOTE]  
+> This projects is provided as-is and we are not actively promoting contributions. However, if you wish to contribute to this repository no guarantee of support for the code is provided, and there is no promise that pull requests will be reviewed or merged.
+
 ### Adding a new language
 
 1. Create a new JSON file `locales/{locale}.json` with the according ISO 639 2-letter language code based on the default [`en.json`](locales/en.json).
@@ -83,7 +86,8 @@ npm run dev:chrome
 
 Minifies and optimizes extension build.
 
-You need to explicitly prepend the `MANIFEST_VERSION` and `BROWSER_TARGET` variables if not specified in a `.env.local` file.
+> [!IMPORTANT]  
+> You need to explicitly prepend the `MANIFEST_VERSION` and `BROWSER_TARGET` variables if not specified in a `.env.local` file.
 
 ```sh
 npm run build
