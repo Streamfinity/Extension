@@ -22,11 +22,6 @@ export default {
                 sm: '12px',
                 xs: '10px',
             },
-            backgroundColor: {
-                yt: {
-                    'button-light': 'var(--yt-spec-badge-chip-background)',
-                },
-            },
         },
     },
     plugins: [],
