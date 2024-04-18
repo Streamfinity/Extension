@@ -28,8 +28,8 @@ export async function getStatus() {
 
     // WARNING: browser.action is not available in Firefox for some reason
     if (browser.action) {
-        if (extensionStatus?.accounts?.length > 0) {
-            await browser.action.setBadgeText({ text: `${extensionStatus.accounts.length}` });
+        if (extensionStatus?.liveStreams?.length > 0) {
+            await browser.action.setBadgeText({ text: `${extensionStatus.liveStreams.length}` });
             await browser.action.setBadgeTextColor({ color: '#fff' });
             await browser.action.setBadgeBackgroundColor({ color: '#f00' });
         } else {
