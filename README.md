@@ -11,9 +11,18 @@
     <a href="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml">
         <img src="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml/badge.svg" alt="Lint">
     </a>
-    <img src="https://img.shields.io/chrome-web-store/v/mkaledojmamkljdldoeefpabbgfdkack?label=Chrome" alt="Chrome Web Store Version">
-    <img src="https://img.shields.io/amo/v/streamfinity?label=Firefox" alt="Mozilla Add-on Version">
     <img src="https://img.shields.io/github/license/Streamfinity/Extension?label=License" alt="GitHub License">
+</p>
+<p align="center">
+    <img src="https://img.shields.io/chrome-web-store/v/mkaledojmamkljdldoeefpabbgfdkack?label=Chrome&logo=google%20chrome&logoColor=%23959DA5" alt="Chrome Web Store Version">
+    <img src="https://img.shields.io/amo/v/streamfinity?label=Firefox&logo=firefox&logoColor=%23959DA5" alt="Mozilla Add-on Version">
+    <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Foodabmjmfenpggjpfnnegmkdkkmenple&query=version&label=Edge&logo=microsoft%20edge&logoColor=%23959DA5" alt="Microsoft Edge Store Version">
+</p>
+<p align="center">
+    <img src="https://img.shields.io/chrome-web-store/rating/mkaledojmamkljdldoeefpabbgfdkack?logo=google%20chrome&logoColor=%23959DA5&label=Rating" alt="Crome Web Store Rating"> 
+    <img src="https://img.shields.io/chrome-web-store/users/mkaledojmamkljdldoeefpabbgfdkack?logo=google%20chrome&logoColor=%23959DA5&label=Users" alt="Chrome Users">
+    <img src="https://img.shields.io/amo/rating/streamfinity?logo=firefox&logoColor=%23959DA5&label=Rating" alt="Firefox Rating">
+    <img src="https://img.shields.io/amo/dw/streamfinity?logo=firefox&logoColor=%23959DA5&label=Downloads" alt="Firefox Downloads">
 </p>
 
 <p align="center">
