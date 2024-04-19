@@ -5,24 +5,9 @@
 </h1>
 
 <p align="center">
-    <a href="https://github.com/Streamfinity/Extension/actions/workflows/build.yml">
-        <img src="https://github.com/Streamfinity/Extension/actions/workflows/build.yml/badge.svg" alt="Build">
-    </a>
-    <a href="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml">
-        <img src="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml/badge.svg" alt="Lint">
-    </a>
-    <img src="https://img.shields.io/github/license/Streamfinity/Extension?label=License" alt="GitHub License">
-</p>
-<p align="center">
     <img src="https://img.shields.io/chrome-web-store/v/mkaledojmamkljdldoeefpabbgfdkack?label=Chrome&logo=google%20chrome&logoColor=%23959DA5" alt="Chrome Web Store Version">
     <img src="https://img.shields.io/amo/v/streamfinity?label=Firefox&logo=firefox&logoColor=%23959DA5" alt="Mozilla Add-on Version">
     <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Foodabmjmfenpggjpfnnegmkdkkmenple&query=version&label=Edge&logo=microsoft%20edge&logoColor=%23959DA5" alt="Microsoft Edge Store Version">
-</p>
-<p align="center">
-    <img src="https://img.shields.io/chrome-web-store/rating/mkaledojmamkljdldoeefpabbgfdkack?logo=google%20chrome&logoColor=%23959DA5&label=Rating" alt="Crome Web Store Rating"> 
-    <img src="https://img.shields.io/chrome-web-store/users/mkaledojmamkljdldoeefpabbgfdkack?logo=google%20chrome&logoColor=%23959DA5&label=Users" alt="Chrome Users">
-    <img src="https://img.shields.io/amo/rating/streamfinity?logo=firefox&logoColor=%23959DA5&label=Rating" alt="Firefox Rating">
-    <img src="https://img.shields.io/amo/dw/streamfinity?logo=firefox&logoColor=%23959DA5&label=Downloads" alt="Firefox Downloads">
 </p>
 
 <p align="center">
@@ -35,12 +20,20 @@
 
 ## Download
 
+<img src="https://img.shields.io/chrome-web-store/rating/mkaledojmamkljdldoeefpabbgfdkack?logo=google%20chrome&logoColor=%23959DA5&label=Rating" alt="Crome Web Store Rating"> 
+<img src="https://img.shields.io/chrome-web-store/users/mkaledojmamkljdldoeefpabbgfdkack?logo=google%20chrome&logoColor=%23959DA5&label=Users" alt="Chrome Users">
+<img src="https://img.shields.io/amo/rating/streamfinity?logo=firefox&logoColor=%23959DA5&label=Rating" alt="Firefox Rating">
+<img src="https://img.shields.io/amo/dw/streamfinity?logo=firefox&logoColor=%23959DA5&label=Downloads" alt="Firefox Downloads">
+
 - [**Manual .zip Download**](https://github.com/Streamfinity/Extension/releases/latest)
 - [**Chrome** Web Store](https://chrome.google.com/webstore/detail/mkaledojmamkljdldoeefpabbgfdkack)
 - [**Firefox** Add-On](https://addons.mozilla.org/en-US/firefox/addon/streamfinity)
 - [**Microsoft** Edge Store](https://microsoftedge.microsoft.com/addons/detail/streamfinity/oodabmjmfenpggjpfnnegmkdkkmenple)
 
 ## Contributing
+
+<a href="https://discord.gg/FsB6ZTAtjq"><img src="https://img.shields.io/discord/1040164710106005524?logo=discord&logoColor=%23a3a3a3&label=Discord&color=%235865F2
+"></a>
 
 > [!NOTE]  
 > This project is provided as-is and we are not actively promoting contributions. However, if you wish to contribute to this repository, you will have to sign a Contributor License Agreement (**CLA**) in order for you PRs to be considered for merging.
@@ -51,6 +44,14 @@
 2. Import the new JSON file in the [`i18n.js`](i18n.js) file.
 
 ## Setup
+
+<a href="https://github.com/Streamfinity/Extension/actions/workflows/build.yml">
+    <img src="https://github.com/Streamfinity/Extension/actions/workflows/build.yml/badge.svg" alt="Build">
+</a>
+<a href="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml">
+    <img src="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml/badge.svg" alt="Lint">
+</a>
+<img src="https://img.shields.io/github/license/Streamfinity/Extension?label=License" alt="GitHub License">
 
 ```sh
 npm install
