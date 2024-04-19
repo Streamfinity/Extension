@@ -20,10 +20,12 @@
 
 ## Download
 
+<p>
 <img src="https://img.shields.io/chrome-web-store/rating/mkaledojmamkljdldoeefpabbgfdkack?logo=google%20chrome&logoColor=%23959DA5&label=Rating" alt="Crome Web Store Rating"> 
 <img src="https://img.shields.io/chrome-web-store/users/mkaledojmamkljdldoeefpabbgfdkack?logo=google%20chrome&logoColor=%23959DA5&label=Users" alt="Chrome Users">
 <img src="https://img.shields.io/amo/rating/streamfinity?logo=firefox&logoColor=%23959DA5&label=Rating" alt="Firefox Rating">
 <img src="https://img.shields.io/amo/dw/streamfinity?logo=firefox&logoColor=%23959DA5&label=Downloads" alt="Firefox Downloads">
+</p>
 
 - [**Manual .zip Download**](https://github.com/Streamfinity/Extension/releases/latest)
 - [**Chrome** Web Store](https://chrome.google.com/webstore/detail/mkaledojmamkljdldoeefpabbgfdkack)
@@ -45,6 +47,7 @@
 
 ## Setup
 
+<p>
 <a href="https://github.com/Streamfinity/Extension/actions/workflows/build.yml">
     <img src="https://github.com/Streamfinity/Extension/actions/workflows/build.yml/badge.svg" alt="Build">
 </a>
@@ -52,6 +55,7 @@
     <img src="https://github.com/Streamfinity/Extension/actions/workflows/lint.yml/badge.svg" alt="Lint">
 </a>
 <img src="https://img.shields.io/github/license/Streamfinity/Extension?label=License" alt="GitHub License">
+</p>
 
 ```sh
 npm install
