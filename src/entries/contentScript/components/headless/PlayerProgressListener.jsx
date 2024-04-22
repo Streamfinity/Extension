@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
-import { INTERVAL_SEND_PLAYER_PROGRESS } from '~/config';
+import { PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS, PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS } from '~/config';
 import { createLogger } from '~/common/log';
 import { sendPlayerProgress } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
@@ -22,12 +22,18 @@ function PlayerProgressListener({ active }) {
 
         const now = +new Date();
 
-        if (lastSent !== null && (now - lastSent) < INTERVAL_SEND_PLAYER_PROGRESS) {
+        if (lastSent !== null && (now - lastSent) < (PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS * 1000)) {
+            // log.debug('cooldown');
             return;
         }
 
         if (progress === lastProgress) {
             log.debug('same progress');
+            return;
+        }
+
+        if (progress < PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS) {
+            log.debug(`video progress too low (min ${PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS}, got ${progress})`);
             return;
         }
 

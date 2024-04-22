@@ -2,6 +2,7 @@ import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { retryFind } from '~/common/utility';
 import { WINDOW_NAVIGATE } from '~/events';
+import { URL_CHANGE_INTERVAL_SECONDS, MOUNT_CONTENT_SCRIPT_RETRY_MS, MOUNT_CONTENT_SCRIPT_RETRY_COUNT } from '~/config';
 
 const log = createLogger('Content-Script');
 
@@ -20,7 +21,7 @@ function bindWindowEvents() {
                 },
             }));
         }
-    }, 1000);
+    }, URL_CHANGE_INTERVAL_SECONDS * 1000);
 }
 
 async function appendShadowRootToDom(appContainer) {
@@ -29,8 +30,8 @@ async function appendShadowRootToDom(appContainer) {
             const el = document.querySelector('#secondary-inner');
             return (el?.firstChild) ? el : null;
         },
-        300,
-        100,
+        MOUNT_CONTENT_SCRIPT_RETRY_MS,
+        MOUNT_CONTENT_SCRIPT_RETRY_COUNT,
     );
 
     const existingAppContainer = parent.querySelector('#streamfinity');
