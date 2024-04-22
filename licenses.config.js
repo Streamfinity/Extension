@@ -3,6 +3,7 @@ module.exports = {
     output: 'licenses/licenses.txt',
     overwrite: true,
     lineEnding: undefined,
+    omitVersions: true,
     append: [
         './licenses/microsoft-fluentui-emoji.txt',
     ],
