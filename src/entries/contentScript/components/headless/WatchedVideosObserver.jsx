@@ -66,7 +66,7 @@ function markElements(watchedVideos, t) {
     log.debug('find watched reaction elements', countFound);
 }
 
-function WatchedVideosHeadless() {
+function WatchedVideosObserver() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
     const { user } = useAuth();
@@ -85,8 +85,8 @@ function WatchedVideosHeadless() {
     return null;
 }
 
-WatchedVideosHeadless.propTypes = {};
+WatchedVideosObserver.propTypes = {};
 
-WatchedVideosHeadless.defaultProps = {};
+WatchedVideosObserver.defaultProps = {};
 
-export default WatchedVideosHeadless;
+export default WatchedVideosObserver;

@@ -8,7 +8,7 @@ import { useAppStore } from '~/entries/contentScript/state';
 
 const log = createLogger('PlayerProgress');
 
-function PlayerProgressListenerHeadless({ active }) {
+function PlayerProgressListener({ active }) {
     const { element: playerElement, progress: playerProgress } = useYouTubePlayer();
     const currentUrl = useAppStore((state) => state.currentUrl);
 
@@ -60,10 +60,10 @@ function PlayerProgressListenerHeadless({ active }) {
     return null;
 }
 
-PlayerProgressListenerHeadless.propTypes = {
+PlayerProgressListener.propTypes = {
     active: PropTypes.bool.isRequired,
 };
 
-PlayerProgressListenerHeadless.defaultProps = {};
+PlayerProgressListener.defaultProps = {};
 
-export default PlayerProgressListenerHeadless;
+export default PlayerProgressListener;

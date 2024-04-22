@@ -10,8 +10,8 @@ import ReactionPolicyNotice from '~/entries/contentScript/components/ReactionPol
 import { WINDOW_NAVIGATE } from '~/events';
 import StatusNotice from '~/entries/contentScript/components/StatusNotice';
 import ReactionsHistoryNotice from '~/entries/contentScript/components/ReactionsHistoryNotice';
-import WatchedVideosHeadless from '~/entries/contentScript/components/WatchedVideosHeadless';
-import PlayerProgressListenerHeadless from '~/entries/contentScript/components/PlayerProgressListenerHeadless';
+import WatchedVideosObserver from '~/entries/contentScript/components/headless/WatchedVideosObserver';
+import PlayerProgressListener from '~/entries/contentScript/components/headless/PlayerProgressListener';
 import { setTheme } from '~/common/bridge';
 import LoginButton from '~/components/LoginButton';
 import SubmitSuggestionNotice from '~/entries/contentScript/components/SubmitSuggestionNotice';
@@ -154,8 +154,8 @@ function App() {
 
             <Footer />
 
-            <PlayerProgressListenerHeadless active={isTrackingVideos} />
-            <WatchedVideosHeadless />
+            <PlayerProgressListener active={isTrackingVideos} />
+            <WatchedVideosObserver />
 
         </AppContainer>
     );
