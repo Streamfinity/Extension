@@ -94,6 +94,9 @@
     "subwaySurfer": {
         "gameplayBy": "Gameplay von {{name}}"
     },
+    "watchedReactions": {
+        "badgeTitle": "In einem Stream gesehen am {{date}}"
+    },
     "words": {
         "liveReactions": "Live-Reactions",
         "loading": "Lädt...",
