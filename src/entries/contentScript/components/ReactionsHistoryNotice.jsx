@@ -135,6 +135,7 @@ function ReactionsHistoryNotice() {
                         plan={isOwnVideo ? subscriptionIds.CREATOR : subscriptionIds.VIEWER}
                         campaign="reaction-history"
                         feature={isOwnVideo ? subscriptionFeatures.ANALYTICS_LIVE_FEED : subscriptionFeatures.VIEWER_VIDEOS_HISTORY}
+                        className="!rounded-xl"
                     >
                         {isOwnVideo ? t('reactionHistory.ctaCreator') : t('reactionHistory.ctaViewer')}
                     </PremiumCtaLabel>

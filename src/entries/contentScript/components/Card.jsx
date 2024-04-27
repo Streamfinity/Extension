@@ -62,7 +62,7 @@ function Card({
     if (hasInner) {
         return (
             <div className={classNames(colorClassName, 'rounded-[12px] p-[2px]')}>
-                <div className={classNames(className, innerColorClassName, 'rounded-[10px] px-4 py-3')}>
+                <div className={classNames(className, innerColorClassName, 'rounded-[10px] p-4')}>
                     {children}
                 </div>
             </div>
@@ -71,7 +71,7 @@ function Card({
 
     return (
         <div className={classNames(
-            'px-4 py-3 rounded-[12px]',
+            'p-4 rounded-[12px]',
             className,
             colorClassName,
         )}
