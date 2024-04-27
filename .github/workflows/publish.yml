@@ -246,7 +246,7 @@ jobs:
       - name: Upload to Chrome Web Store
         uses: mobilefirstllc/cws-publish@latest
         with:
-          action: ${{ contains(github.ref_name, 'dev') && 'testers' || 'publish' }}  # one of: upload, publish, testers
+          action: ${{ contains(github.ref_name, 'dev') && 'testers' || 'upload' }}  # can not publish to extension in review (one of: upload, publish, testers)
           client_id: ${{ secrets.CHROME_CLIENT_ID }}
           client_secret: ${{ secrets.CHROME_CLIENT_SECRET }}
           refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
