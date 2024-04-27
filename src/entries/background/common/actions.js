@@ -11,7 +11,17 @@ import { createLogger } from '~/common/log';
 const log = createLogger('Background');
 
 /**
- * @type {{user}}
+ * @typedef {Object} User
+ * @property {string} id
+ * @property {string} display_name
+ */
+
+/**
+ * @typedef {Object} ExtensionStatus
+ * @property {array} live_streams
+ * @property {User} user
+ */
+
 /**
  * @param {('success','warning','error')} type
  * @param {string} message
@@ -23,6 +33,17 @@ async function sendNotice(type, message) {
         message,
     });
 }
+
+export async function logout() {
+    await clearStorage();
+
+    await sendMessageToContentScript(EVENT_REFRESH_AUTH);
+
+    return { success: true };
+}
+
+/**
+ * @type {ExtensionStatus}
  */
 let extensionStatus = {};
 
@@ -30,17 +51,28 @@ export async function getStatus() {
     const token = await storageGetToken();
 
     if (!token) {
-        return { user: null };
+        return {
+            user: null,
+        };
     }
 
-    const { data } = await getExtensionStatus();
+    const { status, data } = await getExtensionStatus();
+
+    if (status === 401) {
+        await sendNotice('error', 'Session is invalid, logging out...');
+        return logout();
+    }
+
+    if (status !== 200) {
+        await sendNotice('error', `Got an error fetching user information: ${status}`);
+    }
 
     extensionStatus = data?.data || {};
 
     // WARNING: browser.action is not available in Firefox for some reason
     if (browser.action) {
-        if (extensionStatus?.liveStreams?.length > 0) {
-            await browser.action.setBadgeText({ text: `${extensionStatus.liveStreams.length}` });
+        if (extensionStatus?.live_streams?.length > 0) {
+            await browser.action.setBadgeText({ text: `${extensionStatus.live_streams.length}` });
             await browser.action.setBadgeTextColor({ color: '#fff' });
             await browser.action.setBadgeBackgroundColor({ color: '#f00' });
         } else {
@@ -51,14 +83,6 @@ export async function getStatus() {
     return {
         data: data?.data,
     };
-}
-
-export async function logout() {
-    await clearStorage();
-
-    await sendMessageToContentScript(EVENT_REFRESH_AUTH);
-
-    return { success: true };
 }
 
 export async function sendPlayerProgress(data) {
