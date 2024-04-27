@@ -174,7 +174,7 @@ function SubmitSuggestionForm({ onSubmit }) {
                             key={account.id}
                             className={classNames(
                                 account.id === selectedAccount?.id ? 'bg-primary-500/20' : 'hover:bg-white/10',
-                                'flex items-center gap-2 py-2 px-3 rounded-md cursor-pointer transition-colors duration-100',
+                                'flex items-center gap-4 py-2 px-3 rounded-lg cursor-pointer transition-colors duration-100',
                             )}
                             onClick={() => setSelectedAccount(account)}
                         >
@@ -182,7 +182,13 @@ function SubmitSuggestionForm({ onSubmit }) {
                                 <img
                                     src={account.avatar_url}
                                     alt={account.display_name}
-                                    className="size-16 rounded-full"
+                                    onError={({ currentTarget }) => {
+                                        // eslint-disable-next-line no-param-reassign
+                                        currentTarget.onerror = null;
+                                        // eslint-disable-next-line no-param-reassign
+                                        currentTarget.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mPsrQcAAZ8BDlpDGcMAAAAASUVORK5CYII=';
+                                    }}
+                                    className="size-12 rounded-full"
                                 />
                             )}
                             <div className="flex flex-col items-start">
