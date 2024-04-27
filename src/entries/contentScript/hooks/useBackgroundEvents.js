@@ -40,7 +40,9 @@ export function useBackgroundEvents() {
     const setIsVisible = useAppStore((state) => state.setIsVisible);
     const { refreshStatusData } = useAuth();
 
-    async function onBackgroundMessage({ type, data }) {
+    async function onBackgroundMessage(req) {
+        const { type, data } = req;
+
         switch (type) {
         case EVENT_REFRESH_AUTH:
             await refreshStatusData();
@@ -55,7 +57,7 @@ export function useBackgroundEvents() {
             break;
 
         default:
-            log.error('unhandled message', type, data);
+            log.error('unhandled message', req);
         }
     }
 
