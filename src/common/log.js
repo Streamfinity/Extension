@@ -100,8 +100,10 @@ const log = {
                 }),
             });
         } catch (err) {
-            console.log(err);
-            console.log(err?.response);
+            console.log('----------- error sending log to logging -----------');
+            console.log(message);
+            console.error(err);
+            console.error(err?.response);
         }
     },
 
