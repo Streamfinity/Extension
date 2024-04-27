@@ -9,9 +9,7 @@ import ServiceIcon from '~/components/Icons/ServiceIcon';
 import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
 import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
-import {
-    subscriptionIds, subscriptionFeatures, accountServices,
-} from '~/enums';
+import { subscriptionIds, subscriptionFeatures } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 import { buildReactionFromUrl } from '~/common/pretty';
 
@@ -104,6 +102,12 @@ function ReactionsHistoryNotice() {
         return null;
     }
 
+    const placeholders = [
+        { id: 0, sizeClassNames: ['w-20', 'w-16', 'w-8'] },
+        { id: 1, sizeClassNames: ['w-16', 'w-20', 'w-12'] },
+        { id: 2, sizeClassNames: ['w-24', 'w-14', 'w-14'] },
+    ];
+
     return (
         <Card color="primary">
             <CardTitle>
@@ -112,18 +116,18 @@ function ReactionsHistoryNotice() {
 
             {((isOwnVideo && !subscribedCreater) || (!isOwnVideo && !subscribedViewer)) ? (
                 <>
-                    <div className="select-none">
-                        {new Array(3).fill(null).map((_, index) => (
+                    <div className="mb-3 select-none">
+                        {placeholders.map((placeholder) => (
                             <div
-                                key={index}
-                                className="flex items-center gap-2 text-sm blur"
+                                key={placeholder.id}
+                                className="flex items-center gap-2 text-sm text-white/60"
                             >
-                                <ServiceIcon
-                                    service={{ id: accountServices.TWITCH, title: 'Twitch' }}
-                                    size={12}
-                                    className="inline-block"
-                                />
-                                {['Foobar reacted in a livestream for 1h', 'Someone reacted in a twitch livestream', 'A famous streamer reacted in a video'][index]}
+                                <div className="size-5 rounded-lg bg-white/30" />
+                                <div className={`h-5 ${placeholder.sizeClassNames[0]} rounded-lg bg-white/30`} />
+                                reacted in a
+                                <div className={`h-5 ${placeholder.sizeClassNames[1]} rounded-lg bg-white/30`} />
+                                for
+                                <div className={`h-5 ${placeholder.sizeClassNames[2]} rounded-lg bg-white/30`} />
                             </div>
                         ))}
                     </div>
