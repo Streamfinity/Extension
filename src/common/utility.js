@@ -112,9 +112,24 @@ export function findVideoPlayerBar(interval = 300, maxTries = 300) {
 // Toaster
 
 export function toastSuccess(message, options) {
-    toast.success(message, options);
+    toast.success(message, {
+        ...(options || {}),
+    });
+}
+
+export function toastWarn(warning, options) {
+    toast(warning, {
+        ...options || {},
+        duration: 1000000,
+        className: 'rounded-xl gap-2 bg-yellow-600 text-white flex',
+        icon: '⚠️',
+    });
 }
 
 export function toastError(error, options) {
-    toast.error(() => why(error), options || {});
+    toast.error(() => why(error), {
+        ...(options || {}),
+        icon: '❕',
+        className: 'rounded-xl bg-red-500 text-white flex gap-2',
+    });
 }
