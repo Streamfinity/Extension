@@ -94,7 +94,8 @@ export default function useAuth() {
 
             await refreshStatusData();
         } catch (err) {
-            toastError(err);
+            // info: the toastError() will be sent from the background via EVENT_NOTICE
+            log.warn('login error', err);
         }
 
         setLoadingLogin(false);
