@@ -2,10 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import * as messages from '~/messages';
-import { createLogger } from '~/common/log';
 import { sendMessageToBackground } from '~/entries/background/common/spaceship';
-
-const log = createLogger('Bridge');
 
 // Auth
 
