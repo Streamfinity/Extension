@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill';
 import { storageGetToken } from '~/entries/background/common/storage';
 import { sendMessageToContentScript } from '~/entries/background/common/spaceship';
 import { EVENT_REFRESH_AUTH } from '~/messages';
@@ -44,8 +45,33 @@ export async function api(url, opts) {
 }
 
 export async function getExtensionStatus() {
+    let platform = null;
+    let version = null;
+    let os = null;
+
+    if (browser.runtime.getManifest) {
+        version = browser.runtime.getManifest()?.version || null;
+    }
+
+    if (browser.runtime.getPlatformInfo) {
+        os = (await browser.runtime.getPlatformInfo()).os || null;
+    }
+
+    if (navigator && navigator.userAgent) {
+        if (navigator.userAgent.includes('Chrome')) {
+            platform = 'chrome';
+        } else if (navigator.userAgent.includes('Firefox')) {
+            platform = 'firefox';
+        }
+    }
+
     return api('extension/status', {
         token: await storageGetToken(),
+        query: {
+            platform,
+            version,
+            os,
+        },
     });
 }
 
