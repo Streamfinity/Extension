@@ -53,18 +53,20 @@ export async function logout() {
 export async function sendPlayerProgress(data) {
     if (!extensionStatus.user) {
         log.debug('no status adata, dont send player progress');
-        return;
+        return { success: false };
     }
 
     if (extensionStatus.live_streams.length === 0) {
         log.debug('on stream live');
-        return;
+        return { success: false };
     }
 
     await createPlaybackProgress({
         data,
         liveStreamId: extensionStatus.live_streams[0].id,
     });
+
+    return { success: true };
 }
 
 export async function loginFetchUser(accessToken) {
