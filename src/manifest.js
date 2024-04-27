@@ -93,7 +93,7 @@ export function getManifest(manifestVersion, browserTarget, env) {
             browser_specific_settings: {
                 gecko: {
                     id: 'extension-firefox@streamfinity.tv',
-                    strict_min_version: '57.0',
+                    strict_min_version: '79.0',
                 },
             },
         };
