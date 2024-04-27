@@ -56,18 +56,24 @@ export async function renderContent(
     cssPaths,
     render = () => {},
 ) {
-    log.info('starting...', {
-        envMode: import.meta.env.MODE,
-    });
+    log.info('starting...', { envMode: import.meta.env.MODE, cssPaths });
 
     const appContainer = document.createElement('div');
     appContainer.id = 'streamfinity';
+    appContainer.style.display = 'none';
+
+    // Root elements
 
     const appRoot = document.createElement('section');
 
     const shadowRoot = appContainer.attachShadow({
         mode: import.meta.env.MODE === 'development' ? 'open' : 'closed',
     });
+
+    // Add styles
+
+    const neededCssAssets = cssPaths ? cssPaths.length : 0;
+    let loadedCssAssets = 0;
 
     if (import.meta.hot) {
         const { addViteStyleTarget } = await import(
@@ -80,9 +86,20 @@ export async function renderContent(
             const styleEl = document.createElement('link');
             styleEl.setAttribute('rel', 'stylesheet');
             styleEl.setAttribute('href', browser.runtime.getURL(cssPath));
+            styleEl.addEventListener('load', () => {
+                loadedCssAssets += 1;
+
+                log.debug('loaded css', `${loadedCssAssets}/${neededCssAssets}`, cssPath);
+
+                if (loadedCssAssets >= neededCssAssets) {
+                    appContainer.style.display = 'block';
+                }
+            });
             shadowRoot.appendChild(styleEl);
         });
     }
+
+    // Bind events & Mount container
 
     bindWindowEvents();
 
