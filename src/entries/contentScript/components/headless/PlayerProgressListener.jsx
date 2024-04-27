@@ -21,8 +21,11 @@ function PlayerProgressListener({ active }) {
         }
 
         const now = +new Date();
+        const cooldown = lastSent !== null && (now - lastSent) < (PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS * 1000);
 
-        if (lastSent !== null && (now - lastSent) < (PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS * 1000)) {
+        log.remote('send', {}, { cooldown, isLast: progress === lastProgress, tooLow: progress < PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS });
+
+        if (cooldown) {
             // log.debug('cooldown');
             return;
         }
@@ -51,7 +54,11 @@ function PlayerProgressListener({ active }) {
 
         log.debug('send', playerAttributes);
 
-        await sendPlayerProgress(playerAttributes);
+        try {
+            await sendPlayerProgress(playerAttributes);
+        } catch (err) {
+            log.error('couldn\'t send player progress', err);
+        }
     }
 
     useEffect(() => {

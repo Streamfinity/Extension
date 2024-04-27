@@ -1,6 +1,9 @@
 import { storageGetToken } from '~/entries/background/common/storage';
 import { sendMessageToContentScript } from '~/entries/background/common/spaceship';
 import { EVENT_REFRESH_AUTH } from '~/messages';
+import { createLogger } from '~/common/log';
+
+const log = createLogger('Background-API');
 
 export async function api(url, opts) {
     const options = opts;
@@ -11,27 +14,33 @@ export async function api(url, opts) {
         delete options.query;
     }
 
-    const response = await fetch(finalUrl, {
-        headers: {
-            Accept: 'application/json',
-            ...options?.headers || {},
-            ...options?.token ? {
-                Authorization: `Bearer ${options.token}`,
-            } : {},
+    let response;
+    try {
+        response = await fetch(finalUrl, {
+            headers: {
+                Accept: 'application/json',
+                ...options?.headers || {},
+                ...options?.token ? {
+                    Authorization: `Bearer ${options.token}`,
+                } : {},
+                ...options?.json ? {
+                    'Content-Type': 'application/json',
+                } : {},
+            },
+            ...options || {},
             ...options?.json ? {
-                'Content-Type': 'application/json',
+                body: JSON.stringify(options.json),
             } : {},
-        },
-        ...options || {},
-        ...options?.json ? {
-            body: JSON.stringify(options.json),
-        } : {},
-    });
+        });
 
-    return {
-        status: response.status,
-        data: await response.json(),
-    };
+        return {
+            status: response.status,
+            data: await response.json(),
+        };
+    } catch (err) {
+        log.remote({ status: response?.status }, 'error', 'error sending API request', err?.message, { url: finalUrl, token: options?.token });
+        throw err;
+    }
 }
 
 export async function getExtensionStatus() {

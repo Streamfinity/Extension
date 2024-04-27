@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { logout, login, useStatus } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
@@ -99,6 +99,12 @@ export default function useAuth() {
 
         setLoadingLogin(false);
     }
+
+    useEffect(() => {
+        if (user && (typeof window !== 'undefined') && !window.streamfinityUser) {
+            window.streamfinityUser = user.display_name;
+        }
+    }, [user]);
 
     return {
         // User state
