@@ -80,7 +80,7 @@ function WatchedVideosObserver() {
             const watchedVideos = await getWatchedReactions({ userId: user.id });
             markElements(watchedVideos, t);
         })();
-    }, [currentUrl, user]);
+    }, [currentUrl, user?.id]);
 
     return null;
 }
