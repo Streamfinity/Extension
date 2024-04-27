@@ -58,16 +58,14 @@ export async function sendMessageToContentScript(type, data = {}) {
 
     const promises = tabs.map(async (tab) => {
         try {
-            log.debug('SEND ➡️', `[${tab.id}]`, type, 'sending ...');
-
             await sendMessageToTab(tab.id, {
                 type,
                 data,
             });
 
-            log.debug('SEND ➡️', `[${tab.id}]`, type, ' ✅ SENT');
+            log.debug('SEND ➡️', `[tab-${tab.id}]`, type, ' ✅ SENT');
         } catch (err) {
-            log.error('SEND ➡️', `[${tab.id}]`, type, err);
+            log.error('SEND ➡️', `[tab-${tab.id}]`, type, err);
         }
     });
 
@@ -75,8 +73,6 @@ export async function sendMessageToContentScript(type, data = {}) {
 
     try {
         await Promise.allSettled(promises);
-
-        log.debug('SEND ➡️', '✅ SENT ALL MESSAGES');
     } catch (err) {
         log.error('SEND ➡️', 'error executing promises', err);
     }
