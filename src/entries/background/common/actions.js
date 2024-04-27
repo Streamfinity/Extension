@@ -3,7 +3,7 @@ import {
     storageGetToken, clearStorage, storageSetToken, storageSetSettingVisible,
 } from '~/entries/background/common/storage';
 import { getExtensionStatus, createPlaybackProgress, getAuthenticatedUser } from '~/entries/background/common/api';
-import { EVENT_REFRESH_AUTH, EVENT_REFRESH_SETTINGS } from '~/messages';
+import { EVENT_REFRESH_AUTH, EVENT_REFRESH_SETTINGS, EVENT_NOTICE } from '~/messages';
 import { why } from '~/common/pretty';
 import { sendMessageToContentScript } from '~/entries/background/common/spaceship';
 import { createLogger } from '~/common/log';
@@ -12,6 +12,17 @@ const log = createLogger('Background');
 
 /**
  * @type {{user}}
+/**
+ * @param {('success','warning','error')} type
+ * @param {string} message
+ * @returns {Promise<void>}
+ */
+async function sendNotice(type, message) {
+    await sendMessageToContentScript(EVENT_NOTICE, {
+        type,
+        message,
+    });
+}
  */
 let extensionStatus = {};
 

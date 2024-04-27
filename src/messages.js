@@ -20,5 +20,6 @@ export const TOGGLE_INCOGNITO_MODE = 'TOGGLE_INCOGNITO_MODE';
 
 // Background -> Content-Script
 
+export const EVENT_NOTICE = 'EVENT_NOTICE';
 export const EVENT_REFRESH_AUTH = 'EVENT_REFRESH_AUTH';
 export const EVENT_REFRESH_SETTINGS = 'EVENT_REFRESH_SETTINGS';
