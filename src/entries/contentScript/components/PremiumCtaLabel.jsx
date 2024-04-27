@@ -18,10 +18,10 @@ function PremiumCtaLabel({
             href={buildFrontendUrl(`/dashboard/upgrade?utm_source=extension&utm_campaign=${campaign}&plan_id=${plan}&feature_id=${feature}`)}
             target="_blank"
             rel="noreferrer"
-            className={classNames(className, 'block relative h-16 overflow-hidden rounded-[12px] border-2 border-purple-300/60 text-sm font-semibold group/sublabel')}
+            className={classNames(className, 'block relative overflow-hidden rounded-[12px] border-2 border-purple-300/60 text-sm font-semibold group/sublabel')}
         >
             <div className={classNames(gradientStyles.premiumGradient, 'absolute left-0 top-0 w-full h-full opacity-20 transition-opacity group-hover/sublabel:opacity-40')} />
-            <div className="absolute left-0 top-0 flex size-full items-center gap-4 px-5">
+            <div className="flex items-center gap-4 px-5 py-2">
                 <PlusSparklesIcon className="size-6 shrink-0" />
                 {children}
             </div>
