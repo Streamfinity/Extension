@@ -120,7 +120,7 @@ export function toastSuccess(message, options) {
 export function toastWarn(warning, options) {
     toast(warning, {
         ...options || {},
-        duration: 1000000,
+        duration: 5 * 1000,
         className: 'rounded-xl gap-2 bg-yellow-600 text-white flex',
         icon: '⚠️',
     });
@@ -131,5 +131,6 @@ export function toastError(error, options) {
         ...(options || {}),
         icon: '❕',
         className: 'rounded-xl bg-red-500 text-white flex gap-2',
+        duration: 6 * 1000,
     });
 }
