@@ -103,7 +103,7 @@ export default function useAuth() {
 
     useEffect(() => {
         if (user && (typeof window !== 'undefined') && !window.streamfinityUser) {
-            window.streamfinityUser = user.display_name;
+            window.streamfinityUser = user;
         }
     }, [user]);
 

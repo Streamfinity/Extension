@@ -1,4 +1,39 @@
 import moment from 'moment';
+import browser from 'webextension-polyfill';
+import { storageGetUser } from '~/entries/background/common/storage';
+
+function getBrowser() {
+    if (!navigator?.userAgent) {
+        return null;
+    }
+    if ((navigator.userAgent.indexOf('Opera') || navigator.userAgent.indexOf('OPR')) != -1) {
+        return 'Opera';
+    } if (navigator.userAgent.indexOf('Edg') != -1) {
+        return 'Edge';
+    } if (navigator.userAgent.indexOf('Chrome') != -1) {
+        return 'Chrome';
+    } if (navigator.userAgent.indexOf('Safari') != -1) {
+        return 'Safari';
+    } if (navigator.userAgent.indexOf('Firefox') != -1) {
+        return 'Firefox';
+    } if ((navigator.userAgent.indexOf('MSIE') != -1) || (!!document.documentMode == true)) // IF IE > 10
+    {
+        return 'IE';
+    }
+    return 'unknown';
+}
+
+async function getUser() {
+    if (typeof window !== 'undefined' && window.streamfinityUser) {
+        return window.streamfinityUser;
+    }
+
+    if (typeof browser.storage !== 'undefined') {
+        return (await storageGetUser());
+    }
+
+    return null;
+}
 
 const log = {
     enabled: true,
@@ -49,6 +84,14 @@ const log = {
             return;
         }
 
+        // ----------------------------- WIP -----------------------------
+        getUser().then((user) => {
+            if (user?.extension_log || level === 'error') {
+                this.sendToLogging(level, {}, args);
+            }
+        });
+        // ----------------------------- WIP -----------------------------
+
         const { func, highlight } = this.levels[level];
         const placeholder = ' '.repeat(Math.max(0, 6 - level.length));
 
@@ -66,8 +109,13 @@ const log = {
         ]);
     },
 
-    async sendToLogging(level, add, args) {
+    async sendToLogging(level, labels, args) {
         const message = args.map((arg) => ((typeof arg === 'string') ? arg : JSON.stringify(arg))).join(', ');
+
+        // eslint-disable-next-line no-param-reassign
+        labels.version = browser.runtime.getManifest()?.version;
+        // eslint-disable-next-line no-param-reassign
+        labels.browser = getBrowser();
 
         try {
             await fetch('https://logs.streamfinity.tv/loki/api/v1/push', {
@@ -91,8 +139,9 @@ const log = {
                                     message,
                                     app: this.app,
                                     section: this.section,
+                                    ep: import.meta.env.VITE_API_URL,
                                     ...((typeof window !== 'undefined' && window?.streamfinityUser) ? { user: window.streamfinityUser } : {}),
-                                    ...add,
+                                    ...labels,
                                 })],
                             ],
                         },
