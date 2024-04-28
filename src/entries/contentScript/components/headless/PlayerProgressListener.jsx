@@ -57,7 +57,7 @@ function PlayerProgressListener({ active }) {
         try {
             const response = await sendPlayerProgress(playerAttributes);
 
-            log.debug('send OK');
+            log.debug('send OK', response);
         } catch (err) {
             log.error('couldn\'t send player progress', err);
         }

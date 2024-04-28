@@ -6,18 +6,17 @@ function getBrowser() {
     if (!navigator?.userAgent) {
         return null;
     }
-    if ((navigator.userAgent.indexOf('Opera') || navigator.userAgent.indexOf('OPR')) != -1) {
+    if ((navigator.userAgent.indexOf('Opera') || navigator.userAgent.indexOf('OPR')) !== -1) {
         return 'Opera';
-    } if (navigator.userAgent.indexOf('Edg') != -1) {
+    } if (navigator.userAgent.indexOf('Edg') !== -1) {
         return 'Edge';
-    } if (navigator.userAgent.indexOf('Chrome') != -1) {
+    } if (navigator.userAgent.indexOf('Chrome') !== -1) {
         return 'Chrome';
-    } if (navigator.userAgent.indexOf('Safari') != -1) {
+    } if (navigator.userAgent.indexOf('Safari') !== -1) {
         return 'Safari';
-    } if (navigator.userAgent.indexOf('Firefox') != -1) {
+    } if (navigator.userAgent.indexOf('Firefox') !== -1) {
         return 'Firefox';
-    } if ((navigator.userAgent.indexOf('MSIE') != -1) || (!!document.documentMode == true)) // IF IE > 10
-    {
+    } if ((navigator.userAgent.indexOf('MSIE') !== -1) || (!!document.documentMode === true)) {
         return 'IE';
     }
     return 'unknown';
@@ -29,7 +28,7 @@ async function getUser() {
     }
 
     if (typeof browser.storage !== 'undefined') {
-        return (await storageGetUser());
+        return storageGetUser();
     }
 
     return null;
