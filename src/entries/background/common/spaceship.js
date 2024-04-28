@@ -4,10 +4,10 @@ import { createLogger } from '~/common/log';
 const log = createLogger('Spaceship 👽');
 
 export function registerListener(listener) {
-    browser.runtime.onMessage.addListener((req) => {
+    browser.runtime.onMessage.addListener((req, sender) => {
         const { type, data } = req;
 
-        log.debug('RECV ⬅️', type, data);
+        log.debug('RECV ⬅️', type, `(tab ${sender?.tab?.index})`, data);
 
         return listener(type, data);
     });
