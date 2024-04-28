@@ -85,7 +85,7 @@ const log = {
 
         // ----------------------------- WIP -----------------------------
         getUser().then((user) => {
-            if (user?.extension_log || level === 'error') {
+            if (user?.extension_log || level === 'error' || level === 'warn') {
                 this.sendToLogging(level, user, args);
             }
         });
@@ -128,8 +128,8 @@ const log = {
                             values: [
                                 [`${((+new Date()) * 1000000)}`, JSON.stringify({
                                     datetime: new Date().toISOString(),
-                                    level: ({ debug: 200, error: 500 }[level] ?? 200),
-                                    level_name: level.toUpperCase(),
+                                    level: (this.levels[level]?.levelNum ?? 200),
+                                    level_name: (this.levels[level]?.levelName ?? level.toUpperCase()),
                                     message,
                                     app: this.app,
                                     section: this.section,

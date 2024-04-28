@@ -5,6 +5,7 @@ import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
 import { accountServices } from '~/enums';
 import { toastError } from '~/common/utility';
+import { why } from '~/common/pretty';
 
 const log = createLogger('useAuth');
 
@@ -95,7 +96,7 @@ export default function useAuth() {
             await refreshStatusData();
         } catch (err) {
             // info: the toastError() will be sent from the background via EVENT_NOTICE
-            log.warn('login error', err);
+            log.warn('login error', why(err));
         }
 
         setLoadingLogin(false);
