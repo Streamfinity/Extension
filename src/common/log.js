@@ -86,7 +86,7 @@ const log = {
         // ----------------------------- WIP -----------------------------
         getUser().then((user) => {
             if (user?.extension_log || level === 'error') {
-                this.sendToLogging(level, {}, args);
+                this.sendToLogging(level, user, args);
             }
         });
         // ----------------------------- WIP -----------------------------
@@ -108,13 +108,8 @@ const log = {
         ]);
     },
 
-    async sendToLogging(level, labels, args) {
+    async sendToLogging(level, user, args) {
         const message = args.map((arg) => ((typeof arg === 'string') ? arg : JSON.stringify(arg))).join(', ');
-
-        // eslint-disable-next-line no-param-reassign
-        labels.version = browser.runtime.getManifest()?.version;
-        // eslint-disable-next-line no-param-reassign
-        labels.browser = getBrowser();
 
         try {
             await fetch('https://logs.streamfinity.tv/loki/api/v1/push', {
@@ -139,8 +134,9 @@ const log = {
                                     app: this.app,
                                     section: this.section,
                                     ep: import.meta.env.VITE_API_URL,
-                                    ...((typeof window !== 'undefined' && window?.streamfinityUser) ? { user: window.streamfinityUser } : {}),
-                                    ...labels,
+                                    ...(user ? { user: user.display_name } : {}),
+                                    version: browser.runtime.getManifest()?.version,
+                                    browser: getBrowser(),
                                 })],
                             ],
                         },
