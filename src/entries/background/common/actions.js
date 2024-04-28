@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import {
-    storageGetToken, clearStorage, storageSetToken, storageSetSettingVisible,
+    storageGetToken, clearStorage, storageSetToken, storageSetSettingVisible, storageSetUser,
 } from '~/entries/background/common/storage';
 import { getExtensionStatus, createPlaybackProgress, getAuthenticatedUser } from '~/entries/background/common/api';
 import { EVENT_REFRESH_AUTH, EVENT_REFRESH_SETTINGS, EVENT_NOTICE } from '~/messages';
@@ -69,6 +69,10 @@ export async function getStatus() {
 
     extensionStatus = data?.data || {};
 
+    if (extensionStatus.user) {
+        await storageSetUser(extensionStatus.user);
+    }
+
     // WARNING: browser.action is not available in Firefox for some reason
     if (browser.action) {
         if (extensionStatus?.live_streams?.length > 0) {
@@ -123,9 +127,12 @@ export async function loginFetchUser(accessToken) {
         log.debug('login validate', 'ok');
         log.debug('storing token...', accessToken);
 
-        await storageSetToken(accessToken);
+        const user = data.data;
 
-        return { user: data.data };
+        await storageSetToken(accessToken);
+        await storageSetUser(user);
+
+        return { user };
     } catch (err) {
         log.error('error checking data', err);
     }

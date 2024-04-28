@@ -9,6 +9,16 @@ export const STORAGE_SETTING_SCRIPT_VISIBLE = 'invis';
 
 // Setter
 
+export async function storageSetUser(user) {
+    const minimalUser = {
+        display_name: user.display_name,
+        id: user.id,
+        extension_log: user.extension_log,
+    };
+
+    await browser.storage.sync.set({ [STORAGE_USER]: minimalUser });
+}
+
 export async function storageSetToken(token) {
     await browser.storage.sync.set({ [STORAGE_TOKEN]: token });
 }
