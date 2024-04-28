@@ -60,7 +60,10 @@ export async function renderContent(
 
     const appContainer = document.createElement('div');
     appContainer.id = 'streamfinity';
-    appContainer.style.display = 'none';
+
+    if (!import.meta.hot) {
+        appContainer.style.display = 'none';
+    }
 
     // Root elements
 
