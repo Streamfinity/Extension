@@ -5,6 +5,7 @@ import { PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS, PLAYBACK_PROGRESS_MIN_VIDEO_SE
 import { createLogger } from '~/common/log';
 import { sendPlayerProgress } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
+import { why } from '~/common/pretty';
 
 const log = createLogger('PlayerProgress');
 
@@ -59,7 +60,7 @@ function PlayerProgressListener({ active }) {
 
             log.debug('send OK', response);
         } catch (err) {
-            log.error('couldn\'t send player progress', err);
+            log.error('couldn\'t send player progress', why(err), err);
         }
     }
 
