@@ -39,7 +39,7 @@ export async function api(url, opts) {
             data: await response.json(),
         };
     } catch (err) {
-        log.remote({ status: response?.status }, 'error', 'error sending API request', err?.message, { url: finalUrl, token: options?.token });
+        log.error('error sending API request', { status: response?.status, url: finalUrl });
         throw err;
     }
 }

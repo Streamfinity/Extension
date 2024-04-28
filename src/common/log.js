@@ -107,10 +107,6 @@ const log = {
         }
     },
 
-    remote(add, ...args) {
-        this.sendToLogging('debug', add, args);
-    },
-
     verbose(...args) {
         this.log('verbose', args);
     },
@@ -126,10 +122,8 @@ const log = {
     warn(...args) {
         this.warning(...args);
     },
-
     error(...args) {
         this.log('error', args);
-        this.sendToLogging('error', {}, args);
     },
 };
 

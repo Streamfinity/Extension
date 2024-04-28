@@ -23,7 +23,7 @@ function PlayerProgressListener({ active }) {
         const now = +new Date();
         const cooldown = lastSent !== null && (now - lastSent) < (PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS * 1000);
 
-        log.remote({}, { cooldown, isLast: progress === lastProgress, tooLow: progress < PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS });
+        log.debug('send', { cooldown, isLast: progress === lastProgress, tooLow: progress < PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS });
 
         if (cooldown) {
             // log.debug('cooldown');
@@ -57,7 +57,7 @@ function PlayerProgressListener({ active }) {
         try {
             const response = await sendPlayerProgress(playerAttributes);
 
-            log.remote({}, 'send OK', response);
+            log.debug('send OK');
         } catch (err) {
             log.error('couldn\'t send player progress', err);
         }
