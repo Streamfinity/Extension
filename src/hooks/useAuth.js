@@ -102,10 +102,10 @@ export default function useAuth() {
     }
 
     useEffect(() => {
-        if (user && (typeof window !== 'undefined') && !window.streamfinityUser) {
+        if (user?.id && (typeof window !== 'undefined')) {
             window.streamfinityUser = user;
         }
-    }, [user]);
+    }, [user?.id]);
 
     return {
         // User state
