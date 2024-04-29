@@ -14,6 +14,7 @@ export async function storageSetUser(user) {
         display_name: user.display_name,
         id: user.id,
         extension_log: user.extension_log,
+        locale: user.locale_frontend,
     };
 
     await browser.storage.sync.set({ [STORAGE_USER]: minimalUser });
