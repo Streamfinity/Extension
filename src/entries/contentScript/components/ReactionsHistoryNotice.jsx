@@ -75,8 +75,8 @@ function ReactionsHistoryNotice() {
     const currentUrl = useAppStore((state) => state.currentUrl);
 
     const { user, isOwnVideo } = useAuth();
-    const subscribedCreater = hasSubscription(user, subscriptionIds.CREATOR);
-    const subscribedViewer = hasSubscription(user, subscriptionIds.VIEWER);
+    const subscribedCreator = hasSubscription(user, subscriptionIds.CREATOR);
+    const subscribedOther = hasSubscription(user, subscriptionIds.VIEWER) || hasSubscription(user, subscriptionIds.STREAMER);
 
     const { data: reactions } = useReactions({
         videoUrl: currentUrl,
@@ -93,7 +93,7 @@ function ReactionsHistoryNotice() {
     ].filter((_, index) => (index + 1) >= reactions?.length), [reactions?.length]);
 
     if (!reactions || reactions?.length === 0) {
-        if (!subscribedViewer && !isOwnVideo) {
+        if (!subscribedOther && !isOwnVideo) {
             return (
                 <PremiumCtaLabel
                     plan={subscriptionIds.VIEWER}
@@ -114,7 +114,7 @@ function ReactionsHistoryNotice() {
                 {isOwnVideo ? t('reactionHistory.titleOwn') : t('reactionHistory.title')}
             </CardTitle>
 
-            {((isOwnVideo && !subscribedCreater) || (!isOwnVideo && !subscribedViewer)) ? (
+            {((isOwnVideo && !subscribedCreator) || (!isOwnVideo && !subscribedOther)) ? (
                 <>
                     <div className="mb-3 select-none">
                         {placeholders.map((placeholder) => (
