@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+
 import { useMemo } from 'react';
 
 export function hasSubscription(user, subscriptionId) {
@@ -12,6 +14,7 @@ export function hasSubscription(user, subscriptionId) {
 export function hasSubscriptionFeature(feature, account, user) {
     return useMemo(() => {
         const accountSubscriptions = account?.subscriptions || [];
+        const userSubscriptionsUnique = [];
         const userSubscriptions = [];
 
         user?.accounts?.forEach((userAccount) => {
@@ -19,12 +22,23 @@ export function hasSubscriptionFeature(feature, account, user) {
                 return;
             }
 
-            userSubscriptions.push(...userAccount.subscriptions.filter((subscription) => subscription.plan.is_unique_for_user));
+            userSubscriptions.push(...userAccount.subscriptions);
+            userSubscriptionsUnique.push(...userAccount.subscriptions.filter((subscription) => subscription.plan.is_unique_for_user));
         });
 
-        const subscriptions = [...accountSubscriptions, ...userSubscriptions];
+        // Find active subscription in owned account for a feature that propagates to the user
 
-        // eslint-disable-next-line no-restricted-syntax
+        for (const subscription of userSubscriptions) {
+            const perk = subscription.plan.perks.find((subscriptionPerk) => subscriptionPerk.feature === feature);
+
+            if (perk && perk.feature_propagate_to_user) {
+                return true;
+            }
+        }
+
+        // Find a perk that is included in an account-bound subscription or unique-for-user subscription
+        const subscriptions = [...accountSubscriptions, ...userSubscriptionsUnique];
+
         for (const subscription of subscriptions) {
             const perk = subscription.plan.perks.find((subscriptionPerk) => subscriptionPerk.feature === feature);
 
@@ -34,5 +48,5 @@ export function hasSubscriptionFeature(feature, account, user) {
         }
 
         return false;
-    }, [account, user, feature]);
+    }, [feature, account, user]);
 }

@@ -8,7 +8,7 @@ import { reactionShape } from '~/shapes';
 import ServiceIcon from '~/components/Icons/ServiceIcon';
 import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
-import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
+import { hasSubscriptionFeature } from '~/entries/contentScript/hooks/useSubscription';
 import { subscriptionIds, subscriptionFeatures } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 import { buildReactionFromUrl } from '~/common/pretty';
@@ -75,8 +75,12 @@ function ReactionsHistoryNotice() {
     const currentUrl = useAppStore((state) => state.currentUrl);
 
     const { user, isOwnVideo } = useAuth();
-    const subscribedCreator = hasSubscription(user, subscriptionIds.CREATOR);
-    const subscribedOther = hasSubscription(user, subscriptionIds.VIEWER) || hasSubscription(user, subscriptionIds.STREAMER);
+
+    const isSubscribed = hasSubscriptionFeature(
+        subscriptionFeatures.VIEWER_VIDEOS_HISTORY,
+        null,
+        user,
+    );
 
     const { data: reactions } = useReactions({
         videoUrl: currentUrl,
@@ -93,7 +97,7 @@ function ReactionsHistoryNotice() {
     ].filter((_, index) => (index + 1) >= reactions?.length), [reactions?.length]);
 
     if (!reactions || reactions?.length === 0) {
-        if (!subscribedOther && !isOwnVideo) {
+        if (!isSubscribed && !isOwnVideo) {
             return (
                 <PremiumCtaLabel
                     plan={subscriptionIds.VIEWER}
@@ -114,7 +118,7 @@ function ReactionsHistoryNotice() {
                 {isOwnVideo ? t('reactionHistory.titleOwn') : t('reactionHistory.title')}
             </CardTitle>
 
-            {((isOwnVideo && !subscribedCreator) || (!isOwnVideo && !subscribedOther)) ? (
+            {(!isSubscribed) ? (
                 <>
                     <div className="mb-3 select-none">
                         {placeholders.map((placeholder) => (
