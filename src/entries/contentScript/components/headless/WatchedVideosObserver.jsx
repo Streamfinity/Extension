@@ -13,6 +13,10 @@ const log = createLogger('WatchedReactions');
 function markElements(watchedVideos, t) {
     // eslint-disable-next-line no-unused-vars
     let countFound = 0;
+
+    // Home:     <ytd-rich-grid-media />
+    // Search:   <ytd-video-renderer />
+    // Playlist: <ytd-playlist-video-renderer />
     const mediaElements = document.querySelectorAll('ytd-rich-grid-media,ytd-playlist-video-renderer,ytd-video-renderer');
 
     mediaElements.forEach((mediaElement) => {

@@ -95,7 +95,7 @@
         "gameplayBy": "Gameplay by {{name}}"
     },
     "watchedReactions": {
-        "badgeTitle": "Watched in a stream on {{date}}"
+        "badgeTitle": "Watched in a stream {{date}}"
     },
     "words": {
         "liveReactions": "Live Reactions",
