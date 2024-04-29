@@ -53,14 +53,18 @@ function markElements(watchedVideos, t) {
             const infoBadge = document.createElement('div');
             infoBadge.classList.add('streamfinity-watched-badge');
             infoBadge.style.padding = '.4rem .6rem';
-            infoBadge.style.backgroundColor = 'red';
-            infoBadge.style.color = 'white';
-            infoBadge.style.fontWeight = '600';
+            infoBadge.style.backgroundColor = '#14B8A6';
             infoBadge.style.position = 'absolute';
+            infoBadge.style.width = 'calc(100% - (.6rem * 2))';
             infoBadge.style.top = '0';
             infoBadge.style.left = '0';
-            infoBadge.style.margin = '1rem';
-            infoBadge.style.borderRadius = '4px';
+            infoBadge.style.margin = '0';
+            infoBadge.style.borderTopLeftRadius = '4px';
+            infoBadge.style.borderTopRightRadius = '4px';
+            infoBadge.style.color = 'white';
+            infoBadge.style.fontWeight = '500';
+            infoBadge.style.textAlign = 'center';
+            infoBadge.style.fontSize = '12px';
             infoBadge.innerText = t('watchedReactions.badgeTitle', { date: moment(watched.reaction_start_date).fromNow() });
 
             badgeParent.append(infoBadge);
