@@ -2,7 +2,9 @@ import browser from 'webextension-polyfill';
 import { createLogger } from '~/common/log';
 import { retryFind } from '~/common/utility';
 import { WINDOW_NAVIGATE } from '~/events';
-import { URL_CHANGE_INTERVAL_SECONDS, MOUNT_CONTENT_SCRIPT_RETRY_MS, MOUNT_CONTENT_SCRIPT_RETRY_COUNT } from '~/config';
+import {
+    URL_CHANGE_INTERVAL_SECONDS, MOUNT_CONTENT_SCRIPT_RETRY_MS, MOUNT_CONTENT_SCRIPT_RETRY_COUNT, EMBEDS_ON_HOSTS,
+} from '~/config';
 
 const log = createLogger('Content-Script');
 
@@ -56,6 +58,16 @@ export async function renderContent(
     cssPaths,
     render = () => {},
 ) {
+    // Check if extension should be injected into current page
+    const { host } = window.location;
+
+    if (!EMBEDS_ON_HOSTS.includes(host)) {
+        log.info('not injecting on host', host);
+        return;
+    }
+
+    // Create elements
+
     log.info('starting...', { envMode: import.meta.env.MODE, cssPaths });
 
     const appContainer = document.createElement('div');

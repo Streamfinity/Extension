@@ -1,3 +1,12 @@
+export const EMBEDS_ON_HOSTS = [
+    'youtube.com',
+    'www.youtube.com',
+    'm.youtube.com',
+    'youtube-nocookie.com',
+    'www.youtube-nocookie.com',
+    'm.youtube-nocookie.com',
+];
+
 // interval in seconds to wait before checking URL for change
 export const URL_CHANGE_INTERVAL_SECONDS = 1;
 
