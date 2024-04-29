@@ -11,8 +11,9 @@ import { MARK_WATCHED_REACTIONS_INTERVAL } from '~/config';
 const log = createLogger('WatchedReactions');
 
 function markElements(watchedVideos, t) {
+    // eslint-disable-next-line no-unused-vars
     let countFound = 0;
-    const mediaElements = document.querySelectorAll('ytd-rich-grid-media,ytd-playlist-video-renderer');
+    const mediaElements = document.querySelectorAll('ytd-rich-grid-media,ytd-playlist-video-renderer,ytd-video-renderer');
 
     mediaElements.forEach((mediaElement) => {
         const thumbnail = mediaElement.querySelector('ytd-thumbnail #thumbnail');
@@ -31,7 +32,7 @@ function markElements(watchedVideos, t) {
         }
 
         const fadeOutElements = [
-            mediaElement.querySelector('ytd-thumbnail'),
+            mediaElement.querySelector('ytd-thumbnail yt-image'),
             mediaElement.querySelector('#details'),
         ];
 
