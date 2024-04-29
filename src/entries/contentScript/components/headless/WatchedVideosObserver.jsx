@@ -6,6 +6,7 @@ import { getWatchedReactions } from '~/common/bridge';
 import { createLogger } from '~/common/log';
 import useAuth from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
+import { MARK_WATCHED_REACTIONS_INTERVAL } from '~/config';
 
 const log = createLogger('WatchedReactions');
 
@@ -63,7 +64,7 @@ function markElements(watchedVideos, t) {
         countFound += 1;
     });
 
-    log.debug('find watched reaction elements', countFound);
+    // log.debug('mark watched reactions. found:', countFound);
 }
 
 function WatchedVideosObserver() {
@@ -72,6 +73,8 @@ function WatchedVideosObserver() {
     const { user } = useAuth();
 
     useEffect(() => {
+        let intervalId = null;
+
         (async () => {
             if (!user) {
                 return;
@@ -79,7 +82,18 @@ function WatchedVideosObserver() {
 
             const watchedVideos = await getWatchedReactions({ userId: user.id });
             markElements(watchedVideos, t);
+
+            intervalId = setInterval(() => {
+                markElements(watchedVideos, t);
+            }, MARK_WATCHED_REACTIONS_INTERVAL * 1000);
+
+            log.debug('watched videos observer started');
         })();
+
+        return () => {
+            clearInterval(intervalId);
+            log.debug('watched videos observer stopped');
+        };
     }, [currentUrl, user?.id]);
 
     return null;

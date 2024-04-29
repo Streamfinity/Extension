@@ -12,3 +12,6 @@ export const PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS = 60;
 
 // minimum of watched video seconds to send playback progress
 export const PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS = 4;
+
+// interval in seconds to mark videos on youtube.com as watched
+export const MARK_WATCHED_REACTIONS_INTERVAL = 5;
