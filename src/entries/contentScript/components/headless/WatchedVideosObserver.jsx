@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+/* eslint-disable no-param-reassign */
+
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { getIdFromLink } from '~/common/utility';
@@ -11,6 +13,26 @@ import { MARK_WATCHED_REACTIONS_INTERVAL } from '~/config';
 const log = createLogger('WatchedReactions');
 
 function markElements(watchedVideos, t) {
+    if (!watchedVideos) {
+        return;
+    }
+
+    // The function is called from the resize event, which leads to videos being shifted around and
+    // wrong videos now being marked as watched. This is a workaround to clear the previous badges
+
+    document
+        .querySelectorAll('.streamfinity-watched-badge')
+        .forEach((badge) => {
+            badge.remove();
+        });
+
+    document
+        .querySelectorAll('[data-streamfinity-watched]')
+        .forEach((element) => {
+            element.removeAttribute('data-streamfinity-watched');
+            element.style.opacity = '100%';
+        });
+
     // eslint-disable-next-line no-unused-vars
     let countFound = 0;
 
@@ -41,9 +63,9 @@ function markElements(watchedVideos, t) {
         ];
 
         fadeOutElements.filter((e) => !!e).forEach((element) => {
-            // eslint-disable-next-line no-param-reassign
+            element.setAttribute('data-streamfinity-watched', 'true');
+
             element.style.transition = 'opacity 200ms';
-            // eslint-disable-next-line no-param-reassign
             element.style.opacity = '40%';
         });
 
@@ -81,15 +103,29 @@ function WatchedVideosObserver() {
     const currentUrl = useAppStore((state) => state.currentUrl);
     const { user } = useAuth();
 
+    const [watchedVideos, setWatchedVideos] = useState(null);
+
     useEffect(() => {
         let intervalId = null;
+        let resizeTmeout = null;
+
+        function onResize() {
+            resizeTmeout = setTimeout(() => {
+                markElements(watchedVideos, t);
+            }, 500);
+        }
+
+        window.addEventListener('resize', onResize);
 
         (async () => {
             if (!user) {
                 return;
             }
 
-            const watchedVideos = await getWatchedReactions({ userId: user.id });
+            setWatchedVideos(
+                await getWatchedReactions({ userId: user.id }),
+            );
+
             markElements(watchedVideos, t);
 
             intervalId = setInterval(() => {
@@ -101,6 +137,8 @@ function WatchedVideosObserver() {
 
         return () => {
             clearInterval(intervalId);
+            clearTimeout(resizeTmeout);
+            window.removeEventListener('resize', onResize);
             log.debug('watched videos observer stopped');
         };
     }, [currentUrl, user?.id]);
