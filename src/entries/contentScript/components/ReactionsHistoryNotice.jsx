@@ -86,6 +86,12 @@ function ReactionsHistoryNotice() {
     const videoReactions = useMemo(() => reactions?.filter((reaction) => !!reaction.from_video), [reactions]);
     const liveReactions = useMemo(() => reactions?.filter((reaction) => !!reaction.from_stream), [reactions]);
 
+    const placeholders = useMemo(() => [
+        { id: 0, sizeClassNames: ['w-20', 'w-16', 'w-8'] },
+        { id: 1, sizeClassNames: ['w-16', 'w-20', 'w-12'] },
+        { id: 2, sizeClassNames: ['w-24', 'w-14', 'w-14'] },
+    ].filter((_, index) => (index + 1) >= reactions?.length), [reactions?.length]);
+
     if (!reactions || reactions?.length === 0) {
         if (!subscribedViewer && !isOwnVideo) {
             return (
@@ -101,12 +107,6 @@ function ReactionsHistoryNotice() {
 
         return null;
     }
-
-    const placeholders = [
-        { id: 0, sizeClassNames: ['w-20', 'w-16', 'w-8'] },
-        { id: 1, sizeClassNames: ['w-16', 'w-20', 'w-12'] },
-        { id: 2, sizeClassNames: ['w-24', 'w-14', 'w-14'] },
-    ];
 
     return (
         <Card color="primary">
