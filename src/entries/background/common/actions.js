@@ -177,7 +177,7 @@ export async function login() {
 
         return response;
     } catch (err) {
-        log.warn('login', 'error', err);
+        log.warn('login', 'error', url, redirectUri, why(err));
 
         await sendNotice('error', `Login failed (${why(err)})`);
 
