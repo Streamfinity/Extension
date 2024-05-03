@@ -148,11 +148,12 @@ export async function getReactionsForVideo({ videoUrl, onlyFollowed }) {
     return policy;
 }
 
-export async function getReactionPolicy({ videoUrl, channelUrl }) {
+export async function getReactionPolicy({ videoUrl, channelUrl, userId }) {
     const { data: policy } = await api('reaction-policies/for-video', {
         query: {
             video_url: videoUrl,
             channel_url: channelUrl,
+            from_user_id: userId,
         },
     });
 

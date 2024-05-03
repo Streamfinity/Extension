@@ -96,10 +96,10 @@ export async function submitReaction(data) {
 
 // Reaction Policy
 
-async function getReactionPolicyForVideo({ videoUrl, channelUrl }) {
+async function getReactionPolicyForVideo({ videoUrl, channelUrl, userId }) {
     const data = await sendMessageToBackground(
         messages.REACTION_POLICY_GET,
-        { videoUrl, channelUrl },
+        { videoUrl, channelUrl, userId },
     );
 
     return { data: data?.data };
@@ -144,10 +144,10 @@ export function useStatus() {
     });
 }
 
-export function useReactionPolicyForVideo({ videoUrl, channelUrl }) {
+export function useReactionPolicyForVideo({ videoUrl, channelUrl, userId }) {
     const query = useQuery({
         queryKey: ['reaction-policies', videoUrl, channelUrl],
-        queryFn: () => getReactionPolicyForVideo({ videoUrl, channelUrl }),
+        queryFn: () => getReactionPolicyForVideo({ videoUrl, channelUrl, userId }),
         enabled: !!videoUrl && !!channelUrl,
     });
 

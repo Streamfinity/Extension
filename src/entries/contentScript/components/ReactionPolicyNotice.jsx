@@ -198,6 +198,8 @@ NoticeLine.defaultProps = {
 
 function ReactionPolicyNotice() {
     const { t } = useTranslation();
+
+    const { user } = useAuth();
     const [currentUrl, currentChannel] = useAppStore(
         useShallow((state) => [state.currentUrl, state.currentChannel]),
     );
@@ -205,6 +207,7 @@ function ReactionPolicyNotice() {
     const { data: policy, isLoading } = useReactionPolicyForVideo({
         videoUrl: currentUrl,
         channelUrl: currentChannel.url,
+        userId: user?.id,
     });
 
     const [liveCountdownDuration, setLiveCountdownDuration] = useState(null);
