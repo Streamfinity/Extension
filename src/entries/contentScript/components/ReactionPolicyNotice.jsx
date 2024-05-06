@@ -121,7 +121,7 @@ function NoticeLine({
                 </>
             )}
             {status === STATUS_ALLOWED && (
-                <div className="flex items-center">
+                <div className="flex items-start">
                     <div className={`${buttonClassNames} from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20`} />
                     <div className="font-medium text-emerald-500">
                         {t('reactionPolicy.status.noRestriction')}
@@ -129,7 +129,7 @@ function NoticeLine({
                 </div>
             )}
             {status === STATUS_DENIED && (
-                <div className="flex items-center">
+                <div className="flex items-start">
                     <div className={`${buttonClassNames} from-red-500 to-red-400 shadow shadow-red-700/20`} />
                     <div className="font-medium text-red-500">
                         {t('reactionPolicy.status.notAllowed')}
@@ -137,7 +137,7 @@ function NoticeLine({
                 </div>
             )}
             {status === STATUS_ON_COUNTDOWN && (
-                <div className="flex items-center">
+                <div className="flex items-start">
                     <div className={`${buttonClassNames} from-red-500 to-red-400 shadow shadow-red-700/20`} />
                     <div className="font-medium">
                         <span className="text-red-500">
@@ -151,7 +151,7 @@ function NoticeLine({
                 </div>
             )}
             {maxPercentage > 0 && (
-                <div className="flex items-center">
+                <div className="flex items-start">
                     <div className={`${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`} />
                     <div className="font-medium">
                         <span className="text-orange-800 dark:text-orange-500">
@@ -163,7 +163,7 @@ function NoticeLine({
             )}
 
             {comment && (
-                <div className="flex items-center">
+                <div className="flex items-start">
                     <div className={`${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`} />
                     <div className="font-medium">
                         <span className="text-orange-800 dark:text-orange-500">
