@@ -98,6 +98,8 @@ function NoticeLine({
 }) {
     const { t } = useTranslation();
 
+    const buttonClassNames = 'mr-2 size-3 rounded-full bg-gradient-to-tr shrink-0 mt-[0.5rem]';
+
     return (
         <div>
             <div className="font-semibold">
@@ -108,9 +110,9 @@ function NoticeLine({
                     {options.map((option) => (
                         <div
                             key={option.value}
-                            className="flex items-center"
+                            className="flex items-start"
                         >
-                            <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
+                            <div className={`${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`} />
                             <div className="font-medium text-orange-800 dark:text-orange-500">
                                 {option.title}
                             </div>
@@ -120,7 +122,7 @@ function NoticeLine({
             )}
             {status === STATUS_ALLOWED && (
                 <div className="flex items-center">
-                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20" />
+                    <div className={`${buttonClassNames} from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20`} />
                     <div className="font-medium text-emerald-500">
                         {t('reactionPolicy.status.noRestriction')}
                     </div>
@@ -128,7 +130,7 @@ function NoticeLine({
             )}
             {status === STATUS_DENIED && (
                 <div className="flex items-center">
-                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
+                    <div className={`${buttonClassNames} from-red-500 to-red-400 shadow shadow-red-700/20`} />
                     <div className="font-medium text-red-500">
                         {t('reactionPolicy.status.notAllowed')}
                     </div>
@@ -136,7 +138,7 @@ function NoticeLine({
             )}
             {status === STATUS_ON_COUNTDOWN && (
                 <div className="flex items-center">
-                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-red-500 to-red-400 shadow shadow-red-700/20" />
+                    <div className={`${buttonClassNames} from-red-500 to-red-400 shadow shadow-red-700/20`} />
                     <div className="font-medium">
                         <span className="text-red-500">
                             {t('reactionPolicy.status.allowedIn')}
@@ -150,7 +152,7 @@ function NoticeLine({
             )}
             {maxPercentage > 0 && (
                 <div className="flex items-center">
-                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
+                    <div className={`${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`} />
                     <div className="font-medium">
                         <span className="text-orange-800 dark:text-orange-500">
                             {t('reactionPolicy.status.notice')}
@@ -162,7 +164,7 @@ function NoticeLine({
 
             {comment && (
                 <div className="flex items-center">
-                    <div className="mr-2 size-4 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 shadow shadow-orange-700/20" />
+                    <div className={`${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`} />
                     <div className="font-medium">
                         <span className="text-orange-800 dark:text-orange-500">
                             {t('reactionPolicy.status.notice')}
