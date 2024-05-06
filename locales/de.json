@@ -54,8 +54,8 @@
         "titleOwn": "Reactions auf dein Video"
     },
     "reactionPolicy": {
-        "notSet": "Zu diesem Video sind keine Richtlinien für Reactions festgelegt.",
-        "notSetOwn": "Du hast noch keine Richtlinien für Reactions festgelegt.",
+        "notSet": "Zu diesem Video ist keine Reaction-Policy festgelegt.",
+        "notSetOwn": "Du hast noch keine Reaction-Policy festgelegt.",
         "status": {
             "allowedIn": "Reactions erlaubt in:",
             "noRestriction": "Keine Einschränkungen",
@@ -63,7 +63,7 @@
             "notice": "Beachte:",
             "reactUpToPercentage": "Du darfst nur auf {{value}}% des Videos reagieren"
         },
-        "title": "Reaction-Richtlinie"
+        "title": "Reaction-Policy"
     },
     "settings": {
         "incognito": "Inkognito Modus (Videos werden nicht getracked)",
