@@ -207,7 +207,7 @@ function ReactionPolicyNotice() {
     const { data: policy, isLoading } = useReactionPolicyForVideo({
         videoUrl: currentUrl,
         channelUrl: currentChannel.url,
-        userId: user?.id,
+        userId: user?.id || '',
     });
 
     const [liveCountdownDuration, setLiveCountdownDuration] = useState(null);
