@@ -24,65 +24,105 @@ export function usePage() {
         ]),
     );
 
-    useEffect(() => {
-        function scrape() {
-            if (window?.location && window.location.href !== currentUrl) {
-                log.debug('settings new url', window.location.href);
-                setCurrentUrl(window.location.href);
-            }
+    function scrape() {
+        let hasUrl = false;
+        let hasChannel = false;
 
-            const channelUrlFull = document.querySelector('ytd-channel-name yt-formatted-string a')?.href
+        if (window?.location && window.location.href !== currentUrl) {
+            hasUrl = true;
+
+            log.debug('---> new url', window.location.href);
+            setCurrentUrl(window.location.href);
+        }
+
+        const channelUrlFull = document.querySelector('#above-the-fold ytd-channel-name yt-formatted-string a')?.href
                 || document.querySelector('span[itemprop="name"] link[itemprop="url"]')?.href;
 
-            if (channelUrlFull) {
-                const channelUrl = new URL(channelUrlFull);
+        if (channelUrlFull) {
+            hasChannel = true;
 
-                const channelInfo = {
-                    handle: null,
-                    id: null,
-                    url: channelUrl.href,
-                };
+            const channelUrl = new URL(channelUrlFull);
 
-                if (channelUrl.pathname.startsWith('/@')) {
-                    channelInfo.handle = channelUrl.pathname.replace('/@', '');
-                }
+            const channelInfo = {
+                handle: null,
+                id: null,
+                url: channelUrl.href,
+            };
 
-                if (JSON.stringify(channelInfo) !== JSON.stringify(currentChannel)) {
-                    log.debug('setting new channel', channelInfo);
-                    setCurrentChannel(channelInfo);
-                }
+            if (channelUrl.pathname.startsWith('/@')) {
+                channelInfo.handle = channelUrl.pathname.replace('/@', '');
             }
 
-            // Update content script dark mode
-
-            const html = document.querySelector('html');
-            if (html) {
-                const detectedDark = html.hasAttribute('dark');
-
-                if (detectedDark !== isDarkMode) {
-                    setIsDarkMode(detectedDark);
-                }
+            if (JSON.stringify(channelInfo) !== JSON.stringify(currentChannel)) {
+                log.debug('---> new channel', channelInfo);
+                setCurrentChannel(channelInfo);
             }
 
-            // Device dark mode, used to update popup icon color
+            console.log(
+                document.querySelector('#above-the-fold ytd-channel-name yt-formatted-string a'),
+                document.querySelector('span[itemprop="name"] link[itemprop="url"]'),
+            );
+        }
 
-            const detectedDeviceDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (!hasChannel) {
+            setCurrentChannel({ handle: null, id: null, url: null });
+        }
 
-            if (detectedDeviceDark !== isDeviceDarkMode) {
-                setIsDeviceDarkMode(detectedDeviceDark);
+        // Update content script dark mode
+
+        const html = document.querySelector('html');
+        if (html) {
+            const detectedDark = html.hasAttribute('dark');
+
+            if (detectedDark !== isDarkMode) {
+                setIsDarkMode(detectedDark);
             }
         }
 
-        const currentUrlIntervalId = setInterval(() => {
-            scrape();
-        }, 1500);
+        // Device dark mode, used to update popup icon color
+
+        const detectedDeviceDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (detectedDeviceDark !== isDeviceDarkMode) {
+            setIsDeviceDarkMode(detectedDeviceDark);
+        }
+
+        log.debug('scrape() ---------------------------', { hasUrl, hasChannel });
+
+        return hasUrl && hasChannel;
+    }
+
+    useEffect(() => {
+        let scrapeInterval = null;
+
+        function onNavigateFinish() {
+            log.debug('+++++++++++++++++ onNavigateEnd');
+
+            scrapeInterval = setInterval(() => {
+                const ok = scrape();
+
+                if (ok) {
+                    clearInterval(scrapeInterval);
+                }
+            }, 1000);
+        }
+
+        function onNavigateStart() {
+            log.debug('+++++++++++++++++ onNavigateStart');
+        }
+
+        window.addEventListener('yt-navigate-start', onNavigateStart);
+        window.addEventListener('yt-navigate-finish', onNavigateFinish);
 
         scrape();
 
         return () => {
-            clearInterval(currentUrlIntervalId);
+            window.removeEventListener('yt-navigate-start', onNavigateStart);
+            window.removeEventListener('yt-navigate-finish', onNavigateFinish);
+
+            clearInterval(scrapeInterval);
         };
-    }, [currentUrl, currentChannel, isDarkMode, isDeviceDarkMode]);
+    }, []);
 
     return {
         currentUrl,
