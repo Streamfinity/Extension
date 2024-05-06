@@ -42,14 +42,29 @@ function ReactionPreview({ reaction }) {
             {' '}
 
             {reaction.from_stream && (
-                <a
-                    href={buildReactionFromUrl(reaction)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-bold text-primary-gradient-from"
-                >
-                    {t('reactionHistory.inAStream', { service: reaction.from_stream?.account?.service?.title })}
-                </a>
+                reaction.from_stream.vods.length > 0 ? (
+                    reaction.from_stream.vods?.map((vod) => (
+                        <Fragment key={vod.id}>
+                            <a
+                                href={vod.video.external_tracking_url_time.replace('{timestamp}', reaction.vod_seconds_from)}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-bold text-primary-gradient-from"
+                            >
+                                {t('reactionHistory.inAStream', { service: reaction.from_stream?.account?.service?.title })}
+                            </a>
+                        </Fragment>
+                    ))
+                ) : (
+                    <a
+                        href={buildReactionFromUrl(reaction)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-primary-gradient-from"
+                    >
+                        {t('reactionHistory.inAStream', { service: reaction.from_stream?.account?.service?.title })}
+                    </a>
+                )
             )}
 
             {reaction.from_video && (
