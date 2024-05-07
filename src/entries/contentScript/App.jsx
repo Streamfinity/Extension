@@ -131,7 +131,6 @@ function App() {
         <AppContainer
             dark={isDarkMode}
             state={state}
-            isCompact={isCompact}
             isTrackingVideos={isTrackingVideos}
         >
             {user && (
