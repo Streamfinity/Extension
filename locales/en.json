@@ -18,7 +18,9 @@
         "noReactionsYet": "There are no reactions for this video yet.",
         "reactionsTitle": "{{count}} Reactions",
         "title": "Analytics",
-        "uniqueViews": "Unique views"
+        "titleCompact": "Analytics for your video",
+        "uniqueViews": "Unique views",
+        "preview": "{{count}} views"
     },
     "auth": {
         "loginDescription": "Get started by logging in with your YouTube account!"
@@ -51,7 +53,8 @@
         "inAVideo": "in a video",
         "noReactionsYet": "There are no reactions for this video yet.",
         "title": "Reaction History",
-        "titleOwn": "Reactions to your Video"
+        "titleOwn": "Reactions to your Video",
+        "preview": "{{count}} Reactions"
     },
     "reactionPolicy": {
         "notSet": "The Content Creator has not set conditions for reactions.",
@@ -63,7 +66,11 @@
             "notice": "Notice:",
             "reactUpToPercentage": "You may only react to {{value}}% of this video"
         },
-        "title": "Reaction Policy"
+        "title": "Reaction Policy",
+        "previewNone": "not set",
+        "previewAllowed": "allowed",
+        "previewNotAllowed": "not allowed",
+        "previewConditions": "conditions"
     },
     "settings": {
         "incognito": "Incognito Mode (don't track videos)",
@@ -89,7 +96,8 @@
             "loading": "Loading...",
             "pending": "Start typing the creator name to search"
         },
-        "title": "Suggestion"
+        "title": "Suggestion",
+        "titleCompact": "Suggest video"
     },
     "subwaySurfer": {
         "gameplayBy": "Gameplay by {{name}}"

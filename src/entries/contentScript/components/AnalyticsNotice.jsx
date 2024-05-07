@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppStore } from '~/entries/contentScript/state';
 import { useVideoAnalytics } from '~/common/bridge';
 import useAuth from '~/hooks/useAuth';
-import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Card from '~/entries/contentScript/components/Card';
 import { childrenShape } from '~/shapes';
 import { prettyNumber } from '~/common/pretty';
 import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
@@ -73,6 +73,7 @@ StatisticChange.propTypes = {
 function AnalyticsNotice() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
+    const compact = useAppStore((state) => state.isMinimized);
     const { accounts, user } = useAuth();
 
     const { data: videos } = useVideoAnalytics({
@@ -93,18 +94,20 @@ function AnalyticsNotice() {
     const viewChangePercentage = useMemo(() => (video ? Math.round((video.analytics_aggregated.sum_unique_views / video.views_count) * 100) : null), [video]);
 
     return (
-        <Card color="brand-creator">
-            <CardTitle>
-                <div className="flex justify-between">
-                    {t('analytics.title')}
-
-                    {isSubscribed && (
-                        <div className="text-xs font-medium text-gray-600 dark:text-gray-400">
-                            {t('analytics.reactionsTitle', { count: video?.reactions?.length || 0 })}
-                        </div>
-                    )}
-                </div>
-            </CardTitle>
+        <Card
+            title={t('analytics.title')}
+            titleCompact={t('analytics.titleCompact')}
+            color="brand-creator"
+            compact={compact}
+            preview={(isSubscribed && !!video) ? t('analytics.preview', { views: video?.analytics_aggregated.sum_unique_views || 0 }) : null}
+        >
+            <div className="flex justify-between">
+                {isSubscribed && (
+                    <div className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                        {t('analytics.reactionsTitle', { count: video?.reactions?.length || 0 })}
+                    </div>
+                )}
+            </div>
 
             {/* eslint-disable-next-line no-nested-ternary */}
             {isSubscribed ? (

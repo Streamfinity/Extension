@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useOriginalVideos } from '~/common/bridge';
-import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Card from '~/entries/contentScript/components/Card';
 import { reactionShape } from '~/shapes';
 import { prettyDuration } from '~/common/pretty';
 import { useAppStore } from '~/entries/contentScript/state';
@@ -53,6 +53,7 @@ ReactionPreview.propTypes = {
 function OriginalVideoNotice() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
+    const compact = useAppStore((state) => state.isMinimized);
 
     const { data: originalVideoReactions } = useOriginalVideos({
         videoUrl: currentUrl,
@@ -60,11 +61,11 @@ function OriginalVideoNotice() {
 
     if (originalVideoReactions?.length > 0) {
         return (
-            <Card color="primary">
-                <CardTitle>
-                    {originalVideoReactions.length > 1 ? t('originalVideo.titlePlural') : t('originalVideo.title')}
-                </CardTitle>
-
+            <Card
+                title={originalVideoReactions.length > 1 ? t('originalVideo.titlePlural') : t('originalVideo.title')}
+                color="primary"
+                compact={compact}
+            >
                 <div className="mt-3 flex flex-col gap-4">
                     {originalVideoReactions.map((reaction) => (
                         <Fragment key={reaction.id}>

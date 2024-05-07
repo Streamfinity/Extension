@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import { Button } from '@streamfinity/streamfinity-branding';
 import { useTranslation } from 'react-i18next';
-import Card, { CompactCard, CardTitle } from '~/entries/contentScript/components/Card';
+import Card from '~/entries/contentScript/components/Card';
 import SubmitSuggestionForm from '~/entries/contentScript/components/SubmitSuggestionForm';
+import { useAppStore } from '~/entries/contentScript/state';
 
 function SubmitSuggestionNotice() {
     const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);
 
+    const compact = useAppStore((state) => state.isMinimized);
+
     return (
         <Card
+            title={t('submitSuggestion.title')}
+            titleCompact={t('submitSuggestion.titleCompact')}
             color="brand-viewer"
             className="flex flex-col"
+            compact={compact}
         >
-            <CardTitle>
-                {t('submitSuggestion.title')}
-            </CardTitle>
-
             {!showForm && (
                 <div className="flex gap-4">
                     <div className="grow">

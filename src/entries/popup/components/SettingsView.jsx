@@ -9,7 +9,7 @@ import { storageGetSettingVisible } from '~/entries/background/common/storage';
 import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
 import { Switch } from '~/components/Ui/Switch';
-import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Card from '~/entries/contentScript/components/Card';
 
 function SettingsView() {
     const { t } = useTranslation();
@@ -67,11 +67,10 @@ function SettingsView() {
 
     return (
         <div className="flex h-full flex-col justify-between">
-            <Card color="primary">
-                <CardTitle>
-                    {t('settings.title')}
-                </CardTitle>
-
+            <Card
+                title={t('settings.title')}
+                color="primary"
+            >
                 <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-2">
                         <Switch

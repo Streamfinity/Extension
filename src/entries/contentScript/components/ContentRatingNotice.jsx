@@ -4,7 +4,7 @@ import {
     findVideoPlayerBar, retryFind, getYouTubePlayer, getYouTubePlayerProgressBar,
 } from '~/common/utility';
 import { createLogger } from '~/common/log';
-import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Card from '~/entries/contentScript/components/Card';
 import { useContentRatings } from '~/common/bridge';
 import { prettyDuration } from '~/common/pretty';
 import styles from '~/styles/content-rating.module.css';
@@ -15,6 +15,7 @@ const log = createLogger('Content-Rating');
 
 function ContentRatingNotice() {
     const currentUrl = useAppStore((state) => state.currentUrl);
+    const compact = useAppStore((state) => state.isMinimized);
 
     const { progress: playerProgress } = useYouTubePlayer();
 
@@ -113,10 +114,10 @@ function ContentRatingNotice() {
     }
 
     return (
-        <Card>
-            <CardTitle>
-                Content Rating
-            </CardTitle>
+        <Card
+            title="Content Rating"
+            compact={compact}
+        >
             <div className="flex flex-col gap-1 text-sm">
                 {computedContentRatings?.map((rating) => (
                     <div

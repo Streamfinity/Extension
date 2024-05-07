@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Button } from '@streamfinity/streamfinity-branding';
 import { useTranslation } from 'react-i18next';
-import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Card from '~/entries/contentScript/components/Card';
 import MarkReactionForm from '~/entries/contentScript/components/MarkReactionForm';
 import { useAppStore } from '~/entries/contentScript/state';
 
@@ -10,20 +10,22 @@ function MarkReactionNotice() {
     const [showForm, setShowForm] = useState(false);
 
     const currentUrl = useAppStore((state) => state.currentUrl);
+    const compact = useAppStore((state) => state.isMinimized);
 
     useEffect(() => {
         setShowForm(false);
     }, [currentUrl]);
 
     return (
-        <Card className="flex flex-col">
+        <Card
+            title={t('markReaction.title')}
+            className="flex flex-col"
+            compact={compact}
+        >
 
             {!showForm && (
                 <div className="flex gap-4">
                     <div className="grow">
-                        <CardTitle>
-                            {t('markReaction.title')}
-                        </CardTitle>
                         <p className="text-sm">
                             {t('markReaction.intro')}
                         </p>
@@ -41,14 +43,9 @@ function MarkReactionNotice() {
             )}
 
             {showForm && (
-                <>
-                    <CardTitle>
-                        {t('actions.submitReaction')}
-                    </CardTitle>
-                    <Fragment key={currentUrl}>
-                        <MarkReactionForm onSubmitted={() => setShowForm(false)} />
-                    </Fragment>
-                </>
+                <Fragment key={currentUrl}>
+                    <MarkReactionForm onSubmitted={() => setShowForm(false)} />
+                </Fragment>
             )}
         </Card>
     );

@@ -2,7 +2,7 @@
 import React, { useMemo, Fragment } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Card from '~/entries/contentScript/components/Card';
 import { useReactions } from '~/common/bridge';
 import { reactionShape } from '~/shapes';
 import ServiceIcon from '~/components/Icons/ServiceIcon';
@@ -88,6 +88,7 @@ ReactionPreview.propTypes = {
 function ReactionsHistoryNotice() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
+    const compact = useAppStore((state) => state.isMinimized);
 
     const { user, isOwnVideo } = useAuth();
 
@@ -128,11 +129,12 @@ function ReactionsHistoryNotice() {
     }
 
     return (
-        <Card color="primary">
-            <CardTitle>
-                {isOwnVideo ? t('reactionHistory.titleOwn') : t('reactionHistory.title')}
-            </CardTitle>
-
+        <Card
+            title={isOwnVideo ? t('reactionHistory.titleOwn') : t('reactionHistory.title')}
+            color="primary"
+            compact={compact}
+            preview={reactions?.length > 0 && t('reactionHistory.preview', { count: reactions.length })}
+        >
             {(!isSubscribed) ? (
                 <>
                     <div className="mb-3 select-none">

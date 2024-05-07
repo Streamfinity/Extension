@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { reactionPolicyEnum } from '~/enums';
 import { getCurrentVideoPublishDate, buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
-import Card, { CardTitle } from '~/entries/contentScript/components/Card';
+import Card from '~/entries/contentScript/components/Card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
@@ -36,34 +36,36 @@ function prettyFormatCountdown(diff) {
 }
 
 function Notice({
-    title, description, cardColor, className,
+    title, description, preview = null, cardColor, className,
 }) {
     const { t } = useTranslation();
     const { isOwnVideo } = useAuth();
 
+    const compact = useAppStore((state) => state.isMinimized);
+
     return (
         <Card
+            title={t('reactionPolicy.title')}
             color={cardColor}
+            compact={compact}
+            preview={preview}
             className={classNames(
                 className,
                 'text-sm leading-normal',
             )}
         >
-            <CardTitle>
-                <div className="flex justify-between">
-                    {t('reactionPolicy.title')}
-                    {isOwnVideo && (
-                        <a
-                            href={buildFrontendUrl('/dashboard/policy')}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hover:opacity-75"
-                        >
-                            <PencilSquareIcon className="size-8" />
-                        </a>
-                    )}
-                </div>
-            </CardTitle>
+            <div className="flex justify-between">
+                {isOwnVideo && (
+                    <a
+                        href={buildFrontendUrl('/dashboard/policy')}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:opacity-75"
+                    >
+                        <PencilSquareIcon className="size-8" />
+                    </a>
+                )}
+            </div>
 
             {title && (
                 <div className="mb-2">
@@ -83,6 +85,7 @@ function Notice({
 Notice.propTypes = {
     title: PropTypes.string,
     description: childrenShape,
+    preview: PropTypes.string,
     className: PropTypes.string,
     cardColor: PropTypes.string.isRequired,
 };
@@ -334,6 +337,7 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="green"
+                preview={t('reactionPolicy.previewNone')}
                 title={isOwnVideo ? t('reactionPolicy.notSetOwn') : t('reactionPolicy.notSet')}
             />
         );
@@ -345,6 +349,7 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="green"
+                preview={t('reactionPolicy.previewAllowed')}
                 description={(
                     <div className="flex flex-col gap-4">
                         <NoticeLine
@@ -364,6 +369,7 @@ function ReactionPolicyNotice() {
         return (
             <Notice
                 cardColor="red"
+                preview={t('reactionPolicy.previewNotAllowed')}
                 description={(
                     <div className="flex flex-col gap-4">
                         <NoticeLine
@@ -383,6 +389,7 @@ function ReactionPolicyNotice() {
     return (
         <Notice
             cardColor="yellow"
+            preview={t('reactionPolicy.previewConditions')}
             description={(
                 <div className="flex flex-col gap-4">
                     <NoticeLine
