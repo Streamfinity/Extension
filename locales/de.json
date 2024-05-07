@@ -119,6 +119,8 @@
     "communityNotes": {
         "title": "Community Note",
         "rate": "Diese Notiz bewerten",
-        "readMore": "Mehr lesen..."
+        "add": "Notiz schreiben",
+        "readMore": "Mehr lesen...",
+        "none": "keine"
     }
 }
