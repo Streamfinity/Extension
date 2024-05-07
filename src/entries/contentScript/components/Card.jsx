@@ -70,12 +70,12 @@ function Card({
                         </div>
                         <div className="flex">
                             {preview && (
-                                <div className="mr-2 rounded-md bg-white/20 px-2 text-xs font-medium">
+                                <div className="mr-2 rounded-md px-2 text-xs font-medium dark:bg-white/20">
                                     {preview}
                                 </div>
                             )}
                             <div>
-                                <ChevronDownIcon className="size-6" />
+                                <ChevronDownIcon className={classNames(isExpanded && 'rotate-180', 'size-6 transition-transform opacity-70')} />
                             </div>
                         </div>
                     </button>
