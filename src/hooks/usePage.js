@@ -57,11 +57,6 @@ export function usePage() {
                 log.debug('---> new channel', channelInfo);
                 setCurrentChannel(channelInfo);
             }
-
-            console.log(
-                document.querySelector('#above-the-fold ytd-channel-name yt-formatted-string a'),
-                document.querySelector('span[itemprop="name"] link[itemprop="url"]'),
-            );
         }
 
         if (!hasChannel) {
