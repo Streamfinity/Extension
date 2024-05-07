@@ -21,7 +21,7 @@ function CommunityNoteNotice() {
         <a
             href={buildFrontendUrl(`/dashboard/notes?create_for_video_url=${currentUrl}`)}
             target="_blank"
-            className="text-sm font-semibold text-primary-700 transition-colors hover:text-primary-900"
+            className="text-sm font-semibold text-primary-700 transition-colors hover:text-primary-900 dark:text-primary-500 dark:hover:text-primary-600"
             rel="noreferrer"
         >
             {t('communityNotes.add')}
@@ -68,7 +68,7 @@ function CommunityNoteNotice() {
                             title={source}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-1 font-semibold text-primary-700 transition-colors hover:text-primary-900"
+                            className="px-1 font-semibold text-primary-700 transition-colors hover:text-primary-900 dark:text-primary-500 dark:hover:text-primary-600"
                         >
                             [
                             {index}
@@ -80,7 +80,7 @@ function CommunityNoteNotice() {
                     <a
                         href={buildFrontendUrl(`/dashboard/notes/review?note_id=${note.id}`)}
                         target="_blank"
-                        className="font-semibold text-primary-700 transition-colors hover:text-primary-900"
+                        className="font-semibold text-primary-700 transition-colors hover:text-primary-900 dark:text-primary-500 dark:hover:text-primary-600"
                         rel="noreferrer"
                     >
                         {t('communityNotes.rate')}

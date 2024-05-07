@@ -41,7 +41,7 @@ function Card({
         green: 'bg-[#01FF94]', // TODO
         red: 'bg-[#FF5C00]',
         yellow: 'bg-[#FFA800]',
-        dashed: 'border-2 border-dashed',
+        dashed: 'border-2 border-dashed border-gray-200 dark:border-gray-600',
         // Brand
         primary: 'bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to',
         'brand-viewer': 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',
