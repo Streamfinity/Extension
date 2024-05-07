@@ -143,9 +143,7 @@ function App() {
 
             {isIncognito && (
                 <div className="text-center text-sm">
-                    invislbe mode until
-                    {' '}
-                    {moment(user.extension_invisible_until).format('HH:mm')}
+                    {t('incognito.title', { time: moment(user.extension_invisible_until).format('HH:mm') })}
                 </div>
             )}
 

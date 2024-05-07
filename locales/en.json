@@ -112,5 +112,8 @@
         "liveReactions": "Live Reactions",
         "loading": "Loading...",
         "videoReactions": "Video Reactions"
+    },
+    "incognito": {
+        "title": "Incognito mode until {{time}}"
     }
 }
