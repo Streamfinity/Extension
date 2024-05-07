@@ -119,6 +119,8 @@
     "communityNotes": {
         "title": "Community Note",
         "rate": "Rate this note",
-        "readMore": "Read more..."
+        "add": "Write a note",
+        "readMore": "Read more...",
+        "none": "none"
     }
 }
