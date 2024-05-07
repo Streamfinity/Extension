@@ -3,7 +3,7 @@
         "abort": "Abbrechen",
         "loginWith": "Login mit Streamfinity",
         "logout": "Logout",
-        "markAsReaction": "Als Reaction markieren",
+        "markAsReaction": "Reaction markieren",
         "showAll": "Alles anzeigen",
         "submit": "Einreichen",
         "submitReaction": "Reaction einreichen",
@@ -18,7 +18,9 @@
         "noReactionsYet": "Es sind noch keine Reactions für dieses Video vorhanden.",
         "reactionsTitle": "{{count}} Reactions",
         "title": "Analysen",
-        "uniqueViews": "Eindeutige Aufrufe"
+        "titleCompact": "Analysen für dein Video",
+        "uniqueViews": "Eindeutige Aufrufe",
+        "preview": "{{count}} Aufrufe"
     },
     "auth": {
         "loginDescription": "Starte, indem du dich mit deinem YoutTube Account einloggst!"
@@ -51,7 +53,8 @@
         "inAVideo": "In einem Video",
         "noReactionsYet": "Es gibt noch keine Reactions für dieses Video.",
         "title": "Reaction-Historie",
-        "titleOwn": "Reactions auf dein Video"
+        "titleOwn": "Reactions auf dein Video",
+        "preview": "{{count}} Reactions"
     },
     "reactionPolicy": {
         "notSet": "Zu diesem Video ist keine Reaction-Policy festgelegt.",
@@ -63,7 +66,11 @@
             "notice": "Beachte:",
             "reactUpToPercentage": "Du darfst nur auf {{value}}% des Videos reagieren"
         },
-        "title": "Reaction-Policy"
+        "title": "Reaction-Policy",
+        "previewNone": "nicht festgelegt",
+        "previewAllowed": "erlaubt",
+        "previewNotAllowed": "nicht allowed",
+        "previewConditions": "Bedingungen"
     },
     "settings": {
         "incognito": "Inkognito Modus (Videos werden nicht getracked)",
@@ -73,7 +80,7 @@
         "title": "Einstellungen"
     },
     "status": {
-        "disableStreamerMode": "Deaktive Streamer-Modus",
+        "disableStreamerMode": "Streamer-Modus",
         "disableStreamerModeDescription": "Zeige alle ausgeblendeten Elemente der Erweiterung, bis die Seite neugeladen wird.",
         "enableStreamerMode": "Aktiviere Streamer-Modus",
         "youAreLive": "Du bist live",
@@ -89,7 +96,8 @@
             "loading": "Lädt...",
             "pending": "Tippe den Creator-Namen um zu suchen"
         },
-        "title": "Vorschlag"
+        "title": "Vorschlag",
+        "titleCompact": "Video vorschlagen"
     },
     "subwaySurfer": {
         "gameplayBy": "Gameplay von {{name}}"
