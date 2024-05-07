@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@streamfinity/streamfinity-branding';
 import { useTranslation } from 'react-i18next';
-import Card, { CardTitleSubtle } from '~/entries/contentScript/components/Card';
+import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import useAuth, { STATE_DEFAULT } from '~/hooks/useAuth';
 
 function StreamerModeNotice() {
@@ -11,9 +11,9 @@ function StreamerModeNotice() {
     return (
         <Card className="flex gap-4">
             <div className="grow text-sm">
-                <CardTitleSubtle>
+                <CardTitle>
                     {t('status.disableStreamerMode')}
-                </CardTitleSubtle>
+                </CardTitle>
                 <p>
                     {t('status.disableStreamerModeDescription')}
                 </p>

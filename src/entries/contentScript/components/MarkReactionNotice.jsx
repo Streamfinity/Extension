@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Button } from '@streamfinity/streamfinity-branding';
 import { useTranslation } from 'react-i18next';
-import Card, { CardTitle, CardTitleSubtle } from '~/entries/contentScript/components/Card';
+import Card, { CardTitle } from '~/entries/contentScript/components/Card';
 import MarkReactionForm from '~/entries/contentScript/components/MarkReactionForm';
 import { useAppStore } from '~/entries/contentScript/state';
 
@@ -21,9 +21,9 @@ function MarkReactionNotice() {
             {!showForm && (
                 <div className="flex gap-4">
                     <div className="grow">
-                        <CardTitleSubtle>
+                        <CardTitle>
                             {t('markReaction.title')}
-                        </CardTitleSubtle>
+                        </CardTitle>
                         <p className="text-sm">
                             {t('markReaction.intro')}
                         </p>
