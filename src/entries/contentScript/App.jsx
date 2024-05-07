@@ -23,6 +23,7 @@ import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
 import Footer from '~/entries/contentScript/components/Footer';
+import { storageGetCompact, storageSetCompact } from '~/entries/background/common/storage';
 
 function App() {
     const { t, i18n } = useTranslation();
@@ -30,8 +31,14 @@ function App() {
         user, loadingAuth, liveStream, login, state, isIncognito, isTrackingVideos,
     } = useAuth();
 
-    const [setCurrentUrl, isDarkMode, isDeviceDarkMode, isMinimized] = useAppStore(
-        useShallow((storeState) => ([storeState.setCurrentUrl, storeState.isDarkMode, storeState.isDeviceDarkMode, storeState.isMinimized])),
+    const [setCurrentUrl, isDarkMode, isDeviceDarkMode, isCompact, setIsCompact] = useAppStore(
+        useShallow((storeState) => ([
+            storeState.setCurrentUrl,
+            storeState.isDarkMode,
+            storeState.isDeviceDarkMode,
+            storeState.isCompact,
+            storeState.setIsCompact,
+        ])),
     );
 
     // Set language
@@ -66,6 +73,20 @@ function App() {
             window.removeEventListener(WINDOW_NAVIGATE, onChangePage);
         };
     }, []);
+
+    // Compact mode
+
+    useEffect(() => {
+        (async () => {
+            const current = await storageGetCompact();
+
+            if (isCompact === null) {
+                setIsCompact(!!current);
+            } else if (current !== isCompact) {
+                await storageSetCompact(isCompact);
+            }
+        })();
+    }, [isCompact]);
 
     // Theme listener
 
@@ -110,7 +131,7 @@ function App() {
         <AppContainer
             dark={isDarkMode}
             state={state}
-            isMinimized={isMinimized}
+            isCompact={isCompact}
             isTrackingVideos={isTrackingVideos}
         >
             {user && (

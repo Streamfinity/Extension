@@ -8,7 +8,10 @@
         "submit": "Submit",
         "submitReaction": "Submit Reaction",
         "suggestVideo": "Suggest Video",
-        "tryAgain": "Try again"
+        "tryAgain": "Try again",
+        "compactEnable": "Collapse",
+        "compactDisable": "Show more",
+        "yourDashboard": "Your Dashboard"
     },
     "analytics": {
         "clicks": "Unique views",

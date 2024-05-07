@@ -41,7 +41,7 @@ function Notice({
     const { t } = useTranslation();
     const { isOwnVideo } = useAuth();
 
-    const compact = useAppStore((state) => state.isMinimized);
+    const compact = useAppStore((state) => state.isCompact);
 
     return (
         <Card

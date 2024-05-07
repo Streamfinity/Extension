@@ -8,7 +8,10 @@
         "submit": "Einreichen",
         "submitReaction": "Reaction einreichen",
         "suggestVideo": "Video vorschlagen",
-        "tryAgain": "Erneut versuchen"
+        "tryAgain": "Erneut versuchen",
+        "compactEnable": "Kompaktmodus",
+        "compactDisable": "Alles anzeigen",
+        "yourDashboard": "Dein Dashboard"
     },
     "analytics": {
         "clicks": "Eindeutige Aufrufe",

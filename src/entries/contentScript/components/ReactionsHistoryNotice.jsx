@@ -88,7 +88,7 @@ ReactionPreview.propTypes = {
 function ReactionsHistoryNotice() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
-    const compact = useAppStore((state) => state.isMinimized);
+    const compact = useAppStore((state) => state.isCompact);
 
     const { user, isOwnVideo } = useAuth();
 

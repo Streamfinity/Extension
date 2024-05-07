@@ -9,7 +9,7 @@ function StreamerModeNotice() {
     const { t } = useTranslation();
     const { setOverrideState } = useAuth();
 
-    const compact = useAppStore((state) => state.isMinimized);
+    const compact = useAppStore((state) => state.isCompact);
 
     return (
         <Card

@@ -10,7 +10,7 @@ function MarkReactionNotice() {
     const [showForm, setShowForm] = useState(false);
 
     const currentUrl = useAppStore((state) => state.currentUrl);
-    const compact = useAppStore((state) => state.isMinimized);
+    const compact = useAppStore((state) => state.isCompact);
 
     useEffect(() => {
         setShowForm(false);

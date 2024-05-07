@@ -1,14 +1,16 @@
 import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
+import { useTranslation } from 'react-i18next';
 import { buildFrontendUrl } from '~/common/utility';
 import useAuth from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 
 function Footer() {
+    const { t } = useTranslation();
     const { user } = useAuth();
 
-    const [isMinimized, setIsMinimized] = useAppStore(
-        useShallow((storeState) => ([storeState.isMinimized, storeState.setIsMinimized])),
+    const [isCompact, setIsCompact] = useAppStore(
+        useShallow((storeState) => ([storeState.isCompact, storeState.setIsCompact])),
     );
 
     if (!user) {
@@ -24,9 +26,9 @@ function Footer() {
                 <button
                     type="button"
                     className="font-medium"
-                    onClick={() => setIsMinimized(!isMinimized)}
+                    onClick={() => setIsCompact(!isCompact)}
                 >
-                    {isMinimized ? 'Maximize' : 'Minimize'}
+                    {isCompact ? t('actions.compactDisable') : t('actions.compactEnable')}
                 </button>
                 <a
                     href={buildFrontendUrl('/dashboard')}
@@ -34,7 +36,7 @@ function Footer() {
                     rel="noreferrer"
                     className="font-medium"
                 >
-                    Your Dashboard
+                    {t('actions.yourDashboard')}
                 </a>
             </div>
         </div>
