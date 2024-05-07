@@ -16,10 +16,10 @@ function AppContainer({
     dark,
     user,
     state,
-    isCompact = false,
     isTrackingVideos = undefined,
 }) {
     const isVisible = useAppStore((storeState) => storeState.isVisible);
+    const compact = useAppStore((storeState) => storeState.isCompact);
 
     const [clickedCount, setClickedCount] = useState(0);
 
@@ -44,7 +44,7 @@ function AppContainer({
         >
             <div className={classNames(
                 'mb-4 overflow-y-auto rounded-[12px] p-[2px]',
-                isCompact ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br',
+                compact ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',
                 state === STATE_LIVE && 'from-brand-streamer-gradient-from to-brand-streamer-gradient-to',
                 state === STATE_OWN_VIDEO && 'from-brand-creator-gradient-from to-brand-creator-gradient-to',
@@ -117,7 +117,6 @@ AppContainer.propTypes = {
         STATE_LIVE,
         STATE_OWN_VIDEO,
     ]),
-    isCompact: PropTypes.bool,
     isTrackingVideos: PropTypes.bool,
 };
 

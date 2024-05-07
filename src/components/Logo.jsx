@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import logoDark from '~/assets/Logo-Dark-400.png';
 import logoWhite from '~/assets/Logo-Light-400.png';
 import logoStyles from './Logo.module.css';
+import { useAppStore } from '~/entries/contentScript/state';
 
 function Logo({
     size,
@@ -17,8 +18,10 @@ function Logo({
     const imageUrlLight = new URL(logoWhite, import.meta.url).href;
 
     const { t } = useTranslation();
+    const compact = useAppStore((storeState) => storeState.isCompact);
 
-    const logoClassNames = size === 'default' ? 'size-9' : 'size-6';
+    const computedSize = compact ? 'small' : size;
+    const logoClassNames = computedSize === 'default' ? 'size-9' : 'size-6';
 
     const container = useRef();
 
@@ -40,7 +43,7 @@ function Logo({
                     }
                 }}
                 className={classNames(
-                    size === 'default' ? 'gap-4' : 'gap-2',
+                    computedSize === 'default' ? 'gap-4' : 'gap-2',
                     'flex items-center',
                 )}
             >
@@ -55,7 +58,7 @@ function Logo({
                     alt="Logo"
                 />
                 <div className={classNames(
-                    size === 'default' ? 'text-4xl' : 'text-xl',
+                    computedSize === 'default' ? 'text-4xl' : 'text-2xl',
                     'font-semibold',
                 )}
                 >
