@@ -207,6 +207,17 @@ export async function getVideoAnalytics({ videoUrl, accountIds }) {
     return analytics;
 }
 
+export async function getCommunityNotes({ videoUrl }) {
+    const { data: notes } = await api('community/notes/for-video', {
+        token: await storageGetToken(),
+        query: {
+            video_url: videoUrl,
+        },
+    });
+
+    return notes;
+}
+
 export async function updateUserIncognitoMode({ length }) {
     const { data } = await api('extension/visibility', {
         method: 'POST',
