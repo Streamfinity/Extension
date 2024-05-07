@@ -73,7 +73,7 @@ StatisticChange.propTypes = {
 function AnalyticsNotice() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
-    const compact = useAppStore((state) => state.isMinimized);
+    const compact = useAppStore((state) => state.isCompact);
     const { accounts, user } = useAuth();
 
     const { data: videos } = useVideoAnalytics({

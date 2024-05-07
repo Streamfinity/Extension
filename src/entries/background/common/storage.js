@@ -5,6 +5,7 @@ export const STORAGE_AUTH_INFO = 'authInfo';
 export const STORAGE_TOKEN = 'token';
 export const STORAGE_TOKEN_EXPIRES = 'tokenExpiresIn';
 export const STORAGE_USER = 'user';
+export const STORAGE_COMPACT = 'compact';
 export const STORAGE_SETTING_SCRIPT_VISIBLE = 'invis';
 
 // Setter
@@ -22,6 +23,10 @@ export async function storageSetUser(user) {
 
 export async function storageSetToken(token) {
     await browser.storage.sync.set({ [STORAGE_TOKEN]: token });
+}
+
+export async function storageSetCompact(compact) {
+    await browser.storage.sync.set({ [STORAGE_COMPACT]: compact });
 }
 
 export async function storageSetSettingVisible(visible) {
@@ -43,6 +48,10 @@ export async function storageGetSettingVisible() {
     }
 
     return value !== false;
+}
+
+export async function storageGetCompact() {
+    return (await browser.storage.sync.get(STORAGE_COMPACT))[STORAGE_COMPACT];
 }
 
 export async function storageGetUser() {

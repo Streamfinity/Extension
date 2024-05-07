@@ -15,7 +15,7 @@ const log = createLogger('Content-Rating');
 
 function ContentRatingNotice() {
     const currentUrl = useAppStore((state) => state.currentUrl);
-    const compact = useAppStore((state) => state.isMinimized);
+    const compact = useAppStore((state) => state.isCompact);
 
     const { progress: playerProgress } = useYouTubePlayer();
 

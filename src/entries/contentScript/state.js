@@ -8,7 +8,7 @@ export const useAppStore = create((set) => ({
     overrideState: null,
     isDarkMode: false,
     isDeviceDarkMode: false,
-    isMinimized: false,
+    isCompact: null,
     setCurrentUrl: (currentUrl) => set(() => ({ currentUrl })),
     setCurrentChannel: (currentChannel) => set(() => ({ currentChannel })),
     setReactionPolicy: (reactionPolicy) => set(() => ({ reactionPolicy })),
@@ -16,5 +16,5 @@ export const useAppStore = create((set) => ({
     setOverrideState: (overrideState) => set(() => ({ overrideState })),
     setIsDarkMode: (isDarkMode) => set(() => ({ isDarkMode })),
     setIsDeviceDarkMode: (isDeviceDarkMode) => set(() => ({ isDeviceDarkMode })),
-    setIsMinimized: (isMinimized) => set(() => ({ isMinimized })),
+    setIsCompact: (isCompact) => set(() => ({ isCompact })),
 }));

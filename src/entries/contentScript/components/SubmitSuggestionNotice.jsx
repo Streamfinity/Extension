@@ -9,7 +9,7 @@ function SubmitSuggestionNotice() {
     const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);
 
-    const compact = useAppStore((state) => state.isMinimized);
+    const compact = useAppStore((state) => state.isCompact);
 
     return (
         <Card
