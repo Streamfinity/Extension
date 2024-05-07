@@ -115,5 +115,10 @@
     },
     "incognito": {
         "title": "Incognito mode until {{time}}"
+    },
+    "communityNotes": {
+        "title": "Community Note",
+        "rate": "Rate this note",
+        "readMore": "Read more..."
     }
 }

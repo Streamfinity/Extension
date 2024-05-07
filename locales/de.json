@@ -115,5 +115,10 @@
     },
     "incognito": {
         "title": "Inkognito Modus bis {{time}}"
+    },
+    "communityNotes": {
+        "title": "Community Note",
+        "rate": "Diese Notiz bewerten",
+        "readMore": "Mehr lesen..."
     }
 }
