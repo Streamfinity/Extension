@@ -132,7 +132,7 @@ function App() {
                 <AnalyticsNotice />
             )}
 
-            {(state !== STATE_LIVE && !isMinimized) && (
+            {state !== STATE_LIVE && (
                 <SubmitSuggestionNotice />
             )}
 
@@ -144,7 +144,7 @@ function App() {
 
             <OriginalVideoNotice />
 
-            {(state !== STATE_LIVE && !isMinimized) && (
+            {state !== STATE_LIVE && (
                 <MarkReactionNotice />
             )}
 
