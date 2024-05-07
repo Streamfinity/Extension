@@ -130,6 +130,15 @@ export async function setTheme({ isDark }) {
     );
 }
 
+// Community Notes
+
+export async function getCommunityNotes({ videoUrl }) {
+    return sendMessageToBackground(
+        messages.COMMUNITY_NOTES_GET,
+        { videoUrl },
+    );
+}
+
 // ------------------------------------------------------------------------------------------------------------------------
 // Hooks
 // ------------------------------------------------------------------------------------------------------------------------
@@ -201,6 +210,19 @@ export function useVideoAnalytics({ videoUrl, accountIds }) {
         queryKey: ['video-analytics', videoUrl, accountIds],
         queryFn: () => getVideoAnalytics({ videoUrl, accountIds }),
         enabled: !!videoUrl && !!accountIds?.length,
+    });
+
+    return {
+        ...query,
+        data: query.data?.data,
+    };
+}
+
+export function useCommunityNotes({ videoUrl }) {
+    const query = useQuery({
+        queryKey: ['community-notes', videoUrl],
+        queryFn: () => getCommunityNotes({ videoUrl }),
+        enabled: !!videoUrl,
     });
 
     return {

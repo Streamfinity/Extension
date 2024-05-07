@@ -29,6 +29,7 @@ async function getResponse(type, data) {
         [messages.REACTIONS_GET_FOR_VIDEO]: api.getReactionsForVideo,
         [messages.REACTIONS_GET_ORIGINAL_VIDEOS]: api.getOriginalVideosForVideo,
         [messages.VIDEO_ANALYTICS_GET]: api.getVideoAnalytics,
+        [messages.COMMUNITY_NOTES_GET]: api.getCommunityNotes,
         [messages.TOGGLE_INCOGNITO_MODE]: api.updateUserIncognitoMode,
     };
 
