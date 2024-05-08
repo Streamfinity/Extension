@@ -56,7 +56,7 @@ function CommunityNoteNotice() {
                 onClick={() => setIsExpanded(true)}
                 className={classNames(
                     (expandable && !isExpanded) ? 'max-h-[5rem] overflow-hidden cursor-pointer' : 'cursor-default',
-                    'relative text-sm text-left select-text',
+                    'relative text-sm text-left select-text w-full',
                 )}
             >
                 <p>
