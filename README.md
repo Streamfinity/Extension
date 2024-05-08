@@ -34,7 +34,7 @@
 
 ## Contributing
 
-<a href="https://discord.gg/FsB6ZTAtjq"><img src="https://img.shields.io/discord/1040164710106005524?logo=discord&logoColor=%23a3a3a3&label=Discord&color=%235865F2"></a>
+<a href="https://sfin.it/discord"><img src="https://img.shields.io/discord/1040164710106005524?logo=discord&logoColor=%23a3a3a3&label=Discord&color=%235865F2"></a>
 
 > [!NOTE]  
 > This project is provided as-is and we are not actively promoting contributions. However, if you wish to contribute to this repository, you will have to sign a Contributor License Agreement (**CLA**) in order for you PRs to be considered for merging.
