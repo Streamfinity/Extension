@@ -71,7 +71,7 @@ function CommunityNoteNotice() {
                             className="px-1 font-semibold text-primary-700 transition-colors hover:text-primary-900 dark:text-primary-500 dark:hover:text-primary-600"
                         >
                             [
-                            {index}
+                            {index + 1}
                             ]
                         </a>
                     ))}
