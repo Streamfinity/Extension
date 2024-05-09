@@ -54,7 +54,7 @@ function Card({
         return (
             <div className={classNames(
                 colorClassName,
-                'p-[1px] rounded-[8px]',
+                'py-[2px] px-px rounded-[8px]',
             )}
             >
                 <div className={classNames(
