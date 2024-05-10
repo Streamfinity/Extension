@@ -78,12 +78,12 @@ function CommunityNoteNotice() {
                 </p>
                 <div className="mt-2 flex justify-between">
                     <a
-                        href={buildFrontendUrl(`/dashboard/notes/review?note_id=${note.id}`)}
+                        href={buildFrontendUrl(`/dashboard/notes/review?report_note_id=${note.id}`)}
                         target="_blank"
                         className="font-semibold text-primary-700 transition-colors hover:text-primary-900 dark:text-primary-500 dark:hover:text-primary-600"
                         rel="noreferrer"
                     >
-                        {t('communityNotes.rate')}
+                        {t('communityNotes.report')}
                     </a>
                     {writeNoteLink}
                 </div>
