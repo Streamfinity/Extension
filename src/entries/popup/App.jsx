@@ -27,7 +27,7 @@ function App() {
     }, []);
 
     return (
-        <main className="dark flex h-[21rem] min-w-[21rem] flex-col bg-black font-sans text-white">
+        <main className="dark flex h-[23rem] min-w-[21rem] flex-col overflow-y-auto bg-black font-sans text-white">
             <div>
                 <div className="flex justify-center p-3">
                     <Logo size="small" />

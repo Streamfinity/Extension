@@ -66,7 +66,7 @@ function SettingsView() {
     const endpoint = new URL(import.meta.env.VITE_API_URL);
 
     return (
-        <div className="flex h-full flex-col justify-between">
+        <div className="flex h-full flex-col justify-between gap-6">
             <Card
                 title={t('settings.title')}
                 color="primary"
