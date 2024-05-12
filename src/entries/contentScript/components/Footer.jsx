@@ -22,10 +22,11 @@ function Footer({
     }
 
     return (
-        <div className="flex justify-between gap-4 text-sm font-medium text-gray-500 dark:text-gray-300">
+        <div className="flex justify-between gap-4 text-sm font-medium text-gray-500 dark:text-gray-400">
             <button
                 type="button"
                 onClick={() => setIsCompact(!isCompact)}
+                className="dark:hover:text-gray-300"
             >
                 {isCompact ? t('actions.compactDisable') : t('actions.compactEnable')}
             </button>
@@ -34,6 +35,7 @@ function Footer({
                 <button
                     onClick={() => setOverrideState(STATE_LIVE)}
                     type="button"
+                    className="dark:hover:text-gray-300"
                 >
                     {t('status.enableStreamerMode')}
                 </button>
@@ -44,6 +46,7 @@ function Footer({
                 target="_blank"
                 rel="noreferrer"
                 title={user.display_name}
+                className="dark:hover:text-gray-300"
             >
                 {t('actions.yourDashboard')}
             </a>
