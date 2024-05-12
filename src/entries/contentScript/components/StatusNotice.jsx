@@ -2,51 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SignalIcon } from '@heroicons/react/16/solid';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import { buildFrontendUrl } from '~/common/utility';
-import useAuth, { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
+import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
+import { useAppStore } from '~/entries/contentScript/state';
 
-function StatusNotice({ state, liveStream }) {
+function StatusNotice({
+    liveStream,
+}) {
     const { t } = useTranslation();
-    const { setOverrideState } = useAuth();
+    const compact = useAppStore((state) => state.isCompact);
+
+    if (!liveStream) {
+        return null;
+    }
 
     return (
-        <>
-            {liveStream && (
-                <a
-                    href={buildFrontendUrl('/dashboard/streams')}
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    <div className="flex items-center gap-3 rounded-lg bg-brand-streamer-gradient-from px-4 py-1 text-white">
-                        <SignalIcon className="size-8" />
-                        <div>
-                            {liveStream?.service?.title ? (
-                                <span className="font-bold uppercase">
-                                    {t('status.youAreLiveOn', {
-                                        service: liveStream?.service?.title,
-                                        accountName: liveStream?.account?.display_name,
-                                    })}
-                                </span>
-                            ) : (
-                                <span className="font-bold uppercase">
-                                    {t('status.youAreLive')}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                </a>
+        <a
+            href={buildFrontendUrl('/dashboard/streams')}
+            target="_blank"
+            rel="noreferrer"
+        >
+            <div className={classNames(
+                'flex items-center gap-3 bg-brand-streamer-gradient-from px-4 py-1 text-white rounded-[8px]',
+                compact ? '' : '',
             )}
-
-            {(liveStream && state !== STATE_LIVE) && (
-                <button
-                    onClick={() => setOverrideState(STATE_LIVE)}
-                    type="button"
-                    className="w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-                >
-                    {t('status.enableStreamerMode')}
-                </button>
-            )}
-        </>
+            >
+                <SignalIcon className="size-8" />
+                <div>
+                    {liveStream?.service?.title ? (
+                        <span className="font-bold uppercase">
+                            {t('status.youAreLiveOn', {
+                                service: liveStream?.service?.title,
+                                accountName: liveStream?.account?.display_name,
+                            })}
+                        </span>
+                    ) : (
+                        <span className="font-bold uppercase">
+                            {t('status.youAreLive')}
+                        </span>
+                    )}
+                </div>
+            </div>
+        </a>
     );
 }
 

@@ -1,13 +1,17 @@
 import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import { buildFrontendUrl } from '~/common/utility';
-import useAuth from '~/hooks/useAuth';
+import useAuth, { STATE_LIVE, STATE_DEFAULT, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 
-function Footer() {
+function Footer({
+    state,
+    liveStream = null,
+}) {
     const { t } = useTranslation();
-    const { user } = useAuth();
+    const { user, setOverrideState } = useAuth();
 
     const [isCompact, setIsCompact] = useAppStore(
         useShallow((storeState) => ([storeState.isCompact, storeState.setIsCompact])),
@@ -18,32 +22,50 @@ function Footer() {
     }
 
     return (
-        <div className="flex justify-between text-sm text-gray-500 dark:text-gray-300">
-            <div>
-                {user.display_name}
-            </div>
-            <div className="flex gap-4">
-                <button
-                    type="button"
-                    className="font-medium"
-                    onClick={() => setIsCompact(!isCompact)}
-                >
-                    {isCompact ? t('actions.compactDisable') : t('actions.compactEnable')}
-                </button>
-                <a
-                    href={buildFrontendUrl('/dashboard')}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-medium"
-                >
-                    {t('actions.yourDashboard')}
-                </a>
-            </div>
-        </div>
+        <div className="flex justify-between gap-4 text-sm font-medium text-gray-500 dark:text-gray-300">
+            <button
+                type="button"
+                onClick={() => setIsCompact(!isCompact)}
+            >
+                {isCompact ? t('actions.compactDisable') : t('actions.compactEnable')}
+            </button>
 
+            {(liveStream && state !== STATE_LIVE) && (
+                <button
+                    onClick={() => setOverrideState(STATE_LIVE)}
+                    type="button"
+                >
+                    {t('status.enableStreamerMode')}
+                </button>
+            )}
+
+            <a
+                href={buildFrontendUrl('/dashboard')}
+                target="_blank"
+                rel="noreferrer"
+                title={user.display_name}
+            >
+                {t('actions.yourDashboard')}
+            </a>
+        </div>
     );
 }
 
-Footer.propTypes = {};
+Footer.propTypes = {
+    state: PropTypes.oneOf([
+        STATE_DEFAULT,
+        STATE_LIVE,
+        STATE_OWN_VIDEO,
+    ]),
+    liveStream: PropTypes.shape({
+        title: PropTypes.string,
+        account: PropTypes.shape({
+            display_name: PropTypes.string,
+        }),
+        service: PropTypes.shape({
+            title: PropTypes.string,
+        }),
+    }),
+};
 
 export default Footer;

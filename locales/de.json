@@ -85,7 +85,7 @@
     "status": {
         "disableStreamerMode": "Streamer-Modus",
         "disableStreamerModeDescription": "Zeige alle ausgeblendeten Elemente der Erweiterung, bis die Seite neugeladen wird.",
-        "enableStreamerMode": "Aktiviere Streamer-Modus",
+        "enableStreamerMode": "Streamer-Modus",
         "youAreLive": "Du bist live",
         "youAreLiveOn": "Du bist live auf {{service}} ({{accountName}})",
         "trackingDisabled": "Wir zeichnen deine Videohistorie nicht auf",

@@ -173,7 +173,10 @@ function App() {
                 <StreamerModeNotice />
             )}
 
-            <Footer />
+            <Footer
+                liveStream={liveStream}
+                state={state}
+            />
 
             <PlayerProgressListener active={isTrackingVideos} />
             <WatchedVideosObserver />

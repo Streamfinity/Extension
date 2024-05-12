@@ -85,7 +85,7 @@
     "status": {
         "disableStreamerMode": "Disable Streamer Mode",
         "disableStreamerModeDescription": "Show all hidden elements of the extension until you reload the page.",
-        "enableStreamerMode": "Enable Streamer Mode",
+        "enableStreamerMode": "Streamer Mode",
         "youAreLive": "You are live",
         "youAreLiveOn": "You are live on {{service}} ({{accountName}})",
         "trackingDisabled": "We are currently not tracking any videos",
