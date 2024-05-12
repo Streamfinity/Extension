@@ -42,7 +42,7 @@ function SettingsView() {
 
     const isIncognitoToggleActive = useMemo(() => expandIncognito || isIncognito, [expandIncognito, isIncognito]);
 
-    const incognitoAvailableLengths = ['1h', '3h', '8h', '24h', '3d'];
+    const incognitoAvailableLengths = ['15m', '30m', '1h', '3h', '6h'];
 
     async function localToggleIncognitoMode(length) {
         await toggleIncognitoMode({
