@@ -4,7 +4,6 @@ import { SignalIcon } from '@heroicons/react/16/solid';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { buildFrontendUrl } from '~/common/utility';
-import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 
 function StatusNotice({
@@ -49,11 +48,6 @@ function StatusNotice({
 }
 
 StatusNotice.propTypes = {
-    state: PropTypes.oneOf([
-        STATE_DEFAULT,
-        STATE_LIVE,
-        STATE_OWN_VIDEO,
-    ]),
     liveStream: PropTypes.shape({
         title: PropTypes.string,
         account: PropTypes.shape({
@@ -67,7 +61,6 @@ StatusNotice.propTypes = {
 
 StatusNotice.defaultProps = {
     liveStream: null,
-    state: STATE_DEFAULT,
 };
 
 export default StatusNotice;
