@@ -54,11 +54,11 @@ function Card({
         return (
             <div className={classNames(
                 colorClassName,
-                'py-[2px] px-px rounded-[8px]',
+                'p-[1px] rounded-[8px]',
             )}
             >
                 <div className={classNames(
-                    'flex flex-col gap-2 rounded-[7px] px-3 py-1 text-sm bg-white/90 dark:bg-black/90',
+                    'flex flex-col gap-2 rounded-[7px] px-3 py-[0.25rem] text-sm bg-white/90 dark:bg-black/90',
                 )}
                 >
                     <button
