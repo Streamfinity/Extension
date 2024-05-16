@@ -17,6 +17,7 @@ module.exports = {
         'react',
         'import',
         'only-warn',
+        'eslint-plugin-react-compiler',
     ],
     ignorePatterns: [
         'dist/**/*',
@@ -29,6 +30,7 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-unused-vars': ['warn'],
         'no-undef': 'off',
+        'react-compiler/react-compiler': 2,
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
         'react/require-default-props': 'off',
