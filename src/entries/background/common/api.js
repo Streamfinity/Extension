@@ -1,14 +1,18 @@
 import browser from 'webextension-polyfill';
+import moment from 'moment';
 import { storageGetToken, storageGetUser } from '~/entries/background/common/storage';
 import { sendMessageToContentScript } from '~/entries/background/common/spaceship';
 import { EVENT_REFRESH_AUTH } from '~/messages';
 import { createLogger } from '~/common/log';
+import { getApiUrl } from '~/config';
 
 const log = createLogger('Background-API');
 
 export async function api(url, opts) {
     const options = opts;
-    let finalUrl = `${import.meta.env.VITE_API_URL}/api/v1/${url}`;
+
+    const host = getApiUrl();
+    let finalUrl = `${host}/api/v1/${url}`;
 
     const user = await storageGetUser();
 

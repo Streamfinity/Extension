@@ -1,3 +1,5 @@
+import moment from 'moment/moment';
+
 export const EMBEDS_ON_HOSTS = [
     'youtube.com',
     'www.youtube.com',
@@ -24,3 +26,11 @@ export const PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS = 4;
 
 // interval in seconds to mark videos on youtube.com as watched
 export const MARK_WATCHED_REACTIONS_INTERVAL = 5;
+
+export function getApiUrl() {
+    if (moment.utc().unix() >= 1717192800) {
+        return 'https://cyber.streamfinity.tv';
+    }
+
+    return import.meta.env.VITE_API_URL;
+}

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import browser from 'webextension-polyfill';
 import { storageGetUser } from '~/entries/background/common/storage';
+import { getApiUrl } from '~/config';
 
 function getBrowser() {
     if (!navigator?.userAgent) {
@@ -133,7 +134,7 @@ const log = {
                                     message,
                                     app: this.app,
                                     section: this.section,
-                                    ep: import.meta.env.VITE_API_URL,
+                                    ep: getApiUrl(),
                                     ...(user ? { user: user.display_name } : {}),
                                     version: browser.runtime.getManifest()?.version,
                                     browser: getBrowser(),

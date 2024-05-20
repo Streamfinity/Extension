@@ -10,6 +10,7 @@ import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
 import { Switch } from '~/components/Ui/Switch';
 import Card from '~/entries/contentScript/components/Card';
+import { getApiUrl } from '~/config';
 
 function SettingsView() {
     const { t } = useTranslation();
@@ -63,7 +64,7 @@ function SettingsView() {
         }
     }
 
-    const endpoint = new URL(import.meta.env.VITE_API_URL);
+    const endpoint = new URL(getApiUrl());
 
     return (
         <div className="flex h-full flex-col justify-between gap-6">

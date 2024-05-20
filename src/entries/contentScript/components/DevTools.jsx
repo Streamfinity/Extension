@@ -1,5 +1,6 @@
 import React from 'react';
 import useAuth from '~/hooks/useAuth';
+import { getApiUrl } from '~/config';
 
 function DevTools() {
     const {
@@ -14,7 +15,7 @@ function DevTools() {
             <div>
                 <b>Endpoint:</b>
                 {' '}
-                {import.meta.env.VITE_API_URL}
+                {getApiUrl()}
                 <br />
                 <b>State:</b>
                 {' '}

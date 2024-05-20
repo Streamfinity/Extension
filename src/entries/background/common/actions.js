@@ -1,4 +1,5 @@
 import browser from 'webextension-polyfill';
+import moment from 'moment';
 import {
     storageGetToken, clearStorage, storageSetToken, storageSetSettingVisible, storageSetUser,
 } from '~/entries/background/common/storage';
@@ -7,6 +8,7 @@ import { EVENT_REFRESH_AUTH, EVENT_REFRESH_SETTINGS, EVENT_NOTICE } from '~/mess
 import { why } from '~/common/pretty';
 import { sendMessageToContentScript } from '~/entries/background/common/spaceship';
 import { createLogger } from '~/common/log';
+import { getApiUrl } from '~/config';
 
 const log = createLogger('Background');
 
@@ -143,7 +145,8 @@ export async function loginFetchUser(accessToken) {
 export async function login() {
     const redirectUri = browser.identity.getRedirectURL();
 
-    const url = `${import.meta.env.VITE_API_URL}/oauth/authorize?${new URLSearchParams({
+    const host = getApiUrl();
+    const url = `${host}/oauth/authorize?${new URLSearchParams({
         client_id: import.meta.env.VITE_OAUTH_CLIENT_ID,
         response_type: 'token',
         redirect_uri: redirectUri,

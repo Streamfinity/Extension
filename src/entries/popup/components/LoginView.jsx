@@ -1,11 +1,12 @@
 import React from 'react';
 import useAuth from '~/hooks/useAuth';
 import LoginButton from '~/components/LoginButton';
+import { getApiUrl } from '~/config';
 
 function LoginView() {
     const { login, loadingLogin } = useAuth();
 
-    const endpoint = new URL(import.meta.env.VITE_API_URL);
+    const endpoint = new URL(getApiUrl());
 
     return (
         <div className="flex h-full items-center justify-center">
