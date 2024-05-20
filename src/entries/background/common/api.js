@@ -1,5 +1,4 @@
 import browser from 'webextension-polyfill';
-import moment from 'moment';
 import { storageGetToken, storageGetUser } from '~/entries/background/common/storage';
 import { sendMessageToContentScript } from '~/entries/background/common/spaceship';
 import { EVENT_REFRESH_AUTH } from '~/messages';

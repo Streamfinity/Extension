@@ -1,5 +1,4 @@
 import browser from 'webextension-polyfill';
-import moment from 'moment';
 import {
     storageGetToken, clearStorage, storageSetToken, storageSetSettingVisible, storageSetUser,
 } from '~/entries/background/common/storage';
