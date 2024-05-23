@@ -266,7 +266,7 @@ function ReactionPolicyNotice() {
             return STATUS_OTHER_CONDITION;
         }
 
-        if (policy.video_preset_group !== null || policy.computed.video_options.length > 0) {
+        if (policy.video_options.length > 0) {
             return STATUS_CONDITION;
         }
 
@@ -290,7 +290,7 @@ function ReactionPolicyNotice() {
             return STATUS_OTHER_CONDITION;
         }
 
-        if (policy.live_preset_group !== null || policy.computed.live_options.length > 0) {
+        if (policy.live_options.length > 0) {
             return STATUS_CONDITION;
         }
 
@@ -312,7 +312,7 @@ function ReactionPolicyNotice() {
 
         if (policy.policy === reactionPolicyEnum.CONDITIONS) {
             // Allow if "custom" but video & live allowed with no set conditions
-            if ((liveStatus === STATUS_ALLOWED && policy.live_preset_group === null) && (videoStatus === STATUS_ALLOWED && policy.video_preset_group === null)) {
+            if ((liveStatus === STATUS_ALLOWED && policy.live_options.length === 0) && (videoStatus === STATUS_ALLOWED && policy.video_options.length === 0)) {
                 return STATUS_ALLOWED;
             }
 
@@ -398,7 +398,7 @@ function ReactionPolicyNotice() {
                         countdown={liveCountdownDuration}
                         maxPercentage={policy.live_max_percentage}
                         comment={policy.comment}
-                        options={policy.computed.live_options}
+                        options={policy.live_options}
                     />
                     <NoticeLine
                         title={t('words.videoReactions')}
@@ -406,7 +406,7 @@ function ReactionPolicyNotice() {
                         countdown={videoCountdownDuration}
                         maxPercentage={policy.video_max_percentage}
                         comment={policy.comment}
-                        options={policy.computed.video_options}
+                        options={policy.video_options}
                     />
                 </div>
             )}
