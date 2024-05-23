@@ -36,7 +36,11 @@ function prettyFormatCountdown(diff) {
 }
 
 function Notice({
-    title, description, preview = null, cardColor, className,
+    title,
+    description,
+    preview = null,
+    cardColor,
+    className,
 }) {
     const { t } = useTranslation();
     const { isOwnVideo } = useAuth();
@@ -54,19 +58,6 @@ function Notice({
                 'text-sm leading-normal',
             )}
         >
-            <div className="flex justify-between">
-                {isOwnVideo && (
-                    <a
-                        href={buildFrontendUrl('/dashboard/policy')}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="hover:opacity-75"
-                    >
-                        <PencilSquareIcon className="size-8" />
-                    </a>
-                )}
-            </div>
-
             {title && (
                 <div className="mb-2">
                     {title}
@@ -78,6 +69,20 @@ function Notice({
                     {description}
                 </div>
             )}
+
+            <div className="mt-3 text-xs font-medium">
+                {isOwnVideo && (
+                    <a
+                        href={buildFrontendUrl('/dashboard/policy')}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="transition-opacity hover:opacity-75"
+                    >
+                        {t('reactionPolicy.edit')}
+                    </a>
+                )}
+            </div>
+
         </Card>
     );
 }

@@ -57,7 +57,8 @@
         "noReactionsYet": "Es gibt noch keine Reactions für dieses Video.",
         "title": "Reaction-Historie",
         "titleOwn": "Reactions auf dein Video",
-        "preview": "{{count}} Reactions"
+        "preview": "{{count}} Reactions",
+        "edit": "Eigene Policy bearbeiten"
     },
     "reactionPolicy": {
         "notSet": "Zu diesem Video ist keine Reaction-Policy festgelegt.",

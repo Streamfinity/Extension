@@ -73,7 +73,8 @@
         "previewNone": "not set",
         "previewAllowed": "allowed",
         "previewNotAllowed": "not allowed",
-        "previewConditions": "conditions"
+        "previewConditions": "conditions",
+        "edit": "Edit your policy"
     },
     "settings": {
         "incognito": "Incognito Mode (don't track videos)",
