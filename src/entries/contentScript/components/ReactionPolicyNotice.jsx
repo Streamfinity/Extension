@@ -2,7 +2,6 @@ import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
-import { PencilSquareIcon } from '@heroicons/react/16/solid';
 import { useShallow } from 'zustand/react/shallow';
 import { useTranslation } from 'react-i18next';
 import { reactionPolicyEnum } from '~/enums';
