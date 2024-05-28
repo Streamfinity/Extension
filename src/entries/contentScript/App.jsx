@@ -24,7 +24,6 @@ import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackground
 import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
 import Footer from '~/entries/contentScript/components/Footer';
 import { storageGetCompact, storageSetCompact } from '~/entries/background/common/storage';
-import CommunityNoteNotice from '~/entries/contentScript/components/CommunityNoteNotice';
 
 function App() {
     const { t, i18n } = useTranslation();
@@ -157,7 +156,7 @@ function App() {
 
             <ReactionPolicyNotice />
 
-            <CommunityNoteNotice />
+            {/* <CommunityNoteNotice /> */}
 
             {state !== STATE_LIVE && (
                 <ReactionsHistoryNotice />
