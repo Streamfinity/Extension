@@ -11,6 +11,10 @@ import Card from '~/entries/contentScript/components/Card';
 import { useReactionPolicyForVideo } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
+import cirWordmarkLight from '~/assets/cir/canireact_light.png';
+import cirWordmarkDark from '~/assets/cir/canireact_dark.png';
+import logoDark from '~/assets/Logo-Dark-400.png';
+import logoWhite from '~/assets/Logo-Light-400.png';
 
 const STATUS_ALLOWED = 0;
 const STATUS_DENIED = 1;
@@ -38,6 +42,7 @@ function Notice({
     title,
     description,
     preview = null,
+    isThirdParty = false,
     cardColor,
     className,
 }) {
@@ -45,6 +50,9 @@ function Notice({
     const { isOwnVideo } = useAuth();
 
     const compact = useAppStore((state) => state.isCompact);
+
+    const cirWordmarkUrlLight = new URL(cirWordmarkLight, import.meta.url).href;
+    const cirWordmarkUrlDark = new URL(cirWordmarkDark, import.meta.url).href;
 
     return (
         <Card
@@ -82,6 +90,28 @@ function Notice({
                 )}
             </div>
 
+            {isThirdParty && (
+                <div className="mt-1 text-center text-xs">
+                    {t('reactionPolicy.thirdPartyHint')}
+                    <a
+                        href="https://canireact.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src={cirWordmarkUrlLight}
+                            className="ml-2 inline h-8 dark:hidden"
+                            alt="Can I React"
+                        />
+                        <img
+                            src={cirWordmarkUrlDark}
+                            className="ml-2 hidden h-8 dark:inline"
+                            alt="Can I React"
+                        />
+                    </a>
+                </div>
+            )}
+
         </Card>
     );
 }
@@ -90,6 +120,7 @@ Notice.propTypes = {
     title: PropTypes.string,
     description: childrenShape,
     preview: PropTypes.string,
+    isThirdParty: PropTypes.bool,
     className: PropTypes.string,
     cardColor: PropTypes.string.isRequired,
 };
@@ -97,6 +128,7 @@ Notice.propTypes = {
 Notice.defaultProps = {
     title: null,
     description: null,
+    isThirdParty: false,
     className: '',
 };
 
@@ -328,6 +360,8 @@ function ReactionPolicyNotice() {
 
     const { isOwnVideo } = useAuth();
 
+    const isThirdParty = policy?.is_third_party || false;
+
     if (isLoading) {
         return (
             <Notice
@@ -354,6 +388,7 @@ function ReactionPolicyNotice() {
             <Notice
                 cardColor="green"
                 preview={t('reactionPolicy.previewAllowed')}
+                isThirdParty={isThirdParty}
                 description={(
                     <div className="flex flex-col gap-4">
                         <NoticeLine
@@ -374,6 +409,7 @@ function ReactionPolicyNotice() {
             <Notice
                 cardColor="red"
                 preview={t('reactionPolicy.previewNotAllowed')}
+                isThirdParty={isThirdParty}
                 description={(
                     <div className="flex flex-col gap-4">
                         <NoticeLine
@@ -394,6 +430,7 @@ function ReactionPolicyNotice() {
         <Notice
             cardColor="yellow"
             preview={t('reactionPolicy.previewConditions')}
+            isThirdParty={isThirdParty}
             description={(
                 <div className="flex flex-col gap-4">
                     <NoticeLine
