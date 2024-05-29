@@ -22,7 +22,10 @@ export const MOUNT_CONTENT_SCRIPT_RETRY_COUNT = 100;
 export const PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS = 60;
 
 // minimum of watched video seconds to send playback progress
-export const PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS = 4;
+export const PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS = 8;
+
+// minimum of seconds being present after submitting for playback (only since page visit, not playback time)
+export const PLAYBACK_PROGRESS_MIN_SECONDS_PRESENT = 10;
 
 // interval in seconds to mark videos on youtube.com as watched
 export const MARK_WATCHED_REACTIONS_INTERVAL = 5;
