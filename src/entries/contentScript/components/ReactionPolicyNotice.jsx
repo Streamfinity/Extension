@@ -13,8 +13,6 @@ import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
 import cirWordmarkLight from '~/assets/cir/canireact_light.png';
 import cirWordmarkDark from '~/assets/cir/canireact_dark.png';
-import logoDark from '~/assets/Logo-Dark-400.png';
-import logoWhite from '~/assets/Logo-Light-400.png';
 
 const STATUS_ALLOWED = 0;
 const STATUS_DENIED = 1;
