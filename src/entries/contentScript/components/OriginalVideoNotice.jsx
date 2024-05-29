@@ -6,6 +6,23 @@ import { reactionShape } from '~/shapes';
 import { prettyDuration } from '~/common/pretty';
 import { useAppStore } from '~/entries/contentScript/state';
 
+/**
+ * React component for displaying a preview of a reaction.
+ * 
+ * @param {Object} props - The props for the ReactionPreview component.
+ * @param {Object} props.reaction - The reaction object containing information to display.
+ * @param {Object} props.reaction.to_video - The video object to display.
+ * @param {string} props.reaction.to_video.external_tracking_url - The external tracking URL of the video.
+ * @param {string} props.reaction.to_video.thumbnail_url - The thumbnail URL of the video.
+ * @param {string} props.reaction.to_video.title - The title of the video.
+ * @param {Object} props.reaction.to_video.channel - The channel object of the video.
+ * @param {string} props.reaction.to_video.channel.title - The title of the channel.
+ * @param {number} props.reaction.video_seconds_from - The starting time of the reaction in seconds.
+ * @param {number} props.reaction.video_seconds_to - The ending time of the reaction in seconds.
+ * @param {number} props.reaction.interval_duration - The duration of the reaction interval in seconds.
+ * 
+ * @returns {JSX.Element} A React element representing the ReactionPreview component.
+ */
 function ReactionPreview({ reaction }) {
     return (
         <a
@@ -50,6 +67,12 @@ ReactionPreview.propTypes = {
     reaction: reactionShape.isRequired,
 };
 
+/**
+ * Function that renders a component to display original video reactions.
+ * It fetches original video reactions based on the current URL and renders them inside a Card component.
+ * If there are reactions to display, it shows them using ReactionPreview component.
+ * @returns {JSX.Element | null} The rendered component or null if there are no reactions to display.
+ */
 function OriginalVideoNotice() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);

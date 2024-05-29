@@ -13,6 +13,13 @@ import { subscriptionIds, subscriptionFeatures } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 import { buildReactionFromUrl } from '~/common/pretty';
 
+/**
+ * React component for displaying a preview of a reaction.
+ * 
+ * @param {Object} props - The props for the component.
+ * @param {Object} props.reaction - The reaction object to display.
+ * @returns {JSX.Element} A React element representing the reaction preview.
+ */
 function ReactionPreview({ reaction }) {
     const { t } = useTranslation();
 
@@ -85,6 +92,11 @@ ReactionPreview.propTypes = {
     reaction: reactionShape.isRequired,
 };
 
+/**
+ * React component for displaying reactions history notice.
+ * Fetches reactions data based on the current video URL and user's subscription status.
+ * Renders different content based on the presence of reactions and user's subscription.
+ */
 function ReactionsHistoryNotice() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);

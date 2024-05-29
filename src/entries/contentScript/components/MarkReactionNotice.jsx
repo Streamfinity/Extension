@@ -5,6 +5,11 @@ import Card from '~/entries/contentScript/components/Card';
 import MarkReactionForm from '~/entries/contentScript/components/MarkReactionForm';
 import { useAppStore } from '~/entries/contentScript/state';
 
+/**
+ * Function component for displaying a Mark Reaction Notice.
+ * It renders a Card component with a title and conditional content based on the showForm state.
+ * The showForm state toggles the display of MarkReactionForm component.
+ */
 function MarkReactionNotice() {
     const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);

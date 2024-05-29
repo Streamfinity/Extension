@@ -12,6 +12,13 @@ import { MARK_WATCHED_REACTIONS_INTERVAL } from '~/config';
 
 const log = createLogger('WatchedReactions');
 
+/**
+ * Marks elements as watched based on the provided list of watched videos.
+ * 
+ * @param {Array} watchedVideos - List of watched videos to compare against.
+ * @param {Function} t - Translation function for i18n support.
+ * @returns {void}
+ */
 function markElements(watchedVideos, t) {
     if (!watchedVideos) {
         return;
@@ -95,9 +102,16 @@ function markElements(watchedVideos, t) {
         countFound += 1;
     });
 
-    // log.debug('mark watched reactions. found:', countFound);
 }
 
+/**
+ * Function component for observing watched videos.
+ * 
+ * This component sets up an observer to mark watched videos based on user interactions.
+ * It fetches watched videos data, listens for resize events, and periodically updates the watched status.
+ * 
+ * @returns {null} Returns null as the component does not render any UI elements.
+ */
 function WatchedVideosObserver() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);

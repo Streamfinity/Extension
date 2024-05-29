@@ -1,3 +1,7 @@
+/**
+ * Initializes the background script by creating a logger, getting API and frontend URLs,
+ * and registering a listener for content script messages.
+ */
 import { createLogger } from '~/common/log';
 import { onContentScriptMessage } from '~/entries/background/common/controllers';
 import { registerListener } from '~/entries/background/common/spaceship';

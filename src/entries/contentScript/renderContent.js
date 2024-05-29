@@ -8,6 +8,11 @@ import {
 
 const log = createLogger('Content-Script');
 
+/**
+ * Binds an event listener to detect changes in the window location and dispatches a custom event when a navigation occurs.
+ * 
+ * @returns {void}
+ */
 function bindWindowEvents() {
     let currentUrl = window.location.href;
 
@@ -26,6 +31,12 @@ function bindWindowEvents() {
     }, URL_CHANGE_INTERVAL_SECONDS * 1000);
 }
 
+/**
+ * Append the shadow root container to the DOM under a specific parent element after retrying to find the parent element.
+ * 
+ * @param {Element} appContainer - The shadow root container element to be appended to the DOM.
+ * @returns {Promise<void>} - A Promise that resolves once the shadow root container is successfully appended to the DOM.
+ */
 async function appendShadowRootToDom(appContainer) {
     const parent = await retryFind(
         () => {
@@ -54,6 +65,13 @@ async function appendShadowRootToDom(appContainer) {
 //     </section>
 // </div>
 
+/**
+ * Renders content on the current page by injecting a shadow DOM container with specified CSS paths.
+ * 
+ * @param {Array} cssPaths - An array of CSS paths to be loaded into the shadow DOM container.
+ * @param {Function} render - A function to render content inside the shadow DOM container.
+ * @returns {void}
+ */
 export async function renderContent(
     cssPaths,
     render = () => {},

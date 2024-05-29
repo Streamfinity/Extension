@@ -8,6 +8,11 @@ import { usePage } from '~/hooks/usePage';
 import { buildFrontendUrl } from '~/common/utility';
 import { strLimit } from '~/common/pretty';
 
+/**
+ * Function component for rendering a community note notice.
+ * Fetches notes based on the current video URL and displays them in a card format.
+ * Allows expanding notes and provides options to report or add new notes.
+ */
 function CommunityNoteNotice() {
     const { t } = useTranslation();
     const compact = useAppStore((state) => state.isCompact);

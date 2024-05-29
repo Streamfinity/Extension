@@ -6,6 +6,12 @@ import { buildFrontendUrl } from '~/common/utility';
 import { childrenShape } from '~/shapes';
 import PlusSparklesIcon from '~/components/Icons/PlusSparklesIcon';
 
+/**
+ * Function that renders a premium call-to-action label component.
+ * 
+ * @param {Object} props - The props object containing children, campaign, plan, feature, and className.
+ * @returns {JSX.Element} A JSX element representing the premium call-to-action label.
+ */
 function PremiumCtaLabel({
     children,
     campaign,

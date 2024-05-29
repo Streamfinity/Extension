@@ -13,6 +13,17 @@ import { useAppStore } from '~/entries/contentScript/state';
 
 const log = createLogger('Content-Rating');
 
+/**
+ * Function component for displaying content rating notice.
+ * - Fetches current URL and compact state from app store.
+ * - Retrieves player progress using useYouTubePlayer hook.
+ * - Displays content rating segments in the player based on received segments.
+ * - Uses useContentRatings hook to fetch content ratings for the current video.
+ * - Computes content ratings based on player progress and received segments.
+ * - Finds and sets the player progress bar element.
+ * - Listens for content rating results and mounts them in the player.
+ * - Renders a Card component with content rating information.
+ */
 function ContentRatingNotice() {
     const currentUrl = useAppStore((state) => state.currentUrl);
     const compact = useAppStore((state) => state.isCompact);

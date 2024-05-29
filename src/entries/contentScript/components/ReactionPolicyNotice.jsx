@@ -19,6 +19,12 @@ const STATUS_CONDITION = 2;
 const STATUS_ON_COUNTDOWN = 3;
 const STATUS_OTHER_CONDITION = 4;
 
+/**
+ * Formats the given time difference into a human-readable countdown format.
+ *
+ * @param {number} diff - The time difference in milliseconds to be formatted.
+ * @returns {string} The formatted countdown string in the format "d days hh:mm:ss" or "hh:mm:ss" if less than a day.
+ */
 function prettyFormatCountdown(diff) {
     const duration = moment.duration(diff);
 
@@ -34,6 +40,17 @@ function prettyFormatCountdown(diff) {
     return `${days}d ${hours}:${minutes}:${seconds}`;
 }
 
+/**
+ * Functional component for rendering a notice card.
+ * 
+ * @param {string} title - The title of the notice.
+ * @param {PropTypes.node} description - The description content of the notice.
+ * @param {string} preview - The preview content of the notice.
+ * @param {string} cardColor - The color theme of the notice card.
+ * @param {string} className - Additional CSS classes for styling.
+ * 
+ * @returns {JSX.Element} A Card component displaying the notice content.
+ */
 function Notice({
     title,
     description,
@@ -100,6 +117,28 @@ Notice.defaultProps = {
     className: '',
 };
 
+/**
+ * React component for rendering a notice line with different statuses and options.
+ *
+ * @param {string} title - The title of the notice line.
+ * @param {number} status - The status code of the notice line.
+ * @param {object} countdown - The countdown object for displaying time remaining.
+ * @param {number} maxPercentage - The maximum percentage value.
+ * @param {string} comment - Additional comment for the notice line.
+ * @param {array} options - Array of options with value and title.
+ *
+ * @returns {JSX.Element} A div element containing the notice line with appropriate styling based on the status.
+ *
+ * @example
+ * <NoticeLine
+ *    title="Notice Title"
+ *    status={1}
+ *    countdown={{ days: 1, hours: 2, minutes: 30, seconds: 15 }}
+ *    maxPercentage={50}
+ *    comment="Additional comment"
+ *    options={[{ value: 1, title: "Option 1" }, { value: 2, title: "Option 2" }]}
+ * />
+ */
 function NoticeLine({
     title, status, countdown, maxPercentage, comment, options,
 }) {
@@ -205,6 +244,14 @@ NoticeLine.defaultProps = {
     options: null,
 };
 
+/**
+ * Renders a notice component based on the reaction policy for a video.
+ * The notice component displays information about the reaction policy status, including live reactions and video reactions.
+ * It fetches the reaction policy for the current video and channel, and calculates countdown durations for live and video reactions.
+ * The component dynamically renders different content based on the reaction policy status, such as allowed reactions, denied reactions, or conditional reactions.
+ * 
+ * @returns {JSX.Element} The React component that displays the notice based on the reaction policy.
+ */
 function ReactionPolicyNotice() {
     const { t } = useTranslation();
 

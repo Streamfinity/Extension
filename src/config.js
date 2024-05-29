@@ -1,3 +1,6 @@
+/**
+ * Constants and functions related to embedding content on specific hosts and managing playback progress.
+ */
 import moment from 'moment/moment';
 
 export const EMBEDS_ON_HOSTS = [

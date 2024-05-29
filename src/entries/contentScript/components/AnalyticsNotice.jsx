@@ -13,10 +13,15 @@ import { hasSubscription } from '~/entries/contentScript/hooks/useSubscription';
 import { subscriptionIds, subscriptionFeatures } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 
-// -------------------------------------------------------------------------------------------------------
-// Components
-// -------------------------------------------------------------------------------------------------------
-
+/**
+ * Function component for displaying a statistic with a title, value, and optional children.
+ * 
+ * @param {string} title - The title of the statistic.
+ * @param {number} value - The numerical value of the statistic.
+ * @param {bool} blur - Whether to apply blur effect to the statistic.
+ * @param {PropTypes.node|PropTypes.element|PropTypes.arrayOf(PropTypes.element)} children - Optional children components.
+ * @returns {JSX.Element} A div element displaying the statistic with the provided information.
+ */
 function Statistic({
     title, value, children, blur = false,
 }) {
@@ -49,6 +54,14 @@ Statistic.defaultProps = {
     children: null,
 };
 
+/**
+ * Function component for displaying a statistic change with an arrow icon.
+ * 
+ * @param {Object} props - The props object containing the children to be displayed.
+ * @param {node|element|arrayOf(element)} props.children - The content to be displayed within the component.
+ * 
+ * @returns {JSX.Element} A div element displaying the statistic change with an arrow icon and the provided children.
+ */
 function StatisticChange({ children }) {
     return (
         <div className="flex items-center gap-2 text-sm text-green-800 dark:text-green-500">
@@ -70,6 +83,12 @@ StatisticChange.propTypes = {
 // Mount
 // -------------------------------------------------------------------------------------------------------
 
+/**
+ * Function that renders an analytics notice component.
+ * It fetches video analytics data, checks if the user has a subscription, and displays relevant information.
+ * 
+ * @returns {JSX.Element} The rendered AnalyticsNotice component.
+ */
 function AnalyticsNotice() {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);

@@ -8,6 +8,12 @@ import logoWhite from '~/assets/Logo-Light-400.png';
 import logoStyles from './Logo.module.css';
 import { useAppStore } from '~/entries/contentScript/state';
 
+/**
+ * Functional component for rendering a logo with dynamic behavior based on props.
+ * 
+ * @param {Object} props - The props object containing size, onClick function, sws boolean, and isTrackingVideos boolean.
+ * @returns {JSX.Element} A JSX element representing the logo component with dynamic content.
+ */
 function Logo({
     size,
     onClick,

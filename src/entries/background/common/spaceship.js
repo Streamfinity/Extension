@@ -3,6 +3,12 @@ import { createLogger } from '~/common/log';
 
 const log = createLogger('Spaceship 👽');
 
+/**
+ * Registers a listener for incoming messages from the browser runtime.
+ * 
+ * @param {function} listener - The callback function to be executed when a message is received.
+ * @returns {void}
+ */
 export function registerListener(listener) {
     browser.runtime.onMessage.addListener((req, sender) => {
         const { type, data } = req;
@@ -13,10 +19,24 @@ export function registerListener(listener) {
     });
 }
 
+/**
+ * Unregisters a listener for incoming messages from the browser runtime.
+ * 
+ * @param {function} listener - The callback function to be unregistered.
+ * @returns {void}
+ */
 export function unregisterListener(listener) {
     browser.runtime.onMessage.removeListener(listener);
 }
 
+/**
+ * Sends a message to a specific tab with the provided tabId, type, and data.
+ *
+ * @param {number} tabId - The ID of the tab to send the message to.
+ * @param {string} type - The type of the message being sent.
+ * @param {Object} data - The data to be sent along with the message.
+ * @returns {Promise} A Promise that resolves when the message is sent successfully.
+ */
 export async function sendMessageToTab(tabId, type, data) {
     log.debug('SEND ➡️', type, data);
 

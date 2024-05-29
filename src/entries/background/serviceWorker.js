@@ -1,3 +1,6 @@
+/**
+ * Initializes a ServiceWorker with logging, message handling, and listener registration.
+ */
 import { createLogger } from '~/common/log';
 import { onContentScriptMessage } from '~/entries/background/common/controllers';
 import { registerListener } from '~/entries/background/common/spaceship';

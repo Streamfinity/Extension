@@ -1,3 +1,11 @@
+/**
+ * Keyframes animation for a content rating alert.
+ * 
+ * Animates the background and border opacity of an element along with scaling effect.
+ * Applies red background and border colors.
+ * Animation duration is 900ms with infinite iteration.
+ * Uses cubic-bezier timing function for smooth animation.
+ */
 @keyframes contentRatingAlert {
     0%,100% {
         --tw-bg-opacity: 0.2;

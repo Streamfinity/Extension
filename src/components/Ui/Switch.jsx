@@ -5,6 +5,15 @@ import * as SwitchPrimitives from '@radix-ui/react-switch';
 
 import { cn } from '~/common/utility';
 
+/**
+ * A React component that wraps a SwitchPrimitives.Root component to create a customizable switch element.
+ * 
+ * @param {object} props - The props for the Switch component.
+ * @param {string} props.className - Additional classes to be applied to the switch element.
+ * @param {object} props...props - Additional props to be spread on the SwitchPrimitives.Root component.
+ * @param {React.Ref} ref - Reference to the switch element.
+ * @returns {JSX.Element} A JSX element representing the switch component.
+ */
 const Switch = React.forwardRef(({ className, ...props }, ref) => (
     <SwitchPrimitives.Root
         className={cn(

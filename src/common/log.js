@@ -3,6 +3,12 @@ import browser from 'webextension-polyfill';
 import { storageGetUser } from '~/entries/background/common/storage';
 import { getApiUrl } from '~/config';
 
+/**
+ * Returns the name of the browser based on the user agent string.
+ * If the browser is not recognized, it returns 'unknown'.
+ *
+ * @returns {string} The name of the browser.
+ */
 function getBrowser() {
     if (!navigator?.userAgent) {
         return null;
@@ -23,6 +29,11 @@ function getBrowser() {
     return 'unknown';
 }
 
+/**
+ * Asynchronous function that retrieves the user data.
+ * 
+ * @returns {Promise} A promise that resolves with the user data if available, otherwise null.
+ */
 async function getUser() {
     if (typeof window !== 'undefined' && window.streamfinityUser) {
         return window.streamfinityUser;
@@ -172,6 +183,14 @@ const log = {
     },
 };
 
+/**
+ * Creates a logger instance with the specified section and options.
+ * 
+ * @param {string} section - The section name for the logger.
+ * @param {Object} options - Additional options for the logger.
+ * @param {Function} options.forwardCallback - A callback function to forward log messages.
+ * @returns {Object} A logger instance with the specified section and options.
+ */
 export function createLogger(section, options = {}) {
     const logger = { ...log };
     logger.section = section;

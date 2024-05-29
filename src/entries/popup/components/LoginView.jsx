@@ -3,6 +3,14 @@ import useAuth from '~/hooks/useAuth';
 import LoginButton from '~/components/LoginButton';
 import { getApiUrl } from '~/config';
 
+/**
+ * Renders a login view component.
+ * 
+ * This component displays a login button that triggers the login process when clicked.
+ * It also shows the current environment's hostname fetched from the API URL.
+ * 
+ * @returns {JSX.Element} The rendered login view component.
+ */
 function LoginView() {
     const { login, loadingLogin } = useAuth();
 

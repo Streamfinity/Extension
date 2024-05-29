@@ -6,6 +6,20 @@ import { buildFrontendUrl } from '~/common/utility';
 import useAuth, { STATE_LIVE, STATE_DEFAULT, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 
+/**
+ * Renders a footer component with buttons and links based on user and state information.
+ * 
+ * @param {Object} props - The props object containing state and liveStream information.
+ * @param {string} props.state - The state of the footer, can be one of STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO.
+ * @param {Object} [props.liveStream] - The live stream object with title, account, and service information.
+ * @param {string} props.liveStream.title - The title of the live stream.
+ * @param {Object} props.liveStream.account - The account object with display_name.
+ * @param {string} props.liveStream.account.display_name - The display name of the account.
+ * @param {Object} props.liveStream.service - The service object with title.
+ * @param {string} props.liveStream.service.title - The title of the service.
+ * 
+ * @returns {JSX.Element} A JSX element representing the footer component with buttons and links.
+ */
 function Footer({
     state,
     liveStream = null,

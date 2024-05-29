@@ -1,3 +1,6 @@
+/**
+ * Constants for account services, reaction policy, subscription IDs, account types, and subscription features.
+ */
 export const accountServices = {
     TWITCH: 0,
     YOUTUBE: 1,

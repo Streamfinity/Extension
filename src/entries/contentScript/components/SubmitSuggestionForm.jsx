@@ -12,6 +12,11 @@ const RESULTS_LOADING = 1;
 const RESULTS_EMPTY = 2;
 const RESULTS_OK = 3;
 
+/**
+ * Function component for a form to submit suggestions.
+ *
+ * @param {Function} onSubmit - Function to handle form submission.
+ */
 function SubmitSuggestionForm({ onSubmit }) {
     const { t } = useTranslation();
     const [hasLoadedSuggestedAccounts, setHasLoadedSuggestedAccounts] = useState(false);

@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import { childrenShape } from '~/shapes';
 import H2Header from '~/entries/contentScript/components/H2Header';
 
+/**
+ * Function component for rendering an overlay with a title, children, and a close button.
+ * 
+ * @param {Object} props - The props object containing children, onHide function, and title string.
+ * @param {ReactNode} props.children - The content to be displayed within the overlay.
+ * @param {Function} props.onHide - The function to be called when the close button is clicked.
+ * @param {string} props.title - The title to be displayed in the overlay.
+ * 
+ * @returns {JSX.Element} A JSX element representing the overlay component.
+ */
 function Overlay({ children, onHide, title }) {
     return (
         <div className="absolute left-0 top-0 z-20 size-full overflow-hidden rounded-[10px] bg-gray-300/30 p-10 backdrop-blur dark:bg-black/30">

@@ -1,3 +1,6 @@
+/**
+ * PropTypes for defining shapes of various data structures used in the application.
+ */
 import PropTypes from 'prop-types';
 
 export const userShape = PropTypes.shape({

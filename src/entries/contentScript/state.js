@@ -1,3 +1,9 @@
+/**
+ * Creates a custom hook using Zustand library to manage application state.
+ * The hook provides access to various state variables such as currentUrl, currentChannel, reactionPolicy, etc.
+ * It also exposes setter functions to update these state variables.
+ * @returns {Object} The custom hook object with state variables and setter functions.
+ */
 import { create } from 'zustand';
 
 export const useAppStore = create((set) => ({

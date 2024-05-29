@@ -12,21 +12,11 @@ import { getApiUrl } from '~/config';
 const log = createLogger('Background');
 
 /**
- * @typedef {Object} User
- * @property {string} id
- * @property {string} display_name
- */
-
-/**
- * @typedef {Object} ExtensionStatus
- * @property {array} live_streams
- * @property {User} user
- */
-
-/**
- * @param {('success','warning','error')} type
- * @param {string} message
- * @returns {Promise<void>}
+ * Sends a notice message to the content script.
+ *
+ * @param {string} type - The type of the notice message.
+ * @param {string} message - The content of the notice message.
+ * @returns {Promise<void>} - A promise that resolves once the notice message is sent.
  */
 async function sendNotice(type, message) {
     await sendMessageToContentScript(EVENT_NOTICE, {
@@ -35,6 +25,11 @@ async function sendNotice(type, message) {
     });
 }
 
+/**
+ * Function to log out the user by clearing storage and sending a message to content script to refresh authentication.
+ * 
+ * @returns {Object} Object indicating the success of the logout operation.
+ */
 export async function logout() {
     await clearStorage();
 
@@ -43,11 +38,14 @@ export async function logout() {
     return { success: true };
 }
 
-/**
- * @type {ExtensionStatus}
- */
 let extensionStatus = {};
 
+/**
+ * Function: getStatus
+ * Description: This function retrieves the status of the extension and performs various actions based on the status.
+ * 
+ * @returns {Object} An object containing the data retrieved from the extension status.
+ */
 export async function getStatus() {
     const token = await storageGetToken();
 
@@ -90,6 +88,12 @@ export async function getStatus() {
     };
 }
 
+/**
+ * Sends the player progress to the server.
+ * 
+ * @param {Object} data - The data containing the player progress information.
+ * @returns {Object} An object indicating the success of sending the player progress.
+ */
 export async function sendPlayerProgress(data) {
     if (!extensionStatus.user) {
         log.debug('no status data, dont send player progress');
@@ -119,6 +123,12 @@ export async function sendPlayerProgress(data) {
     };
 }
 
+/**
+ * Function to fetch user data using the provided access token and store the token and user data in browser storage.
+ *
+ * @param {string} accessToken - The access token to authenticate the user.
+ * @returns {Object} - An object containing the user data if successful, otherwise null.
+ */
 export async function loginFetchUser(accessToken) {
     try {
         const { data } = await getAuthenticatedUser({
@@ -141,6 +151,14 @@ export async function loginFetchUser(accessToken) {
     return { user: null };
 }
 
+/**
+ * Function to handle the login process.
+ * 
+ * This function initiates the login process by redirecting the user to the authorization URL,
+ * obtaining the access token, fetching user data, and sending a refresh authentication event.
+ * 
+ * @returns {Object} An object containing the user data if successful, or an error message if login fails.
+ */
 export async function login() {
     const redirectUri = browser.identity.getRedirectURL();
 
@@ -156,6 +174,7 @@ export async function login() {
     log.debug('login', url);
 
     try {
+        // TODO: should this be here?
         // https://cfiiggfhnccbchheekifachmajflgcgn.chromiumapp.org/
         //     #access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ
         //     &token_type=Bearer
@@ -190,6 +209,13 @@ export async function login() {
     }
 }
 
+/**
+ * Update the visibility setting in storage and send a message to content script to refresh settings.
+ * 
+ * @param {Object} data - The data containing the visibility setting.
+ * @param {boolean} data.visible - The visibility setting to be updated.
+ * @returns {Object} An empty object indicating the completion of the update process.
+ */
 export async function updateSettingUpdateVisible(data) {
     await storageSetSettingVisible(data.visible);
 
@@ -198,6 +224,11 @@ export async function updateSettingUpdateVisible(data) {
     return {};
 }
 
+/**
+ * Function: openPopup
+ * Description: Opens the browser action popup if available. Note that browser.action.openPopup may not be available in Firefox.
+ * Returns: An empty object.
+ */
 export async function openPopup() {
     // WARNING: browser.action is not available in Firefox for some reason
     if (!browser.action || !('openPopup' in browser.action)) {
@@ -210,6 +241,13 @@ export async function openPopup() {
     return {};
 }
 
+/**
+ * Update the browser action icon scheme based on the dark mode setting.
+ * 
+ * @param {Object} options - The options object.
+ * @param {boolean} options.dark - A boolean indicating whether dark mode is enabled.
+ * @returns {Object} An empty object.
+ */
 export async function updateScheme({ dark }) {
     if (!browser.action) {
         log.warn('updateScheme', 'no browser action available');

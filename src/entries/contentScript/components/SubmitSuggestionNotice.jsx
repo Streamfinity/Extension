@@ -5,6 +5,11 @@ import Card from '~/entries/contentScript/components/Card';
 import SubmitSuggestionForm from '~/entries/contentScript/components/SubmitSuggestionForm';
 import { useAppStore } from '~/entries/contentScript/state';
 
+/**
+ * Function component for rendering a Submit Suggestion Notice.
+ * It displays a Card component with a title and a Button to suggest a video.
+ * Toggles between showing a form for submitting a suggestion and hiding it.
+ */
 function SubmitSuggestionNotice() {
     const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);

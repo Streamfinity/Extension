@@ -1,3 +1,8 @@
+/**
+ * Constants for communication between Content-Script and Background in a browser extension.
+ * Includes actions like getting status, player progress, login/logout, submitting suggestions, etc.
+ */
+
 // Content-Script -> Background
 
 export const GET_STATUS = 'GET_STATUS';
