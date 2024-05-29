@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
-import { PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS, PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS } from '~/config';
+import { PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS, PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS, PLAYBACK_PROGRESS_MIN_SECONDS_PRESENT } from '~/config';
 import { createLogger } from '~/common/log';
 import { sendPlayerProgress } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
@@ -13,6 +13,7 @@ function PlayerProgressListener({ active }) {
     const { element: playerElement, progress: playerProgress } = useYouTubePlayer();
     const currentUrl = useAppStore((state) => state.currentUrl);
 
+    const [firstVisited, setFirstVisited] = useState(null);
     const [lastProgress, setLastProgress] = useState(null);
     const [lastSent, setLastSent] = useState(null);
 
@@ -23,6 +24,15 @@ function PlayerProgressListener({ active }) {
 
         const now = +new Date();
         const cooldown = lastSent !== null && (now - lastSent) < (PLAYBACK_PROGRESS_SEND_INTERVAL_SECONDS * 1000);
+
+        // Only submit playback after being present on the video page for a couple of seconds
+        // -> prevents, skipping through video player and sending playback progress
+
+        const secondsPassedSinceVisitedVideo = Number((now - firstVisited) / 1000);
+        if (secondsPassedSinceVisitedVideo < PLAYBACK_PROGRESS_MIN_SECONDS_PRESENT) {
+            log.debug(`did not spend enough time on video page (min ${PLAYBACK_PROGRESS_MIN_SECONDS_PRESENT}, got ${secondsPassedSinceVisitedVideo})`);
+            return;
+        }
 
         // log.debug('send', { cooldown, isLast: progress === lastProgress, tooLow: progress < PLAYBACK_PROGRESS_MIN_VIDEO_SECONDS });
 
@@ -67,6 +77,7 @@ function PlayerProgressListener({ active }) {
     useEffect(() => {
         setLastSent(null);
         setLastProgress(null);
+        setFirstVisited(+new Date());
     }, [currentUrl]);
 
     useEffect(() => {
