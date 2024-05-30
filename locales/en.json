@@ -33,6 +33,7 @@
         "none": "none",
         "rate": "Rate this note",
         "readMore": "Read more...",
+        "report": "Report",
         "title": "Community Note"
     },
     "incognito": {
@@ -62,6 +63,7 @@
     "reactionHistory": {
         "ctaCreator": "Get Creator+ to see who reacted to your video",
         "ctaViewer": "Get Community+ to see if followed streamers reacted",
+        "edit": "",
         "inAStream": "in a {{service}} livestream",
         "inAVideo": "in a video",
         "noReactionsYet": "There are no reactions for this video yet.",
@@ -70,6 +72,7 @@
         "titleOwn": "Reactions to your Video"
     },
     "reactionPolicy": {
+        "edit": "Edit your policy",
         "notSet": "The Content Creator has not set conditions for reactions.",
         "notSetOwn": "You have not not set conditions for reactions.",
         "previewAllowed": "allowed",
@@ -83,6 +86,7 @@
             "notice": "Notice:",
             "reactUpToPercentage": "You may only react to {{value}}% of this video"
         },
+        "thirdPartyHint": "Data provided by",
         "title": "Reaction Policy"
     },
     "settings": {
@@ -95,7 +99,7 @@
     "status": {
         "disableStreamerMode": "Disable Streamer Mode",
         "disableStreamerModeDescription": "Show all hidden elements of the extension until you reload the page.",
-        "enableStreamerMode": "Enable Streamer Mode",
+        "enableStreamerMode": "Streamer Mode",
         "trackingDisabled": "We are currently not tracking any videos",
         "trackingEnabled": "We are currently tracking your video progress",
         "youAreLive": "You are live",
