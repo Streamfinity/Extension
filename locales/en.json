@@ -63,7 +63,6 @@
     "reactionHistory": {
         "ctaCreator": "Get Creator+ to see who reacted to your video",
         "ctaViewer": "Get Community+ to see if followed streamers reacted",
-        "edit": "",
         "inAStream": "in a {{service}} livestream",
         "inAVideo": "in a video",
         "noReactionsYet": "There are no reactions for this video yet.",
