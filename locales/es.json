@@ -1,0 +1,126 @@
+{
+    "actions": {
+        "abort": "Cancelar",
+        "compactDisable": "Ver más",
+        "compactEnable": "Contraer",
+        "loginWith": "Iniciar sesión con Streamfinity",
+        "logout": "Cerrar sesión",
+        "markAsReaction": "Marcar como reacción",
+        "showAll": "Ver todo",
+        "submit": "Enviar",
+        "submitReaction": "Enviar reacción",
+        "suggestVideo": "Sugerir vídeo",
+        "tryAgain": "Intentar otra vez",
+        "yourDashboard": "Tu dashboard"
+    },
+    "analytics": {
+        "clicks": "Vistas únicas",
+        "ctaCreator": "Consigue Creator+ para ver más análisis",
+        "liveAvg": "Promedio en directo",
+        "livePeak": "Máximo en directo",
+        "noReactionsYet": "Aún no hay reacciones para este vídeo.",
+        "preview": "{{count}} vistas",
+        "reactionsTitle": "{{count}} reacciones",
+        "title": "análisis",
+        "titleCompact": "Análisis de tu vídeo",
+        "uniqueViews": "Vistas únicas"
+    },
+    "auth": {
+        "loginDescription": "Para empezar, inicia sesión con tu cuenta de YouTube."
+    },
+    "communityNotes": {
+        "add": "Escribe una nota",
+        "none": "nada",
+        "rate": "Evalúa esta nota",
+        "readMore": "Leer más...",
+        "title": "Nota comunitaria"
+    },
+    "incognito": {
+        "title": "Modo incógnito hasta {{time}}"
+    },
+    "markReaction": {
+        "description": "Si este vídeo es o contiene una reacción a otro vídeo, puedes marcarlo como tal.",
+        "disclaimer": "Recuerde que todos los envíos se revisarán manualmente antes de incluirlos en la lista.",
+        "fullVideo": "Vídeo completo",
+        "intro": "Si este vídeo es una reacción a otro tipo de contenido, puedes ayudar a utilizarlo aportando información.",
+        "or": "O",
+        "segmentVideo": "Parte del vídeo",
+        "stepMark": "Marcar inicio y fin",
+        "stepToWhat": "¿A qué vídeo se ha reaccionado?",
+        "stepWhichPart": "¿En qué parte está la reacción?",
+        "title": "¿Reacción no rastreada?"
+    },
+    "messages": {
+        "playerNotFound": "No se ha encontrado el elemento reproductor",
+        "reactionSubmitted": "¡Se ha enviado la reacción!",
+        "suggestionSubmitted": "¡Se ha enviado la propuesta!"
+    },
+    "originalVideo": {
+        "title": "Vídeo original",
+        "titlePlural": "Vídeos originales"
+    },
+    "reactionHistory": {
+        "ctaCreator": "Consigue Creator+ para ver quién reacciona a tu vídeo",
+        "ctaViewer": "Consigue Community+ para ver cuáles de los streamers que sigues han reaccionado",
+        "inAStream": "en un stream en directo de {{service}}",
+        "inAVideo": "En un vídeo",
+        "noReactionsYet": "Aún no hay reacciones para este vídeo.",
+        "preview": "{{count}} reacciones",
+        "title": "Historial de reacciones",
+        "titleOwn": "Reacciones de tu vídeo"
+    },
+    "reactionPolicy": {
+        "notSet": "No se ha definido ninguna política de reacción para este vídeo.",
+        "notSetOwn": "Aún no ha definido una política de reacción.",
+        "previewAllowed": "permitido",
+        "previewConditions": "Condiciones",
+        "previewNone": "no definido",
+        "previewNotAllowed": "no permitido",
+        "status": {
+            "allowedIn": "Reacciones permitidas en:",
+            "noRestriction": "Sin restricciones",
+            "notAllowed": "No permitido",
+            "notice": "Recuerde:",
+            "reactUpToPercentage": "Sólo puedes reaccionar al {{value}}% del vídeo"
+        },
+        "title": "Política de reacción"
+    },
+    "settings": {
+        "incognito": "Modo incógnito (los vídeos no se rastrean)",
+        "incognitoDisable": "Desactivar (activo hasta {{date}})",
+        "incognitoEnable": "Activar",
+        "showExtension": "Ver extensión en la página",
+        "title": "Ajustes"
+    },
+    "status": {
+        "disableStreamerMode": "Modo Streamer",
+        "disableStreamerModeDescription": "Ver todos los elementos ocultos de la extensión hasta que se vuelva a cargar la página.",
+        "enableStreamerMode": "Activar el modo streamer",
+        "trackingDisabled": "No grabamos tu historial de vídeo",
+        "trackingEnabled": "Tu historial de vídeo se está grabando",
+        "youAreLive": "Estás en directo",
+        "youAreLiveOn": "Estás en directo en {{service}} ({{accountName}})"
+    },
+    "submitSuggestion": {
+        "description": "Puedes enviar el vídeo a todos los streamers como sugerencia.",
+        "intro": "Sugiere este vídeo a tus streamers favoritos.",
+        "results": {
+            "empty": "El streamer/creador aún no está registrado o ha desactivado las sugerencias de vídeo",
+            "loading": "Cargando...",
+            "pending": "Pulse el nombre del creador para buscar"
+        },
+        "title": "Sugerencia",
+        "titleCompact": "Sugerir vídeo"
+    },
+    "subwaySurfer": {
+        "gameplayBy": "Juego de {{name}}"
+    },
+    "watchedReactions": {
+        "badgeTitle": "Visto en un stream {{date}}"
+    },
+    "words": {
+        "liveReactions": "Reacción en directo",
+        "loading": "Cargando...",
+        "videoReactions": "Reacciones en vídeo"
+    }
+}

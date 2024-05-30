@@ -1,6 +1,8 @@
 {
     "actions": {
         "abort": "Abbrechen",
+        "compactDisable": "Alles anzeigen",
+        "compactEnable": "Kompaktmodus",
         "loginWith": "Login mit Streamfinity",
         "logout": "Logout",
         "markAsReaction": "Reaction markieren",
@@ -9,8 +11,6 @@
         "submitReaction": "Reaction einreichen",
         "suggestVideo": "Video vorschlagen",
         "tryAgain": "Erneut versuchen",
-        "compactEnable": "Kompaktmodus",
-        "compactDisable": "Alles anzeigen",
         "yourDashboard": "Dein Dashboard"
     },
     "analytics": {
@@ -19,14 +19,24 @@
         "liveAvg": "Live Ø",
         "livePeak": "Live Peak",
         "noReactionsYet": "Es sind noch keine Reactions für dieses Video vorhanden.",
+        "preview": "{{count}} Aufrufe",
         "reactionsTitle": "{{count}} Reactions",
         "title": "Analysen",
         "titleCompact": "Analysen für dein Video",
-        "uniqueViews": "Eindeutige Aufrufe",
-        "preview": "{{count}} Aufrufe"
+        "uniqueViews": "Eindeutige Aufrufe"
     },
     "auth": {
         "loginDescription": "Starte, indem du dich mit deinem YoutTube Account einloggst!"
+    },
+    "communityNotes": {
+        "add": "Notiz schreiben",
+        "none": "keine",
+        "rate": "Diese Notiz bewerten",
+        "readMore": "Mehr lesen...",
+        "title": "Community Note"
+    },
+    "incognito": {
+        "title": "Inkognito Modus bis {{time}}"
     },
     "markReaction": {
         "description": "Wenn dieses Video eine Reaction enthält oder eine Reaction auf ein anderes Video ist, markiere es.",
@@ -55,14 +65,17 @@
         "inAStream": "in einem {{service}} Livestream",
         "inAVideo": "In einem Video",
         "noReactionsYet": "Es gibt noch keine Reactions für dieses Video.",
-        "title": "Reaction-Historie",
-        "titleOwn": "Reactions auf dein Video",
         "preview": "{{count}} Reactions",
-        "edit": "Eigene Policy bearbeiten"
+        "title": "Reaction-Historie",
+        "titleOwn": "Reactions auf dein Video"
     },
     "reactionPolicy": {
         "notSet": "Zu diesem Video ist keine Reaction-Policy festgelegt.",
         "notSetOwn": "Du hast noch keine Reaction-Policy festgelegt.",
+        "previewAllowed": "erlaubt",
+        "previewConditions": "Bedingungen",
+        "previewNone": "nicht festgelegt",
+        "previewNotAllowed": "nicht allowed",
         "status": {
             "allowedIn": "Reactions erlaubt in:",
             "noRestriction": "Keine Einschränkungen",
@@ -70,12 +83,7 @@
             "notice": "Beachte:",
             "reactUpToPercentage": "Du darfst nur auf {{value}}% des Videos reagieren"
         },
-        "title": "Reaction-Policy",
-        "previewNone": "nicht festgelegt",
-        "previewAllowed": "erlaubt",
-        "previewNotAllowed": "nicht allowed",
-        "previewConditions": "Bedingungen",
-        "thirdPartyHint": "Infos bereitgestellt von"
+        "title": "Reaction-Policy"
     },
     "settings": {
         "incognito": "Inkognito Modus (Videos werden nicht getracked)",
@@ -87,11 +95,11 @@
     "status": {
         "disableStreamerMode": "Streamer-Modus",
         "disableStreamerModeDescription": "Zeige alle ausgeblendeten Elemente der Erweiterung, bis die Seite neugeladen wird.",
-        "enableStreamerMode": "Streamer-Modus",
-        "youAreLive": "Du bist live",
-        "youAreLiveOn": "Du bist live auf {{service}} ({{accountName}})",
+        "enableStreamerMode": "Aktiviere Streamer-Modus",
         "trackingDisabled": "Wir zeichnen deine Videohistorie nicht auf",
-        "trackingEnabled": "Deine Videohistorie wird gerade aufgezeichnet"
+        "trackingEnabled": "Deine Videohistorie wird gerade aufgezeichnet",
+        "youAreLive": "Du bist live",
+        "youAreLiveOn": "Du bist live auf {{service}} ({{accountName}})"
     },
     "submitSuggestion": {
         "description": "Du kannst das aufgerufene Video bei allen Streamenden als Vorschlag einreichen.",
@@ -114,15 +122,5 @@
         "liveReactions": "Live-Reactions",
         "loading": "Lädt...",
         "videoReactions": "Video-Reactions"
-    },
-    "incognito": {
-        "title": "Inkognito Modus bis {{time}}"
-    },
-    "communityNotes": {
-        "title": "Community Note",
-        "report": "Melden",
-        "add": "Notiz schreiben",
-        "readMore": "Mehr lesen...",
-        "none": "keine"
     }
 }

@@ -1,6 +1,8 @@
 {
     "actions": {
         "abort": "Abort",
+        "compactDisable": "Show more",
+        "compactEnable": "Collapse",
         "loginWith": "Login with Streamfinity",
         "logout": "Logout",
         "markAsReaction": "Mark as Reaction",
@@ -9,8 +11,6 @@
         "submitReaction": "Submit Reaction",
         "suggestVideo": "Suggest Video",
         "tryAgain": "Try again",
-        "compactEnable": "Collapse",
-        "compactDisable": "Show more",
         "yourDashboard": "Your Dashboard"
     },
     "analytics": {
@@ -19,14 +19,24 @@
         "liveAvg": "Live Avg",
         "livePeak": "Live Peak",
         "noReactionsYet": "There are no reactions for this video yet.",
+        "preview": "{{count}} views",
         "reactionsTitle": "{{count}} Reactions",
         "title": "Analytics",
         "titleCompact": "Analytics for your video",
-        "uniqueViews": "Unique views",
-        "preview": "{{count}} views"
+        "uniqueViews": "Unique views"
     },
     "auth": {
         "loginDescription": "Get started by logging in with your YouTube account!"
+    },
+    "communityNotes": {
+        "add": "Write a note",
+        "none": "none",
+        "rate": "Rate this note",
+        "readMore": "Read more...",
+        "title": "Community Note"
+    },
+    "incognito": {
+        "title": "Incognito mode until {{time}}"
     },
     "markReaction": {
         "description": "If this video is or contains a reaction to another video, you can mark it as this.",
@@ -55,13 +65,17 @@
         "inAStream": "in a {{service}} livestream",
         "inAVideo": "in a video",
         "noReactionsYet": "There are no reactions for this video yet.",
+        "preview": "{{count}} Reactions",
         "title": "Reaction History",
-        "titleOwn": "Reactions to your Video",
-        "preview": "{{count}} Reactions"
+        "titleOwn": "Reactions to your Video"
     },
     "reactionPolicy": {
         "notSet": "The Content Creator has not set conditions for reactions.",
         "notSetOwn": "You have not not set conditions for reactions.",
+        "previewAllowed": "allowed",
+        "previewConditions": "conditions",
+        "previewNone": "not set",
+        "previewNotAllowed": "not allowed",
         "status": {
             "allowedIn": "Reactions allowed in:",
             "noRestriction": "No restrictions",
@@ -69,13 +83,7 @@
             "notice": "Notice:",
             "reactUpToPercentage": "You may only react to {{value}}% of this video"
         },
-        "title": "Reaction Policy",
-        "previewNone": "not set",
-        "previewAllowed": "allowed",
-        "previewNotAllowed": "not allowed",
-        "previewConditions": "conditions",
-        "edit": "Edit your policy",
-        "thirdPartyHint": "Data provided by"
+        "title": "Reaction Policy"
     },
     "settings": {
         "incognito": "Incognito Mode (don't track videos)",
@@ -87,11 +95,11 @@
     "status": {
         "disableStreamerMode": "Disable Streamer Mode",
         "disableStreamerModeDescription": "Show all hidden elements of the extension until you reload the page.",
-        "enableStreamerMode": "Streamer Mode",
-        "youAreLive": "You are live",
-        "youAreLiveOn": "You are live on {{service}} ({{accountName}})",
+        "enableStreamerMode": "Enable Streamer Mode",
         "trackingDisabled": "We are currently not tracking any videos",
-        "trackingEnabled": "We are currently tracking your video progress"
+        "trackingEnabled": "We are currently tracking your video progress",
+        "youAreLive": "You are live",
+        "youAreLiveOn": "You are live on {{service}} ({{accountName}})"
     },
     "submitSuggestion": {
         "description": "You can submit the currently playing video as a suggestion for any streamer.",
@@ -114,15 +122,5 @@
         "liveReactions": "Live Reactions",
         "loading": "Loading...",
         "videoReactions": "Video Reactions"
-    },
-    "incognito": {
-        "title": "Incognito mode until {{time}}"
-    },
-    "communityNotes": {
-        "title": "Community Note",
-        "report": "Report",
-        "add": "Write a note",
-        "readMore": "Read more...",
-        "none": "none"
     }
 }
