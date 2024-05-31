@@ -2,6 +2,7 @@ import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { ChevronUpIcon, ChevronDownIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/16/solid';
 import { buildFrontendUrl } from '~/common/utility';
 import useAuth, { STATE_LIVE, STATE_DEFAULT, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
@@ -26,9 +27,19 @@ function Footer({
             <button
                 type="button"
                 onClick={() => setIsCompact(!isCompact)}
-                className="dark:hover:text-gray-300"
+                className="flex items-center gap-1 dark:hover:text-gray-300"
             >
-                {isCompact ? t('actions.compactDisable') : t('actions.compactEnable')}
+                {isCompact ? (
+                    <>
+                        <ChevronDownIcon className="size-6" />
+                        {t('actions.compactDisable') }
+                    </>
+                ) : (
+                    <>
+                        <ChevronUpIcon className="size-6" />
+                        {t('actions.compactEnable')}
+                    </>
+                )}
             </button>
 
             {(liveStream && state !== STATE_LIVE) && (
@@ -46,8 +57,9 @@ function Footer({
                 target="_blank"
                 rel="noreferrer"
                 title={user.display_name}
-                className="dark:hover:text-gray-300"
+                className="flex items-center gap-1 dark:hover:text-gray-300"
             >
+                <ArrowTopRightOnSquareIcon className="inline size-6" />
                 {t('actions.yourDashboard')}
             </a>
         </div>
