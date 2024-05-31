@@ -1,7 +1,7 @@
 {
     "actions": {
         "abort": "Abbrechen",
-        "compactDisable": "Alles anzeigen",
+        "compactDisable": "Kompaktmodus verlassen",
         "compactEnable": "Kompaktmodus",
         "loginWith": "Login mit Streamfinity",
         "logout": "Logout",

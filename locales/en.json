@@ -1,8 +1,8 @@
 {
     "actions": {
         "abort": "Abort",
-        "compactDisable": "Show more",
-        "compactEnable": "Collapse",
+        "compactDisable": "Exit Compact Mode",
+        "compactEnable": "Comapct Mode",
         "loginWith": "Login with Streamfinity",
         "logout": "Logout",
         "markAsReaction": "Mark as Reaction",
