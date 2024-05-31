@@ -38,15 +38,6 @@ export async function storageSetSettingVisible(visible) {
 export async function storageGetSettingVisible() {
     const value = (await browser.storage.sync.get(STORAGE_SETTING_SCRIPT_VISIBLE))[STORAGE_SETTING_SCRIPT_VISIBLE];
 
-    if (value === undefined) {
-        // TODO remove, only for review so extension is visible
-        if ((navigator.userAgent.indexOf('Edg') !== -1)) {
-            return true;
-        }
-
-        return false;
-    }
-
     return value !== false;
 }
 
