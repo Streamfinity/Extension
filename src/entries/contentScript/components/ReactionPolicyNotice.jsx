@@ -194,7 +194,8 @@ function NoticeLine({
                         <span className="text-orange-800 dark:text-orange-500">
                             {t('reactionPolicy.status.notice')}
                         </span>
-                        {t('reactUpToPercentage.reactUpToPercentage', { value: maxPercentage })}
+                        {' '}
+                        {t('reactionPolicy.status.reactUpToPercentage', { value: maxPercentage })}
                     </div>
                 </div>
             )}
