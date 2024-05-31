@@ -73,8 +73,8 @@
     },
     "reactionPolicy": {
         "edit": "Eigene Policy bearbeiten",
-        "notSet": "Zu diesem Video ist keine Reaction-Policy festgelegt.",
-        "notSetOwn": "Du hast noch keine Reaction-Policy festgelegt.",
+        "notSet": "Zu diesem Video ist keine Reaction Policy festgelegt.",
+        "notSetOwn": "Du hast noch keine Reaction Policy festgelegt.",
         "previewAllowed": "erlaubt",
         "previewConditions": "Bedingungen",
         "previewNone": "nicht festgelegt",
@@ -87,7 +87,7 @@
             "reactUpToPercentage": "Du darfst nur auf {{value}}% des Videos reagieren"
         },
         "thirdPartyHint": "Infos bereitgestellt von",
-        "title": "Reaction-Policy"
+        "title": "Reaction Policy"
     },
     "settings": {
         "incognito": "Inkognito Modus (Videos werden nicht getracked)",
