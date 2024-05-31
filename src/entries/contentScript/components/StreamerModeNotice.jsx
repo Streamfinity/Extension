@@ -5,6 +5,11 @@ import Card from '~/entries/contentScript/components/Card';
 import useAuth, { STATE_DEFAULT } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
 
+/**
+ * Function component for displaying a notice in streamer mode.
+ * Uses translation and authentication hooks to render a Card component with a title and description.
+ * Includes a Button component to allow users to show all content.
+ */
 function StreamerModeNotice() {
     const { t } = useTranslation();
     const { setOverrideState } = useAuth();

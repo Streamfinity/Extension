@@ -1,3 +1,6 @@
+/**
+ * Set up Tailwind CSS with a custom font variable for Inter font family.
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,3 +1,6 @@
+/**
+ * Animation keyframes for jiggling effect and styling for active state.
+ */
 @keyframes jiggle {
     0% { transform: scale(1) translateX(0) rotate(0); }
     25% { transform: scale(1.03) translateX(5px) rotate(1deg); }

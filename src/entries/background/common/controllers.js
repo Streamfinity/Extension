@@ -6,6 +6,13 @@ import { createLogger } from '~/common/log';
 
 const log = createLogger('Background');
 
+/**
+ * Retrieves the appropriate action or API function based on the provided type and executes it with the given data.
+ * 
+ * @param {string} type - The type of action or API function to be executed.
+ * @param {object} data - The data to be passed to the action or API function.
+ * @returns {Promise} A Promise that resolves with the result of the executed action or API function, or null if the type is not recognized.
+ */
 async function getResponse(type, data) {
     const callback = {
         // Actions
@@ -42,6 +49,13 @@ async function getResponse(type, data) {
     return null;
 }
 
+/**
+ * Handle messages received from content scripts.
+ * 
+ * @param {string} type - The type of message being received.
+ * @param {any} data - The data associated with the message.
+ * @returns {Promise<any>} A promise that resolves with the response to the message.
+ */
 export async function onContentScriptMessage(type, data) {
     const response = await getResponse(type, data);
 

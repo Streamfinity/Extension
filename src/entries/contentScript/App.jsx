@@ -1,3 +1,9 @@
+/**
+ * React functional component representing the main application.
+ * Handles user authentication, state management, theme settings, and various UI components.
+ * Utilizes hooks like useTranslation, useAuth, useAppStore, usePage, useBackgroundEvents.
+ * Renders different components based on the user's state and actions.
+ */
 import './App.css';
 import '@streamfinity/streamfinity-branding/dist/index.css';
 import React, { useEffect, useState } from 'react';

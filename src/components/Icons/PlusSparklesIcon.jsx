@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Function component that renders a SVG icon of PlusSparkles.
+ * 
+ * @param {string} className - Additional CSS class for styling.
+ * @param {number} width - The width of the SVG icon.
+ * @param {number} height - The height of the SVG icon.
+ * @returns {JSX.Element} SVG icon of PlusSparkles.
+ */
 function PlusSparkles({ className = '', width = 20, height = 20 }) {
     return (
         <svg

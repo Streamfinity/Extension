@@ -2,6 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Function component for rendering a Twitch icon.
+ * 
+ * @param {Object} props - The props for the Twitch icon component.
+ * @param {string} props.className - The class name for the icon container.
+ * @param {number} props.height - The height of the icon.
+ * @param {number} props.width - The width of the icon.
+ * @param {string} props.viewBox - The viewBox attribute for the SVG icon.
+ * @returns {JSX.Element} A React element representing the Twitch icon.
+ */
 function TwitchIcon({
     className, height, width, viewBox,
 }) {

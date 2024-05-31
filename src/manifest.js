@@ -16,11 +16,12 @@ const browserAction = {
 };
 
 /**
+ * Function to generate a manifest object based on the manifest version, browser target, and environment variables.
  *
- * @param {number} manifestVersion
- * @param {string} browserTarget
- * @param {Record<string, string>} env
- * @returns {object}
+ * @param {number} manifestVersion - The version of the manifest (2 or 3).
+ * @param {string} browserTarget - The target browser ('chrome' or 'firefox').
+ * @param {Record<string, string>} env - Environment variables object.
+ * @returns {object} - The generated manifest object.
  */
 export function getManifest(manifestVersion, browserTarget, env) {
     if (!Object.values(browserTargets).includes(browserTarget)) {

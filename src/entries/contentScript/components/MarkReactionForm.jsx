@@ -9,6 +9,14 @@ import { submitReaction } from '~/common/bridge';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 import { toastError, toastSuccess } from '~/common/utility';
 
+/**
+ * Function component for a MarkReactionForm.
+ * 
+ * @param {Object} props - The props for the MarkReactionForm component.
+ * @param {Function} props.onSubmitted - Function to be called when the form is submitted.
+ * 
+ * @returns {JSX.Element} A React component representing the MarkReactionForm.
+ */
 function MarkReactionForm({ onSubmitted }) {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);

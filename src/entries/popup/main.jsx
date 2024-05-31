@@ -1,3 +1,6 @@
+/**
+ * Initializes i18n configuration, creates a logger, sets up a QueryClient, and renders the main App component.
+ */
 import '~/enableDevHmr';
 import React from 'react';
 import { createRoot } from 'react-dom/client';

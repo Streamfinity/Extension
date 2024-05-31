@@ -4,10 +4,14 @@ import classNames from 'classnames';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import { childrenShape } from '~/shapes';
 
-// -------------------------------------------------------------------------------------------------------
-// Title
-// -------------------------------------------------------------------------------------------------------
-
+/**
+ * Function that renders a card title with the provided children.
+ * 
+ * @param {Object} props - The props object containing the children to be rendered.
+ * @param {Node | Element | Array} props.children - The children elements to be displayed in the card title.
+ * 
+ * @returns {JSX.Element} A div element representing the card title with the provided children.
+ */
 function CardTitle({ children }) {
     return (
         <div className="mb-2 text-base font-bold">
@@ -20,10 +24,20 @@ CardTitle.propTypes = {
     children: childrenShape.isRequired,
 };
 
-// -------------------------------------------------------------------------------------------------------
-// Card
-// -------------------------------------------------------------------------------------------------------
-
+/**
+ * Function that defines a Card component in React.
+ * 
+ * @param {Object} props - The props for the Card component.
+ * @param {string} props.className - The class name for styling the Card.
+ * @param {string} props.color - The color theme for the Card.
+ * @param {node} props.children - The content to be displayed inside the Card.
+ * @param {string} props.title - The title of the Card.
+ * @param {string} props.titleCompact - The compact title of the Card.
+ * @param {string} props.preview - The preview content of the Card.
+ * @param {boolean} props.compact - Flag to determine if the Card should be displayed in compact mode.
+ * 
+ * @returns {JSX.Element} A React component representing a Card.
+ */
 function Card({
     children,
     title,

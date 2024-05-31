@@ -11,6 +11,18 @@ import SubwaySurfer from '~/entries/contentScript/components/SubwaySurfer';
 
 const dev = import.meta.env.DEV;
 
+/**
+ * Function that renders the main AppContainer component.
+ * 
+ * @param {Object} props - The props for the AppContainer component.
+ * @param {childrenShape} props.children - The children elements to be rendered.
+ * @param {childrenShape} [props.user=null] - The user element to be rendered.
+ * @param {boolean} [props.dark=false] - Flag to determine if dark mode is enabled.
+ * @param {string} [props.state='default'] - The state of the component (default, live, own-video).
+ * @param {boolean} [props.isTrackingVideos] - Flag to determine if video tracking is enabled.
+ * 
+ * @returns {JSX.Element} JSX element representing the AppContainer component.
+ */
 function AppContainer({
     children,
     dark,

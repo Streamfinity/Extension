@@ -1,3 +1,10 @@
+/**
+ * Styles for a label and an input field.
+ * - Label has base text styling with gray color and margin bottom.
+ * - Input field has full width, padding, border, rounded corners, and no outline.
+ * - Input field has white background with 70% opacity and light gray border with 30% opacity.
+ * - Input field changes border color on focus, with different styles for dark mode.
+ */
 .label {
     @apply block text-base text-gray-200 mb-2;
 }

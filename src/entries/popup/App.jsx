@@ -14,6 +14,13 @@ const availableViews = [
     },
 ];
 
+/**
+ * Function representing the main component of the application.
+ * Renders different views based on user authentication status.
+ * Uses state, memoization, and custom hooks like useAuth and useBackgroundEvents.
+ * 
+ * @returns {JSX.Element} The main component of the application.
+ */
 function App() {
     const [activeView] = useState(availableViews[0]);
     const ActiveViewComponent = useMemo(() => activeView.component, [activeView]);

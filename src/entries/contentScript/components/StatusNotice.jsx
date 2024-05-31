@@ -6,6 +6,18 @@ import classNames from 'classnames';
 import { buildFrontendUrl } from '~/common/utility';
 import { useAppStore } from '~/entries/contentScript/state';
 
+/**
+ * Functional component for displaying a status notice based on the liveStream prop.
+ * 
+ * @param {Object} liveStream - The live stream object containing title, account, and service information.
+ * @param {string} liveStream.title - The title of the live stream.
+ * @param {Object} liveStream.account - The account object with display_name.
+ * @param {string} liveStream.account.display_name - The display name of the account.
+ * @param {Object} liveStream.service - The service object with title.
+ * @param {string} liveStream.service.title - The title of the service.
+ * 
+ * @returns {JSX.Element} JSX element representing the status notice component.
+ */
 function StatusNotice({
     liveStream,
 }) {

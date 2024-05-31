@@ -9,6 +9,12 @@ import { why } from '~/common/pretty';
 
 const log = createLogger('PlayerProgress');
 
+/**
+ * Function component for handling player progress updates.
+ * 
+ * @param {Object} props - The props object containing the 'active' boolean property.
+ * @returns {null} - This component does not render any UI elements.
+ */
 function PlayerProgressListener({ active }) {
     const { element: playerElement, progress: playerProgress } = useYouTubePlayer();
     const currentUrl = useAppStore((state) => state.currentUrl);

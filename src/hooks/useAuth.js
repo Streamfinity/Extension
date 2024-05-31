@@ -13,6 +13,31 @@ export const STATE_DEFAULT = 'default';
 export const STATE_LIVE = 'live';
 export const STATE_OWN_VIDEO = 'own-video';
 
+/**
+ * Custom React hook for handling user authentication logic.
+ *
+ * This hook manages user authentication state, including login, logout, user status, and user actions.
+ * It provides functions to perform login and logout operations, as well as access to user data and status.
+ *
+ * @returns {{
+*  user: object,
+*  accounts: array,
+*  liveStreams: array,
+*  liveStream: object,
+*  isLive: boolean,
+*  isOwnVideo: boolean,
+*  isIncognito: boolean,
+*  isTrackingVideos: boolean,
+*  loadingAuth: boolean,
+*  state: string,
+*  setOverrideState: function,
+*  refreshStatusData: function,
+*  loadingLogin: boolean,
+*  login: function,
+*  loadingLogout: boolean,
+*  logout: function
+* }}
+*/
 export default function useAuth() {
     const [
         overrideState, setOverrideState, currentChannel,

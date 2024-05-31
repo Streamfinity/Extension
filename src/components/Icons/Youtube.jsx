@@ -2,6 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Function component for rendering a YouTube icon.
+ * 
+ * @param {Object} props - The props for the YouTube icon.
+ * @param {string} props.className - The class name for the icon.
+ * @param {number} props.height - The height of the icon.
+ * @param {number} props.width - The width of the icon.
+ * @param {string} props.viewBox - The viewBox for the icon.
+ * @returns {JSX.Element} A div containing an SVG element representing the YouTube icon.
+ */
 function YouTubeIcon({
     className, height, width, viewBox,
 }) {

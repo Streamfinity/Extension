@@ -5,6 +5,12 @@ import { createLogger } from '~/common/log';
 
 const log = createLogger('usePage');
 
+/**
+ * Custom React hook that scrapes information from the current page and updates the state accordingly.
+ * It listens for page navigation events and periodically scrapes for new URL, channel information, and dark mode status.
+ * 
+ * @returns {Object} An object containing the current URL.
+ */
 export function usePage() {
     const [
         currentUrl, setCurrentUrl,

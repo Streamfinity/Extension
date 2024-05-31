@@ -12,6 +12,13 @@ import { Switch } from '~/components/Ui/Switch';
 import Card from '~/entries/contentScript/components/Card';
 import { getApiUrl } from '~/config';
 
+/**
+ * Function component for rendering the settings view.
+ * Handles toggling visibility, incognito mode, and logout functionality.
+ * Uses various hooks and state management for user interaction.
+ * 
+ * @param {object} user - The user object containing display_name.
+ */
 function SettingsView() {
     const { t } = useTranslation();
     const {

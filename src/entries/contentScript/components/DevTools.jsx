@@ -2,6 +2,12 @@ import React from 'react';
 import useAuth from '~/hooks/useAuth';
 import { getApiUrl } from '~/config';
 
+/**
+ * Function component for displaying Streamfinity Dev Tools.
+ * Retrieves user authentication information and displays user details, accounts, live streams, and current state.
+ * Utilizes useAuth hook to fetch user authentication data.
+ * Renders UI elements with user information, accounts for reaction tracking, live stream status, and API endpoint.
+ */
 function DevTools() {
     const {
         state, user, liveStreams, accounts, isLive,

@@ -20,6 +20,13 @@ const availableVideoItems = [{
     url: 'https://cdn.streamfinity.tv/extension-assets/subway-surfer-mina.mp4',
 }];
 
+/**
+ * Function component for rendering a 🤫 video player.
+ * 
+ * @param {Function} onClose - Function to handle closing the video player.
+ * 
+ * @returns {JSX.Element} A div containing the video player with controls and information.
+ */
 function SubwaySurfer({ onClose }) {
     const { t } = useTranslation();
     const [videoItem, setVideoItem] = useState(null);
