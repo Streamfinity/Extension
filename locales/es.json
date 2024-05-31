@@ -34,7 +34,8 @@
         "rate": "Evalúa esta nota",
         "readMore": "Leer más...",
         "report": "",
-        "title": "Nota comunitaria"
+        "title": "Nota comunitaria",
+        "comingSoon": "Community Notes are <0>coming soon</0>"
     },
     "incognito": {
         "title": "Modo incógnito hasta {{time}}"

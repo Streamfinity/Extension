@@ -34,7 +34,8 @@
         "rate": "Rate this note",
         "readMore": "Read more...",
         "report": "Report",
-        "title": "Community Note"
+        "title": "Community Note",
+        "comingSoon": "Community Notes are <0>coming soon</0>"
     },
     "incognito": {
         "title": "Incognito mode until {{time}}"

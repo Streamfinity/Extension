@@ -34,7 +34,8 @@
         "rate": "Diese Notiz bewerten",
         "readMore": "Mehr lesen...",
         "report": "Melden",
-        "title": "Community Note"
+        "title": "Community Note",
+        "comingSoon": "Community Notes are <0>coming soon</0>"
     },
     "incognito": {
         "title": "Inkognito Modus bis {{time}}"
