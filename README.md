@@ -32,6 +32,10 @@
 - [**Firefox** Add-On](https://addons.mozilla.org/en-US/firefox/addon/streamfinity)
 - [**Microsoft** Edge Store](https://microsoftedge.microsoft.com/addons/detail/streamfinity/oodabmjmfenpggjpfnnegmkdkkmenple)
 
+<p align="center">
+<img src="images/preview.png" alt="Preview">
+</p>
+
 ## Contributing
 
 <a href="https://sfin.it/discord"><img src="https://img.shields.io/discord/1040164710106005524?logo=discord&logoColor=%23a3a3a3&label=Discord&color=%235865F2"></a>
