@@ -124,7 +124,7 @@ function MarkReactionForm({ onSubmitted }) {
             <div className="flex">
                 <div className="flex-1">
                     <Button
-                        color="primary-gradient"
+                        color="primary"
                         className="w-full"
                         disabled={segmentFull !== null}
                         onClick={() => fullSegment()}
@@ -140,7 +140,7 @@ function MarkReactionForm({ onSubmitted }) {
                 </div>
                 <div className="flex flex-1 flex-col gap-4">
                     <Button
-                        color="primary-gradient"
+                        color="primary"
                         className="w-full"
                         disabled={segmentFull !== null}
                         onClick={() => partSegment()}
@@ -165,7 +165,7 @@ function MarkReactionForm({ onSubmitted }) {
                     </H3Header>
                     <div className="mt-4 flex gap-4">
                         <Button
-                            color="primary-gradient"
+                            color="primary"
                             disabled={!!segmentStart}
                             className="w-full"
                             onClick={() => startSegment()}
@@ -173,7 +173,7 @@ function MarkReactionForm({ onSubmitted }) {
                             {segmentStart ? prettyDuration(segmentStart) : `Start at ${prettyDuration(playerProgress)}`}
                         </Button>
                         <Button
-                            color="primary-gradient"
+                            color="primary"
                             className="w-full"
                             disabled={!!segmentEnd || !segmentStart}
                             onClick={() => endSegment()}
@@ -217,7 +217,7 @@ function MarkReactionForm({ onSubmitted }) {
                             </p>
 
                             <Button
-                                color="primary-gradient"
+                                color="primary"
                                 className="w-full"
                                 disabled={loading}
                                 loading={loading}

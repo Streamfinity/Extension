@@ -32,7 +32,7 @@ function MarkReactionNotice() {
                     </div>
                     <div className="flex grow items-center">
                         <Button
-                            color="primary-gradient"
+                            color="primary"
                             className="w-full"
                             onClick={() => setShowForm(true)}
                             usePx={false}

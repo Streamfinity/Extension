@@ -9,7 +9,7 @@ function LoginButton({ onClick, loading }) {
     return (
         <Button
             type="button"
-            color="primary-gradient"
+            color="primary"
             onClick={onClick}
             disabled={loading}
             usePx={false}
