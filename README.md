@@ -33,7 +33,7 @@
 - [**Microsoft** Edge Store](https://microsoftedge.microsoft.com/addons/detail/streamfinity/oodabmjmfenpggjpfnnegmkdkkmenple)
 
 <p align="center">
-<img src="images/preview.png" alt="Preview">
+<img src="img/preview.png" alt="Preview">
 </p>
 
 ## Contributing
