@@ -123,8 +123,8 @@ const log = {
                         {
                             stream: {
                                 project: 'extension',
-                                channel: 'beta',
-                                env: 'beta',
+                                channel: 'production',
+                                env: 'production',
                             },
                             values: [
                                 [`${((+new Date()) * 1000000)}`, JSON.stringify({
