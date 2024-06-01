@@ -27,6 +27,7 @@ function StreamerModeNotice() {
                         color="brand-streamer"
                         className="w-full"
                         onClick={() => setOverrideState(STATE_DEFAULT)}
+                        usePx={false}
                     >
                         {t('actions.showAll')}
                     </Button>

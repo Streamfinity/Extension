@@ -12,6 +12,7 @@ function LoginButton({ onClick, loading }) {
             color="primary-gradient"
             onClick={onClick}
             disabled={loading}
+            usePx={false}
             className="w-full"
         >
             {loading ? t('words.loading') : t('actions.loginWith')}

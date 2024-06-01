@@ -31,6 +31,7 @@ function SubmitSuggestionNotice() {
                             color="brand-viewer"
                             className="w-full"
                             onClick={() => setShowForm(true)}
+                            usePx={false}
                         >
                             {t('actions.suggestVideo')}
                         </Button>

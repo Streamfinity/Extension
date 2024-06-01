@@ -129,6 +129,7 @@ function SettingsView() {
                     color="secondary"
                     disabled={loadingLogout}
                     onClick={logout}
+                    usePx={false}
                     className="w-full"
                     sm
                 >

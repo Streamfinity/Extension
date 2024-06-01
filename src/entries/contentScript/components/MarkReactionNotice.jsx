@@ -35,6 +35,7 @@ function MarkReactionNotice() {
                             color="primary-gradient"
                             className="w-full"
                             onClick={() => setShowForm(true)}
+                            usePx={false}
                         >
                             {t('actions.markAsReaction')}
                         </Button>

@@ -128,6 +128,7 @@ function MarkReactionForm({ onSubmitted }) {
                         className="w-full"
                         disabled={segmentFull !== null}
                         onClick={() => fullSegment()}
+                        usePx={false}
                     >
                         {t('markReaction.fullVideo')}
                     </Button>
@@ -143,6 +144,7 @@ function MarkReactionForm({ onSubmitted }) {
                         className="w-full"
                         disabled={segmentFull !== null}
                         onClick={() => partSegment()}
+                        usePx={false}
                     >
                         {t('markReaction.segmentVideo')}
                     </Button>
@@ -175,6 +177,7 @@ function MarkReactionForm({ onSubmitted }) {
                             className="w-full"
                             disabled={!!segmentEnd || !segmentStart}
                             onClick={() => endSegment()}
+                            usePx={false}
                         >
                             {segmentEnd && prettyDuration(segmentEnd)}
                             {(!segmentEnd && segmentStart) && `End at ${prettyDuration(playerProgress)}`}
@@ -219,6 +222,7 @@ function MarkReactionForm({ onSubmitted }) {
                                 disabled={loading}
                                 loading={loading}
                                 onClick={() => submit()}
+                                usePx={false}
                             >
                                 {t('actions.submitReaction')}
                             </Button>

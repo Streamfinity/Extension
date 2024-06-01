@@ -210,6 +210,7 @@ function SubmitSuggestionForm({ onSubmit }) {
                     type="button"
                     className="w-full"
                     onClick={() => submit()}
+                    usePx={false}
                 >
                     {t('actions.submit')}
                 </Button>
