@@ -75,8 +75,8 @@ function Notice({
                 </div>
             )}
 
-            <div className="mt-3 text-xs font-medium">
-                {isOwnVideo && (
+            {isOwnVideo && (
+                <div className="mt-3 text-xs font-medium">
                     <a
                         href={buildFrontendUrl('/dashboard/policy')}
                         target="_blank"
@@ -85,8 +85,8 @@ function Notice({
                     >
                         {t('reactionPolicy.edit')}
                     </a>
-                )}
-            </div>
+                </div>
+            )}
 
             {isThirdParty && (
                 <div className="mt-1 text-center text-xs">
@@ -136,48 +136,67 @@ function NoticeLine({
     const { t } = useTranslation();
 
     const buttonClassNames = 'mr-2 size-3 rounded-full bg-gradient-to-tr shrink-0 mt-[0.5rem]';
+    const buttonClassNamesStatusMap = {
+        [STATUS_ALLOWED]: 'from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20',
+        [STATUS_CONDITION]: 'from-orange-500 to-orange-400 shadow shadow-orange-700/20',
+        [STATUS_DENIED]: 'from-red-500 to-red-400 shadow shadow-red-700/20',
+    };
+
+    const textClassNamesTextMap = {
+        [STATUS_ALLOWED]: 'font-medium text-emerald-500',
+        [STATUS_CONDITION]: 'font-medium text-orange-800 dark:text-orange-500',
+        [STATUS_DENIED]: 'font-medium text-red-500',
+    };
 
     return (
         <div>
             <div className="font-semibold">
                 {title}
             </div>
-            {(status === STATUS_CONDITION && options?.length > 0) && (
+
+            {options?.length > 0 && (
                 <>
                     {options.map((option) => (
                         <div
                             key={option.value}
                             className="flex items-start"
                         >
-                            <div className={`${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`} />
-                            <div className="font-medium text-orange-800 dark:text-orange-500">
+                            <div className={classNames(
+                                buttonClassNames,
+                                buttonClassNamesStatusMap[status === STATUS_ALLOWED ? STATUS_ALLOWED : STATUS_CONDITION],
+                            )}
+                            />
+                            <div className={textClassNamesTextMap[status === STATUS_ALLOWED ? STATUS_ALLOWED : STATUS_CONDITION]}>
                                 {option.title}
                             </div>
                         </div>
                     ))}
                 </>
             )}
-            {status === STATUS_ALLOWED && (
+
+            {(status === STATUS_ALLOWED && options?.length === 0) && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20`} />
-                    <div className="font-medium text-emerald-500">
+                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_ALLOWED]}`} />
+                    <div className={textClassNamesTextMap[STATUS_ALLOWED]}>
                         {t('reactionPolicy.status.noRestriction')}
                     </div>
                 </div>
             )}
+
             {status === STATUS_DENIED && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} from-red-500 to-red-400 shadow shadow-red-700/20`} />
-                    <div className="font-medium text-red-500">
+                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_DENIED]}`} />
+                    <div className={textClassNamesTextMap[STATUS_DENIED]}>
                         {t('reactionPolicy.status.notAllowed')}
                     </div>
                 </div>
             )}
+
             {status === STATUS_ON_COUNTDOWN && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} from-red-500 to-red-400 shadow shadow-red-700/20`} />
-                    <div className="font-medium">
-                        <span className="text-red-500">
+                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_DENIED]}`} />
+                    <div className={textClassNamesTextMap[STATUS_DENIED]}>
+                        <span className="underline">
                             {t('reactionPolicy.status.allowedIn')}
                         </span>
                         {' '}
@@ -187,11 +206,12 @@ function NoticeLine({
                     </div>
                 </div>
             )}
+
             {maxPercentage > 0 && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`} />
-                    <div className="font-medium">
-                        <span className="text-orange-800 dark:text-orange-500">
+                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_CONDITION]}`} />
+                    <div className={textClassNamesTextMap[STATUS_CONDITION]}>
+                        <span className="underline">
                             {t('reactionPolicy.status.notice')}
                         </span>
                         {' '}
@@ -202,9 +222,9 @@ function NoticeLine({
 
             {comment && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`} />
-                    <div className="font-medium">
-                        <span className="text-orange-800 dark:text-orange-500">
+                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_CONDITION]}`} />
+                    <div className={textClassNamesTextMap[STATUS_CONDITION]}>
+                        <span className="underline">
                             {t('reactionPolicy.status.notice')}
                         </span>
                         {' '}
@@ -393,10 +413,12 @@ function ReactionPolicyNotice() {
                         <NoticeLine
                             title={t('words.liveReactions')}
                             status={STATUS_ALLOWED}
+                            options={policy.live_options}
                         />
                         <NoticeLine
                             title={t('words.videoReactions')}
                             status={STATUS_ALLOWED}
+                            options={policy.video_options}
                         />
                     </div>
                 )}
