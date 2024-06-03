@@ -64,7 +64,6 @@
     "reactionHistory": {
         "ctaCreator": "Consigue Creator+ para ver quién reacciona a tu vídeo",
         "ctaViewer": "Consigue Community+ para ver cuáles de los streamers que sigues han reaccionado",
-        "edit": "",
         "inAStream": "en un stream en directo de {{service}}",
         "inAVideo": "En un vídeo",
         "noReactionsYet": "Aún no hay reacciones para este vídeo.",
