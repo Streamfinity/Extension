@@ -30,12 +30,12 @@
     },
     "communityNotes": {
         "add": "Escribe una nota",
+        "comingSoon": "Community Notes are <0>coming soon</0>",
         "none": "nada",
         "rate": "Evalúa esta nota",
         "readMore": "Leer más...",
         "report": "",
-        "title": "Nota comunitaria",
-        "comingSoon": "Community Notes are <0>coming soon</0>"
+        "title": "Nota comunitaria"
     },
     "incognito": {
         "title": "Modo incógnito hasta {{time}}"

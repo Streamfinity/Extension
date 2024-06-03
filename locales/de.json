@@ -30,12 +30,12 @@
     },
     "communityNotes": {
         "add": "Notiz schreiben",
+        "comingSoon": "Community Notes starten ab dem 01.07. <0>Informier dich hier</0>, um mehr darüber zu erfahren.",
         "none": "keine",
         "rate": "Diese Notiz bewerten",
         "readMore": "Mehr lesen...",
         "report": "Melden",
-        "title": "Community Note",
-        "comingSoon": "Community Notes starten ab dem 01.07. <0>Informier dich hier</0>, um mehr darüber zu erfahren."
+        "title": "Community Note"
     },
     "incognito": {
         "title": "Inkognito Modus bis {{time}}"
