@@ -26,7 +26,7 @@
         "uniqueViews": "Eindeutige Aufrufe"
     },
     "auth": {
-        "loginDescription": "Starte, indem du dich mit deinem YoutTube Account einloggst!"
+        "loginDescription": "Starte, indem du dich mit deinem Twitch oder YoutTube Account einloggst!"
     },
     "communityNotes": {
         "add": "Notiz schreiben",
@@ -38,7 +38,7 @@
         "title": "Community Note"
     },
     "incognito": {
-        "title": "Inkognito Modus bis {{time}}"
+        "title": "Inkognito-Modus bis {{time}}"
     },
     "markReaction": {
         "description": "Wenn dieses Video eine Reaction enthält oder eine Reaction auf ein anderes Video ist, markiere es.",
@@ -73,8 +73,8 @@
     },
     "reactionPolicy": {
         "edit": "Eigene Policy bearbeiten",
-        "notSet": "Zu diesem Video ist keine Reaction Policy festgelegt.",
-        "notSetOwn": "Du hast noch keine Reaction Policy festgelegt.",
+        "notSet": "Zu diesem Video ist keine Reaction-Policy festgelegt.",
+        "notSetOwn": "Du hast noch keine Reaction-Policy festgelegt.",
         "previewAllowed": "erlaubt",
         "previewConditions": "Bedingungen",
         "previewNone": "nicht festgelegt",
@@ -87,17 +87,17 @@
             "reactUpToPercentage": "Du darfst nur auf {{value}}% des Videos reagieren"
         },
         "thirdPartyHint": "Infos bereitgestellt von",
-        "title": "Reaction Policy"
+        "title": "Reaction-Policy"
     },
     "settings": {
-        "incognito": "Inkognito Modus (Videos werden nicht getracked)",
+        "incognito": "Inkognito-Modus (Videos werden nicht getracked)",
         "incognitoDisable": "Deaktivieren (aktiv bis {{date}})",
         "incognitoEnable": "Aktivieren",
         "showExtension": "Erweiterung auf Seite anzeigen",
         "title": "Einstellungen"
     },
     "status": {
-        "disableStreamerMode": "Streamer-Modus",
+        "disableStreamerMode": "Deaktiviere Streamer-Modus",
         "disableStreamerModeDescription": "Zeige alle ausgeblendeten Elemente der Erweiterung, bis die Seite neugeladen wird.",
         "enableStreamerMode": "Streamer-Modus",
         "trackingDisabled": "Wir zeichnen deine Videohistorie nicht auf",

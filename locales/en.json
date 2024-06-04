@@ -26,7 +26,7 @@
         "uniqueViews": "Unique views"
     },
     "auth": {
-        "loginDescription": "Get started by logging in with your YouTube account!"
+        "loginDescription": "Get started by logging in with your Twitch or YouTube account!"
     },
     "communityNotes": {
         "add": "Write a note",
@@ -90,7 +90,7 @@
         "title": "Reaction Policy"
     },
     "settings": {
-        "incognito": "Incognito Mode (don't track videos)",
+        "incognito": "Incognito Mode (not tracking videos)",
         "incognitoDisable": "Disable (active until {{date}})",
         "incognitoEnable": "Enable",
         "showExtension": "Show Extension on Web Pages",
