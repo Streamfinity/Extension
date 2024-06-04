@@ -180,7 +180,7 @@ By tagging a commit, the Extension will be built and sent to the **Chrome Web St
 
 ## Security Policy ⚠️
 
-If you have discovered a vulnerability or security related issue, please send a mail at [security@streamfinity.tv](security@streamfinity.tv). Do not open an issue on GitHub.
+If you have discovered a vulnerability or security related issue, please send a mail at [security@streamfinity.tv](mailto:security@streamfinity.tv). Do not open an issue on GitHub.
 
 ## Authors
 
