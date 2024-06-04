@@ -184,7 +184,7 @@ If you have discovered a vulnerability or security related issue, please send a 
 
 ## Authors
 
-- [Roman Zipp](https://ich.wtf)
+- [Roman Zipp](https://romanzipp.com)
 
 ## License
 
