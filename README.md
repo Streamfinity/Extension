@@ -178,6 +178,10 @@ By tagging a commit, the Extension will be built and sent to the **Chrome Web St
   - See issue [vite-plugin-web-extension#87](https://github.com/samrum/vite-plugin-web-extension/issues/87)
   - We can not load the transpiled JS bundle from `localhost` since Firefox only allows loading content scripts from `moz-extension` URLs. (*WebExtension content scripts may only load modules with moz-extension URLs and not: “http://localhost:5173/@vite/client”.*)
 
+## Security Policy ⚠️
+
+If you have discovered a vulnerability or security related issue, please send a mail at [security@streamfinity.tv](security@streamfinity.tv). Do not open an issue on GitHub.
+
 ## Authors
 
 - [Roman Zipp](https://ich.wtf)
