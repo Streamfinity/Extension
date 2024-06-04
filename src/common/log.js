@@ -1,39 +1,4 @@
 import moment from 'moment';
-import browser from 'webextension-polyfill';
-import { storageGetUser } from '~/entries/background/common/storage';
-import { getApiUrl } from '~/config';
-
-function getBrowser() {
-    if (!navigator?.userAgent) {
-        return null;
-    }
-    if ((navigator.userAgent.indexOf('Opera') || navigator.userAgent.indexOf('OPR')) !== -1) {
-        return 'Opera';
-    } if (navigator.userAgent.indexOf('Edg') !== -1) {
-        return 'Edge';
-    } if (navigator.userAgent.indexOf('Chrome') !== -1) {
-        return 'Chrome';
-    } if (navigator.userAgent.indexOf('Safari') !== -1) {
-        return 'Safari';
-    } if (navigator.userAgent.indexOf('Firefox') !== -1) {
-        return 'Firefox';
-    } if ((navigator.userAgent.indexOf('MSIE') !== -1) || (!!document.documentMode === true)) {
-        return 'IE';
-    }
-    return 'unknown';
-}
-
-async function getUser() {
-    if (typeof window !== 'undefined' && window.streamfinityUser) {
-        return window.streamfinityUser;
-    }
-
-    if (typeof browser.storage !== 'undefined') {
-        return storageGetUser();
-    }
-
-    return null;
-}
 
 const log = {
     enabled: true,
@@ -84,14 +49,6 @@ const log = {
             return;
         }
 
-        // ----------------------------- WIP -----------------------------
-        getUser().then((user) => {
-            if (user?.extension_log || level === 'error' || level === 'warn') {
-                this.sendToLogging(level, user, args);
-            }
-        });
-        // ----------------------------- WIP -----------------------------
-
         const { func, highlight } = this.levels[level];
         const placeholder = ' '.repeat(Math.max(0, 6 - level.length));
 
@@ -107,49 +64,6 @@ const log = {
             `color:${highlight};font-weight:bold`,
             ...args,
         ]);
-    },
-
-    async sendToLogging(level, user, args) {
-        const message = args.map((arg) => ((typeof arg === 'string') ? arg : JSON.stringify(arg))).join(', ');
-
-        try {
-            await fetch('https://logs.streamfinity.tv/loki/api/v1/push', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    streams: [
-                        {
-                            stream: {
-                                project: 'extension',
-                                channel: 'production',
-                                env: 'production',
-                            },
-                            values: [
-                                [`${((+new Date()) * 1000000)}`, JSON.stringify({
-                                    datetime: new Date().toISOString(),
-                                    level: (this.levels[level]?.levelNum ?? 200),
-                                    level_name: (this.levels[level]?.levelName ?? level.toUpperCase()),
-                                    message,
-                                    app: this.app,
-                                    section: this.section,
-                                    ep: getApiUrl(),
-                                    ...(user ? { user: user.display_name } : {}),
-                                    version: browser.runtime.getManifest()?.version,
-                                    browser: getBrowser(),
-                                })],
-                            ],
-                        },
-                    ],
-                }),
-            });
-        } catch (err) {
-            console.log('----------- error sending log to logging -----------');
-            console.log(message);
-            console.error(err);
-            console.error(err?.response);
-        }
     },
 
     verbose(...args) {
