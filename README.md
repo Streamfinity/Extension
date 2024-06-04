@@ -30,7 +30,7 @@
 - [**Manual .zip Download**](https://github.com/Streamfinity/Extension/releases/latest)
 - [**Chrome** Web Store](https://chrome.google.com/webstore/detail/mkaledojmamkljdldoeefpabbgfdkack)
 - [**Firefox** Add-On](https://addons.mozilla.org/en-US/firefox/addon/streamfinity)
-- [**Microsoft** Edge Store](https://microsoftedge.microsoft.com/addons/detail/streamfinity/oodabmjmfenpggjpfnnegmkdkkmenple)
+- [**Microsoft** Edge Store](https://chrome.google.com/webstore/detail/mkaledojmamkljdldoeefpabbgfdkack)
 
 <p align="center">
 <img src="img/preview.png" alt="Preview">
