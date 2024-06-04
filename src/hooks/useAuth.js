@@ -56,10 +56,6 @@ export default function useAuth() {
             return overrideState;
         }
 
-        // ++++++++++++ DEBUG ++++++++++++
-        // return STATE_OWN_VIDEO;
-        // ++++++++++++ DEBUG ++++++++++++
-
         if (isLive) {
             return STATE_LIVE;
         }
