@@ -14,13 +14,6 @@ import useAuth from '~/hooks/useAuth';
 import cirWordmarkLight from '~/assets/cir/canireact_light.png';
 import cirWordmarkDark from '~/assets/cir/canireact_dark.png';
 
-const STATUS_ALLOWED = 0;
-const STATUS_DENIED = 1;
-const STATUS_CONDITION = 2;
-
-const STATUS_ON_COUNTDOWN = 3;
-const STATUS_OTHER_CONDITION = 4;
-
 function prettyFormatCountdown(diff) {
     const duration = moment.duration(diff);
 
@@ -38,10 +31,11 @@ function prettyFormatCountdown(diff) {
 
 function Notice({
     title,
-    description,
+    children,
     preview = null,
     isThirdParty = false,
     cardColor,
+    note,
     className,
 }) {
     const { t } = useTranslation();
@@ -69,9 +63,15 @@ function Notice({
                 </div>
             )}
 
-            {description && (
+            {note && (
+                <div className="mb-3">
+                    {note}
+                </div>
+            )}
+
+            {children && (
                 <div className="text-sm">
-                    {description}
+                    {children}
                 </div>
             )}
 
@@ -116,37 +116,44 @@ function Notice({
 
 Notice.propTypes = {
     title: PropTypes.string,
-    description: childrenShape,
+    children: childrenShape,
     preview: PropTypes.string,
     isThirdParty: PropTypes.bool,
     className: PropTypes.string,
+    note: PropTypes.string,
     cardColor: PropTypes.string.isRequired,
 };
 
 Notice.defaultProps = {
     title: null,
-    description: null,
     isThirdParty: false,
     className: '',
 };
 
 function NoticeLine({
-    title, status, countdown, maxPercentage, comment, options,
+    title,
+    countdown,
+    maxPercentage,
+    minHours,
+    allowValue,
+    comment,
+    options,
 }) {
     const { t } = useTranslation();
 
-    const buttonClassNames = 'mr-2 size-3 rounded-full bg-gradient-to-tr shrink-0 mt-[0.5rem]';
-    const buttonClassNamesStatusMap = {
-        [STATUS_ALLOWED]: 'from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20',
-        [STATUS_CONDITION]: 'from-orange-500 to-orange-400 shadow shadow-orange-700/20',
-        [STATUS_DENIED]: 'from-red-500 to-red-400 shadow shadow-red-700/20',
-    };
+    const textGreenClassNames = 'font-medium text-emerald-500';
+    const textOrangeClassNames = 'font-medium text-orange-800 dark:text-orange-500';
+    const textRedClassNames = 'font-medium text-red-500';
 
-    const textClassNamesTextMap = {
-        [STATUS_ALLOWED]: 'font-medium text-emerald-500',
-        [STATUS_CONDITION]: 'font-medium text-orange-800 dark:text-orange-500',
-        [STATUS_DENIED]: 'font-medium text-red-500',
-    };
+    const buttonClassNames = 'mr-2 size-3 rounded-full bg-gradient-to-tr shrink-0 mt-[0.5rem]';
+
+    const buttonGreenClassNames = `${buttonClassNames} from-emerald-500 to-emerald-400 shadow shadow-emerald-700/20`;
+    const buttonOrangeClassNames = `${buttonClassNames} from-orange-500 to-orange-400 shadow shadow-orange-700/20`;
+    const buttonRedClassNames = `${buttonClassNames} from-red-500 to-red-400 shadow shadow-red-700/20`;
+
+    if (allowValue === null && options.length === 0 && !maxPercentage && !minHours && !countdown && !comment) {
+        return null;
+    }
 
     return (
         <div>
@@ -161,12 +168,8 @@ function NoticeLine({
                             key={option.value}
                             className="flex items-start"
                         >
-                            <div className={classNames(
-                                buttonClassNames,
-                                buttonClassNamesStatusMap[status === STATUS_ALLOWED ? STATUS_ALLOWED : STATUS_CONDITION],
-                            )}
-                            />
-                            <div className={textClassNamesTextMap[status === STATUS_ALLOWED ? STATUS_ALLOWED : STATUS_CONDITION]}>
+                            <div className={allowValue === true ? buttonGreenClassNames : buttonOrangeClassNames} />
+                            <div className={allowValue === true ? textGreenClassNames : textOrangeClassNames}>
                                 {option.title}
                             </div>
                         </div>
@@ -174,28 +177,28 @@ function NoticeLine({
                 </>
             )}
 
-            {(status === STATUS_ALLOWED && options?.length === 0) && (
+            {(allowValue === true && options?.length === 0) && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_ALLOWED]}`} />
-                    <div className={textClassNamesTextMap[STATUS_ALLOWED]}>
+                    <div className={buttonGreenClassNames} />
+                    <div className={textGreenClassNames}>
                         {t('reactionPolicy.status.noRestriction')}
                     </div>
                 </div>
             )}
 
-            {status === STATUS_DENIED && (
+            {allowValue === false && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_DENIED]}`} />
-                    <div className={textClassNamesTextMap[STATUS_DENIED]}>
+                    <div className={buttonRedClassNames} />
+                    <div className={textRedClassNames}>
                         {t('reactionPolicy.status.notAllowed')}
                     </div>
                 </div>
             )}
 
-            {status === STATUS_ON_COUNTDOWN && (
+            {countdown && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_DENIED]}`} />
-                    <div className={textClassNamesTextMap[STATUS_DENIED]}>
+                    <div className={buttonRedClassNames} />
+                    <div className={textRedClassNames}>
                         <span className="underline">
                             {t('reactionPolicy.status.allowedIn')}
                         </span>
@@ -209,8 +212,8 @@ function NoticeLine({
 
             {maxPercentage > 0 && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_CONDITION]}`} />
-                    <div className={textClassNamesTextMap[STATUS_CONDITION]}>
+                    <div className={buttonOrangeClassNames} />
+                    <div className={textOrangeClassNames}>
                         <span className="underline">
                             {t('reactionPolicy.status.notice')}
                         </span>
@@ -222,8 +225,8 @@ function NoticeLine({
 
             {comment && (
                 <div className="flex items-start">
-                    <div className={`${buttonClassNames} ${buttonClassNamesStatusMap[STATUS_CONDITION]}`} />
-                    <div className={textClassNamesTextMap[STATUS_CONDITION]}>
+                    <div className={buttonOrangeClassNames} />
+                    <div className={textOrangeClassNames}>
                         <span className="underline">
                             {t('reactionPolicy.status.notice')}
                         </span>
@@ -238,10 +241,11 @@ function NoticeLine({
 
 NoticeLine.propTypes = {
     title: PropTypes.string.isRequired,
-    status: PropTypes.number.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     countdown: PropTypes.object,
     maxPercentage: PropTypes.number,
+    minHours: PropTypes.number,
+    allowValue: PropTypes.bool,
     comment: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.shape({
         value: PropTypes.number,
@@ -281,18 +285,27 @@ function ReactionPolicyNotice() {
         }
 
         function refreshInterval() {
-            const liveAllowedAfter = moment(publishDate).add(policy.live_min_hours, 'hours');
-            const videoAllowedAfter = moment(publishDate).add(policy.video_min_hours, 'hours');
             const now = moment();
 
-            const liveDiff = liveAllowedAfter.diff(now);
-            const videoDiff = videoAllowedAfter.diff(now);
+            if (policy.live_min_hours) {
+                const liveAllowedAfter = moment(publishDate).add(policy.live_min_hours, 'hours');
+                const liveDiff = liveAllowedAfter.diff(now);
+                const liveDuration = moment.duration(liveDiff);
 
-            const liveDuration = moment.duration(liveDiff);
-            const videoDuration = moment.duration(videoDiff);
+                setLiveCountdownDuration(
+                    (liveCountdownDuration && liveCountdownDuration.asSeconds()) > 0 ? liveDuration : null,
+                );
+            }
 
-            setLiveCountdownDuration(liveDuration);
-            setVideoCountdownDuration(videoDuration);
+            if (policy.video_min_hours) {
+                const videoAllowedAfter = moment(publishDate).add(policy.video_min_hours, 'hours');
+                const videoDiff = videoAllowedAfter.diff(now);
+                const videoDuration = moment.duration(videoDiff);
+
+                setVideoCountdownDuration(
+                    (liveCountdownDuration && liveCountdownDuration.asSeconds()) > 0 ? videoDuration : null,
+                );
+            }
         }
 
         const interval = setInterval(() => {
@@ -304,78 +317,25 @@ function ReactionPolicyNotice() {
         return () => clearInterval(interval);
     }, [policy]);
 
-    const videoStatus = useMemo(() => {
+    const [cardColor, previewTitle] = useMemo(() => {
         if (!policy) {
-            return null;
+            return ['green', t('reactionPolicy.previewNone')];
         }
 
-        if (!policy.allow_video) {
-            return STATUS_DENIED;
-        }
-
-        if (policy.video_min_hours > 0 && videoCountdownDuration && videoCountdownDuration.asSeconds() > 0) {
-            return STATUS_ON_COUNTDOWN;
-        }
-
-        if (policy.video_max_percentage > 0) {
-            return STATUS_OTHER_CONDITION;
-        }
-
-        if (policy.video_options.length > 0) {
-            return STATUS_CONDITION;
-        }
-
-        return STATUS_ALLOWED;
-    }, [policy, videoCountdownDuration]);
-
-    const liveStatus = useMemo(() => {
-        if (!policy) {
-            return null;
-        }
-
-        if (!policy.allow_live) {
-            return STATUS_DENIED;
-        }
-
-        if (policy.live_min_hours > 0 && liveCountdownDuration && liveCountdownDuration.asSeconds() > 0) {
-            return STATUS_ON_COUNTDOWN;
-        }
-
-        if (policy.live_max_percentage > 0) {
-            return STATUS_OTHER_CONDITION;
-        }
-
-        if (policy.live_options.length > 0) {
-            return STATUS_CONDITION;
-        }
-
-        return STATUS_ALLOWED;
-    }, [policy, liveCountdownDuration]);
-
-    const status = useMemo(() => {
-        if (!policy) {
-            return null;
+        if (policy.policy === reactionPolicyEnum.DENY) {
+            return ['red', t('reactionPolicy.previewNotAllowed')];
         }
 
         if (policy.policy === reactionPolicyEnum.ALLOW) {
-            return STATUS_ALLOWED;
-        }
-
-        if (policy.policy === reactionPolicyEnum.DENY || (policy.policy === reactionPolicyEnum.CONDITIONS && !policy.allow_video && !policy.allow_live)) {
-            return STATUS_DENIED;
+            return ['green', t('reactionPolicy.previewAllowed')];
         }
 
         if (policy.policy === reactionPolicyEnum.CONDITIONS) {
-            // Allow if "custom" but video & live allowed with no set conditions
-            if ((liveStatus === STATUS_ALLOWED && policy.live_options.length === 0) && (videoStatus === STATUS_ALLOWED && policy.video_options.length === 0)) {
-                return STATUS_ALLOWED;
-            }
-
-            return STATUS_CONDITION;
+            return ['yellow', t('reactionPolicy.previewConditions')];
         }
 
-        return STATUS_DENIED;
-    }, [policy, liveStatus, videoStatus]);
+        return ['default', t('reactionPolicy.previewInfo')];
+    }, [policy]);
 
     const { isOwnVideo } = useAuth();
 
@@ -393,86 +353,41 @@ function ReactionPolicyNotice() {
     if (!policy) {
         return (
             <Notice
-                cardColor="green"
-                preview={t('reactionPolicy.previewNone')}
+                cardColor={cardColor}
+                preview={previewTitle}
                 title={isOwnVideo ? t('reactionPolicy.notSetOwn') : t('reactionPolicy.notSet')}
-            />
-        );
-    }
-
-    // eslint-disable-next-line default-case
-    switch (status) {
-    case STATUS_ALLOWED:
-        return (
-            <Notice
-                cardColor="green"
-                preview={t('reactionPolicy.previewAllowed')}
-                isThirdParty={isThirdParty}
-                description={(
-                    <div className="flex flex-col gap-4">
-                        <NoticeLine
-                            title={t('words.liveReactions')}
-                            status={STATUS_ALLOWED}
-                            options={policy.live_options}
-                        />
-                        <NoticeLine
-                            title={t('words.videoReactions')}
-                            status={STATUS_ALLOWED}
-                            options={policy.video_options}
-                        />
-                    </div>
-                )}
-            />
-        );
-
-    case STATUS_DENIED:
-        return (
-            <Notice
-                cardColor="red"
-                preview={t('reactionPolicy.previewNotAllowed')}
-                isThirdParty={isThirdParty}
-                description={(
-                    <div className="flex flex-col gap-4">
-                        <NoticeLine
-                            title={t('words.liveReactions')}
-                            status={STATUS_DENIED}
-                        />
-                        <NoticeLine
-                            title={t('words.videoReactions')}
-                            status={STATUS_DENIED}
-                        />
-                    </div>
-                )}
             />
         );
     }
 
     return (
         <Notice
-            cardColor="yellow"
-            preview={t('reactionPolicy.previewConditions')}
+            cardColor={cardColor}
+            preview={previewTitle}
             isThirdParty={isThirdParty}
-            description={(
-                <div className="flex flex-col gap-4">
-                    <NoticeLine
-                        title={t('words.liveReactions')}
-                        status={liveStatus}
-                        countdown={liveCountdownDuration}
-                        maxPercentage={policy.live_max_percentage}
-                        comment={policy.comment}
-                        options={policy.live_options}
-                    />
-                    <NoticeLine
-                        title={t('words.videoReactions')}
-                        status={videoStatus}
-                        countdown={videoCountdownDuration}
-                        maxPercentage={policy.video_max_percentage}
-                        comment={policy.comment}
-                        options={policy.video_options}
-                    />
-                </div>
-            )}
-        />
+            note={policy.note}
+        >
+            <div className="flex flex-col gap-4">
+                <NoticeLine
+                    title={t('words.liveReactions')}
+                    countdown={liveCountdownDuration}
+                    allowValue={policy.allow_live}
+                    maxPercentage={policy.live_max_percentage}
+                    minHours={policy.live_min_hours}
+                    comment={policy.live_comment}
+                    options={policy.live_options}
+                />
+                <NoticeLine
+                    title={t('words.videoReactions')}
+                    countdown={videoCountdownDuration}
+                    allowValue={policy.allow_video}
+                    maxPercentage={policy.video_max_percentage}
+                    minHours={policy.video_min_hours}
+                    comment={policy.video_comment}
+                    options={policy.video_options}
+                />
+            </div>
+        </Notice>
     );
 }
 
