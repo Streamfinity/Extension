@@ -36,9 +36,9 @@ function Card({
     const [isExpanded, setIsExpanded] = useState(false);
 
     const colorClassName = {
-        default: 'bg-gray-300/30 dark:bg-neutral-700/30',
+        default: 'border border-gray-200 dark:border-gray-600',
         // Colors
-        green: 'bg-[#01FF94]', // TODO
+        green: 'bg-[#01FF94]',
         red: 'bg-[#FF5C00]',
         yellow: 'bg-[#FFA800]',
         dashed: 'border-2 border-dashed border-gray-200 dark:border-gray-600',
@@ -47,8 +47,6 @@ function Card({
         'brand-viewer': 'bg-gradient-to-r from-brand-viewer-gradient-from to-brand-viewer-gradient-to',
         'brand-creator': 'bg-gradient-to-r from-brand-creator-gradient-from to-brand-creator-gradient-to',
     }[color];
-
-    const hasInner = color !== 'default';
 
     if (compact) {
         return (
@@ -101,24 +99,11 @@ function Card({
         </>
     );
 
-    if (hasInner) {
-        return (
-            <div className={classNames(colorClassName, 'rounded-[12px] p-[2px]')}>
-                <div className={classNames(className, 'rounded-[10px] p-4 bg-white/90 dark:bg-black/90')}>
-                    {inner}
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <div className={classNames(
-            'p-4 rounded-[12px]',
-            className,
-            colorClassName,
-        )}
-        >
-            {inner}
+        <div className={classNames(colorClassName, 'rounded-[12px] p-[2px]')}>
+            <div className={classNames(className, 'rounded-[10px] p-4 bg-white/90 dark:bg-black/90')}>
+                {inner}
+            </div>
         </div>
     );
 }
