@@ -23,7 +23,7 @@ function Footer({
     }
 
     return (
-        <div className="flex justify-between gap-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+        <div className="flex justify-between gap-4 truncate text-sm font-medium text-gray-500 dark:text-gray-400">
             <button
                 type="button"
                 onClick={() => setIsCompact(!isCompact)}
