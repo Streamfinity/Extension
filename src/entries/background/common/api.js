@@ -24,6 +24,8 @@ export async function api(url, opts) {
         delete options.query;
     }
 
+    const version = browser.runtime.getManifest()?.version;
+
     let response;
     try {
         response = await fetch(finalUrl, {
@@ -35,6 +37,9 @@ export async function api(url, opts) {
                 } : {},
                 ...options?.json ? {
                     'Content-Type': 'application/json',
+                } : {},
+                ...version ? {
+                    'X-Extension-Version': version,
                 } : {},
             },
             ...options || {},
