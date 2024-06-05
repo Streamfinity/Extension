@@ -76,9 +76,10 @@
         "notSet": "The Content Creator has not set conditions for reactions.",
         "notSetOwn": "You have not not set conditions for reactions.",
         "previewAllowed": "allowed",
-        "previewConditions": "conditions",
+        "previewConditions": "Conditions",
         "previewNone": "not set",
         "previewNotAllowed": "not allowed",
+        "previewInfo": "Info",
         "status": {
             "allowedIn": "Reactions allowed in:",
             "noRestriction": "No restrictions",

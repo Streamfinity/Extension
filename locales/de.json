@@ -78,7 +78,8 @@
         "previewAllowed": "erlaubt",
         "previewConditions": "Bedingungen",
         "previewNone": "nicht festgelegt",
-        "previewNotAllowed": "nicht allowed",
+        "previewNotAllowed": "nicht erlaubt",
+        "previewInfo": "Info",
         "status": {
             "allowedIn": "Reactions erlaubt in:",
             "noRestriction": "Keine Einschränkungen",
