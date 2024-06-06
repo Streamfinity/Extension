@@ -10,6 +10,7 @@ function CommunityNoteNoticeComingSoon() {
 
     return (
         <Card
+            id="cncs"
             title={t('communityNotes.title')}
             color="dashed"
             compact={compact}

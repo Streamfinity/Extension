@@ -46,6 +46,7 @@ function CommunityNoteNotice() {
 
     return (
         <Card
+            id="cn"
             title={t('communityNotes.title')}
             color="dashed"
             compact={compact}

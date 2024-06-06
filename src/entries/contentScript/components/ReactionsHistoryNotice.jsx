@@ -130,6 +130,7 @@ function ReactionsHistoryNotice() {
 
     return (
         <Card
+            id="rh"
             title={isOwnVideo ? t('reactionHistory.titleOwn') : t('reactionHistory.title')}
             color="primary"
             compact={compact}

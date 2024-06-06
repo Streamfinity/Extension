@@ -62,6 +62,7 @@ function OriginalVideoNotice() {
     if (originalVideoReactions?.length > 0) {
         return (
             <Card
+                id="ov"
                 title={originalVideoReactions.length > 1 ? t('originalVideo.titlePlural') : t('originalVideo.title')}
                 color="primary"
                 compact={compact}

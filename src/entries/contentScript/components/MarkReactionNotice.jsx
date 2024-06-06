@@ -18,6 +18,7 @@ function MarkReactionNotice() {
 
     return (
         <Card
+            id="mr"
             title={t('markReaction.title')}
             className="flex flex-col"
             compact={compact}

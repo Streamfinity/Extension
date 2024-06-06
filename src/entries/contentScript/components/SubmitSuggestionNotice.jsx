@@ -13,6 +13,7 @@ function SubmitSuggestionNotice() {
 
     return (
         <Card
+            id="ss"
             title={t('submitSuggestion.title')}
             titleCompact={t('submitSuggestion.titleCompact')}
             color="brand-viewer"

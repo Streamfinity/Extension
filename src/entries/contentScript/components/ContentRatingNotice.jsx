@@ -115,6 +115,7 @@ function ContentRatingNotice() {
 
     return (
         <Card
+            id="cr"
             title="Content Rating"
             compact={compact}
         >
