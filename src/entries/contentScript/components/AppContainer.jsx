@@ -43,20 +43,19 @@ function AppContainer({
         )}
         >
             <div className={classNames(
-                'mb-4 overflow-y-auto rounded-[12px] p-[2px]',
-                compact ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br',
+                'mb-4 overflow-y-auto',
+                compact ? 'bg-transparent' : 'bg-gradient-to-br rounded-[12px] p-[2px]',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',
                 state === STATE_LIVE && 'from-brand-streamer-gradient-from to-brand-streamer-gradient-to',
                 state === STATE_OWN_VIDEO && 'from-brand-creator-gradient-from to-brand-creator-gradient-to',
             )}
             >
-                <div className="relative flex flex-col gap-4
-                        rounded-[10px] bg-white p-[16px]
-                        text-base text-gray-900
-                        dark:bg-black dark:text-white
-                        dark:shadow-lg dark:shadow-white/5"
+                <div className={classNames(
+                    'relative flex flex-col gap-4 text-base text-gray-900 dark:text-white',
+                    !compact && 'p-[16px] rounded-[10px] bg-white dark:bg-black dark:shadow-lg dark:shadow-white/5',
+                )}
                 >
-                    <div className="mb-4 flex items-center justify-between">
+                    <div className="mb-2 flex items-center justify-between">
                         <Logo
                             onClick={() => setClickedCount((prev) => prev + 1)}
                             isTrackingVideos={isTrackingVideos}
