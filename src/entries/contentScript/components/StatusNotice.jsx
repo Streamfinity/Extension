@@ -23,7 +23,7 @@ function StatusNotice({
             rel="noreferrer"
         >
             <div className={classNames(
-                'bg-gradient-to-br from-brand-streamer-gradient-from to-brand-streamer-gradient-to text-white rounded-[8px]',
+                'bg-gradient-to-br from-brand-streamer-gradient-from to-brand-streamer-gradient-to text-black dark:text-white rounded-[8px]',
                 compact ? 'p-[1px]' : 'p-[2px]',
             )}
             >
