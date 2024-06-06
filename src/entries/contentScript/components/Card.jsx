@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
@@ -24,7 +24,10 @@ CardTitle.propTypes = {
 // Card
 // -------------------------------------------------------------------------------------------------------
 
+const LOCALSTORAGE_KEY = 'streamfinity-cards';
+
 function Card({
+    id = null,
     children,
     title,
     titleCompact = null,
@@ -34,6 +37,40 @@ function Card({
     compact = false,
 }) {
     const [isExpanded, setIsExpanded] = useState(false);
+
+    function getExpandedCards() {
+        const lsExpandedCardsValue = localStorage.getItem(LOCALSTORAGE_KEY);
+
+        if (lsExpandedCardsValue) {
+            return `${lsExpandedCardsValue}`.split(',');
+        }
+
+        return [];
+    }
+
+    function toggleExpanded() {
+        setIsExpanded(!isExpanded);
+
+        if (id) {
+            let lsExpandedCards = getExpandedCards();
+
+            if (isExpanded) {
+                lsExpandedCards = lsExpandedCards.filter((cardId) => cardId !== id);
+            } else {
+                lsExpandedCards.push(id);
+            }
+
+            localStorage.setItem(LOCALSTORAGE_KEY, lsExpandedCards.join(','));
+        }
+    }
+
+    useEffect(() => {
+        const expandedCards = getExpandedCards();
+
+        setIsExpanded(
+            expandedCards.filter((cardId) => cardId === id).length > 0,
+        );
+    }, [id]);
 
     const colorClassName = {
         default: 'border border-gray-200 dark:border-gray-600',
@@ -60,7 +97,7 @@ function Card({
                 )}
                 >
                     <button
-                        onClick={() => setIsExpanded(!isExpanded)}
+                        onClick={() => toggleExpanded()}
                         type="button"
                         className="flex items-center justify-between"
                     >
@@ -109,6 +146,7 @@ function Card({
 }
 
 Card.propTypes = {
+    id: PropTypes.string,
     className: PropTypes.string,
     color: PropTypes.oneOf([
         'default',

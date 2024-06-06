@@ -13,6 +13,7 @@ function StreamerModeNotice() {
 
     return (
         <Card
+            id="sm"
             title={t('status.disableStreamerMode')}
             compact={compact}
         >

@@ -48,6 +48,7 @@ function Notice({
 
     return (
         <Card
+            id="rp"
             title={t('reactionPolicy.title')}
             color={cardColor}
             compact={compact}
