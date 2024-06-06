@@ -2,7 +2,7 @@
     "actions": {
         "abort": "Abort",
         "compactDisable": "Exit Compact Mode",
-        "compactEnable": "Comapct Mode",
+        "compactEnable": "Compact Mode",
         "loginWith": "Login with Streamfinity",
         "logout": "Logout",
         "markAsReaction": "Mark as Reaction",
