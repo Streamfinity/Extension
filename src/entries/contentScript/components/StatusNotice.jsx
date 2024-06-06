@@ -23,24 +23,26 @@ function StatusNotice({
             rel="noreferrer"
         >
             <div className={classNames(
-                'flex items-center gap-3 bg-brand-streamer-gradient-from px-4 py-1 text-white rounded-[8px]',
-                compact ? '' : '',
+                'bg-gradient-to-br from-brand-streamer-gradient-from to-brand-streamer-gradient-to text-white rounded-[8px]',
+                compact ? 'p-[1px]' : 'p-[2px]',
             )}
             >
-                <SignalIcon className="size-8" />
-                <div>
-                    {liveStream?.service?.title ? (
-                        <span className="font-bold uppercase">
-                            {t('status.youAreLiveOn', {
-                                service: liveStream?.service?.title,
-                                accountName: liveStream?.account?.display_name,
-                            })}
-                        </span>
-                    ) : (
-                        <span className="font-bold uppercase">
-                            {t('status.youAreLive')}
-                        </span>
-                    )}
+                <div className="flex items-center gap-3 rounded-[7px] bg-white/80 px-4 py-1 dark:bg-black/80">
+                    <SignalIcon className="size-8" />
+                    <div>
+                        {liveStream?.service?.title ? (
+                            <span className="font-bold">
+                                {t('status.youAreLiveOn', {
+                                    service: liveStream?.service?.title,
+                                    accountName: liveStream?.account?.display_name,
+                                })}
+                            </span>
+                        ) : (
+                            <span className="font-bold">
+                                {t('status.youAreLive')}
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
         </a>
