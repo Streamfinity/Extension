@@ -26,11 +26,17 @@ export function prettyCurrency(number, currency = 'EUR') {
 }
 
 export function prettyDuration(seconds) {
+    const duration = moment.duration(seconds, 'seconds');
+
+    const durationHours = `${duration.hours()}`.padStart(2, '0');
+    const durationMinutes = `${duration.minutes()}`.padStart(2, '0');
+    const durationSeconds = `${duration.hours()}`.padStart(2, '0');
+
     if (seconds >= 3600) {
-        return moment.unix(seconds).format('hh:mm:ss');
+        return `${durationHours}:${durationMinutes}:${durationSeconds}`;
     }
 
-    return moment.unix(seconds).format('mm:ss');
+    return `${durationMinutes}:${durationSeconds}`;
 }
 
 export function ucfirst(string) {
