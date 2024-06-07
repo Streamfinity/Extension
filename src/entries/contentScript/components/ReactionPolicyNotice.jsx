@@ -293,7 +293,7 @@ function ReactionPolicyNotice() {
                 const liveDuration = moment.duration(liveDiff);
 
                 setLiveCountdownDuration(
-                    (liveCountdownDuration && liveCountdownDuration.asSeconds()) > 0 ? liveDuration : null,
+                    (liveDuration && liveDuration.asSeconds()) > 0 ? liveDuration : null,
                 );
             }
 
@@ -303,7 +303,7 @@ function ReactionPolicyNotice() {
                 const videoDuration = moment.duration(videoDiff);
 
                 setVideoCountdownDuration(
-                    (liveCountdownDuration && liveCountdownDuration.asSeconds()) > 0 ? videoDuration : null,
+                    (videoDuration && videoDuration.asSeconds()) > 0 ? videoDuration : null,
                 );
             }
         }
