@@ -43,7 +43,7 @@ function Logo({
                     }
                 }}
                 className={classNames(
-                    computedSize === 'default' ? 'gap-4' : 'gap-2',
+                    computedSize === 'default' ? 'gap-4' : 'gap-3',
                     'flex items-center',
                 )}
             >
