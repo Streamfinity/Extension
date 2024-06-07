@@ -49,7 +49,7 @@ function MarkReactionForm({ onSubmitted }) {
     }
 
     function startSegment() {
-        if (segmentFull || segmentStart) {
+        if (segmentFull || segmentStart !== null) {
             return;
         }
 
@@ -62,7 +62,7 @@ function MarkReactionForm({ onSubmitted }) {
     }
 
     function endSegment() {
-        if (segmentFull || !segmentStart) {
+        if (segmentFull || segmentStart === null) {
             return;
         }
 
@@ -104,7 +104,7 @@ function MarkReactionForm({ onSubmitted }) {
             return false;
         }
 
-        if (segmentFull === false && (!segmentStart || !segmentEnd)) {
+        if (segmentFull === false && (segmentStart === null || segmentEnd === null)) {
             return false;
         }
 
@@ -166,22 +166,22 @@ function MarkReactionForm({ onSubmitted }) {
                     <div className="mt-4 flex gap-4">
                         <Button
                             color="primary"
-                            disabled={!!segmentStart}
+                            disabled={segmentStart !== null}
                             className="w-full"
                             onClick={() => startSegment()}
                         >
-                            {segmentStart ? prettyDuration(segmentStart) : `Start at ${prettyDuration(playerProgress)}`}
+                            {segmentStart !== null ? prettyDuration(segmentStart) : `Start at ${prettyDuration(playerProgress)}`}
                         </Button>
                         <Button
                             color="primary"
                             className="w-full"
-                            disabled={!!segmentEnd || !segmentStart}
+                            disabled={segmentEnd !== null || segmentStart === null}
                             onClick={() => endSegment()}
                             usePx={false}
                         >
-                            {segmentEnd && prettyDuration(segmentEnd)}
-                            {(!segmentEnd && segmentStart) && `End at ${prettyDuration(playerProgress)}`}
-                            {(!segmentEnd && !segmentStart) && 'End Segment'}
+                            {segmentEnd !== null && prettyDuration(segmentEnd)}
+                            {(segmentEnd === null && segmentStart !== null) && `End at ${prettyDuration(playerProgress)}`}
+                            {(segmentEnd === null && segmentStart === null) && 'End Segment'}
                         </Button>
                     </div>
                 </>
