@@ -39,6 +39,10 @@ function Card({
     const [isExpanded, setIsExpanded] = useState(false);
 
     function getExpandedCards() {
+        if (!localStorage) {
+            return [];
+        }
+
         const lsExpandedCardsValue = localStorage.getItem(LOCALSTORAGE_KEY);
 
         if (lsExpandedCardsValue) {
@@ -50,6 +54,10 @@ function Card({
 
     function toggleExpanded() {
         setIsExpanded(!isExpanded);
+
+        if (!localStorage) {
+            return;
+        }
 
         if (id) {
             let lsExpandedCards = getExpandedCards();
