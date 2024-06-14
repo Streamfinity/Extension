@@ -30,7 +30,7 @@ export function prettyDuration(seconds) {
 
     const durationHours = `${duration.hours()}`.padStart(2, '0');
     const durationMinutes = `${duration.minutes()}`.padStart(2, '0');
-    const durationSeconds = `${duration.hours()}`.padStart(2, '0');
+    const durationSeconds = `${duration.seconds()}`.padStart(2, '0');
 
     if (seconds >= 3600) {
         return `${durationHours}:${durationMinutes}:${durationSeconds}`;
