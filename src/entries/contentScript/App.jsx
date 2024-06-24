@@ -22,7 +22,6 @@ import StreamerModeNotice from '~/entries/contentScript/components/StreamerModeN
 import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
-import Footer from '~/entries/contentScript/components/Footer';
 import { storageGetCompact, storageSetCompact } from '~/entries/background/common/storage';
 import CommunityNoteNoticeComingSoon from '~/entries/contentScript/components/CommunityNoteNoticeComingSoon';
 
