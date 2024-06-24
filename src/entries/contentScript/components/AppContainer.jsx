@@ -50,11 +50,10 @@ function AppContainer({
                 state === STATE_OWN_VIDEO && 'from-brand-creator-gradient-from to-brand-creator-gradient-to',
             )}
             >
-                <div className="relative flex flex-col gap-4
-                        rounded-[10px] bg-white p-[16px]
-                        text-base text-gray-900
-                        dark:bg-black dark:text-white
-                        dark:shadow-lg dark:shadow-white/5"
+                <div className={classNames(
+                    compact ? 'p-[12px]' : 'p-[16px]',
+                    'relative flex flex-col gap-4 rounded-[10px] bg-white text-base text-gray-900 dark:bg-black dark:text-white dark:shadow-lg dark:shadow-white/5',
+                )}
                 >
                     <div className="mb-4 flex items-center justify-between">
                         <Logo
