@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { useAppStore } from '~/entries/contentScript/state';
 import Logo from '~/components/Logo';
 import DevTools from '~/entries/contentScript/components/DevTools';
-import { childrenShape } from '~/shapes';
+import { childrenShape, streamShape } from '~/shapes';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import SubwaySurfer from '~/entries/contentScript/components/SubwaySurfer';
 import Footer from '~/entries/contentScript/components/Footer';
@@ -17,7 +17,7 @@ function AppContainer({
     dark,
     user,
     state,
-    liveStream,
+    liveStream = null,
     isTrackingVideos = undefined,
 }) {
     const isVisible = useAppStore((storeState) => storeState.isVisible);
@@ -132,6 +132,7 @@ AppContainer.propTypes = {
         STATE_LIVE,
         STATE_OWN_VIDEO,
     ]),
+    liveStream: streamShape,
     isTrackingVideos: PropTypes.bool,
 };
 
