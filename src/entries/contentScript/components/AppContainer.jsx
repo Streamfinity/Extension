@@ -51,8 +51,8 @@ function AppContainer({
         >
             <div className={classNames(
                 'mb-4 overflow-y-auto rounded-[12px]',
-                compact ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br',
-                isNewLayout ? 'p-px' : 'p-[2px]',
+                !isNewLayout && (compact ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br'),
+                isNewLayout ? 'p-px bg-[rgba(0,0,0,0.05)] dark:bg-[rgba(255,255,255,0.1)]' : 'p-[2px]',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',
                 state === STATE_LIVE && 'from-brand-streamer-gradient-from to-brand-streamer-gradient-to',
                 state === STATE_OWN_VIDEO && 'from-brand-creator-gradient-from to-brand-creator-gradient-to',
@@ -60,7 +60,8 @@ function AppContainer({
             >
                 <div className={classNames(
                     compact ? 'p-[12px]' : 'p-[16px]',
-                    'relative flex flex-col gap-4 rounded-[10px] bg-white text-base text-gray-900 dark:bg-black dark:text-white dark:shadow-lg dark:shadow-white/5',
+                    !isNewLayout && 'bg-white dark:bg-black',
+                    'relative flex flex-col gap-4 rounded-[10px] text-base text-gray-900 dark:text-white dark:shadow-lg dark:shadow-white/5',
                 )}
                 >
                     <div className="mb-4 flex items-center justify-between">
