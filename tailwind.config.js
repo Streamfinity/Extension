@@ -1,5 +1,6 @@
 import { preset } from '@streamfinity/streamfinity-branding';
 import colors from 'tailwindcss/colors';
+import containerQueries from '@tailwindcss/container-queries';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -24,5 +25,7 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        containerQueries,
+    ],
 };
