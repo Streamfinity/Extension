@@ -36,15 +36,28 @@ async function appendShadowRootToDom(appContainer) {
         MOUNT_CONTENT_SCRIPT_RETRY_COUNT,
     );
 
+    const isNewLayout = !!document.querySelector('#fixed-columns-secondary');
+
     const existingAppContainer = parent.querySelector('#streamfinity');
 
-    // log.debug('found parent', parent, existingAppContainer);
+    if (existingAppContainer) {
+        // log.debug('found parent', parent, existingAppContainer);
 
-    if (!existingAppContainer) {
-        parent.prepend(appContainer);
-
-        log.debug('injected', parent);
+        return;
     }
+
+    log.debug('isNewLayout', isNewLayout);
+
+    if (isNewLayout) {
+        const insertAfter = parent.querySelector('ytd-comments');
+
+        appContainer.setAttribute('data-new-layout', 1);
+        parent.insertBefore(appContainer, insertAfter);
+    } else {
+        parent.prepend(appContainer);
+    }
+
+    log.debug('injected', parent);
 }
 
 // <div id="streamfinity">
