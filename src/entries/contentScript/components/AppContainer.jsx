@@ -8,6 +8,7 @@ import DevTools from '~/entries/contentScript/components/DevTools';
 import { childrenShape } from '~/shapes';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import SubwaySurfer from '~/entries/contentScript/components/SubwaySurfer';
+import Footer from '~/entries/contentScript/components/Footer';
 
 const dev = import.meta.env.DEV;
 
@@ -16,6 +17,7 @@ function AppContainer({
     dark,
     user,
     state,
+    liveStream,
     isTrackingVideos = undefined,
 }) {
     const isVisible = useAppStore((storeState) => storeState.isVisible);
@@ -44,7 +46,7 @@ function AppContainer({
         <main className={classNames(
             !isVisible && 'hidden',
             dark && 'dark',
-            'font-sans',
+            '@container font-sans',
         )}
         >
             <div className={classNames(
@@ -74,7 +76,14 @@ function AppContainer({
                         <SubwaySurfer onClose={() => setClickedCount(0)} />
                     )}
 
-                    {children}
+                    <div className="grid auto-cols-fr items-start gap-4 @[800px]:grid-flow-col">
+                        {children}
+                    </div>
+
+                    <Footer
+                        liveStream={liveStream}
+                        state={state}
+                    />
 
                     <Toaster
                         containerStyle={{ position: 'absolute' }}

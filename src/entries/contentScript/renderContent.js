@@ -26,8 +26,8 @@ function bindWindowEvents() {
     }, URL_CHANGE_INTERVAL_SECONDS * 1000);
 }
 
-async function appendShadowRootToDom(appContainer) {
-    const parent = await retryFind(
+async function findParentElement() {
+    return retryFind(
         () => {
             const el = document.querySelector('#secondary-inner');
             return (el?.firstChild) ? el : null;
@@ -35,14 +35,12 @@ async function appendShadowRootToDom(appContainer) {
         MOUNT_CONTENT_SCRIPT_RETRY_MS,
         MOUNT_CONTENT_SCRIPT_RETRY_COUNT,
     );
+}
 
-    const isNewLayout = !!document.querySelector('#fixed-columns-secondary');
-
+async function appendShadowRootToDom(parent, appContainer, isNewLayout) {
     const existingAppContainer = parent.querySelector('#streamfinity');
 
     if (existingAppContainer) {
-        // log.debug('found parent', parent, existingAppContainer);
-
         return;
     }
 
@@ -51,7 +49,6 @@ async function appendShadowRootToDom(appContainer) {
     if (isNewLayout) {
         const insertAfter = parent.querySelector('ytd-comments');
 
-        appContainer.setAttribute('data-new-layout', 1);
         parent.insertBefore(appContainer, insertAfter);
     } else {
         parent.prepend(appContainer);
@@ -127,6 +124,21 @@ export async function renderContent(
         });
     }
 
+    // Find parent element
+
+    const parent = await findParentElement();
+
+    // Check if is new YouTube Layout
+
+    const isNewLayout = !!document.querySelector('#fixed-columns-secondary');
+
+    console.log('isNewLayout');
+
+    if (isNewLayout) {
+        appContainer.setAttribute('data-new-layout', 1);
+        window.streamfinityNewLayout = true;
+    }
+
     // Bind events & Mount container
 
     bindWindowEvents();
@@ -135,9 +147,9 @@ export async function renderContent(
 
     render(appRoot);
 
-    await appendShadowRootToDom(appContainer);
+    await appendShadowRootToDom(parent, appContainer, isNewLayout);
 
     setInterval(async () => {
-        await appendShadowRootToDom(appContainer);
+        await appendShadowRootToDom(parent, appContainer, isNewLayout);
     }, 2000);
 }

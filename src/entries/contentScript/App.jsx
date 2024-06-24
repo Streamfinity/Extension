@@ -133,6 +133,7 @@ function App() {
             dark={isDarkMode}
             state={state}
             isTrackingVideos={isTrackingVideos}
+            liveStream={liveStream}
         >
             {user && (
                 <StatusNotice
@@ -172,11 +173,6 @@ function App() {
             {state === STATE_LIVE && (
                 <StreamerModeNotice />
             )}
-
-            <Footer
-                liveStream={liveStream}
-                state={state}
-            />
 
             <PlayerProgressListener active={isTrackingVideos} />
             <WatchedVideosObserver />
