@@ -72,6 +72,7 @@ function OriginalVideoNotice() {
                 title={originalVideoReactions.length > 1 ? t('originalVideo.titlePlural') : t('originalVideo.title')}
                 color="primary"
                 compact={compact}
+                forceOpen
             >
                 <div className="mt-3 flex flex-col gap-4">
                     {originalVideoReactions.map((reaction) => (
