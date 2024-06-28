@@ -109,20 +109,19 @@ function App() {
     if (!user) {
         return (
             <AppContainer dark={isDarkMode}>
-                <div className="flex flex-col gap-6">
 
-                    <ReactionPolicyNotice />
 
-                    <p className="text-sm text-gray-500">
-                        {t('auth.loginDescription')}
-                    </p>
+                <ReactionPolicyNotice />
 
-                    <LoginButton
-                        loading={loadingAuth}
-                        onClick={login}
-                    />
+                <p className="text-sm text-gray-500">
+                    {t('auth.loginDescription')}
+                </p>
 
-                </div>
+                <LoginButton
+                    loading={loadingAuth}
+                    onClick={login}
+                />
+
             </AppContainer>
         );
     }
