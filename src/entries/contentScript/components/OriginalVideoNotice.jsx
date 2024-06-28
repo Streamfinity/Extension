@@ -14,12 +14,18 @@ function ReactionPreview({ reaction }) {
             className="flex gap-3"
             rel="noreferrer"
         >
-            <div className="w-2/5 shrink-0">
+            <div className="relative w-2/5 shrink-0">
                 <img
                     src={reaction.to_video.thumbnail_url}
                     alt={reaction.to_video.title}
                     className="aspect-video rounded-lg object-cover"
                 />
+
+                {reaction.to_video.duration > 0 && (
+                    <div className="absolute bottom-2 right-2 rounded-md bg-black/80 px-1 text-xs font-semibold text-white/80">
+                        {prettyDuration(reaction.to_video.duration)}
+                    </div>
+                )}
             </div>
             <div className="flex flex-col justify-between gap-2">
                 <div>
