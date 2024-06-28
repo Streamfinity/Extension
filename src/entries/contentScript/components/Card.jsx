@@ -78,7 +78,7 @@ function Card({
     }
 
     useEffect(() => {
-        if (!forceOpen) {
+        if (forceOpen) {
             return;
         }
 
