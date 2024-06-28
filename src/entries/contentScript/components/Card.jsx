@@ -35,8 +35,9 @@ function Card({
     color,
     className,
     compact = false,
+    forceOpen = false,
 }) {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(forceOpen);
 
     function getExpandedCards() {
         if (!localStorage) {
@@ -53,6 +54,10 @@ function Card({
     }
 
     function toggleExpanded() {
+        if (forceOpen) {
+            return;
+        }
+
         setIsExpanded(!isExpanded);
 
         if (!localStorage) {
@@ -73,12 +78,16 @@ function Card({
     }
 
     useEffect(() => {
+        if (!forceOpen) {
+            return;
+        }
+
         const expandedCards = getExpandedCards();
 
         setIsExpanded(
             expandedCards.filter((cardId) => cardId === id).length > 0,
         );
-    }, [id]);
+    }, [id, forceOpen]);
 
     const colorClassName = {
         default: 'border border-gray-200 dark:border-gray-600',
@@ -118,9 +127,12 @@ function Card({
                                     {preview}
                                 </div>
                             )}
-                            <div>
-                                <ChevronDownIcon className={classNames(isExpanded && 'rotate-180', 'size-6 transition-transform opacity-70')} />
-                            </div>
+
+                            {!forceOpen && (
+                                <div>
+                                    <ChevronDownIcon className={classNames(isExpanded && 'rotate-180', 'size-6 transition-transform opacity-70')} />
+                                </div>
+                            )}
                         </div>
                     </button>
 
@@ -171,6 +183,7 @@ Card.propTypes = {
     titleCompact: PropTypes.string,
     preview: PropTypes.string,
     compact: PropTypes.bool,
+    forceOpen: PropTypes.bool,
 };
 
 Card.defaultProps = {
