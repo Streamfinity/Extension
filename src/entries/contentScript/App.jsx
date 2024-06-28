@@ -110,6 +110,7 @@ function App() {
         return (
             <AppContainer dark={isDarkMode}>
 
+                <OriginalVideoNotice />
 
                 <ReactionPolicyNotice />
 
