@@ -151,6 +151,8 @@ function App() {
                 <AnalyticsNotice />
             )}
 
+            <OriginalVideoNotice />
+
             {state !== STATE_LIVE && (
                 <SubmitSuggestionNotice />
             )}
@@ -162,8 +164,6 @@ function App() {
             {state !== STATE_LIVE && (
                 <ReactionsHistoryNotice />
             )}
-
-            <OriginalVideoNotice />
 
             {state !== STATE_LIVE && (
                 <MarkReactionNotice />
