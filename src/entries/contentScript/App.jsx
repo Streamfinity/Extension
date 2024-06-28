@@ -153,11 +153,11 @@ function App() {
 
             <OriginalVideoNotice />
 
+            <ReactionPolicyNotice />
+
             {state !== STATE_LIVE && (
                 <SubmitSuggestionNotice />
             )}
-
-            <ReactionPolicyNotice />
 
             <CommunityNoteNoticeComingSoon />
 
