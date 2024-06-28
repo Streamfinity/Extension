@@ -29,7 +29,7 @@ function SubmitSuggestionNotice() {
                     </div>
                     <div className="flex grow items-center">
                         <Button
-                            color="brand-viewer"
+                            color="primary"
                             className="w-full"
                             onClick={() => setShowForm(true)}
                             usePx={false}
