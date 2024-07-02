@@ -23,7 +23,6 @@ import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
 import { storageGetCompact, storageSetCompact } from '~/entries/background/common/storage';
-import CommunityNoteNoticeComingSoon from '~/entries/contentScript/components/CommunityNoteNoticeComingSoon';
 
 function App() {
     const { t, i18n } = useTranslation();
@@ -158,8 +157,6 @@ function App() {
             {state !== STATE_LIVE && (
                 <SubmitSuggestionNotice />
             )}
-
-            <CommunityNoteNoticeComingSoon />
 
             {state !== STATE_LIVE && (
                 <ReactionsHistoryNotice />
