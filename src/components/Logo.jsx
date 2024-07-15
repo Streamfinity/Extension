@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/16/solid';
 import { useTranslation } from 'react-i18next';
-import logoDark from '~/assets/Logo-Dark-400.png';
-import logoWhite from '~/assets/Logo-Light-400.png';
+import wordmarkDark from '~/assets/Wordmark-Dark-Logo.png';
+import wordmarkLight from '~/assets/Wordmark-Light-Logo.png';
 import logoStyles from './Logo.module.css';
 import { useAppStore } from '~/entries/contentScript/state';
 
@@ -14,14 +14,14 @@ function Logo({
     sws,
     isTrackingVideos,
 }) {
-    const imageUrlDark = new URL(logoDark, import.meta.url).href;
-    const imageUrlLight = new URL(logoWhite, import.meta.url).href;
+    const wordmarkUrlDark = new URL(wordmarkDark, import.meta.url).href;
+    const wordmarkUrlLight = new URL(wordmarkLight, import.meta.url).href;
 
     const { t } = useTranslation();
     const compact = useAppStore((storeState) => storeState.isCompact);
 
     const computedSize = compact ? 'small' : size;
-    const logoClassNames = computedSize === 'default' ? 'size-9' : 'size-6';
+    const logoClassNames = 'h-9';
 
     const container = useRef();
 
@@ -42,27 +42,20 @@ function Logo({
                         resetAnimation();
                     }
                 }}
-                className={classNames(
-                    computedSize === 'default' ? 'gap-4' : 'gap-2',
-                    'flex items-center',
-                )}
+                className="flex items-center gap-2"
             >
                 <img
-                    src={imageUrlDark}
+                    src={wordmarkUrlDark}
                     className={classNames(logoClassNames, 'block dark:hidden')}
-                    alt="Logo"
+                    alt="Streamfinity"
                 />
                 <img
-                    src={imageUrlLight}
+                    src={wordmarkUrlLight}
                     className={classNames(logoClassNames, 'hidden dark:block')}
-                    alt="Logo"
+                    alt="Streamfinity"
                 />
-                <div className={classNames(
-                    computedSize === 'default' ? 'text-4xl' : 'text-2xl',
-                    'font-semibold',
-                )}
-                >
-                    Streamfinity Buddy
+                <div className="text-2xl font-semibold">
+                    Buddy
                 </div>
             </div>
 
