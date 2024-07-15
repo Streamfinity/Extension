@@ -27,7 +27,7 @@ function SubmitSuggestionNotice() {
                             {t('submitSuggestion.intro')}
                         </p>
                     </div>
-                    <div className="flex grow items-center">
+                    <div className="flex grow items-start">
                         <Button
                             color="primary"
                             className="w-full"
