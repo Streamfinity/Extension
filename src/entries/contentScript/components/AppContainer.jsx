@@ -50,9 +50,9 @@ function AppContainer({
         )}
         >
             <div className={classNames(
-                'mb-4 overflow-y-auto rounded-[12px]',
+                'mb-4 overflow-y-auto rounded-[12px] p-px',
                 !isNewLayout && (compact ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br'),
-                isNewLayout ? 'p-px bg-[rgba(0,0,0,0.05)] dark:bg-[rgba(255,255,255,0.1)]' : 'p-[2px]',
+                isNewLayout && 'bg-[rgba(0,0,0,0.05)] dark:bg-[rgba(255,255,255,0.1)]',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',
                 state === STATE_LIVE && 'from-brand-streamer-gradient-from to-brand-streamer-gradient-to',
                 state === STATE_OWN_VIDEO && 'from-brand-creator-gradient-from to-brand-creator-gradient-to',
