@@ -27,17 +27,21 @@ function Footer({
             <button
                 type="button"
                 onClick={() => setIsCompact(!isCompact)}
-                className="flex items-center gap-1 dark:hover:text-gray-300"
+                className="group flex items-center gap-2 leading-none dark:hover:text-gray-300"
             >
                 {isCompact ? (
                     <>
-                        <ChevronDownIcon className="size-6" />
-                        {t('actions.compactDisable') }
+                        <div className="size-4 rounded-full border border-gray-500 p-px">
+                            <div className="size-full rounded-full bg-gray-500" />
+                        </div>
+                        {t('actions.compact') }
                     </>
                 ) : (
                     <>
-                        <ChevronUpIcon className="size-6" />
-                        {t('actions.compactEnable')}
+                        <div className="size-4 rounded-full border border-gray-500 p-px">
+                            <div className="invisible size-full rounded-full bg-gray-500 group-hover:visible" />
+                        </div>
+                        {t('actions.compact')}
                     </>
                 )}
             </button>
