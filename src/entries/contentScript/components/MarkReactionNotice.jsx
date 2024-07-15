@@ -31,7 +31,7 @@ function MarkReactionNotice() {
                             {t('markReaction.intro')}
                         </p>
                     </div>
-                    <div className="flex grow items-center">
+                    <div className="flex grow items-start">
                         <Button
                             color="primary"
                             className="w-full"
