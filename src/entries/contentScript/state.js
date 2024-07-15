@@ -9,6 +9,7 @@ export const useAppStore = create((set) => ({
     isDarkMode: false,
     isDeviceDarkMode: false,
     isCompact: null,
+    isMinimized: null,
     setCurrentUrl: (currentUrl) => set(() => ({ currentUrl })),
     setCurrentChannel: (currentChannel) => set(() => ({ currentChannel })),
     setReactionPolicy: (reactionPolicy) => set(() => ({ reactionPolicy })),
@@ -17,4 +18,5 @@ export const useAppStore = create((set) => ({
     setIsDarkMode: (isDarkMode) => set(() => ({ isDarkMode })),
     setIsDeviceDarkMode: (isDeviceDarkMode) => set(() => ({ isDeviceDarkMode })),
     setIsCompact: (isCompact) => set(() => ({ isCompact })),
+    setIsMinimized: (isMinimized) => set(() => ({ isMinimized })),
 }));

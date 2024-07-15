@@ -24,27 +24,36 @@ function Footer({
 
     return (
         <div className="flex justify-between gap-4 truncate text-xs font-medium text-gray-500 dark:text-gray-400">
-            <button
-                type="button"
-                onClick={() => setIsCompact(!isCompact)}
-                className="group flex items-center gap-2 leading-none dark:hover:text-gray-300"
-            >
-                {isCompact ? (
-                    <>
-                        <div className="size-4 rounded-full border border-gray-500 p-px">
-                            <div className="size-full rounded-full bg-gray-500" />
-                        </div>
-                        {t('actions.compact') }
-                    </>
-                ) : (
-                    <>
-                        <div className="size-4 rounded-full border border-gray-500 p-px">
-                            <div className="invisible size-full rounded-full bg-gray-500 group-hover:visible" />
-                        </div>
-                        {t('actions.compact')}
-                    </>
-                )}
-            </button>
+            <div className="flex items-center gap-4">
+                <button
+                    type="button"
+                    onClick={() => setIsCompact(!isCompact)}
+                    className="group flex items-center gap-1.5 leading-none dark:hover:text-gray-300"
+                >
+                    {isCompact ? (
+                        <>
+                            <div className="size-4 rounded-full border border-gray-500 p-px">
+                                <div className="size-full rounded-full bg-gray-500" />
+                            </div>
+                            {t('actions.compact') }
+                        </>
+                    ) : (
+                        <>
+                            <div className="size-4 rounded-full border border-gray-500 p-px">
+                                <div className="invisible size-full rounded-full bg-gray-500 group-hover:visible" />
+                            </div>
+                            {t('actions.compact')}
+                        </>
+                    )}
+                </button>
+
+                <div className="flex items-center gap-1.5 leading-none">
+                    <div className="size-4 rounded-full border border-gray-500 p-px">
+                        <div className="size-full rounded-full bg-gray-500" />
+                    </div>
+                    Minimize
+                </div>
+            </div>
 
             {(liveStream && state !== STATE_LIVE) && (
                 <button
