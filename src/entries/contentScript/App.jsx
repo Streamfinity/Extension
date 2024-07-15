@@ -155,11 +155,11 @@ function App() {
             <ReactionPolicyNotice />
 
             {state !== STATE_LIVE && (
-                <SubmitSuggestionNotice />
+                <ReactionsHistoryNotice />
             )}
 
             {state !== STATE_LIVE && (
-                <ReactionsHistoryNotice />
+                <SubmitSuggestionNotice />
             )}
 
             {state !== STATE_LIVE && (
