@@ -6,10 +6,8 @@ import { useTranslation } from 'react-i18next';
 import wordmarkDark from '~/assets/Wordmark-Dark-Logo.png';
 import wordmarkLight from '~/assets/Wordmark-Light-Logo.png';
 import logoStyles from './Logo.module.css';
-import { useAppStore } from '~/entries/contentScript/state';
 
 function Logo({
-    size,
     onClick,
     sws,
     isTrackingVideos,
@@ -18,9 +16,7 @@ function Logo({
     const wordmarkUrlLight = new URL(wordmarkLight, import.meta.url).href;
 
     const { t } = useTranslation();
-    const compact = useAppStore((storeState) => storeState.isCompact);
 
-    const computedSize = compact ? 'small' : size;
     const logoClassNames = 'h-9';
 
     const container = useRef();
@@ -80,10 +76,6 @@ function Logo({
 
 Logo.propTypes = {
     sws: PropTypes.bool,
-    size: PropTypes.oneOf([
-        'default',
-        'small',
-    ]),
     onClick: PropTypes.func,
     isTrackingVideos: PropTypes.bool,
 };
