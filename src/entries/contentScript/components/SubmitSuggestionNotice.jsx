@@ -21,22 +21,18 @@ function SubmitSuggestionNotice() {
             compact={compact}
         >
             {!showForm && (
-                <div className="flex gap-4">
-                    <div className="grow">
-                        <p className="text-sm">
-                            {t('submitSuggestion.intro')}
-                        </p>
-                    </div>
-                    <div className="flex grow items-start">
-                        <Button
-                            color="primary"
-                            className="w-full"
-                            onClick={() => setShowForm(true)}
-                            usePx={false}
-                        >
-                            {t('actions.suggestVideo')}
-                        </Button>
-                    </div>
+                <div>
+                    <Button
+                        color="primary"
+                        className="float-right ml-4"
+                        onClick={() => setShowForm(true)}
+                        usePx={false}
+                    >
+                        {t('actions.suggestVideo')}
+                    </Button>
+                    <p className="text-sm">
+                        {t('submitSuggestion.intro')}
+                    </p>
                 </div>
             )}
 

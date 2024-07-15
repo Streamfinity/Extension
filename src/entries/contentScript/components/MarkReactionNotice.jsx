@@ -25,22 +25,19 @@ function MarkReactionNotice() {
         >
 
             {!showForm && (
-                <div className="flex gap-4">
-                    <div className="grow">
-                        <p className="text-sm">
-                            {t('markReaction.intro')}
-                        </p>
-                    </div>
-                    <div className="flex grow items-start">
-                        <Button
-                            color="primary"
-                            className="w-full"
-                            onClick={() => setShowForm(true)}
-                            usePx={false}
-                        >
-                            {t('actions.markAsReaction')}
-                        </Button>
-                    </div>
+                <div>
+                    <Button
+                        color="primary"
+                        className="float-right ml-4"
+                        onClick={() => setShowForm(true)}
+                        usePx={false}
+                    >
+                        {t('actions.markAsReaction')}
+                    </Button>
+
+                    <p className="text-sm">
+                        {t('markReaction.intro')}
+                    </p>
                 </div>
             )}
 
