@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
-    EyeIcon, EyeSlashIcon, ChevronUpIcon, ChevronDownIcon,
+    EyeIcon, EyeSlashIcon, ChevronUpIcon, ChevronDownIcon, BellIcon,
 } from '@heroicons/react/16/solid';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
@@ -100,6 +100,14 @@ function Logo({
             </div>
 
             <div className="flex items-center gap-2">
+                {isMinimized && (
+                    <TopButton>
+                        <div className="absolute left-0 top-0 flex size-7 -translate-x-1/2 -translate-y-2 items-center justify-center rounded-full bg-red-500 text-xs leading-none text-white">
+                            5
+                        </div>
+                        <BellIcon className="size-7 text-gray-500" />
+                    </TopButton>
+                )}
                 {isTrackingVideos !== undefined && (
                     <TopButton popup={isTrackingVideos ? t('status.trackingEnabled') : t('status.trackingDisabled')}>
                         {isTrackingVideos ? (
