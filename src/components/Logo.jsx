@@ -101,7 +101,7 @@ function Logo({
 
             <div className="flex items-center gap-2">
                 {isMinimized && (
-                    <TopButton>
+                    <TopButton onClick={() => setIsMinimized(false)}>
                         <div className="absolute left-0 top-0 flex size-7 -translate-x-1/2 -translate-y-2 items-center justify-center rounded-full bg-red-500 text-xs leading-none text-white">
                             5
                         </div>
