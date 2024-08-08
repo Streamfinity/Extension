@@ -14,6 +14,8 @@ import logoWhite from '~/assets/Logo-Light-400.png';
 import logoStyles from './Logo.module.css';
 import { useAppStore } from '~/entries/contentScript/state';
 import { reactionPolicyEnum } from '~/enums';
+import { useReactionPolicyForVideo } from '~/common/bridge';
+import useAuth from '~/hooks/useAuth';
 
 function TopButton({
     children,
@@ -60,10 +62,24 @@ function Header({
     const logoUrlLight = new URL(logoWhite, import.meta.url).href;
 
     const { t } = useTranslation();
+    const { user } = useAuth();
 
-    const [isMinimized, setIsMinimized, reactionPolicy] = useAppStore(
-        useShallow((storeState) => ([storeState.isMinimized, storeState.setIsMinimized, storeState.reactionPolicy])),
+    const [isMinimized, setIsMinimized, currentUrl, currentChannel] = useAppStore(
+        useShallow((storeState) => ([
+            storeState.isMinimized,
+            storeState.setIsMinimized,
+            storeState.currentUrl,
+            storeState.currentChannel,
+        ])),
     );
+
+    // Reaction-Policy
+
+    const { data: reactionPolicy } = useReactionPolicyForVideo({
+        videoUrl: currentUrl,
+        channelUrl: currentChannel.url,
+        userId: user?.id || '',
+    });
 
     const reactionPolicyClassNames = useMemo(() => ({
         [reactionPolicyEnum.ALLOW]: 'border bg-emerald-500/20 border-emerald-500 text-emerald-900 dark:text-white',
@@ -71,7 +87,7 @@ function Header({
         [reactionPolicyEnum.CONDITIONS]: 'border bg-yellow-500/20 border-yellow-500 text-yellow-900 dark:text-white',
     }[reactionPolicy?.policy] || ''), [reactionPolicy]);
 
-    console.log(reactionPolicy, reactionPolicyClassNames);
+    // Animations
 
     const container = useRef();
 
