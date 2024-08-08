@@ -7,8 +7,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
-import wordmarkDark from '~/assets/Wordmark-Dark-Logo.png';
-import wordmarkLight from '~/assets/Wordmark-Light-Logo.png';
+import logoDark from '~/assets/Logo-Dark-400.png';
+import logoWhite from '~/assets/Logo-Light-400.png';
 import logoStyles from './Logo.module.css';
 import { useAppStore } from '~/entries/contentScript/state';
 import { reactionPolicyEnum } from '~/enums';
@@ -54,8 +54,8 @@ function Header({
     sws,
     isTrackingVideos,
 }) {
-    const wordmarkUrlDark = new URL(wordmarkDark, import.meta.url).href;
-    const wordmarkUrlLight = new URL(wordmarkLight, import.meta.url).href;
+    const logoUrlDark = new URL(logoDark, import.meta.url).href;
+    const logoUrlLight = new URL(logoWhite, import.meta.url).href;
 
     const { t } = useTranslation();
 
@@ -70,8 +70,6 @@ function Header({
     }[reactionPolicy?.policy] || ''), [reactionPolicy]);
 
     console.log(reactionPolicy, reactionPolicyClassNames);
-
-    const logoClassNames = 'h-9';
 
     const container = useRef();
 
@@ -92,20 +90,20 @@ function Header({
                         resetAnimation();
                     }
                 }}
-                className="flex items-center gap-2"
+                className="flex items-center gap-3"
             >
                 <img
-                    src={wordmarkUrlDark}
-                    className={classNames(logoClassNames, 'block dark:hidden')}
+                    src={logoUrlDark}
+                    className="block h-8 dark:hidden"
                     alt="Streamfinity"
                 />
                 <img
-                    src={wordmarkUrlLight}
-                    className={classNames(logoClassNames, 'hidden dark:block')}
+                    src={logoUrlLight}
+                    className="hidden h-8 dark:block"
                     alt="Streamfinity"
                 />
-                <div className="text-2xl font-semibold">
-                    Buddy
+                <div className="-mb-px text-2xl font-bold leading-none">
+                    Streamfinity Buddy
                 </div>
             </div>
 
