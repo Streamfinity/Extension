@@ -108,7 +108,7 @@ function Header({
             </div>
 
             <div className="flex items-center gap-2">
-                {isMinimized && (
+                {(isMinimized && reactionPolicy) && (
                     <TopButton
                         onClick={() => setIsMinimized(false)}
                         className={reactionPolicyClassNames}
@@ -118,7 +118,7 @@ function Header({
                 )}
 
                 {isTrackingVideos !== undefined && (
-                    <TopButton popup={isTrackingVideos ? t('status.trackingEnabled') : t('status.trackingDisabled')}>
+                    <TopButton popup={isMinimized ? '' : (isTrackingVideos ? t('status.trackingEnabled') : t('status.trackingDisabled'))}>
                         {isTrackingVideos ? (
                             <EyeIcon className="size-7 text-red-500" />
                         ) : (
@@ -129,7 +129,7 @@ function Header({
 
                 <TopButton
                     onClick={() => setIsMinimized(!isMinimized)}
-                    popup={isMinimized ? 'Maximize' : 'Minimize'}
+                    popup={isMinimized ? '' : 'Minimize'}
                 >
                     {isMinimized ? (
                         <ChevronDownIcon className="size-7 text-gray-500" />
