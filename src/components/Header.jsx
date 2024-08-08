@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
@@ -6,10 +6,12 @@ import {
 } from '@heroicons/react/16/solid';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import wordmarkDark from '~/assets/Wordmark-Dark-Logo.png';
 import wordmarkLight from '~/assets/Wordmark-Light-Logo.png';
 import logoStyles from './Logo.module.css';
 import { useAppStore } from '~/entries/contentScript/state';
+import { reactionPolicyEnum } from '~/enums';
 
 function TopButton({
     children,
@@ -47,7 +49,7 @@ TopButton.propTypes = {
     onClick: PropTypes.func,
 };
 
-function Logo({
+function Header({
     onClick,
     sws,
     isTrackingVideos,
@@ -57,9 +59,17 @@ function Logo({
 
     const { t } = useTranslation();
 
-    const [isMinimized, setIsMinimized] = useAppStore(
-        useShallow((storeState) => ([storeState.isMinimized, storeState.setIsMinimized])),
+    const [isMinimized, setIsMinimized, reactionPolicy] = useAppStore(
+        useShallow((storeState) => ([storeState.isMinimized, storeState.setIsMinimized, storeState.reactionPolicy])),
     );
+
+    const reactionPolicyClassNames = useMemo(() => ({
+        [reactionPolicyEnum.ALLOW]: 'border bg-emerald-500/20 border-emerald-500 text-emerald-900 dark:text-white',
+        [reactionPolicyEnum.DENY]: 'border bg-red-500/20 border-red-500 text-red-900 dark:text-white',
+        [reactionPolicyEnum.CONDITIONS]: 'border bg-yellow-500/20 border-yellow-500 text-yellow-900 dark:text-white',
+    }[reactionPolicy?.policy] || ''), [reactionPolicy]);
+
+    console.log(reactionPolicy, reactionPolicyClassNames);
 
     const logoClassNames = 'h-9';
 
@@ -101,13 +111,14 @@ function Logo({
 
             <div className="flex items-center gap-2">
                 {isMinimized && (
-                    <TopButton onClick={() => setIsMinimized(false)}>
-                        <div className="absolute left-0 top-0 flex size-7 -translate-x-1/2 -translate-y-2 items-center justify-center rounded-full bg-red-500 text-xs leading-none text-white">
-                            5
-                        </div>
-                        <BellIcon className="size-7 text-gray-500" />
+                    <TopButton
+                        onClick={() => setIsMinimized(false)}
+                        className={reactionPolicyClassNames}
+                    >
+                        <InformationCircleIcon className="size-7" />
                     </TopButton>
                 )}
+
                 {isTrackingVideos !== undefined && (
                     <TopButton popup={isTrackingVideos ? t('status.trackingEnabled') : t('status.trackingDisabled')}>
                         {isTrackingVideos ? (
@@ -133,17 +144,17 @@ function Logo({
     );
 }
 
-Logo.propTypes = {
+Header.propTypes = {
     sws: PropTypes.bool,
     onClick: PropTypes.func,
     isTrackingVideos: PropTypes.bool,
 };
 
-Logo.defaultProps = {
+Header.defaultProps = {
     sws: false,
     size: 'default',
     onClick: () => {},
     isTrackingVideos: undefined,
 };
 
-export default Logo;
+export default Header;

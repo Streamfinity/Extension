@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Toaster } from 'react-hot-toast';
 import { useShallow } from 'zustand/react/shallow';
 import { useAppStore } from '~/entries/contentScript/state';
-import Logo from '~/components/Logo';
+import Header from '~/components/Header';
 import DevTools from '~/entries/contentScript/components/DevTools';
 import { childrenShape, streamShape } from '~/shapes';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
@@ -71,7 +71,7 @@ function AppContainer({
                 )}
                 >
                     <div className="flex items-center justify-between">
-                        <Logo
+                        <Header
                             onClick={() => setClickedCount((prev) => prev + 1)}
                             isTrackingVideos={isTrackingVideos}
                             sws

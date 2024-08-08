@@ -265,8 +265,8 @@ function ReactionPolicyNotice() {
     const { t } = useTranslation();
 
     const { user } = useAuth();
-    const [currentUrl, currentChannel] = useAppStore(
-        useShallow((state) => [state.currentUrl, state.currentChannel]),
+    const [currentUrl, currentChannel, setReactionPolicy] = useAppStore(
+        useShallow((state) => [state.currentUrl, state.currentChannel, state.setReactionPolicy]),
     );
 
     const { data: policy, isLoading } = useReactionPolicyForVideo({
@@ -274,6 +274,10 @@ function ReactionPolicyNotice() {
         channelUrl: currentChannel.url,
         userId: user?.id || '',
     });
+
+    useEffect(() => {
+        setReactionPolicy(policy);
+    }, [policy]);
 
     const [liveCountdownDuration, setLiveCountdownDuration] = useState(null);
     const [videoCountdownDuration, setVideoCountdownDuration] = useState(null);

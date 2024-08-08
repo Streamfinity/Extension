@@ -22,7 +22,9 @@ import StreamerModeNotice from '~/entries/contentScript/components/StreamerModeN
 import { usePage } from '~/hooks/usePage';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
 import AnalyticsNotice from '~/entries/contentScript/components/AnalyticsNotice';
-import { storageGetCompact, storageSetCompact } from '~/entries/background/common/storage';
+import {
+    storageGetCompact, storageSetCompact, storageGetMinimized, storageSetMinimized,
+} from '~/entries/background/common/storage';
 
 function App() {
     const { t, i18n } = useTranslation();
@@ -30,13 +32,15 @@ function App() {
         user, loadingAuth, liveStream, login, state, isIncognito, isTrackingVideos,
     } = useAuth();
 
-    const [setCurrentUrl, isDarkMode, isDeviceDarkMode, isCompact, setIsCompact] = useAppStore(
+    const [setCurrentUrl, isDarkMode, isDeviceDarkMode, isCompact, setIsCompact, isMinimized, setIsMinimized] = useAppStore(
         useShallow((storeState) => ([
             storeState.setCurrentUrl,
             storeState.isDarkMode,
             storeState.isDeviceDarkMode,
             storeState.isCompact,
             storeState.setIsCompact,
+            storeState.isMinimized,
+            storeState.setIsMinimized,
         ])),
     );
 
@@ -86,6 +90,20 @@ function App() {
             }
         })();
     }, [isCompact]);
+
+    // Minimize listener
+
+    useEffect(() => {
+        (async () => {
+            const current = await storageGetMinimized();
+
+            if (isMinimized === null) {
+                setIsMinimized(!!current);
+            } else if (current !== isMinimized) {
+                await storageSetMinimized(isMinimized);
+            }
+        })();
+    }, [isMinimized]);
 
     // Theme listener
 
