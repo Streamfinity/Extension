@@ -2,7 +2,7 @@ import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { ChevronUpIcon, ChevronDownIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/16/solid';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/16/solid';
 import { buildFrontendUrl } from '~/common/utility';
 import useAuth, { STATE_LIVE, STATE_DEFAULT, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
@@ -46,13 +46,6 @@ function Footer({
                         </>
                     )}
                 </button>
-
-                <div className="flex items-center gap-1.5 leading-none">
-                    <div className="size-4 rounded-full border border-gray-500 p-px">
-                        <div className="size-full rounded-full bg-gray-500" />
-                    </div>
-                    Minimize
-                </div>
             </div>
 
             {(liveStream && state !== STATE_LIVE) && (
