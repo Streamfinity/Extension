@@ -4,7 +4,7 @@ import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
-    EyeIcon, EyeSlashIcon, ChevronUpIcon, ChevronDownIcon,
+    EyeIcon, EyeSlashIcon, ChevronUpIcon, ChevronDownIcon, BellIcon,
 } from '@heroicons/react/16/solid';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
@@ -126,6 +126,13 @@ function Header({
             </div>
 
             <div className="flex items-center gap-2">
+                <TopButton onClick={() => setIsMinimized(false)}>
+                    <div className="absolute left-0 top-0 flex size-5 -translate-x-1/2 -translate-y-2 items-center justify-center rounded-full bg-red-500 text-xs leading-none text-white">
+                        <div className="size-[3px] rounded-full bg-white" />
+                    </div>
+                    <InformationCircleIcon className="size-7 text-gray-500" />
+                </TopButton>
+
                 {(isMinimized && reactionPolicy) && (
                     <TopButton
                         onClick={() => setIsMinimized(false)}
