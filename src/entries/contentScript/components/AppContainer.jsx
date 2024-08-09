@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Toaster } from 'react-hot-toast';
+import { useShallow } from 'zustand/react/shallow';
 import { useAppStore } from '~/entries/contentScript/state';
-import Logo from '~/components/Logo';
+import Header from '~/components/Header';
 import DevTools from '~/entries/contentScript/components/DevTools';
 import { childrenShape, streamShape } from '~/shapes';
 import { STATE_DEFAULT, STATE_LIVE, STATE_OWN_VIDEO } from '~/hooks/useAuth';
@@ -20,8 +21,13 @@ function AppContainer({
     liveStream = null,
     isTrackingVideos = undefined,
 }) {
-    const isVisible = useAppStore((storeState) => storeState.isVisible);
-    const compact = useAppStore((storeState) => storeState.isCompact);
+    const [isVisible, isCompact, isMinimized] = useAppStore(
+        useShallow((storeState) => ([
+            storeState.isVisible,
+            storeState.isCompact,
+            storeState.isMinimized,
+        ])),
+    );
 
     const [isNewLayout, setIsNewLayout] = useState(false);
     const [clickedCount, setClickedCount] = useState(0);
@@ -50,22 +56,22 @@ function AppContainer({
         )}
         >
             <div className={classNames(
-                'mb-4 overflow-y-auto rounded-[12px]',
-                !isNewLayout && (compact ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br'),
-                isNewLayout ? 'p-px bg-[rgba(0,0,0,0.05)] dark:bg-[rgba(255,255,255,0.1)]' : 'p-[2px]',
+                'mb-4 overflow-y-auto rounded-[12px] p-px',
+                !isNewLayout && (isCompact ? 'bg-gray-300 dark:bg-gray-700' : 'bg-gradient-to-br'),
+                isNewLayout && 'bg-[rgba(0,0,0,0.05)] dark:bg-[rgba(255,255,255,0.1)]',
                 state === STATE_DEFAULT && 'from-primary-gradient-from to-primary-gradient-to',
                 state === STATE_LIVE && 'from-brand-streamer-gradient-from to-brand-streamer-gradient-to',
                 state === STATE_OWN_VIDEO && 'from-brand-creator-gradient-from to-brand-creator-gradient-to',
             )}
             >
                 <div className={classNames(
-                    compact ? 'p-[12px]' : 'p-[16px]',
+                    isCompact ? 'p-[12px]' : 'p-[16px]',
                     !isNewLayout && 'bg-white dark:bg-black',
                     'relative flex flex-col gap-4 rounded-[10px] text-base text-gray-900 dark:text-white dark:shadow-lg dark:shadow-white/5',
                 )}
                 >
-                    <div className="mb-4 flex items-center justify-between">
-                        <Logo
+                    <div className="flex items-center justify-between">
+                        <Header
                             onClick={() => setClickedCount((prev) => prev + 1)}
                             isTrackingVideos={isTrackingVideos}
                             sws
@@ -77,14 +83,17 @@ function AppContainer({
                         <SubwaySurfer onClose={() => setClickedCount(0)} />
                     )}
 
-                    <div className="grid auto-cols-fr items-start gap-4 @[800px]:grid-flow-col">
-                        {children}
-                    </div>
-
-                    <Footer
-                        liveStream={liveStream}
-                        state={state}
-                    />
+                    {!isMinimized && (
+                        <>
+                            <div className="grid auto-cols-fr items-start gap-4 @[800px]:grid-flow-col">
+                                {children}
+                            </div>
+                            <Footer
+                                liveStream={liveStream}
+                                state={state}
+                            />
+                        </>
+                    )}
 
                     <Toaster
                         containerStyle={{ position: 'absolute' }}

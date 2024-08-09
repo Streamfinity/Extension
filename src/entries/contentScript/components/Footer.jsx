@@ -2,7 +2,7 @@ import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { ChevronUpIcon, ChevronDownIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/16/solid';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/16/solid';
 import { buildFrontendUrl } from '~/common/utility';
 import useAuth, { STATE_LIVE, STATE_DEFAULT, STATE_OWN_VIDEO } from '~/hooks/useAuth';
 import { useAppStore } from '~/entries/contentScript/state';
@@ -23,24 +23,30 @@ function Footer({
     }
 
     return (
-        <div className="flex justify-between gap-4 truncate text-sm font-medium text-gray-500 dark:text-gray-400">
-            <button
-                type="button"
-                onClick={() => setIsCompact(!isCompact)}
-                className="flex items-center gap-1 dark:hover:text-gray-300"
-            >
-                {isCompact ? (
-                    <>
-                        <ChevronDownIcon className="size-6" />
-                        {t('actions.compactDisable') }
-                    </>
-                ) : (
-                    <>
-                        <ChevronUpIcon className="size-6" />
-                        {t('actions.compactEnable')}
-                    </>
-                )}
-            </button>
+        <div className="flex justify-between gap-4 truncate text-xs font-medium text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-4">
+                <button
+                    type="button"
+                    onClick={() => setIsCompact(!isCompact)}
+                    className="group flex items-center gap-1.5 leading-none dark:hover:text-gray-300"
+                >
+                    {isCompact ? (
+                        <>
+                            <div className="size-4 rounded-full border border-gray-500 p-px">
+                                <div className="size-full rounded-full bg-gray-500" />
+                            </div>
+                            {t('actions.compact') }
+                        </>
+                    ) : (
+                        <>
+                            <div className="size-4 rounded-full border border-gray-500 p-px">
+                                <div className="invisible size-full rounded-full bg-gray-500 group-hover:visible" />
+                            </div>
+                            {t('actions.compact')}
+                        </>
+                    )}
+                </button>
+            </div>
 
             {(liveStream && state !== STATE_LIVE) && (
                 <button

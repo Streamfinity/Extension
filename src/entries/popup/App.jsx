@@ -5,7 +5,7 @@ import SettingsView from '~/entries/popup/components/SettingsView';
 import LoginView from '~/entries/popup/components/LoginView';
 import useAuth from '~/hooks/useAuth';
 import { useBackgroundEvents } from '~/entries/contentScript/hooks/useBackgroundEvents';
-import Logo from '~/components/Logo';
+import Header from '~/components/Header';
 
 const availableViews = [
     {
@@ -30,7 +30,7 @@ function App() {
         <main className="dark flex h-[23rem] min-w-[21rem] flex-col overflow-y-auto bg-black font-sans text-white">
             <div>
                 <div className="flex justify-center p-3">
-                    <Logo size="small" />
+                    <Header size="small" />
                 </div>
             </div>
 

@@ -1,6 +1,7 @@
 {
     "actions": {
         "abort": "Cancelar",
+        "compact": "Contraer",
         "compactDisable": "Ver más",
         "compactEnable": "Contraer",
         "loginWith": "Iniciar sesión con Streamfinity",

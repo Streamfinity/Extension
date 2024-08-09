@@ -6,6 +6,7 @@ export const STORAGE_TOKEN = 'token';
 export const STORAGE_TOKEN_EXPIRES = 'tokenExpiresIn';
 export const STORAGE_USER = 'user';
 export const STORAGE_COMPACT = 'compact';
+export const STORAGE_MINIMIZED = 'min';
 export const STORAGE_SETTING_SCRIPT_VISIBLE = 'invis';
 
 // Setter
@@ -29,6 +30,10 @@ export async function storageSetCompact(compact) {
     await browser.storage.sync.set({ [STORAGE_COMPACT]: compact });
 }
 
+export async function storageSetMinimized(minimized) {
+    await browser.storage.sync.set({ [STORAGE_MINIMIZED]: minimized });
+}
+
 export async function storageSetSettingVisible(visible) {
     await browser.storage.sync.set({ [STORAGE_SETTING_SCRIPT_VISIBLE]: visible });
 }
@@ -43,6 +48,10 @@ export async function storageGetSettingVisible() {
 
 export async function storageGetCompact() {
     return (await browser.storage.sync.get(STORAGE_COMPACT))[STORAGE_COMPACT];
+}
+
+export async function storageGetMinimized() {
+    return (await browser.storage.sync.get(STORAGE_MINIMIZED))[STORAGE_MINIMIZED];
 }
 
 export async function storageGetUser() {
