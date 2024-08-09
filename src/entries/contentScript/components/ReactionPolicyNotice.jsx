@@ -13,6 +13,9 @@ import { useAppStore } from '~/entries/contentScript/state';
 import useAuth from '~/hooks/useAuth';
 import cirWordmarkLight from '~/assets/cir/canireact_light.png';
 import cirWordmarkDark from '~/assets/cir/canireact_dark.png';
+import { createLogger } from '~/common/log';
+
+const log = createLogger('ReactionPolicy');
 
 function prettyFormatCountdown(diff) {
     const duration = moment.duration(diff);
@@ -280,6 +283,10 @@ function ReactionPolicyNotice() {
 
     useEffect(() => {
         const publishDate = getCurrentVideoPublishDate();
+
+        if (publishDate) {
+            log.debug('found date', publishDate.toISOString());
+        }
 
         if (!policy) {
             return () => {};

@@ -83,9 +83,15 @@ export function getYouTubePlayerProgressBar() {
 }
 
 export function getCurrentVideoPublishDate() {
-    const metaPublish = document.querySelector('meta[itemprop="datePublished"]');
-    if (metaPublish) {
-        return moment(metaPublish.content);
+    const ldScript = document.querySelector('#microformat script[type="application/ld+json"]').innerHTML;
+
+    if (ldScript) {
+        try {
+            const ldData = JSON.parse(ldScript);
+            return moment(ldData.uploadDate);
+        } catch (err) {
+            return null;
+        }
     }
 
     return null;
