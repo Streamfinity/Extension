@@ -4,7 +4,7 @@ import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
-    EyeIcon, EyeSlashIcon, ChevronUpIcon, ChevronDownIcon, BellIcon,
+    EyeIcon, EyeSlashIcon, ChevronUpIcon, ChevronDownIcon,
 } from '@heroicons/react/16/solid';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
