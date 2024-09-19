@@ -126,13 +126,6 @@ function Header({
             </div>
 
             <div className="flex items-center gap-2">
-                <TopButton onClick={() => setIsMinimized(false)}>
-                    <div className="absolute left-0 top-0 flex size-5 -translate-x-1/2 -translate-y-2 items-center justify-center rounded-full bg-red-500 text-xs leading-none text-white">
-                        <div className="size-[3px] rounded-full bg-white" />
-                    </div>
-                    <InformationCircleIcon className="size-7 text-gray-500" />
-                </TopButton>
-
                 {(isMinimized && reactionPolicy) && (
                     <TopButton
                         onClick={() => setIsMinimized(false)}
