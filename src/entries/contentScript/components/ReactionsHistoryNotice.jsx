@@ -16,8 +16,7 @@ import { buildReactionFromUrl } from '~/common/pretty';
 function ReactionPreview({ reaction }) {
     const { t } = useTranslation();
 
-    const showAvatar = useMemo(() => reaction.from_info?.avatar_url && false, []);
-
+    const showAvatar = useMemo(() => reaction.from_info?.avatar_url, [reaction]);
     const showServiceIcon = useMemo(() => !showAvatar && reaction.from_info?.service, [showAvatar, reaction]);
 
     return (
@@ -27,11 +26,17 @@ function ReactionPreview({ reaction }) {
         >
             <div>
                 {showAvatar && (
-                    <img
-                        src={reaction.from_info.avatar_url}
-                        className="inline size-7 overflow-hidden rounded-full"
-                        alt={reaction.from_info.name}
-                    />
+                    <a
+                        href={reaction.from_info?.service_external_url}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <img
+                            src={reaction.from_info.avatar_url}
+                            className="inline size-7 overflow-hidden rounded-full"
+                            alt={reaction.from_info.name}
+                        />
+                    </a>
                 )}
                 {showServiceIcon && (
                     <ServiceIcon
@@ -180,31 +185,35 @@ function ReactionsHistoryNotice() {
                 </>
             ) : (
                 <div className="flex flex-col gap-4 text-sm">
-                    {liveReactions.length > 0 && (
-                        <div>
-                            <div className="mb-2 font-bold">
-                                Live Reactions
-                            </div>
-
-                            {liveReactions.map((reaction) => (
-                                <Fragment key={reaction.id}>
-                                    <ReactionPreview reaction={reaction} />
-                                </Fragment>
-                            ))}
-                        </div>
-                    )}
-
                     {videoReactions.length > 0 && (
                         <div>
                             <div className="mb-2 font-bold">
                                 {t('words.videoReactions')}
                             </div>
 
-                            {videoReactions.map((reaction) => (
-                                <Fragment key={reaction.id}>
-                                    <ReactionPreview reaction={reaction} />
-                                </Fragment>
-                            ))}
+                            <div className="flex flex-col gap-1">
+                                {videoReactions.map((reaction) => (
+                                    <Fragment key={reaction.id}>
+                                        <ReactionPreview reaction={reaction} />
+                                    </Fragment>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {liveReactions.length > 0 && (
+                        <div>
+                            <div className="mb-2 font-bold">
+                                Live Reactions
+                            </div>
+
+                            <div className="flex flex-col gap-1">
+                                {liveReactions.map((reaction) => (
+                                    <Fragment key={reaction.id}>
+                                        <ReactionPreview reaction={reaction} />
+                                    </Fragment>
+                                ))}
+                            </div>
                         </div>
                     )}
                 </div>
