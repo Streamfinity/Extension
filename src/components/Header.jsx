@@ -36,8 +36,8 @@ function TopButton({
             {children}
 
             {popup && (
-                <div className="invisible absolute bottom-0 right-0 z-20 flex w-[20rem] translate-y-full justify-end group-hover/button:visible">
-                    <div className="mt-2 rounded-md border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-white shadow dark:border-gray-200 dark:bg-gray-100">
+                <div className="invisible absolute bottom-0 right-0 z-20 flex w-80 translate-y-full justify-end group-hover/button:visible">
+                    <div className="mt-2 rounded-md border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-white shadow dark:border-gray-200 dark:bg-gray-100 dark:text-black">
                         {popup}
                     </div>
                 </div>
