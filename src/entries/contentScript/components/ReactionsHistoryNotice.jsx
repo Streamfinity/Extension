@@ -16,67 +16,83 @@ import { buildReactionFromUrl } from '~/common/pretty';
 function ReactionPreview({ reaction }) {
     const { t } = useTranslation();
 
+    const showAvatar = useMemo(() => reaction.from_info?.avatar_url && false, []);
+
+    const showServiceIcon = useMemo(() => !showAvatar && reaction.from_info?.service, [showAvatar, reaction]);
+
     return (
         <div
             key={reaction.id}
-            className="flex items-center gap-2"
+            className="flex items-start gap-2"
         >
-            {reaction.from_info?.service && (
-                <ServiceIcon
-                    service={reaction.from_info?.service}
-                    size={12}
-                    className="inline-block"
-                />
-            )}
-            <a
-                href={reaction.from_info?.service_external_url}
-                target="_blank"
-                rel="noreferrer"
-                className="font-bold text-primary-gradient-from"
-            >
-                {reaction.from_info?.display_name}
-            </a>
+            <div>
+                {showAvatar && (
+                    <img
+                        src={reaction.from_info.avatar_url}
+                        className="inline size-7 overflow-hidden rounded-full"
+                        alt={reaction.from_info.name}
+                    />
+                )}
+                {showServiceIcon && (
+                    <ServiceIcon
+                        service={reaction.from_info?.service}
+                        size={12}
+                        className="mr-2 inline-block align-middle"
+                    />
+                )}
+            </div>
 
-            {' '}
-            {moment(reaction.reaction_timestamp_start).fromNow()}
-            {' '}
+            <div className="leading-7">
+                <a
+                    href={reaction.from_info?.service_external_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-bold text-primary-gradient-hc-from dark:text-primary-gradient-from"
+                >
+                    {reaction.from_info?.display_name}
+                </a>
 
-            {reaction.from_stream && (
-                reaction.from_stream.vods.length > 0 ? (
-                    reaction.from_stream.vods?.map((vod) => (
-                        <Fragment key={vod.id}>
-                            <a
-                                href={vod.video.external_tracking_url_time.replace('{timestamp}', reaction.vod_seconds_from)}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="font-bold text-primary-gradient-from"
-                            >
-                                {t('reactionHistory.inAStream', { service: reaction.from_stream?.account?.service?.title })}
-                            </a>
-                        </Fragment>
-                    ))
-                ) : (
+                {' '}
+                {moment(reaction.reaction_timestamp_start).fromNow()}
+                {' '}
+
+                {reaction.from_stream && (
+                    reaction.from_stream.vods.length > 0 ? (
+                        reaction.from_stream.vods?.map((vod) => (
+                            <Fragment key={vod.id}>
+                                <a
+                                    href={vod.video.external_tracking_url_time.replace('{timestamp}', reaction.vod_seconds_from)}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="font-bold text-primary-gradient-hc-from dark:text-primary-gradient-from"
+                                >
+                                    {t('reactionHistory.inAStream', { service: reaction.from_stream?.account?.service?.title })}
+                                </a>
+                            </Fragment>
+                        ))
+                    ) : (
+                        <a
+                            href={buildReactionFromUrl(reaction)}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="font-bold text-primary-gradient-hc-from dark:text-primary-gradient-from"
+                        >
+                            {t('reactionHistory.inAStream', { service: reaction.from_stream?.account?.service?.title })}
+                        </a>
+                    )
+                )}
+
+                {reaction.from_video && (
                     <a
                         href={buildReactionFromUrl(reaction)}
                         target="_blank"
                         rel="noreferrer"
-                        className="font-bold text-primary-gradient-from"
+                        className="font-bold text-primary-gradient-hc-from dark:text-primary-gradient-from"
                     >
-                        {t('reactionHistory.inAStream', { service: reaction.from_stream?.account?.service?.title })}
+                        {t('reactionHistory.inAVideo')}
                     </a>
-                )
-            )}
-
-            {reaction.from_video && (
-                <a
-                    href={buildReactionFromUrl(reaction)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-bold text-primary-gradient-from"
-                >
-                    {t('reactionHistory.inAVideo')}
-                </a>
-            )}
+                )}
+            </div>
         </div>
     );
 }
@@ -100,7 +116,7 @@ function ReactionsHistoryNotice() {
 
     const { data: reactions } = useReactions({
         videoUrl: currentUrl,
-        onlyFollowed: !isOwnVideo,
+        limit: 10,
     });
 
     const videoReactions = useMemo(() => reactions?.filter((reaction) => !!reaction.from_video), [reactions]);

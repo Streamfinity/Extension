@@ -70,10 +70,10 @@ async function getContentRatingsForVideo({ videoUrl }) {
 
 // Reactions
 
-async function getReactionsForVideo({ videoUrl, onlyFollowed }) {
+async function getReactionsForVideo({ videoUrl, onlyFollowed, limit }) {
     return sendMessageToBackground(
         messages.REACTIONS_GET_FOR_VIDEO,
-        { videoUrl, onlyFollowed },
+        { videoUrl, onlyFollowed, limit },
     );
 }
 
@@ -179,10 +179,10 @@ export function useContentRatings({ videoUrl }) {
     };
 }
 
-export function useReactions({ videoUrl, onlyFollowed }) {
+export function useReactions({ videoUrl, onlyFollowed, limit }) {
     const query = useQuery({
-        queryKey: ['reactions-to-video', videoUrl, onlyFollowed],
-        queryFn: () => getReactionsForVideo({ videoUrl, onlyFollowed }),
+        queryKey: ['reactions-to-video', videoUrl, onlyFollowed, limit],
+        queryFn: () => getReactionsForVideo({ videoUrl, onlyFollowed, limit }),
         enabled: !!videoUrl,
     });
 
