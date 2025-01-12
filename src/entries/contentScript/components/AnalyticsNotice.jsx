@@ -99,7 +99,7 @@ function AnalyticsNotice() {
             titleCompact={t('analytics.titleCompact')}
             color="brand-creator"
             compact={compact}
-            preview={(isSubscribed && !!video) ? t('analytics.preview', { views: video?.analytics_aggregated.sum_unique_views || 0 }) : null}
+            preview={(isSubscribed && !!video) ? t('analytics.preview', { count: video?.analytics_aggregated.sum_unique_views || 0 }) : null}
         >
             <div className="flex justify-between">
                 {isSubscribed && (
