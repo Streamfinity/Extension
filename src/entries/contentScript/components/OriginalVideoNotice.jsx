@@ -39,11 +39,11 @@ function ReactionPreview({ reaction }) {
                     )}
                 </div>
                 <div className="flex items-center text-xs font-semibold text-black">
-                    <div className="rounded-lg bg-primary-gradient-from px-2 py-[1px]">
+                    <div className="rounded-lg bg-primary-gradient-from px-2 py-px">
                         {reaction.video_seconds_from ? prettyDuration(reaction.video_seconds_from) : '00:00'}
                     </div>
                     <div className="h-2 w-4 bg-gradient-to-r from-primary-gradient-from to-primary-gradient-to" />
-                    <div className="rounded-lg bg-primary-gradient-to px-2 py-[1px]">
+                    <div className="rounded-lg bg-primary-gradient-to px-2 py-px">
                         {reaction.video_seconds_to ? prettyDuration(reaction.video_seconds_to) : prettyDuration(reaction.interval_duration)}
                     </div>
                 </div>
