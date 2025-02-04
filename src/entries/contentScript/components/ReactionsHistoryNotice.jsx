@@ -12,6 +12,7 @@ import { hasSubscriptionFeature } from '~/entries/contentScript/hooks/useSubscri
 import { subscriptionIds, subscriptionFeatures } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
 import { buildReactionFromUrl } from '~/common/pretty';
+import imageOnError from '~/common/imageOnError';
 
 function ReactionPreview({ reaction }) {
     const { t } = useTranslation();
@@ -34,6 +35,7 @@ function ReactionPreview({ reaction }) {
                         <img
                             src={reaction.from_info.avatar_url}
                             className="inline size-7 overflow-hidden rounded-full"
+                            onError={(e) => imageOnError(e, ['bg-primary-gradient-hc-from/40'])}
                             alt={reaction.from_info.name}
                         />
                     </a>
