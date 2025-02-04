@@ -271,14 +271,13 @@ jobs:
           name: "${{ github.ref_name }}_chrome_mv${{ matrix.manifest_version }}.zip" # <--- "chrome" hardcoded, uses .zip instead of .xpi
           path: artifacts/
 
-      - uses: wdzeng/edge-addon@v1
+      - uses: wdzeng/edge-addon@v2
         with:
           product-id: ${{ secrets.EDGE_PRODUCT_ID }}
           zip-path: "artifacts/${{ github.ref_name }}_chrome_mv${{ matrix.manifest_version }}.zip"
-          upload-only: true # TODO change to "false" when approved
+          api-key: ${{ secrets.EDGE_API_KEY }}
           client-id: ${{ secrets.EDGE_CLIENT_ID }}
-          client-secret: ${{ secrets.EDGE_CLIENT_SECRET }}
-          access-token-url: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}
+          upload-only: true # TODO change to "false" when approved
 
   # -----------------------------------------------------------------------------------------------------------------------
   # Release
