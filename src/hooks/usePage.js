@@ -31,7 +31,7 @@ export function usePage() {
         if (window?.location && window.location.href !== currentUrl) {
             hasUrl = true;
 
-            log.debug('---> new url', window.location.href);
+            log.debug('-> new url', window.location.href);
             setCurrentUrl(window.location.href);
         }
 
@@ -54,7 +54,7 @@ export function usePage() {
             }
 
             if (JSON.stringify(channelInfo) !== JSON.stringify(currentChannel)) {
-                log.debug('---> new channel', channelInfo);
+                log.debug('-> new channel', channelInfo, currentChannel);
                 setCurrentChannel(channelInfo);
             }
         }
@@ -82,7 +82,7 @@ export function usePage() {
             setIsDeviceDarkMode(detectedDeviceDark);
         }
 
-        log.debug('scrape() ---------------------------', { hasUrl, hasChannel });
+        log.debug('scrape()', { hasUrl, hasChannel });
 
         return hasUrl && hasChannel;
     }
