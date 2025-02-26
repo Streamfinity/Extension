@@ -172,9 +172,7 @@ function App() {
 
             <ReactionPolicyNotice />
 
-            {state !== STATE_LIVE && (
-                <ReactionsHistoryNotice />
-            )}
+            <ReactionsHistoryNotice truncateNames={state === STATE_LIVE} />
 
             {state !== STATE_LIVE && (
                 <SubmitSuggestionNotice />
