@@ -2,6 +2,7 @@
 import React, { useMemo, Fragment } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import Card from '~/entries/contentScript/components/Card';
 import { useReactions } from '~/common/bridge';
 import { reactionShape } from '~/shapes';
@@ -11,10 +12,14 @@ import useAuth from '~/hooks/useAuth';
 import { hasSubscriptionFeature } from '~/entries/contentScript/hooks/useSubscription';
 import { subscriptionIds, subscriptionFeatures } from '~/enums';
 import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel';
-import { buildReactionFromUrl } from '~/common/pretty';
+import { buildReactionFromUrl, truncateString } from '~/common/pretty';
 import imageOnError from '~/common/imageOnError';
+import TruncatedString from '~/entries/contentScript/components/TruncatedString';
 
-function ReactionPreview({ reaction }) {
+function ReactionPreview({
+    reaction,
+    truncateNames = false,
+}) {
     const { t } = useTranslation();
 
     const showAvatar = useMemo(() => reaction.from_info?.avatar_url, [reaction]);
@@ -56,7 +61,9 @@ function ReactionPreview({ reaction }) {
                     rel="noreferrer"
                     className="font-bold text-primary-gradient-hc-from dark:text-primary-gradient-from"
                 >
-                    {reaction.from_info?.display_name}
+                    {truncateNames
+                        ? <TruncatedString value={reaction.from_info?.display_name} />
+                        : reaction.from_info?.display_name}
                 </a>
 
                 {' '}
@@ -106,9 +113,12 @@ function ReactionPreview({ reaction }) {
 
 ReactionPreview.propTypes = {
     reaction: reactionShape.isRequired,
+    truncateNames: PropTypes.bool,
 };
 
-function ReactionsHistoryNotice() {
+function ReactionsHistoryNotice({
+    truncateNames = false,
+}) {
     const { t } = useTranslation();
     const currentUrl = useAppStore((state) => state.currentUrl);
     const compact = useAppStore((state) => state.isCompact);
@@ -196,7 +206,10 @@ function ReactionsHistoryNotice() {
                             <div className="flex flex-col gap-1">
                                 {videoReactions.map((reaction) => (
                                     <Fragment key={reaction.id}>
-                                        <ReactionPreview reaction={reaction} />
+                                        <ReactionPreview
+                                            reaction={reaction}
+                                            truncateNames={truncateNames}
+                                        />
                                     </Fragment>
                                 ))}
                             </div>
@@ -212,7 +225,10 @@ function ReactionsHistoryNotice() {
                             <div className="flex flex-col gap-1">
                                 {liveReactions.map((reaction) => (
                                     <Fragment key={reaction.id}>
-                                        <ReactionPreview reaction={reaction} />
+                                        <ReactionPreview
+                                            reaction={reaction}
+                                            truncateNames={truncateNames}
+                                        />
                                     </Fragment>
                                 ))}
                             </div>
@@ -224,7 +240,9 @@ function ReactionsHistoryNotice() {
     );
 }
 
-ReactionsHistoryNotice.propTypes = {};
+ReactionsHistoryNotice.propTypes = {
+    truncateNames: PropTypes.bool,
+};
 
 ReactionsHistoryNotice.defaultProps = {};
 

@@ -132,3 +132,11 @@ export function buildReactionFromUrl(reaction) {
 
     return reaction.from_info?.service_external_url;
 }
+
+export function truncateString(str, countDots = null) {
+    if (!str || str.length <= 1) {
+        return str;
+    }
+
+    return str[0] + '.'.repeat(countDots || str.length - 1);
+}
