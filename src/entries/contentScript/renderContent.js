@@ -132,8 +132,6 @@ export async function renderContent(
 
     const isNewLayout = !!document.querySelector('#fixed-columns-secondary');
 
-    console.log('isNewLayout');
-
     if (isNewLayout) {
         appContainer.setAttribute('data-new-layout', 1);
         window.streamfinityNewLayout = true;
