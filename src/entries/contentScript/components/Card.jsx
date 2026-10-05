@@ -32,8 +32,8 @@ function Card({
     title,
     titleCompact = null,
     preview = null,
-    color,
-    className,
+    color = 'default',
+    className = null,
     compact = false,
     forceOpen = false,
     highlight = false,
@@ -188,11 +188,6 @@ Card.propTypes = {
     compact: PropTypes.bool,
     forceOpen: PropTypes.bool,
     highlight: PropTypes.bool,
-};
-
-Card.defaultProps = {
-    className: null,
-    color: 'default',
 };
 
 export default Card;

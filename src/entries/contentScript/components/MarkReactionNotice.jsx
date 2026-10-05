@@ -10,7 +10,7 @@ import { useReactionCandidate } from '~/hooks/useReactionCandidate';
 import { submitReaction } from '~/common/bridge';
 import { toastError, toastSuccess } from '~/common/utility';
 
-function MarkReactionNotice({ autoDetect }) {
+function MarkReactionNotice({ autoDetect = false }) {
     const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);
     const [dismissed, setDismissed] = useState(false);
@@ -142,10 +142,6 @@ function MarkReactionNotice({ autoDetect }) {
 
 MarkReactionNotice.propTypes = {
     autoDetect: PropTypes.bool,
-};
-
-MarkReactionNotice.defaultProps = {
-    autoDetect: false,
 };
 
 export default MarkReactionNotice;

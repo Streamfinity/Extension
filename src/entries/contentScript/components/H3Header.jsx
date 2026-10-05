@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { childrenShape } from '~/shapes';
 
 function H3Header({
-    children, mt, mb, step,
+    children, mt = 'mt-6', mb = 'mb-4', step = null,
 }) {
     return (
         <h3 className={classNames(mt, mb, 'flex items-center text-2xl font-semibold')}>
@@ -29,12 +29,6 @@ H3Header.propTypes = {
         PropTypes.string,
     ]),
     step: PropTypes.number,
-};
-
-H3Header.defaultProps = {
-    mt: 'mt-6',
-    mb: 'mb-4',
-    step: null,
 };
 
 export default H3Header;

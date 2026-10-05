@@ -4,7 +4,7 @@ import TwitchIcon from '~/components/Icons/Twitch';
 import YouTubeIcon from '~/components/Icons/Youtube';
 import { accountServices } from '~/enums';
 
-function ServiceIcon({ service, size, className }) {
+function ServiceIcon({ service, size = 16, className = null }) {
     if (service.id === accountServices.TWITCH) {
         return (
             <TwitchIcon
@@ -35,11 +35,6 @@ ServiceIcon.propTypes = {
         id: PropTypes.number,
         title: PropTypes.string,
     }).isRequired,
-};
-
-ServiceIcon.defaultProps = {
-    className: null,
-    size: 16,
 };
 
 export default ServiceIcon;

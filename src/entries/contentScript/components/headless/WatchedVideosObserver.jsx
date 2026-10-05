@@ -148,6 +148,4 @@ function WatchedVideosObserver() {
 
 WatchedVideosObserver.propTypes = {};
 
-WatchedVideosObserver.defaultProps = {};
-
 export default WatchedVideosObserver;

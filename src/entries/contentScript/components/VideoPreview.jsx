@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { videoShape } from '~/shapes';
 import { prettyDuration } from '~/common/pretty';
 
-function VideoPreview({ video, children }) {
+function VideoPreview({ video, children = null }) {
     return (
         <a
             href={video.external_tracking_url}
@@ -44,10 +44,6 @@ function VideoPreview({ video, children }) {
 VideoPreview.propTypes = {
     video: videoShape.isRequired,
     children: PropTypes.node,
-};
-
-VideoPreview.defaultProps = {
-    children: null,
 };
 
 export default VideoPreview;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { childrenShape } from '~/shapes';
 
-function H2Header({ children, mt, mb }) {
+function H2Header({ children, mt = 'mt-6', mb = 'mb-4' }) {
     return (
         <h2 className={classNames(mt, mb, 'text-3xl font-semibold')}>
             {children}
@@ -21,11 +21,6 @@ H2Header.propTypes = {
         PropTypes.bool,
         PropTypes.string,
     ]),
-};
-
-H2Header.defaultProps = {
-    mt: 'mt-6',
-    mb: 'mb-4',
 };
 
 export default H2Header;

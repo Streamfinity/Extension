@@ -64,6 +64,4 @@ function DevTools() {
 
 DevTools.propTypes = {};
 
-DevTools.defaultProps = {};
-
 export default DevTools;

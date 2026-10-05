@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TwitchIcon({
-    className, height, width, viewBox,
+    className = null, height = 200, width = 200, viewBox = '0 0 24 24',
 }) {
     return (
         <div className={className}>
@@ -29,13 +29,6 @@ TwitchIcon.propTypes = {
     height: PropTypes.number,
     width: PropTypes.number,
     viewBox: PropTypes.string,
-};
-
-TwitchIcon.defaultProps = {
-    className: null,
-    height: 200,
-    width: 200,
-    viewBox: '0 0 24 24',
 };
 
 export default TwitchIcon;

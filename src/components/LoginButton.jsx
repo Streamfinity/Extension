@@ -25,6 +25,4 @@ LoginButton.propTypes = {
     loading: PropTypes.bool.isRequired,
 };
 
-LoginButton.defaultProps = {};
-
 export default LoginButton;
