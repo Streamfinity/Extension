@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import * as messages from '~/messages';
 import { sendMessageToBackground } from '~/entries/background/common/spaceship';
+import { isVideoUrl } from '~/common/utility';
 
 // Auth
 
@@ -157,7 +158,7 @@ export function useReactionPolicyForVideo({ videoUrl, channelUrl, userId }) {
     const query = useQuery({
         queryKey: ['reaction-policies', videoUrl, channelUrl, userId],
         queryFn: () => getReactionPolicyForVideo({ videoUrl, channelUrl, userId }),
-        enabled: !!videoUrl && !!channelUrl,
+        enabled: isVideoUrl(videoUrl) && !!channelUrl,
     });
 
     return {
@@ -170,7 +171,7 @@ export function useContentRatings({ videoUrl }) {
     const query = useQuery({
         queryKey: ['content-ratings', videoUrl],
         queryFn: () => getContentRatingsForVideo({ videoUrl }),
-        enabled: !!videoUrl,
+        enabled: isVideoUrl(videoUrl),
     });
 
     return {
@@ -183,7 +184,7 @@ export function useReactions({ videoUrl, onlyFollowed, limit }) {
     const query = useQuery({
         queryKey: ['reactions-to-video', videoUrl, onlyFollowed, limit],
         queryFn: () => getReactionsForVideo({ videoUrl, onlyFollowed, limit }),
-        enabled: !!videoUrl,
+        enabled: isVideoUrl(videoUrl),
     });
 
     return {
@@ -196,7 +197,7 @@ export function useOriginalVideos({ videoUrl }) {
     const query = useQuery({
         queryKey: ['original-videos-for-video', videoUrl],
         queryFn: () => getReactionOriginalVideos({ videoUrl }),
-        enabled: !!videoUrl,
+        enabled: isVideoUrl(videoUrl),
     });
 
     return {
@@ -209,7 +210,7 @@ export function useVideoAnalytics({ videoUrl, accountIds }) {
     const query = useQuery({
         queryKey: ['video-analytics', videoUrl, accountIds],
         queryFn: () => getVideoAnalytics({ videoUrl, accountIds }),
-        enabled: !!videoUrl && !!accountIds?.length,
+        enabled: isVideoUrl(videoUrl) && !!accountIds?.length,
     });
 
     return {
@@ -222,7 +223,7 @@ export function useCommunityNotes({ videoUrl }) {
     const query = useQuery({
         queryKey: ['community-notes', videoUrl],
         queryFn: () => getCommunityNotes({ videoUrl }),
-        enabled: !!videoUrl,
+        enabled: isVideoUrl(videoUrl),
     });
 
     return {

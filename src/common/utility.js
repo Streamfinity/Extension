@@ -22,6 +22,32 @@ export function getIdFromLink(link) {
     return match.groups.id;
 }
 
+export function isVideoUrl(url) {
+    let parsed;
+
+    try {
+        parsed = new URL(url);
+    } catch {
+        return false;
+    }
+
+    const { hostname, pathname, searchParams } = parsed;
+
+    if (['youtube.com', 'www.youtube.com', 'm.youtube.com'].includes(hostname)) {
+        return !!searchParams.get('v') || /(shorts|e|v)\/[A-Za-z0-9-_]+/.test(pathname);
+    }
+
+    if (['youtu.be', 'www.youtu.be'].includes(hostname)) {
+        return pathname.replace(/\//g, '') !== '';
+    }
+
+    if (['twitch.tv', 'www.twitch.tv'].includes(hostname)) {
+        return /videos\/[0-9]+|clip\/[A-Za-z0-9-_]+/.test(pathname);
+    }
+
+    return false;
+}
+
 /**
  * @param callback
  * @param {number} intervalMs

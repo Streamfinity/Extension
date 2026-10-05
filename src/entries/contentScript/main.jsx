@@ -25,7 +25,13 @@ i18n
     });
 
 const log = createLogger('Content-Script');
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 60 * 1000,
+        },
+    },
+});
 
 log.debug('content script main');
 
