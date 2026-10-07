@@ -4,6 +4,7 @@ import { Button } from '@streamfinity/streamfinity-branding';
 import { useTranslation } from 'react-i18next';
 import Card from '~/entries/contentScript/components/Card';
 import MarkReactionForm from '~/entries/contentScript/components/MarkReactionForm';
+import VideoPreview from '~/entries/contentScript/components/VideoPreview';
 import { useAppStore } from '~/entries/contentScript/state';
 import { useReactionCandidate } from '~/hooks/useReactionCandidate';
 import { submitReaction } from '~/common/bridge';
@@ -66,16 +67,7 @@ function MarkReactionNotice({ autoDetect }) {
                         {t('markReaction.candidate')}
                     </p>
 
-                    <div className="text-sm">
-                        <div className="font-semibold">
-                            {candidate.original_video.title}
-                        </div>
-                        {candidate.original_video.channel?.title && (
-                            <div className="opacity-75">
-                                {candidate.original_video.channel.title}
-                            </div>
-                        )}
-                    </div>
+                    <VideoPreview video={candidate.original_video} />
 
                     <div className="flex flex-wrap gap-2">
                         <Button
@@ -87,12 +79,14 @@ function MarkReactionNotice({ autoDetect }) {
                             {t('markReaction.candidateConfirm')}
                         </Button>
                         <Button
+                            color="secondary"
                             onClick={() => setShowForm(true)}
                             usePx={false}
                         >
                             {t('markReaction.candidatePart')}
                         </Button>
                         <Button
+                            color="secondary"
                             onClick={() => setDismissed(true)}
                             usePx={false}
                         >
