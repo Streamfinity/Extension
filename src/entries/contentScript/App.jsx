@@ -181,7 +181,7 @@ function App() {
             )}
 
             {state !== STATE_LIVE && (
-                <MarkReactionNotice />
+                <MarkReactionNotice autoDetect={!!user && !isIncognito} />
             )}
 
             {state === STATE_LIVE && (

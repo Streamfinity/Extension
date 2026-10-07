@@ -42,6 +42,10 @@
         "title": "Incognito mode until {{time}}"
     },
     "markReaction": {
+        "candidate": "This looks like a reaction. Is it a reaction to this video?",
+        "candidateConfirm": "Yes, full video",
+        "candidateDismiss": "No",
+        "candidatePart": "Only a part",
         "description": "If this video is or contains a reaction to another video, you can mark it as this.",
         "disclaimer": "Please note that every submission will be manually reviewed before being listed.",
         "fullVideo": "Full video",

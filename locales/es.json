@@ -42,6 +42,10 @@
         "title": "Modo incógnito hasta {{time}}"
     },
     "markReaction": {
+        "candidate": "Parece una reacción. ¿Es una reacción a este vídeo?",
+        "candidateConfirm": "Sí, vídeo completo",
+        "candidateDismiss": "No",
+        "candidatePart": "Solo una parte",
         "description": "Si este vídeo es o contiene una reacción a otro vídeo, puedes marcarlo como tal.",
         "disclaimer": "Recuerde que todos los envíos se revisarán manualmente antes de incluirlos en la lista.",
         "fullVideo": "Vídeo completo",

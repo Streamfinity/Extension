@@ -23,6 +23,15 @@ export default {
                 sm: '12px',
                 xs: '10px',
             },
+            keyframes: {
+                attention: {
+                    '0%, 100%': { transform: 'scale(1)' },
+                    '50%': { transform: 'scale(1.03)' },
+                },
+            },
+            animation: {
+                attention: 'attention 0.5s ease-in-out 3',
+            },
         },
     },
     plugins: [

@@ -36,6 +36,7 @@ function Card({
     className,
     compact = false,
     forceOpen = false,
+    highlight = false,
 }) {
     const [isExpanded, setIsExpanded] = useState(forceOpen);
 
@@ -79,6 +80,7 @@ function Card({
 
     useEffect(() => {
         if (forceOpen) {
+            setIsExpanded(true);
             return;
         }
 
@@ -106,6 +108,7 @@ function Card({
         return (
             <div className={classNames(
                 colorClassName,
+                highlight && 'motion-safe:animate-attention',
                 'p-[1px] rounded-[8px]',
             )}
             >
@@ -157,7 +160,7 @@ function Card({
     );
 
     return (
-        <div className={classNames(colorClassName, 'rounded-[12px] p-[2px]')}>
+        <div className={classNames(colorClassName, highlight && 'motion-safe:animate-attention', 'rounded-[12px] p-[2px]')}>
             <div className={classNames(className, 'rounded-[10px] p-4 bg-white/90 dark:bg-black/90')}>
                 {inner}
             </div>
@@ -184,6 +187,7 @@ Card.propTypes = {
     preview: PropTypes.string,
     compact: PropTypes.bool,
     forceOpen: PropTypes.bool,
+    highlight: PropTypes.bool,
 };
 
 Card.defaultProps = {

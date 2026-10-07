@@ -42,6 +42,10 @@
         "title": "Inkognito-Modus bis {{time}}"
     },
     "markReaction": {
+        "candidate": "Das sieht nach einer Reaction aus. Ist es eine Reaction auf dieses Video?",
+        "candidateConfirm": "Ja, ganzes Video",
+        "candidateDismiss": "Nein",
+        "candidatePart": "Nur ein Teil",
         "description": "Wenn dieses Video eine Reaction enthält oder eine Reaction auf ein anderes Video ist, markiere es.",
         "disclaimer": "Bitte beachte, dass jede Einreichung manuell überprüft wird, bevor diese gelistet wird.",
         "fullVideo": "Ganzes Video",
