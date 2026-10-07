@@ -72,6 +72,7 @@ function MarkReactionNotice({ autoDetect }) {
                     <div className="flex flex-wrap gap-2">
                         <Button
                             color="primary"
+                            className="grow"
                             onClick={() => confirmCandidate()}
                             loading={loading}
                             usePx={false}
