@@ -95,6 +95,12 @@ export async function submitReaction(data) {
     return response;
 }
 
+export async function getReactionCandidate(data) {
+    const response = await sendMessageToBackground(messages.REACTION_CANDIDATE_GET, data);
+
+    return response?.data || null;
+}
+
 // Reaction Policy
 
 async function getReactionPolicyForVideo({ videoUrl, channelUrl, userId }) {

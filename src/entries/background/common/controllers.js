@@ -24,6 +24,7 @@ async function getResponse(type, data) {
         [messages.SUGGESTIONS_SUBMIT]: api.submitSuggestion,
         [messages.WATCHED_REACTIONS_GET]: api.getWatchedReactions,
         [messages.REACTION_SUBMIT]: api.submitReaction,
+        [messages.REACTION_CANDIDATE_GET]: api.getReactionCandidate,
         [messages.REACTION_POLICY_GET]: api.getReactionPolicy,
         [messages.CONTENT_RATINGS_GET]: api.getContentRatings,
         [messages.REACTIONS_GET_FOR_VIDEO]: api.getReactionsForVideo,

@@ -144,6 +144,16 @@ export async function submitReaction(data) {
     return response;
 }
 
+export async function getReactionCandidate(data) {
+    const { data: response } = await api('extension/reaction-candidate', {
+        method: 'POST',
+        token: await storageGetToken(),
+        json: data,
+    });
+
+    return response;
+}
+
 export async function getReactionsForVideo({ videoUrl, onlyFollowed, limit }) {
     const { data: policy } = await api('reactions/to-video', {
         token: await storageGetToken(),
