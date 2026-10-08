@@ -44,6 +44,7 @@
     "markReaction": {
         "candidate": "This looks like a reaction. Is it a reaction to this video?",
         "candidateConfirm": "Yes, full video",
+        "candidateDisableHint": "Not helpful? You can turn off these suggestions in the extension settings.",
         "candidateDismiss": "No",
         "candidatePart": "Only a part",
         "description": "If this video is or contains a reaction to another video, you can mark it as this.",
@@ -99,6 +100,7 @@
         "incognito": "Incognito Mode (not tracking videos)",
         "incognitoDisable": "Disable (active until {{date}})",
         "incognitoEnable": "Enable",
+        "reactionSuggestions": "Suggest untracked reactions",
         "showExtension": "Show Extension on Web Pages",
         "title": "Settings"
     },

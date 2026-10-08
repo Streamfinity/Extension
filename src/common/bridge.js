@@ -130,6 +130,13 @@ export async function settingsUpdateVisible({ visible }) {
     );
 }
 
+export async function settingsUpdateReactionSuggestions({ enabled }) {
+    return sendMessageToBackground(
+        messages.SETTING_UPDATE_REACTION_SUGGESTIONS,
+        { enabled },
+    );
+}
+
 export async function setTheme({ isDark }) {
     return sendMessageToBackground(
         messages.SET_BROWSER_THEME,

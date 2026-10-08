@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import {
-    storageGetToken, clearStorage, storageSetToken, storageSetSettingVisible, storageSetUser,
+    storageGetToken, clearStorage, storageSetToken, storageSetSettingVisible, storageSetSettingReactionSuggestions, storageSetUser,
 } from '~/entries/background/common/storage';
 import { getExtensionStatus, createPlaybackProgress, getAuthenticatedUser } from '~/entries/background/common/api';
 import { EVENT_REFRESH_AUTH, EVENT_REFRESH_SETTINGS, EVENT_NOTICE } from '~/messages';
@@ -192,6 +192,14 @@ export async function login() {
 
 export async function updateSettingUpdateVisible(data) {
     await storageSetSettingVisible(data.visible);
+
+    await sendMessageToContentScript(EVENT_REFRESH_SETTINGS);
+
+    return {};
+}
+
+export async function updateSettingReactionSuggestions(data) {
+    await storageSetSettingReactionSuggestions(data.enabled);
 
     await sendMessageToContentScript(EVENT_REFRESH_SETTINGS);
 

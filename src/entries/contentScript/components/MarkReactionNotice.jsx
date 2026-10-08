@@ -14,18 +14,26 @@ function MarkReactionNotice({ autoDetect }) {
     const { t } = useTranslation();
     const [showForm, setShowForm] = useState(false);
     const [dismissed, setDismissed] = useState(false);
+    const [declined, setDeclined] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const currentUrl = useAppStore((state) => state.currentUrl);
     const compact = useAppStore((state) => state.isCompact);
+    const suggestionsEnabled = useAppStore((state) => state.isReactionSuggestionsEnabled);
 
-    const candidate = useReactionCandidate({ enabled: autoDetect });
+    const candidate = useReactionCandidate({ enabled: autoDetect && suggestionsEnabled });
     const showCandidate = !!candidate && !dismissed && !showForm;
 
     useEffect(() => {
         setShowForm(false);
         setDismissed(false);
+        setDeclined(false);
     }, [currentUrl]);
+
+    function declineCandidate() {
+        setDismissed(true);
+        setDeclined(true);
+    }
 
     async function confirmCandidate() {
         if (loading) {
@@ -56,7 +64,7 @@ function MarkReactionNotice({ autoDetect }) {
             title={t('markReaction.title')}
             className="flex flex-col"
             compact={compact}
-            forceOpen={showCandidate}
+            forceOpen={showCandidate || declined}
             highlight={showCandidate}
             color={showCandidate ? 'primary' : 'default'}
         >
@@ -88,7 +96,7 @@ function MarkReactionNotice({ autoDetect }) {
                         </Button>
                         <Button
                             color="secondary"
-                            onClick={() => setDismissed(true)}
+                            onClick={() => declineCandidate()}
                             usePx={false}
                         >
                             {t('markReaction.candidateDismiss')}
@@ -111,6 +119,12 @@ function MarkReactionNotice({ autoDetect }) {
                     <p className="text-sm">
                         {t('markReaction.intro')}
                     </p>
+
+                    {declined && (
+                        <p className="clear-both pt-3 text-xs text-black/60 dark:text-white/50">
+                            {t('markReaction.candidateDisableHint')}
+                        </p>
+                    )}
                 </div>
             )}
 

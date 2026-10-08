@@ -44,6 +44,7 @@
     "markReaction": {
         "candidate": "Das sieht nach einer Reaction aus. Ist es eine Reaction auf dieses Video?",
         "candidateConfirm": "Ja, ganzes Video",
+        "candidateDisableHint": "Nicht hilfreich? Du kannst diese Vorschläge in den Einstellungen der Erweiterung ausschalten.",
         "candidateDismiss": "Nein",
         "candidatePart": "Nur ein Teil",
         "description": "Wenn dieses Video eine Reaction enthält oder eine Reaction auf ein anderes Video ist, markiere es.",
@@ -99,6 +100,7 @@
         "incognito": "Inkognito-Modus (Videos werden nicht getracked)",
         "incognitoDisable": "Deaktivieren (aktiv bis {{date}})",
         "incognitoEnable": "Aktivieren",
+        "reactionSuggestions": "Nicht getrackte Reactions vorschlagen",
         "showExtension": "Erweiterung auf Seite anzeigen",
         "title": "Einstellungen"
     },

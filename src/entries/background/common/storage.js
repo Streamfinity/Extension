@@ -8,6 +8,7 @@ export const STORAGE_USER = 'user';
 export const STORAGE_COMPACT = 'compact';
 export const STORAGE_MINIMIZED = 'min';
 export const STORAGE_SETTING_SCRIPT_VISIBLE = 'invis';
+export const STORAGE_SETTING_REACTION_SUGGESTIONS = 'rsug';
 
 // Setter
 
@@ -38,10 +39,20 @@ export async function storageSetSettingVisible(visible) {
     await browser.storage.sync.set({ [STORAGE_SETTING_SCRIPT_VISIBLE]: visible });
 }
 
+export async function storageSetSettingReactionSuggestions(enabled) {
+    await browser.storage.sync.set({ [STORAGE_SETTING_REACTION_SUGGESTIONS]: enabled });
+}
+
 // Getter
 
 export async function storageGetSettingVisible() {
     const value = (await browser.storage.sync.get(STORAGE_SETTING_SCRIPT_VISIBLE))[STORAGE_SETTING_SCRIPT_VISIBLE];
+
+    return value !== false;
+}
+
+export async function storageGetSettingReactionSuggestions() {
+    const value = (await browser.storage.sync.get(STORAGE_SETTING_REACTION_SUGGESTIONS))[STORAGE_SETTING_REACTION_SUGGESTIONS];
 
     return value !== false;
 }

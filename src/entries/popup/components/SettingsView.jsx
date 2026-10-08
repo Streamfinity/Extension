@@ -5,8 +5,8 @@ import { Button } from '@streamfinity/streamfinity-branding';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import useAuth from '~/hooks/useAuth';
-import { storageGetSettingVisible } from '~/entries/background/common/storage';
-import { settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
+import { storageGetSettingReactionSuggestions, storageGetSettingVisible } from '~/entries/background/common/storage';
+import { settingsUpdateReactionSuggestions, settingsUpdateVisible, toggleIncognitoMode } from '~/common/bridge';
 import { useAppStore } from '~/entries/contentScript/state';
 import { Switch } from '~/components/Ui/Switch';
 import Card from '~/entries/contentScript/components/Card';
@@ -18,14 +18,18 @@ function SettingsView() {
         logout, loadingLogout, refreshStatusData, user,
     } = useAuth();
 
-    const [isVisible, setIsVisible] = useAppStore(
-        useShallow((state) => [state.isVisible, state.setIsVisible]),
+    const [isVisible, setIsVisible, isReactionSuggestionsEnabled, setIsReactionSuggestionsEnabled] = useAppStore(
+        useShallow((state) => [state.isVisible, state.setIsVisible, state.isReactionSuggestionsEnabled, state.setIsReactionSuggestionsEnabled]),
     );
 
     useEffect(() => {
         (async () => {
             setIsVisible(
                 await storageGetSettingVisible(),
+            );
+
+            setIsReactionSuggestionsEnabled(
+                await storageGetSettingReactionSuggestions(),
             );
         })();
     }, []);
@@ -34,6 +38,12 @@ function SettingsView() {
         await settingsUpdateVisible({ visible: value });
 
         setIsVisible(value);
+    }
+
+    async function localToggleReactionSuggestions(value) {
+        await settingsUpdateReactionSuggestions({ enabled: value });
+
+        setIsReactionSuggestionsEnabled(value);
     }
 
     // check if "extension_invisible_until" is not in past using momentjs
@@ -81,6 +91,17 @@ function SettingsView() {
                         />
                         <label htmlFor="visibility">
                             {t('settings.showExtension')}
+                        </label>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <Switch
+                            id="reaction-suggestions"
+                            checked={isReactionSuggestionsEnabled}
+                            onCheckedChange={() => localToggleReactionSuggestions(!isReactionSuggestionsEnabled)}
+                        />
+                        <label htmlFor="reaction-suggestions">
+                            {t('settings.reactionSuggestions')}
                         </label>
                     </div>
 

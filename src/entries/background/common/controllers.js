@@ -17,6 +17,7 @@ async function getResponse(type, data) {
         [messages.GET_STATUS]: actions.getStatus,
         [messages.PLAYER_PROGRESS]: actions.sendPlayerProgress,
         [messages.SETTING_UPDATE_VISIBLE]: actions.updateSettingUpdateVisible,
+        [messages.SETTING_UPDATE_REACTION_SUGGESTIONS]: actions.updateSettingReactionSuggestions,
 
         // API
 

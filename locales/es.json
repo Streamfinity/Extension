@@ -44,6 +44,7 @@
     "markReaction": {
         "candidate": "Parece una reacción. ¿Es una reacción a este vídeo?",
         "candidateConfirm": "Sí, vídeo completo",
+        "candidateDisableHint": "¿No es útil? Puedes desactivar estas sugerencias en los ajustes de la extensión.",
         "candidateDismiss": "No",
         "candidatePart": "Solo una parte",
         "description": "Si este vídeo es o contiene una reacción a otro vídeo, puedes marcarlo como tal.",
@@ -99,6 +100,7 @@
         "incognito": "Modo incógnito (los vídeos no se rastrean)",
         "incognitoDisable": "Desactivar (activo hasta {{date}})",
         "incognitoEnable": "Activar",
+        "reactionSuggestions": "Sugerir reacciones no registradas",
         "showExtension": "Ver extensión en la página",
         "title": "Ajustes"
     },

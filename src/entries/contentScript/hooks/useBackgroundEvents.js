@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { EVENT_REFRESH_SETTINGS, EVENT_REFRESH_AUTH, EVENT_NOTICE } from '~/messages';
-import { storageGetSettingVisible } from '~/entries/background/common/storage';
+import { storageGetSettingReactionSuggestions, storageGetSettingVisible } from '~/entries/background/common/storage';
 import { useAppStore } from '~/entries/contentScript/state';
 import { createLogger } from '~/common/log';
 import useAuth from '~/hooks/useAuth';
@@ -9,11 +9,15 @@ import { toastSuccess, toastError, toastWarn } from '~/common/utility';
 
 const log = createLogger('Background-Events');
 
-async function refreshSettings({ setIsVisible }) {
+async function refreshSettings({ setIsVisible, setIsReactionSuggestionsEnabled }) {
     log.debug('refreshing settings...');
 
     setIsVisible(
         await storageGetSettingVisible(),
+    );
+
+    setIsReactionSuggestionsEnabled(
+        await storageGetSettingReactionSuggestions(),
     );
 }
 
@@ -38,6 +42,7 @@ function sendNotice(type, message) {
 
 export function useBackgroundEvents() {
     const setIsVisible = useAppStore((state) => state.setIsVisible);
+    const setIsReactionSuggestionsEnabled = useAppStore((state) => state.setIsReactionSuggestionsEnabled);
     const { refreshStatusData } = useAuth();
 
     async function onBackgroundMessage(req) {
@@ -49,7 +54,7 @@ export function useBackgroundEvents() {
             break;
 
         case EVENT_REFRESH_SETTINGS:
-            await refreshSettings({ setIsVisible });
+            await refreshSettings({ setIsVisible, setIsReactionSuggestionsEnabled });
             break;
 
         case EVENT_NOTICE:
@@ -64,7 +69,7 @@ export function useBackgroundEvents() {
     useEffect(() => {
         registerListener(onBackgroundMessage);
 
-        refreshSettings({ setIsVisible });
+        refreshSettings({ setIsVisible, setIsReactionSuggestionsEnabled });
 
         return () => {
             unregisterListener(onBackgroundMessage);
