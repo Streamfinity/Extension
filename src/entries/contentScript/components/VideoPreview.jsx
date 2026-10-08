@@ -11,7 +11,7 @@ function VideoPreview({ video, children }) {
             className="flex gap-3"
             rel="noreferrer"
         >
-            <div className="relative w-2/5 shrink-0 @md:w-1/3">
+            <div className="relative w-2/5 shrink-0 @[400px]:w-1/4">
                 <img
                     src={video.thumbnail_url}
                     alt={video.title}
@@ -26,7 +26,7 @@ function VideoPreview({ video, children }) {
             </div>
             <div className="flex flex-col justify-between gap-2">
                 <div>
-                    <div className="line-clamp-2 font-semibold leading-7 @md:text-lg">
+                    <div className="line-clamp-2 font-semibold leading-7 @[400px]:text-lg">
                         {video.title}
                     </div>
                     {video.channel && (

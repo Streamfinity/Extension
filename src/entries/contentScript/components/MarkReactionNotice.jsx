@@ -71,7 +71,7 @@ function MarkReactionNotice({ autoDetect }) {
 
             {showCandidate && (
                 <div className="flex flex-col gap-3">
-                    <p className="text-sm">
+                    <p className="mb-1 text-sm">
                         {t('markReaction.candidate')}
                     </p>
 
