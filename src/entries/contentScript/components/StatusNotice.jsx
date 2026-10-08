@@ -7,7 +7,7 @@ import { buildFrontendUrl } from '~/common/utility';
 import { useAppStore } from '~/entries/contentScript/state';
 
 function StatusNotice({
-    liveStream,
+    liveStream = null,
 }) {
     const { t } = useTranslation();
     const compact = useAppStore((state) => state.isCompact);
@@ -57,10 +57,6 @@ StatusNotice.propTypes = {
             title: PropTypes.string,
         }),
     }),
-};
-
-StatusNotice.defaultProps = {
-    liveStream: null,
 };
 
 export default StatusNotice;

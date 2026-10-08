@@ -40,6 +40,4 @@ function StreamerModeNotice() {
 
 StreamerModeNotice.propTypes = {};
 
-StreamerModeNotice.defaultProps = {};
-
 export default StreamerModeNotice;

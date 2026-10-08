@@ -9,7 +9,7 @@ import { submitReaction } from '~/common/bridge';
 import { useYouTubePlayer } from '~/hooks/useYouTubePlayer';
 import { toastError, toastSuccess } from '~/common/utility';
 
-function MarkReactionForm({ onSubmitted, initialOriginalUrl }) {
+function MarkReactionForm({ onSubmitted, initialOriginalUrl = null }) {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
 
@@ -245,10 +245,6 @@ function MarkReactionForm({ onSubmitted, initialOriginalUrl }) {
 MarkReactionForm.propTypes = {
     onSubmitted: PropTypes.func.isRequired,
     initialOriginalUrl: PropTypes.string,
-};
-
-MarkReactionForm.defaultProps = {
-    initialOriginalUrl: null,
 };
 
 export default MarkReactionForm;

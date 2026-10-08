@@ -77,6 +77,4 @@ SubwaySurfer.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-SubwaySurfer.defaultProps = {};
-
 export default SubwaySurfer;

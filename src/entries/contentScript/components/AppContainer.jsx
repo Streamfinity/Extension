@@ -15,9 +15,9 @@ const dev = import.meta.env.DEV;
 
 function AppContainer({
     children,
-    dark,
-    user,
-    state,
+    dark = false,
+    user = null,
+    state = STATE_DEFAULT,
     liveStream = null,
     isTrackingVideos = undefined,
 }) {
@@ -143,12 +143,6 @@ AppContainer.propTypes = {
     ]),
     liveStream: streamShape,
     isTrackingVideos: PropTypes.bool,
-};
-
-AppContainer.defaultProps = {
-    user: null,
-    dark: false,
-    state: STATE_DEFAULT,
 };
 
 export default AppContainer;

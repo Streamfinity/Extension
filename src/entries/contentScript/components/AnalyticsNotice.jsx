@@ -18,7 +18,7 @@ import PremiumCtaLabel from '~/entries/contentScript/components/PremiumCtaLabel'
 // -------------------------------------------------------------------------------------------------------
 
 function Statistic({
-    title, value, children, blur = false,
+    title, value, children = null, blur = false,
 }) {
     return (
         <div className="flex flex-col gap-2 text-left">
@@ -43,10 +43,6 @@ Statistic.propTypes = {
     value: PropTypes.number.isRequired,
     blur: PropTypes.bool,
     children: childrenShape,
-};
-
-Statistic.defaultProps = {
-    children: null,
 };
 
 function StatisticChange({ children }) {
@@ -185,7 +181,5 @@ function AnalyticsNotice() {
 }
 
 AnalyticsNotice.propTypes = {};
-
-AnalyticsNotice.defaultProps = {};
 
 export default AnalyticsNotice;

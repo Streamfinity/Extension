@@ -226,6 +226,4 @@ function ReactionsHistoryNotice() {
 
 ReactionsHistoryNotice.propTypes = {};
 
-ReactionsHistoryNotice.defaultProps = {};
-
 export default ReactionsHistoryNotice;

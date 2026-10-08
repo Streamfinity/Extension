@@ -151,6 +151,4 @@ ContentRatingNotice.propTypes = {
 
 };
 
-ContentRatingNotice.defaultProps = {};
-
 export default ContentRatingNotice;

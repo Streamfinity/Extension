@@ -44,6 +44,4 @@ Overlay.propTypes = {
     title: PropTypes.string.isRequired,
 };
 
-Overlay.defaultProps = {};
-
 export default Overlay;

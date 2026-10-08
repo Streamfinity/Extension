@@ -91,6 +91,4 @@ PlayerProgressListener.propTypes = {
     active: PropTypes.bool.isRequired,
 };
 
-PlayerProgressListener.defaultProps = {};
-
 export default PlayerProgressListener;

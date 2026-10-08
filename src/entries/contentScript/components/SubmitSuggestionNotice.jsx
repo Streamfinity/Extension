@@ -45,6 +45,4 @@ function SubmitSuggestionNotice() {
 
 SubmitSuggestionNotice.propTypes = {};
 
-SubmitSuggestionNotice.defaultProps = {};
-
 export default SubmitSuggestionNotice;

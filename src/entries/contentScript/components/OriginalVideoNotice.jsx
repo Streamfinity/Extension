@@ -61,6 +61,4 @@ function OriginalVideoNotice() {
 
 OriginalVideoNotice.propTypes = {};
 
-OriginalVideoNotice.defaultProps = {};
-
 export default OriginalVideoNotice;

@@ -33,13 +33,13 @@ function prettyFormatCountdown(diff) {
 }
 
 function Notice({
-    title,
+    title = null,
     children,
     preview = null,
     isThirdParty = false,
     cardColor,
     note,
-    className,
+    className = '',
 }) {
     const { t } = useTranslation();
     const { isOwnVideo } = useAuth();
@@ -128,20 +128,14 @@ Notice.propTypes = {
     cardColor: PropTypes.string.isRequired,
 };
 
-Notice.defaultProps = {
-    title: null,
-    isThirdParty: false,
-    className: '',
-};
-
 function NoticeLine({
     title,
-    countdown,
-    maxPercentage,
+    countdown = null,
+    maxPercentage = null,
     minHours,
     allowValue,
-    comment,
-    options,
+    comment = null,
+    options = null,
 }) {
     const { t } = useTranslation();
 
@@ -255,13 +249,6 @@ NoticeLine.propTypes = {
         value: PropTypes.number,
         title: PropTypes.string,
     })),
-};
-
-NoticeLine.defaultProps = {
-    countdown: null,
-    maxPercentage: null,
-    comment: null,
-    options: null,
 };
 
 function ReactionPolicyNotice() {

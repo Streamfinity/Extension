@@ -54,9 +54,9 @@ TopButton.propTypes = {
 };
 
 function Header({
-    onClick,
-    sws,
-    isTrackingVideos,
+    onClick = () => {},
+    sws = false,
+    isTrackingVideos = undefined,
 }) {
     const logoUrlDark = new URL(logoDark, import.meta.url).href;
     const logoUrlLight = new URL(logoWhite, import.meta.url).href;
@@ -164,12 +164,6 @@ Header.propTypes = {
     sws: PropTypes.bool,
     onClick: PropTypes.func,
     isTrackingVideos: PropTypes.bool,
-};
-
-Header.defaultProps = {
-    sws: false,
-    onClick: () => {},
-    isTrackingVideos: undefined,
 };
 
 export default Header;

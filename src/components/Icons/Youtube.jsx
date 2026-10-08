@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function YouTubeIcon({
-    className, height, width, viewBox,
+    className = null, height = 200, width = 200, viewBox = '0 0 71.412065 50',
 }) {
     return (
         <div className={className}>
@@ -51,13 +51,6 @@ YouTubeIcon.propTypes = {
     height: PropTypes.number,
     width: PropTypes.number,
     viewBox: PropTypes.string,
-};
-
-YouTubeIcon.defaultProps = {
-    className: null,
-    height: 200,
-    width: 200,
-    viewBox: '0 0 71.412065 50',
 };
 
 export default YouTubeIcon;

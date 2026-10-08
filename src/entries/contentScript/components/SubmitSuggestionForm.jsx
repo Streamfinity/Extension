@@ -231,6 +231,4 @@ SubmitSuggestionForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 };
 
-SubmitSuggestionForm.defaultProps = {};
-
 export default SubmitSuggestionForm;
